@@ -1,24 +1,28 @@
 package closet.model.vo;
 
+import java.sql.Date;
+
 public class Closet implements java.io.Serializable{
 	private static final long serialVersionUID = -7305682391284883000L;
-	private String clothCode; // 옷코드
+	private int clothNo; // 옷코드
+	private int memberNo; // 회원번호
 	private String fitCode; // 핏코드
 	private String seasonCode; // 계절코드
 	private String colourCode; // 컬러코드
 	private String materialCode; // 재질코드
 	private String usageCode; // 용도
 	private String clothName; // 옷이름
-	private String clothBuyDate; // 옷 구매일자
+	private Date clothBuyDate; // 옷 구매일자
 	private String clothMemo; // 옷장메모
 	private String status; // 옷삭제여부
 	
 	public Closet() {}
 
-	public Closet(String clothCode, String fitCode, String seasonCode, String colourCode, String materialCode,
-			String usageCode, String clothName, String clothBuyDate, String clothMemo, String status) {
+	public Closet(int clothNo, int memberNo, String fitCode, String seasonCode, String colourCode, String materialCode,
+			String usageCode, String clothName, Date clothBuyDate, String clothMemo, String status) {
 		super();
-		this.clothCode = clothCode;
+		this.clothNo = clothNo;
+		this.memberNo = memberNo;
 		this.fitCode = fitCode;
 		this.seasonCode = seasonCode;
 		this.colourCode = colourCode;
@@ -30,12 +34,20 @@ public class Closet implements java.io.Serializable{
 		this.status = status;
 	}
 
-	public String getClothCode() {
-		return clothCode;
+	public int getClothNo() {
+		return clothNo;
 	}
 
-	public void setClothCode(String clothCode) {
-		this.clothCode = clothCode;
+	public void setClothNo(int clothNo) {
+		this.clothNo = clothNo;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 
 	public String getFitCode() {
@@ -86,11 +98,11 @@ public class Closet implements java.io.Serializable{
 		this.clothName = clothName;
 	}
 
-	public String getClothBuyDate() {
+	public Date getClothBuyDate() {
 		return clothBuyDate;
 	}
 
-	public void setClothBuyDate(String clothBuyDate) {
+	public void setClothBuyDate(Date clothBuyDate) {
 		this.clothBuyDate = clothBuyDate;
 	}
 
@@ -110,19 +122,14 @@ public class Closet implements java.io.Serializable{
 		this.status = status;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
-		return "Closet [clothCode=" + clothCode + ", fitCode=" + fitCode + ", seasonCode=" + seasonCode
-				+ ", colourCode=" + colourCode + ", materialCode=" + materialCode + ", usageCode=" + usageCode
-				+ ", clothName=" + clothName + ", clothBuyDate=" + clothBuyDate + ", clothMemo=" + clothMemo
+		return "Closet [clothNo=" + clothNo + ", memberNo=" + memberNo + ", fitCode=" + fitCode + ", seasonCode="
+				+ seasonCode + ", colourCode=" + colourCode + ", materialCode=" + materialCode + ", usageCode="
+				+ usageCode + ", clothName=" + clothName + ", clothBuyDate=" + clothBuyDate + ", clothMemo=" + clothMemo
 				+ ", status=" + status + "]";
 	}
 
-	
 	
 	
 }
