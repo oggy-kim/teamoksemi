@@ -71,6 +71,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#" style="color: #000;">MY PAGE</a>
         </li>
+        <p>test</p>
       </ul>
     </nav>
 </header>
