@@ -10,7 +10,7 @@ public class Member implements java.io.Serializable{
 	private String memberPwd; // 회원비밀번호
 	private String memberNick; // 회원닉네임
 	private char gender; // 성별
-	private String profile; // 프로필사진
+	private String profile; // 프로필사진	
 	private String likeStyle; // 선호스타일
 	private int age; // 연령
 	private Date entryDate; // 가입날짜

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
+	//회원 가입 성공 메세지 출력용
+	String msg = (String)session.getAttribute("msg");
+	
 	//request.getContextPath() 변수화
 	String contextPath = request.getContextPath();
 %>
@@ -58,7 +61,18 @@
             color: white;
             text-decoration: underline;
         }
+        
+         
     </style>
+    <script>
+    	var msg = "<%= msg %>";
+		$(function(){
+			if(msg != "null"){
+				alert(msg);
+				<% session.removeAttribute("msg"); %>
+			}
+		});
+    </script>
 </head>
 <body>
 <header>
@@ -87,20 +101,25 @@
     </nav>
 </header>
 <script>
+	
+	function validate(){
+	if($("#userId").val().trim().length==0){
+		alert("이메일를 입력하세요");
+		$("#userId").select();
+		return false;
+	}
+	
+	if($("#userPwd").val().trim().length==0){
+		alert("비밀번호를 입력하세요");
+		$("#userPwd").select();
+		return false;
+	}
+	
+	return true;
+	// 여기까지 작성 했으면 LoginServlet 만들러 가기 ~!!
+}
 	function goMain() {
 		location.href="<%= contextPath %>";
-	}
-	
-	function goFavorite() {
-		
-	}
-	
-	function goEvent() {
-		location.href="<%= contextPath %>/views/event/eventPage.jsp";
-	}
-	
-	function goMypage() {
-		
 	}
 </script>
 

@@ -1,218 +1,126 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%
+	//2_1_1. session 객체에 담겨진 loginUser 정보를 변수에 담기
+	Member loginUser = (Member) session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>LOOK SO FINE</title>
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- font -->
-    <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-    <!-- fotorama -->
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-    <style>
-        body {
-          width : 100%;
-          height : 1600px;
-        }
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.inner {
+	position: absolute;
+}
 
-        header {
-          width:100%;
-          height:120px;
-        }
+.inner-container {
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	position: fixed;
+	top: calc(55vh - 200px);
+	left: calc(50vw - 200px);
+	overflow: hidden;
+}
 
-        .mainArea {
-          background: darkgray;
-          width: 80%;
-          height: 400px;
-          margin: auto;
-        }
+.API {
+	position: absolute;
+	top: calc(110vh - 200px);
+	left: calc(50vw - 180px);
+}
 
-        .mainImgArea{
-            width: 80%;
-            height: 100%;
-            float: left;
-        }
+.box {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	font-family: Helvetica;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.13);
+	padding: 30px 0px;
+	padding-top: 5px;
+}
 
-        .weatherArea {
-            width: 20%;
-            height: 100%;
-            float: left;
-            color: white;
-            margin: auto;
-            font-family: 'Fugaz One', cursive;
-            font-size: 20px;
-            background: rgb(65, 65, 65);
-            text-align: left;
-        }
+.box h1 {
+	text-align: center;
+	margin: 30px 0;
+	font-size: 30px;
+}
 
-        .weatherArea .up {
-          width: 100%;
-          height: 60%;
-        }
+.box input {
+	display: block;
+	width: 300px;
+	margin: 20px auto;
+	padding: 15px;
+	background: rgba(0, 0, 0, 0.2);
+	color: #fff;
+	border: 0;
+}
 
-        .weatherArea .down {
-          width: 100%;
-          height: 40%;
-        }
+.box input:focus, .box input:active, .box button:focus, .box button:active
+	{
+	outline: none;
+}
 
-        .forecast {
-          width:80%;
-          height:100%;
-          margin:auto;
-        }
+.box button {
+	background: #742ECC;
+	border: 0;
+	color: #fff;
+	padding: 10px;
+	font-size: 20px;
+	width: 330px;
+	margin: 20px auto;
+	display: block;
+	cursor: pointer;
+}
 
-        .dailyImg {
-          width:80%;
-          height:100%;
-          margin:auto;
-        }
+.box button:active {
+	background: #27ae60;
+}
 
-        .weatherArea .up img {
-          width:100%;
-          height:100%;
-          padding:10px 0;
-        }
+.box p {
+	font-size: 14px;
+	text-align: center;
+}
 
-        .mainImg {
-            float: left;
-        }
+.box p span {
+	cursor: pointer;
+	color: #666;
+}
 
-        .mainImg1 {
-            width: 100%;
-            height: 100%;
-        }
-
-        .middleArea {
-          width: 80%;
-          height: 500px;
-          margin: auto;
-        }
-
-        .subImg {
-          background: darkgray;
-          width: 30%;
-          height: 400px;
-          float: left;
-        }
-
-        .subImg1 {
-          margin: 10px 1.7%;
-        }
-
-        .subImg2 {
-          margin: 10px 1.7%;
-        }
-
-        .subImg3 {
-          margin: 10px 1.6%;
-        }
-
-        .styleImgArea{
-          width: 80%;
-		  margin: 0 auto;
-        }
-
-        .copyRight {
-          text-align: center;
-          padding: 100px 0;
-
-        }
-
-        .cicon {
-          text-transform: uppercase;
-        }
-    </style>
-    <script>
-      $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=975353dea991d476ec748ec5b88c3a52&units=metric', function(data){
-        var $ctemp = data.main.temp;
-        var $chum = data.main.humidity;
-        var $cwind = data.wind.speed;
-        var $wIcon = data.weather[0].icon;
-        var $wData = data.weather[0].main;
-
-        $('.ctemp').prepend($ctemp);
-        $('.chum').append($chum).append($('.per'));
-        $('.cwind').append($cwind).append($('persec'));
-        $('.cicon').append('<img src="http://openweathermap.org/img/w/' + $wIcon + '.png" />').append($wData);
-      });
-      
-    </script>
-    
+#goMain {
+	width: 200px;
+	margin: auto;
+}
+</style>
 </head>
 <body>
- 	<%@ include file="views/common/menubar.jsp" %>
-<br>
-<section>
-  <div class="mainArea">
-    <div class="mainImgArea">
-        <img class="mainImg mainImg1" src="resources/images/main.png">
-    </div>  
-    <div class="weatherArea">
-        <div class="up">
-          <div class="dailyImg">
-            <img src="resources/images/daily.png">
-          </div>
-        </div>
-        <div class="down">
-          <div class="forecast">
-            <div class="cicon"></div>
-            <label>TEMP : </label> <label class="ctemp"> &deg;C</label>
-            <br>
-            <label class="chum">HUM : </label> <label>%</label>
-            <br>
-            <label class="cwind">WIND : </label> <label>m/s</label>
-          </div>
-        </div>
-    </div>
-  </div>
-  <div class="middleArea">
-    <br>
-    <div class="subImg subImg1">
-        <div class="card" style="width: 100%; height: 100%;">
-            <img src="resources/images/tour1.jpg" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail >></a>
-            </div>
-        </div>
-    </div>
-    <div class="subImg subImg2">
-        <div class="card" style="width: 100%; height:100%;">
-            <img src="resources/images/tour2.jpg" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail>></a>
-            </div>
-        </div>
-    </div>
-    <div class="subImg subImg3">
-        <div class="card" style="width: 100%; height:100%;">
-            <img src="resources/images/tour3.jpg" class="card-img-top">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-    </div>
-  </div>
-  <!-- 스타일 이미지 -->
-  <div class="styleImgArea">
-     <div class="fotorama" data-fit="contain" data-arrows="true" data-width="100%" data-height="80%" data-ratio="4/3" data-allowfullscreen="true" data-autoplay="3000">
-        <img src="resources/images/style1.PNG" class="inner">
-        <img src="resources/images/style2.PNG" class="inner">
-        <img src="resources/images/style3.PNG" class="inner">
-        <img src="resources/images/style4.PNG" class="inner">
-      </div>
-   </div>
-</section>
-<br><br>
-<footer class="copyRight">
-  <p>Copyright 2019. LOOKSOFINE.  All right reserved.</p>
-</footer>
+	<%@ include file="views/common/menubar.jsp"%>
+	<%if (loginUser == null) {%>
+	<div class="inner-container">
+		<div class="box">
+			<h1>LOOKSOFINE</h1>
+			<form method="post" action="<%=contextPath%>/login.me"
+				onsubmit="return validate();">
+				<input type="text" placeholder="Email" name="userId"> <input
+					type="password" placeholder="Password" name="userPwd">
+				<button type="submit">Login</button>
+				<p>
+					회원이아니세요? <span onclick="memberJoin();">회원가입</span>
+				</p>
+				<p>
+					ID/비밀번호를 잃어버렸나요?<span>ID/비밀번호찾기</span>
+				</p>
+			</form>
+		</div>
+	</div>
+	<%} else {
+		response.sendRedirect("views/common/main.jsp");
+	}%>
 </body>
+<script>
+	function memberJoin() {
+		location.href="<%= contextPath %>/memberJoin.me";
+	}
+</script>
 </html>
