@@ -166,7 +166,7 @@
     <div class="eventArea">
       <div class="eventArea1">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="#"><img src="resources/images/style1.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/6914"><img src="<%= contextPath %>/resources/images/style1.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
             <p class="card-text"><h4>Only LOOK SO FINE</h4><br><h4>LOOK SO FINE 단독행사</h4></p>
           </div>
@@ -175,7 +175,7 @@
       <br><br>
       <div class="eventArea2">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="#"><img src="resources/images/style2.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/9197"><img src="<%= contextPath %>/resources/images/style2.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
             <p class="card-text"><h4>온라인 단독으로 만나는</h4><br><h4>뉴발란스 퍼 아이템</h4></p>
           </div>
@@ -184,7 +184,7 @@
       <br>
       <div class="eventArea3">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="#"><img src="resources/images/style3.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/9096"><img src="<%= contextPath %>/resources/images/style3.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
             <p class="card-text"><h4>10.16 - 10.20</h4><br><h4>더 샘 빅세일! ~50% 할인</h4></p>
           </div>
@@ -193,7 +193,7 @@
       <br><br>
       <div class="eventArea4">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="#"><img src="resources/images/style4.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/9220"><img src="<%= contextPath %>/resources/images/style4.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
             <p class="card-text"><h4>스파오 X 위 베어 베어스</h4><br><h4>사랑스러운 콜라보레이션</h4></p>
           </div>

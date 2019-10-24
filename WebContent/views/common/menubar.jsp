@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//request.getContextPath() 변수화
+	String contextPath = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +12,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
     <style>
@@ -83,7 +88,7 @@
 </header>
 <script>
 	function goMain() {
-		location.href="<%= request.getContextPath() %>";
+		location.href="<%= contextPath %>";
 	}
 	
 	function goFavorite() {
@@ -91,7 +96,7 @@
 	}
 	
 	function goEvent() {
-		
+		location.href="<%= contextPath %>/views/event/eventPage.jsp";
 	}
 	
 	function goMypage() {
