@@ -58,7 +58,7 @@
 <body>
 <header>
   <nav class="navbar navbar-dark bg-dark" id="navbar">
-    <p class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</p>
+    <a class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
@@ -87,15 +87,15 @@
 	}
 	
 	function goFavorite() {
-		location.href="<%= %>";
+		
 	}
 	
 	function goEvent() {
-		location.href="<%= %>";
+		
 	}
 	
 	function goMypage() {
-		location.href="<%= %>";
+		
 	}
 </script>
 
