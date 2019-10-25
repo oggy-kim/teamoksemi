@@ -19,32 +19,6 @@
           height : 1600px;
         }
 
-        #navbar {
-            width:100%;
-            height:60px;
-            position:fixed;
-            z-index: 1;
-            color:white;
-            font-family: 'Fugaz One', cursive;
-        }
-
-        #category {
-          width: 100%;
-          height:60px;
-          position: fixed;
-          z-index: 1;
-          background: white;
-          opacity:0.8;
-          font-family: 'Paytone One', sans-serif;
-          font-size: 25px; 
-          font-style: italic;
-        }
-
-        .nav-link:hover {
-          text-decoration:underline;
-          font-weight:bold;
-        }
-
         section {
             width: 100%;
             height: 1200px;
@@ -88,8 +62,8 @@
             border: 1px solid black;
             border-radius: 5px;
             margin: auto;
-            font-weight: bold;
             font-size: 18px;
+            font-family: 'Paytone One', sans-serif;
         }
 
         .eventArea {

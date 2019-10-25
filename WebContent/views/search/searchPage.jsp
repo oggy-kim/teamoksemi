@@ -18,32 +18,6 @@
           height : 2200px;
         }
 
-         #navbar {
-            width:100%;
-            height:60px;
-            position:fixed;
-            z-index: 1;
-            color:white;
-            font-family: 'Fugaz One', cursive;
-        }
-
-        #category {
-          width: 100%;
-          height:60px;
-          position: fixed;
-          z-index: 1;
-          background: white;
-          opacity:0.8;
-          font-family: 'Paytone One', sans-serif;
-          font-size: 25px; 
-          font-style: italic;
-        }
-
-        .nav-link:hover {
-          text-decoration:underline;
-          font-weight:bold;
-        }
-
         section {
             width: 100%;
             height: 2000px;
@@ -168,6 +142,11 @@
             color: black;
             text-decoration: none;
         }
+        
+        #detail {
+        	font-family: 'Fugaz One', cursive;
+        }
+        
 
 
     </style>
@@ -231,7 +210,7 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#">>>></a></button>
+            <button><a href="#" id="detail">DETAIL</a></button>
         </div>
     </div>
     <br>
@@ -265,7 +244,7 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#">>>></a></button>
+            <button><a href="#" id="detail">DETAIL</a></button>
         </div>  
     </div>
     <br>
@@ -299,7 +278,7 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#">>>></a></button>
+            <button><a href="#" id="detail">DETAIL</a></button>
         </div>  
     </div>
 </section>

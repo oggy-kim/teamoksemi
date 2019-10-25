@@ -14,6 +14,8 @@
 body {
 	background: url('<%= request.getContextPath() %>/resources/images/background2.jpg') no-repeat;
 	background-size : cover;
+	width:100%;
+	height:820px;
 }
 .inner {
 	position: absolute;
@@ -39,7 +41,6 @@ body {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	font-family: Helvetica;
 	color: rgba(255, 255, 255, 0.9);
 	background: rgba(100, 100, 100, 0.8);
 	padding: 30px 0px;
@@ -50,7 +51,7 @@ body {
 .box h1 {
 	text-align: center;
 	margin: 30px 0;
-	font-size: 30px;
+	font-size: 40px;
 }
 
 .box input {
@@ -108,7 +109,7 @@ body {
 	<div class="back"></div>
 	<div class="inner-container">
 		<div class="box">
-			<h1>LOOKSOFINE</h1>
+			<h1>LOOK SO FINE</h1>
 			<form method="post" action="<%=contextPath%>/login.me"
 				onsubmit="return validate();">
 				<input type="text" placeholder="Email" name="userId"> <input
