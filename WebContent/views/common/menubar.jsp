@@ -62,6 +62,11 @@
             text-decoration: underline;
         }
         
+        .btn-light {
+        	background:white;
+        	margin:0 0 0 10px;
+        }
+        
          
     </style>
     <script>
@@ -81,6 +86,7 @@
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
+      <button type="button" class="btn btn-light" style="font-family: 'Do Hyeon', sans-serif;" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
     </form>
   </nav>
   <nav style="padding:60px 0;">
@@ -120,6 +126,10 @@
 }
 	function goMain() {
 		location.href="<%= contextPath %>";
+	}
+	
+	function logout(){
+		location.href = '<%= request.getContextPath() %>/logout.me';
 	}
 </script>
 

@@ -10,6 +10,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
+body {
+	background: url('<%= request.getContextPath() %>/resources/images/background2.jpg') no-repeat;
+	background-size : cover;
+}
 .inner {
 	position: absolute;
 }
@@ -35,10 +40,11 @@
 	height: 100%;
 	width: 100%;
 	font-family: Helvetica;
-	color: #fff;
-	background: rgba(0, 0, 0, 0.13);
+	color: rgba(255, 255, 255, 0.9);
+	background: rgba(100, 100, 100, 0.8);
 	padding: 30px 0px;
 	padding-top: 5px;
+	font-family: 'Fugaz One', cursive;
 }
 
 .box h1 {
@@ -52,7 +58,7 @@
 	width: 300px;
 	margin: 20px auto;
 	padding: 15px;
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(210, 210, 210, 0.8);
 	color: #fff;
 	border: 0;
 }
@@ -63,7 +69,7 @@
 }
 
 .box button {
-	background: #742ECC;
+	background: rgba(210, 210, 210, 0.8);
 	border: 0;
 	color: #fff;
 	padding: 10px;
@@ -75,28 +81,31 @@
 }
 
 .box button:active {
-	background: #27ae60;
+	background: rgba(120, 120, 120, 0.9);
 }
 
 .box p {
 	font-size: 14px;
 	text-align: center;
+	font-family: 'Do Hyeon', sans-serif;
 }
 
 .box p span {
 	cursor: pointer;
-	color: #666;
+	color: rgba(150, 150, 150, 0.9);
 }
 
 #goMain {
 	width: 200px;
 	margin: auto;
 }
+
 </style>
 </head>
 <body>
 	<%@ include file="views/common/menubar.jsp"%>
 	<%if (loginUser == null) {%>
+	<div class="back"></div>
 	<div class="inner-container">
 		<div class="box">
 			<h1>LOOKSOFINE</h1>
@@ -104,7 +113,7 @@
 				onsubmit="return validate();">
 				<input type="text" placeholder="Email" name="userId"> <input
 					type="password" placeholder="Password" name="userPwd">
-				<button type="submit">Login</button>
+				<button type="submit">LOGIN</button>
 				<p>
 					회원이아니세요? <span onclick="memberJoin();">회원가입</span>
 				</p>
