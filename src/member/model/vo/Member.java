@@ -10,7 +10,7 @@ public class Member implements java.io.Serializable{
 	private String memberPwd; // 회원비밀번호
 	private String memberNick; // 회원닉네임
 	private char gender; // 성별
-	//private String profile; // 프로필사진
+	private String profile; // 프로필사진	
 	private String likeStyle; // 선호스타일
 	private int age; // 연령
 	private Date entryDate; // 가입날짜
@@ -19,7 +19,7 @@ public class Member implements java.io.Serializable{
 	public Member() {}
 
 	public Member(int memberNo, String gradeCode, String memberId, String memberPwd, String memberNick, char gender,
-			String likeStyle, int age, Date entryDate, String memberStatus) {
+			String profile, String likeStyle, int age, Date entryDate, String memberStatus) {
 		super();
 		this.memberNo = memberNo;
 		this.gradeCode = gradeCode;
@@ -27,6 +27,7 @@ public class Member implements java.io.Serializable{
 		this.memberPwd = memberPwd;
 		this.memberNick = memberNick;
 		this.gender = gender;
+		this.profile = profile;
 		this.likeStyle = likeStyle;
 		this.age = age;
 		this.entryDate = entryDate;
@@ -81,6 +82,14 @@ public class Member implements java.io.Serializable{
 		this.gender = gender;
 	}
 
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	public String getLikeStyle() {
 		return likeStyle;
 	}
@@ -113,13 +122,17 @@ public class Member implements java.io.Serializable{
 		this.memberStatus = memberStatus;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", gradeCode=" + gradeCode + ", memberId=" + memberId + ", memberPwd="
-				+ memberPwd + ", memberNick=" + memberNick + ", gender=" + gender + ", likeStyle=" + likeStyle
-				+ ", age=" + age + ", entryDate=" + entryDate + ", memberStatus=" + memberStatus + "]";
+				+ memberPwd + ", memberNick=" + memberNick + ", gender=" + gender + ", profile=" + profile
+				+ ", likeStyle=" + likeStyle + ", age=" + age + ", entryDate=" + entryDate + ", memberStatus="
+				+ memberStatus + "]";
 	}
-	
-	
+
 	
 }

@@ -2,15 +2,26 @@ package shop.model.vo;
 
 public class Event implements java.io.Serializable{
 	private static final long serialVersionUID = 501321778962430461L;
+	
+	private String shopCode; // 쇼핑몰코드
 	private String eventCode; // 이벤트코드
 	private String eventName; // 이벤트이름
 	
 	public Event() {}
 
-	public Event(String eventCode, String eventName) {
+	public Event(String shopCode, String eventCode, String eventName) {
 		super();
+		this.shopCode = shopCode;
 		this.eventCode = eventCode;
 		this.eventName = eventName;
+	}
+
+	public String getShopCode() {
+		return shopCode;
+	}
+
+	public void setShopCode(String shopCode) {
+		this.shopCode = shopCode;
 	}
 
 	public String getEventCode() {
@@ -31,8 +42,6 @@ public class Event implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Event [eventCode=" + eventCode + ", eventName=" + eventName + "]";
+		return "Event [shopCode=" + shopCode + ", eventCode=" + eventCode + ", eventName=" + eventName + "]";
 	}
-	
-	
 }
