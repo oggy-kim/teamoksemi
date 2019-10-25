@@ -40,17 +40,17 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				loginUser = new Member(rset.getInt("memberNo"),
-									   rset.getString("gradeCode"),
-									   rset.getString("memberId"),
-									   rset.getString("memberPwd"),
-									   rset.getString("memberNick"),
-									   rset.getString("gender").charAt(0),
-									   rset.getString("profile"),
-									   rset.getString("likeStyle"),
-									   rset.getInt("age"),
-									   rset.getDate("entryDate"),
-									   rset.getString("membetStatus"));
+				loginUser = new Member(rset.getInt("MEMBER_NO"),
+									   rset.getString("GRADE_CODE"),
+									   rset.getString("MEMBER_ID"),
+									   rset.getString("MEMBER_PWD"),
+									   rset.getString("MEMBER_NICK"),
+									   rset.getString("GENDER").charAt(0),
+									   rset.getString("PROFILE"),
+									   rset.getString("LIKE_STYLE"),
+									   rset.getInt("AGE"),
+									   rset.getDate("ENTRY_DATE"),
+									   rset.getString("MEMBER_STATUS"));
 				
 				
 			}
