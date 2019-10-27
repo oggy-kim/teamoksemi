@@ -42,4 +42,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# IntelliJ 설정파일 추가
+classes/
+.idea/
+
+
 # End of https://www.gitignore.io/api/java,windows,eclipse
