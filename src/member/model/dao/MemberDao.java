@@ -64,4 +64,24 @@ public class MemberDao {
 		return loginUser;
 	}
 
+	public int withdrawMember(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+	    int result = 0;
+
+	    String sql = prop.getProperty("withdrawMember");
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, memberNo);
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+        return result;
+	}
+
 }
