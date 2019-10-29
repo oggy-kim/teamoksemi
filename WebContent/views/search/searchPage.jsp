@@ -72,6 +72,7 @@
 
         .search {
             width: 80%;
+            height: 600px;
             margin: auto;
         }
 
@@ -145,7 +146,6 @@
         	text-align: center;
            	margin: 30px 0 0 48%;
            	border-radius: 5px;
-           	position:absolute;
         }
         
         #detail a {
@@ -189,9 +189,9 @@
             <hr>
         </div>
         	<% if(blist.size() == 0) { %>
+ 		        <div class="thumbnail">
         		<h1 style="text-align : center;"><%= keyword %> 검색 결과가 없습니다.</h1>
         	<% } else if(blist.size() <= 3) {%>        	
-        		<div class="thumbnail">
         		<%for(int i = 0; i < blist.size(); i++) { %>
             	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
@@ -213,44 +213,10 @@
                 	</div>
             	</div>            	
              <% } %>
+             <button id="detail"><a href="#">DETAIL</a></button>
             <% } %> 
         </div>
-        <button id="detail"><a href="#">DETAIL</a></button>
     </div>    
-    <br>
-    <div class="search search3">
-        <div class="searchName">
-            <h3>OOTD</h3>
-            <hr>
-        </div>
-        <div class="thumbnail">
-            <div class="subImg subImg1">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-        </div>  
-        <button id="detail"><a href="#">DETAIL</a></button>
-    </div>
     <br>
     <div class="search search4">
         <div class="searchName">

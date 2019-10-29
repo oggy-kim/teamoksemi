@@ -43,9 +43,6 @@ public class SearchServlet extends HttpServlet {
 			request.setAttribute("blist", blist);
 			request.getRequestDispatcher("views/search/searchPage.jsp").forward(request, response);
 			//response.sendRedirect("views/search/searchPage.jsp");
-		} else {
-			request.setAttribute("msg", "검색 결과가 없습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		
 		
