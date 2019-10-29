@@ -145,6 +145,7 @@
         	text-align: center;
            	margin: 30px 0 0 48%;
            	border-radius: 5px;
+           	position:absolute;
         }
         
         #detail a {
