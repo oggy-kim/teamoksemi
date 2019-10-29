@@ -12,16 +12,7 @@
 <body>
 	<h1 align="center"><%= message %></h1>
 	<div align="center">
-		<button onclick="location.href='<%= request.getContextPath() %>'" style="width:50%">홈으로 돌아가기</button>
+		<button onclick="javascript:history.back(-1);" style="width:50%">이전 페이지로 돌아가기</button>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </body>
 </html>

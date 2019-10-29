@@ -72,7 +72,6 @@
 
         .search {
             width: 80%;
-            height : 600px;
             margin: auto;
         }
 
@@ -152,9 +151,6 @@
         	color: black;
             text-decoration: none;
         }
-        
-
-
     </style>
 </head>
 <body>
@@ -182,7 +178,7 @@
             <button><a href="#">#오버핏가디건</a></button>
         </div>
         <div class="searchTitle">
-           <h1><%= keyword %>검색결과</h1>
+           <h1><%= keyword %> 검색결과</h1>
         </div>
     </div>
     <br>
@@ -191,8 +187,10 @@
             <h3>STYLE</h3>
             <hr>
         </div>
-        <div class="thumbnail">
-        	<%if(blist.size() <= 3) {%>        	
+        	<% if(blist.size() == 0) { %>
+        		<h1 style="text-align : center;"><%= keyword %> 검색 결과가 없습니다.</h1>
+        	<% } else if(blist.size() <= 3) {%>        	
+        		<div class="thumbnail">
         		<%for(int i = 0; i < blist.size(); i++) { %>
             	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
