@@ -220,11 +220,11 @@ function goMain() {
 }
 
 function goStyle() {
-	location.href="<%= contextPath %>/views/style/stylePage.jsp";
+	location.href="<%= contextPath %>/list.bo";
 }
 
 function goFavorite() {
-	location.href="<%= contextPath %>/views/style/choicePage.jsp";
+	location.href="<%= contextPath %>/list.fa";
 }
 
 function goEvent() {
