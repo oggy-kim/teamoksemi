@@ -172,27 +172,27 @@
   <div class="middleArea">
     <br>
     <div class="subImg subImg1">
-        <div class="card" style="width: 100%; height: 100%;">
+        <div class="card" style="width: 100%; height: 100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour1.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail >></a>
+                <a href="#" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
             </div>
         </div>
     </div>
     <div class="subImg subImg2">
-        <div class="card" style="width: 100%; height:100%;">
+        <div class="card" style="width: 100%; height:100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour2.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail>></a>
+                <a href="#" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
             </div>
         </div>
     </div>
     <div class="subImg subImg3">
-        <div class="card" style="width: 100%; height:100%;">
+        <div class="card" style="width: 100%; height:100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
             <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
