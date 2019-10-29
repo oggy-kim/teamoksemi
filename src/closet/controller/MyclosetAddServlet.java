@@ -1,4 +1,4 @@
-package closet;
+package closet.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,37 +7,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.vo.Member;
-
 /**
- * Servlet implementation class SelectMyClosetServlet
+ * Servlet implementation class MyclosetAddServlet
  */
-@WebServlet(name="SelectMyClosetServlet", urlPatterns="/mycloset.look")
-public class SelectMyClosetServlet extends HttpServlet {
+@WebServlet(name="MyclosetAddServlet", urlPatterns="/addmycloth.look")
+public class MyclosetAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectMyClosetServlet() {
+    public MyclosetAddServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = (Member) request.getSession().getAttribute("loginUser");
-        request.setCharacterEncoding("UTF-8");
-        
-        
-	
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

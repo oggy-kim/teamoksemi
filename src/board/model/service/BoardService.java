@@ -45,4 +45,28 @@ public class BoardService {
 
         return listCount;
 	}
+	// QnA 게시판 문의글 등록 service
+	public int insertQnA(QnA q) {
+		Connection conn = getConnection();
+		int result = new BoardDao().insertQnA(conn, q);
+		
+		if(result > 0) {
+			commit(conn);
+		}
+		else {
+			rollback(conn);
+		}
+
+		close(conn);
+		
+		return result;
+	}
+	// QnA 게시판 세부내용 조회
+	public QnA detailQnA(int qnaNo) {
+		Connection conn = getConnection();
+		QnA q = new BoardDao().detailQnA(conn, qnaNo);
+
+		close(conn);
+		return q;
+	}
 }

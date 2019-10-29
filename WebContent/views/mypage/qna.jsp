@@ -168,7 +168,6 @@
         border-radius:5px;
         display: none;
     }
-    }    
     .myQnAListArea {
         width: 80%;
         align-content: center;
@@ -183,6 +182,25 @@
     }
     #myQnAList td {
         height: 50px;
+    }
+    
+    .QnAInsertForm {
+    	background: lightgray;
+    	visibility: hidden;
+    	position: fixed;
+    	top: 20%;
+    	left: 20%;
+        width: 800px;
+        height: 400px;
+    }
+    .QnADetailForm {
+    	background: lightgray;
+    	visibility: hidden;
+    	position: fixed;
+    	top: 20%;
+    	left: 20%;
+        width: 800px;
+        height: 400px;
     }
     </style>
 </head>
@@ -234,6 +252,42 @@
 
 
     <div class="line"></div>
+    <div class="QnAInsertForm" id="QnAInsertForm">
+		<br>
+			<h2 align="center">Q&A 문의글 등록</h2>
+			<div class="tableArea">
+				<form id="qnasubmit" action="<%= contextPath %>/qnasubmit.look" method="post">
+					<table>
+						<tr>
+							<td>제목</td>
+							<td colspan="3"><input type="text" size="60" name="title" required></td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td colspan="3">
+								<textarea rows="5" cols="60" name="content" style="resize:none" required></textarea>
+							</td>
+						</tr>
+					</table>
+					<br>
+					<div align="center">
+						<button type="button" onclick="">취소하기(이거 안돼...)</button>
+						<button id="submit" type="submit">문의글 등록</button>
+					</div>
+				</form>
+				
+			</div>
+	</div>
+	<script>
+           	function showQnAInsertForm(){
+           		$("#QnAInsertForm").css("visibility", "visible");
+           		$("body").css({"background": "gray"});
+           		$(".menu").css({"pointer-events":"none"});
+           	}
+           </script>
+	<div class="QnADetailForm" id="QnADetailForm">
+		</div>
+    
     <div class="content">
         <h2>FAQ</h2>
         <hr>
@@ -269,19 +323,65 @@
             $(this).next("p").slideToggle(0, function(){
             });
         })
+    });
+	$(function(){
+        $('#myQnAList td').click(
+            function() {
+            var qnaNo = $(this).parent().children("input").val();
+            $.ajax({
+                url: "qnadetail.look",
+                data: {qnaNo : qnaNo},
+                type: "get",
+                dataType: "json",
+                success : function(result){ 
+					console.log(result);
+					console.log(result.enrollDate);
+                    console.log(result.qnaTitle);
+	           		$("body").click(function(){
+	           			$("#QnADetailForm").css({"visibility":"hidden"}); 
+		           		$("body").css({"background": "none"});
+	           		});
+					$("#QnADetailForm").css("visibility", "visible");
+	           		$("body").css({"background": "gray"});
+	           		$(".menu").css({"pointer-events":"none"});
 
-    })
+
+	           		var detail = "";
+
+	           		detail += "<div>등록일 : " + result.enrollDate + "</div>" +
+                             "<div>제목 : " + result.qnaTitle + "</div>" +
+                             "<div>문의내용 : " + result.qnaContents + "</div>" +
+                             "<div>답변여부 : " + result.answerStatus + "</div>" + 
+                             "<div>답변내용 : " + result.answerContents + "</div>";
+                    console.log(detail);
+
+	           		$(".QnADetailForm").html(detail);
+	           		
+	           		console.log($('.QnADetailForm').html());
+				},
+                error: function() {
+                    console.log("ajax 연동실패");
+                }
+            });
+        });
+    });
 </script>
         <span><h2>나의 Q&A</h2></span>
         <hr>
         <div class="myQnAListArea">
 	        <p>총 <%= listCount%> 개의 게시물이 있습니다.</p>
             <div class="btn-qna" align="right">
-				<button>Q&A 문의글 등록</button>
+				<button onclick="showQnAInsertForm();">Q&A 문의글 등록</button>
             </div>
+            
+            
+            
+            
             <table id="myQnAList">
                 <tr>
-                    <th width="200">문의내역</th>
+                    <th width="100">문의일자</th>
+                    <th width="100">문의내역</th>
+                    <th width="150">문의내용</th>
                     <th width="80">답변여부</th>
                     <th>답변내역</th>
                 </tr>
@@ -293,7 +393,9 @@
                 <% for(QnA q : list) {%>
                 <tr>
                     <input type="hidden" value="<%= q.getQnaNo() %>">
+                    <td><%= q.getEnrollDate() %></td>
                     <td><%= q.getQnaTitle() %></td>
+                    <td><%= q.getQnaContents()%></td>
                     <td><%= q.getAnswerStatus() %></td>
                     <td><%= q.getAnswerContents() %></td>
                 </tr>
