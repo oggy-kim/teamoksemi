@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	//2_1_1. session 객체에 담겨진 loginUser 정보를 변수에 담기
-	Member loginUser = (Member) session.getAttribute("loginUser");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -104,6 +103,7 @@ body {
 </style>
 </head>
 <body>
+	<!-- 에러 신경 쓰지 말것 -->
 	<%@ include file="views/common/menubar.jsp"%>
 	<%if (loginUser == null) {%>
 	<div class="back"></div>

@@ -6,6 +6,11 @@
 	
 	//request.getContextPath() 변수화
 	String contextPath = request.getContextPath();
+	
+	//2_1_1. session 객체에 담겨진 loginUser 정보를 변수에 담기
+	Member loginUser = (Member) session.getAttribute("loginUser");
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -83,11 +88,13 @@
 <header>
   <nav class="navbar navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</a>
-    <form class="form-inline" action="<%= contextPath %>/search">
+    <%if (loginUser != null) {%>
+    <form class="form-inline" action="<%= contextPath %>/search.look">
       <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
       <button type="button" class="btn btn-light" style="font-family: 'Do Hyeon', sans-serif;" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
     </form>
+    <% } %>
   </nav>
   <nav style="padding:60px 0;">
       <ul class="nav justify-content-center" id="category">

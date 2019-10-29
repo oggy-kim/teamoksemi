@@ -9,7 +9,7 @@ public class Member implements java.io.Serializable{
 	private String memberId; // 회원아이디
 	private String memberPwd; // 회원비밀번호
 	private String memberNick; // 회원닉네임
-	private char gender; // 성별
+	private String gender; // 성별
 	private String profile; // 프로필사진	
 	private String likeStyle; // 선호스타일
 	private int age; // 연령
@@ -18,7 +18,7 @@ public class Member implements java.io.Serializable{
 	
 	public Member() {}
 
-	public Member(int memberNo, String gradeCode, String memberId, String memberPwd, String memberNick, char gender,
+	public Member(int memberNo, String gradeCode, String memberId, String memberPwd, String memberNick, String gender,
 			String profile, String likeStyle, int age, Date entryDate, String memberStatus) {
 		super();
 		this.memberNo = memberNo;
@@ -74,11 +74,11 @@ public class Member implements java.io.Serializable{
 		this.memberNick = memberNick;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

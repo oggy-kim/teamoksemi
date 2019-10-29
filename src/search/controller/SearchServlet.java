@@ -1,16 +1,22 @@
 package search.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import board.model.service.BoardService;
+import board.model.vo.Board;
 
 /**
  * Servlet implementation class SearchServlet
  */
-@WebServlet("/search")
+@WebServlet("/search.look")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,6 +35,18 @@ public class SearchServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String keyword = request.getParameter("keyword");
+		
+		ArrayList<Board> blist = new BoardService().searchResult(keyword);
+		
+		if(blist != null) {
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("blist", blist);
+			request.getRequestDispatcher("views/search/searchPage.jsp").forward(request, response);
+			//response.sendRedirect("views/search/searchPage.jsp");
+		} else {
+			request.setAttribute("msg", "검색 결과가 없습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 		
 		
 		

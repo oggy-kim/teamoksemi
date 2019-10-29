@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board, java.util.ArrayList"%>
+<%
+	ArrayList<Board> blist = (ArrayList<Board>)request.getAttribute("blist");
+
+	String keyword = (String)request.getAttribute("keyword");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,12 +20,13 @@
 
         body {
           width : 100%;
-          height : 2200px;
+          height:2200px;
+
         }
 
         section {
             width: 100%;
-            height: 2000px;
+			height: 2000px;
         }
 
         hr {
@@ -66,7 +72,7 @@
 
         .search {
             width: 80%;
-            height: 500px;
+            height : 600px;
             margin: auto;
         }
 
@@ -111,11 +117,10 @@
             width: 93%;
             margin: 1% 0 0 3%;
         }
-
+		
         .subImg {
-          background: darkgray;
           width: 20%;
-          height: 330px;
+          height: 380px;
           float: left;
           
         }
@@ -131,20 +136,21 @@
         .subImg3 {
           margin: 10px 6.5%;
         }
-
-        .thumbnail button {
-           text-align: center;
-           margin: 30px 0 0 48%;
-           border-radius: 5px;
-        }
-
-        .thumbnail button a {
-            color: black;
-            text-decoration: none;
+        
+        .thumbnail {
+        	height : 400px;
         }
         
         #detail {
         	font-family: 'Fugaz One', cursive;
+        	text-align: center;
+           	margin: 30px 0 0 48%;
+           	border-radius: 5px;
+        }
+        
+        #detail a {
+        	color: black;
+            text-decoration: none;
         }
         
 
@@ -176,7 +182,7 @@
             <button><a href="#">#오버핏가디건</a></button>
         </div>
         <div class="searchTitle">
-            <h1>OOO검색결과</h1>
+           <h1><%= keyword %>검색결과</h1>
         </div>
     </div>
     <br>
@@ -186,33 +192,32 @@
             <hr>
         </div>
         <div class="thumbnail">
-            <div class="subImg subImg1">
+        	<%if(blist.size() <= 3) {%>        	
+        		<%for(int i = 0; i < blist.size(); i++) { %>
+            	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
                 </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <button><a href="#" id="detail">DETAIL</a></button>
+            	</div>
+            <% } %>
+            <% } else { %>
+            	<%for(int i = 0; i < 3; i++) { %>
+            		<div class="subImg subImg1">
+                	<div class="card" style="width: 100%; height:100%;">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
+                	</div>
+            	</div>            	
+             <% } %>
+            <% } %> 
         </div>
-    </div>
+        <button id="detail"><a href="#">DETAIL</a></button>
+    </div>    
     <br>
     <div class="search search3">
         <div class="searchName">
@@ -244,8 +249,8 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#" id="detail">DETAIL</a></button>
         </div>  
+        <button id="detail"><a href="#">DETAIL</a></button>
     </div>
     <br>
     <div class="search search4">
@@ -278,8 +283,8 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#" id="detail">DETAIL</a></button>
-        </div>  
+        </div>
+        <button id="detail"><a href="#">DETAIL</a></button>  
     </div>
 </section>
 <footer class="copyRight">

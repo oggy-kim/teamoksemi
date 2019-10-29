@@ -45,4 +45,14 @@ public class BoardService {
 
         return listCount;
 	}
+
+	public ArrayList<Board> searchResult(String keyword) {
+		Connection conn = getConnection();
+		ArrayList<Board> blist = new BoardDao().searchResult(conn, keyword);
+		
+		close(conn);
+		
+		
+		return blist;
+	}
 }
