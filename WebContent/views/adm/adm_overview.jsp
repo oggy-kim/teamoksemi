@@ -94,9 +94,7 @@
             list-style-type: disc;
             float: left;
             font-size: 20px;
-            /* ------ 규내 수정 -----*/
             padding : 5% 0 0 0;
-            /* ---------------------*/
         }
 
         .line {
@@ -116,10 +114,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             /* ------ 규내 수정 -----*/
              font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
-            /* ---------------------*/ 
         }
 
         ul.category li a:hover {
@@ -172,7 +168,7 @@
   <div class="div div1"><hr></div>
   <div class="div div2">
       <div class="innermenu">
-          ADMINmm
+          ADMIN
       </div>
   </div>
   <div class="div div3"><hr></div>

@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList"%>
+<% 
+	// QNA 목록
+	ArrayList<QnA> list = (ArrayList<QnA>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -108,6 +120,12 @@
         .list {
             padding: 10px;
         }
+        
+        .list:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
         .sublist {
             padding: 10px;
         }
@@ -178,6 +196,13 @@
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
+
+		#qna_table {
+			text-align : center;
+            width : 85%;
+            margin : 3% 0 0 5%;
+            font-size : 15px;
+		}
 
         .qna_detail_box {
             width : 80%;
@@ -318,72 +343,56 @@
                     <th>작성일</th>
                     <th>답변여부</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>로그인문제</td>
-                    <td>규내</td>
-                    <td>19-10-24</td>
-                    <td>Y</td>
+                <% if(list.isEmpty()){ %>
+               		 <tr>
+                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                	<tr>
+                	<% } else { %>s
+                	<% for(QnA q : list){ %>    
+ 					<tr>
+ 					<td><%= q.getQnaNo() %></td>
+                    <td><%= q.getQnaTitle() %></td>
+                    <td><%= q.getMemberNick() %></td>
+                    <td><%= q.getEnrollDate() %></td>
+                    <td><%= q.getAnswerStatus() %></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <% } %>
+                <% } %>  
             </table>
             <br>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
+            <!-- 페이지네이션 -->
+             <div class="pagingArea" align="center">
+               <!-- 맨 처음으로 (<<) -->
+               <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=1'"> &lt;&lt; </button>
 
-            <!-- <div class="search_box">
-                <form class="search_form">
-                    <input type="text" placeholder="검색어 입력">
-                    <button type="submit"></button>
-                </form>
-            </div> -->
+               <!-- 이전 페이지로 (<) -->
+               <% if(currentPage == 1){ %>
+               <button disabled> &lt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+               <% } %>
 
+               <!-- 10개의 페이지 목록 -->
+               <% for(int p = startPage; p <= endPage; p++){ %>
+               <% if(p == currentPage){ %>
+               <button disabled> <%= p %> </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= p %>'"><%= p %></button>
+               <% } %>
+               <% } %>
+
+               <!-- 다음 페이지로 (>) -->
+               <% if(currentPage == maxPage){ %>
+               <button disabled> &gt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+               <% } %>
+
+               <!-- 맨 끝으로 (>>) -->
+               <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+          	 </div> 
+
+          
             <div class="searchArea">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>
@@ -397,8 +406,25 @@
 
         </div>
         <br> 
+        <script>
+        // QNA 상세보기
+            	$(function(){
+            		$("#qna_table td").mouseenter(function(){
+            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+            		}).mouseout(function(){
+            			$(this).parent().css({"background":"white"});
+            		}).click(function(){ // QNA click시, 해당 QNA 상세정보가 하위에 표시
+            			var con = document.getElementById("qna_detail");
+            			if(con.style.display != 'none'){
+            				con.style.display = 'none';
+            			} else {
+            				con.style.display = 'block';
+            			}
+            		}); 
+            	});
+        </script>
 
-        <div class="qna_detail_box">
+        <div class="qna_detail_box" id="qna_detail">
             <h4 class="qna_detail_title">QnA 상세보기</h4>
             
             

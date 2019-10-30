@@ -108,6 +108,12 @@
         .list {
             padding: 10px;
         }
+        
+        .list:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
         .sublist {
             padding: 10px;
         }

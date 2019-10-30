@@ -141,6 +141,12 @@
         .list {
             padding: 10px;
         }
+        
+        .list:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
         .sublist {
             padding: 10px;
         }
@@ -148,10 +154,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             /* ------ 규내 수정 -----*/
              font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
-            /* ---------------------*/ 
         }
 
         ul.category li a:hover {
@@ -192,17 +196,12 @@
 
          /* -------------------- member -------------------- */
 
-
-         /* -------------sorting_box------------- */
-
         .sorting_box {
             margin-right:10%;
             margin-bottom:1%;
             float : right;
         }
   
-        /* ---------------------------------- */
-
         .member_box {
             width : 80%;
             height : 25%;
@@ -221,13 +220,6 @@
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
-
-        /* .table {
-            text-align : center;
-            width : 85%;
-            margin : 3% 0 0 5%;
-            font-size : 15px;
-        } */
         
         #member_table, #member_board_table{
        		text-align : center;
@@ -322,7 +314,6 @@
         #searchBtn:hover {
             cursor:pointer;
         }
-        /* --------------- */
 
     </style>
 </head>
@@ -512,6 +503,8 @@
                             <td>성별</td>
                             <td><span><%= gender %></span></td>
                         </tr>
+                        
+                        
                     </table>
                 </div>
                 <!-- 회원정보란 2-->
@@ -522,7 +515,6 @@
                             <td><span><%= likeStyle  %></span></td>
                         </tr>
                         <tr>
-                            <!-- DB에서 AGE -> BIRTH로 변경해야 함! -->
                             <td>출생년도</td>
                             <td><span><%= birthYear %></span></td>
                         </tr>
