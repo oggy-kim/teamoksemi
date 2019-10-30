@@ -416,7 +416,7 @@
                 <% } %>   
             </table> 
             <!-- 페이지네이션 -->
-        <%--     <div class="pagingArea" align="center">
+        	 <div class="pagingArea" align="center">
                <!-- 맨 처음으로 (<<) -->
                <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=1'"> &lt;&lt; </button>
 
@@ -445,7 +445,7 @@
 
                <!-- 맨 끝으로 (>>) -->
                <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
-           </div> --%>
+           </div> 
             <script>
             	// 회원정보 상세보기
             	$(function(){
@@ -455,13 +455,10 @@
             			$(this).parent().css({"background":"white"});
             		}).click(function(){ // 회원정보 click시, 해당 회원의 상세정보가 하위에 표시
             			var con = document.getElementById("member_detail");
-            		
             			if(con.style.display != 'none'){
             				con.style.display = 'none';
             			} else {
             				con.style.display = 'block';
-            				
-            				
             			}
             		}); 
             	});
