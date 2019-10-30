@@ -47,7 +47,7 @@ public class MemberDao {
 									   rset.getString("GENDER"),
 									   rset.getString("PROFILE"),
 									   rset.getString("LIKE_STYLE"),
-									   rset.getInt("AGE"),
+									   rset.getInt("BIRTH_YEAR"),
 									   rset.getDate("ENTRY_DATE"),
 									   rset.getString("MEMBER_STATUS"));
 				
@@ -104,6 +104,26 @@ public class MemberDao {
 		}
 		
 		return result;
+	}
+
+	public int withdrawMember(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+	    int result = 0;
+
+	    String sql = prop.getProperty("withdrawMember");
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, memberNo);
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+        return result;
 	}
 
 }
