@@ -255,5 +255,26 @@
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>
 </footer>
+<script>
+function goMain() {
+	location.href="<%= contextPath %>";
+}
+
+function goStyle() {
+	location.href="<%= contextPath %>/views/style/stylePage.jsp";
+}
+
+function goFavorite() {
+	location.href="<%= contextPath %>/views/style/choicePage.jsp";
+}
+
+function goEvent() {
+	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+}
+
+function goMypage() {
+	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+}
+</script>
 </body>
 </html>

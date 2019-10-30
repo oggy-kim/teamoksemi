@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int ran = (int)(1+10*Math.random());
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -149,7 +152,7 @@
 <section>
   <div class="mainArea">
     <div class="mainImgArea">
-        <img class="mainImg mainImg1" src="<%= contextPath %>/resources/images/main.png">
+        <img class="mainImg mainImg1" src="<%= contextPath %>/resources/images/main/<%= ran %>.jpg">
     </div>  
     <div class="weatherArea">
         <div class="up">
