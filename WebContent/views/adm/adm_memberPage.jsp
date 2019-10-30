@@ -454,9 +454,6 @@
             				con.style.display = 'block';
             				
             				
-            				
-            				
-            				
             			}
             		}); 
             	});
