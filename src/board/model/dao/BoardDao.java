@@ -78,8 +78,6 @@ public class BoardDao {
                                    rset.getInt(6), rset.getString(7), rset.getDate(9),
                                    rset.getString(8)));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

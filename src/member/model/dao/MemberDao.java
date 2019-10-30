@@ -50,8 +50,6 @@ public class MemberDao {
 									   rset.getInt("BIRTH_YEAR"),
 									   rset.getDate("ENTRY_DATE"),
 									   rset.getString("MEMBER_STATUS"));
-				
-				
 			}
 			
 		} catch (SQLException e) {
