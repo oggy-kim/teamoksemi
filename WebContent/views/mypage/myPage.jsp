@@ -174,6 +174,19 @@
         </ul>
     </div>
     <script>
+
+    	function goStyle() {
+    		location.href="<%= contextPath %>/views/style/stylePage.jsp";
+    	}
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/views/style/choicePage.jsp";
+    	}
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
+    	function goMypage() {
+    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+   	 	}
         function goMyCloset(){
             location.href="<%= contextPath %>/closet.look";
         }

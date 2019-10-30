@@ -224,13 +224,16 @@
 
     </p>
         <div class="myListArea">
-            <div class="sortArea" align="right">
+            <span class="dtn-delete">
+                <form action="<%= contextPath%>/deleteMyListServlet" method="POST">
+                    <button id="submit">삭제</button>
+                </form>
                 <select id="sortCondition" name="sortCondition">
                     <option value="date" selected>작성일 순</option>
                     <option value="like">좋아요 순</option>
                     <option value="reply">최근 댓글 순</option>
                 </select>
-            </div>
+            </span>
             <table id="myListArea">
                 <tr>
                     <th width="40">선택</th>

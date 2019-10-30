@@ -13,6 +13,12 @@ public class QnA {
 	
 	public QnA() {}
 	
+	public QnA(int memberNo, String qnaTitle, String qnaContents) {
+		this.memberNo = memberNo;
+		this.qnaTitle = qnaTitle;
+		this.qnaContents = qnaContents;
+	}
+	
 	public QnA(int qnaNo, int memberNo, Date enrollDate, String qnaTitle, String qnaContents, char answerStatus,
 			String answerContents) {
 		super();
@@ -28,6 +34,8 @@ public class QnA {
 	public int getQnaNo() {
 		return qnaNo;
 	}
+
+
 
 	public void setQnaNo(int qnaNo) {
 		this.qnaNo = qnaNo;
