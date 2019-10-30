@@ -46,5 +46,7 @@ $RECYCLE.BIN/
 classes/
 .idea/
 
+*.class
+
 
 # End of https://www.gitignore.io/api/java,windows,eclipse
