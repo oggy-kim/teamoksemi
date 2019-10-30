@@ -314,4 +314,31 @@ public class BoardDao {
 		}
 		return list;
 	}
+
+
+	public int deleteMyList(Connection conn, String[] deleteList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("deleteMyList");
+		
+		int[] deleteListInt = new int[deleteList.length];
+		for(int i = 0; i < deleteList.length; i++) {
+			deleteListInt[i] = Integer.parseInt(deleteList[i]);
+		}		
+		try {
+			for(int i = 0; i < deleteListInt.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, deleteListInt[i]);		
+				System.out.println(pstmt);
+				result += pstmt.executeUpdate();
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

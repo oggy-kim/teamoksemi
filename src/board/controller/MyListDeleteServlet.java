@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import board.model.service.BoardService;
+
 /**
  * Servlet implementation class MyListDeleteServlet
  */
@@ -26,6 +28,16 @@ public class MyListDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String[] deleteList = request.getParameterValues("delete");
+		int result = new BoardService().deleteMyList(deleteList);
+		
+		if(result > 0) {
+			request.setAttribute("msg", "게시물 삭제가 완료되었습니다!");
+			response.sendRedirect("./mylist.look");
+		} else {
+			request.setAttribute("msg", "게시물 삭제에 실패하셨습니다.");
+			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

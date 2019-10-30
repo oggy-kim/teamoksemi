@@ -225,9 +225,9 @@
     </p>
         <div class="myListArea">
             <span class="dtn-delete">
-                <form action="<%= contextPath%>/deleteMyListServlet" method="POST">
+                <form action="<%= contextPath%>/deletemylist.look" method="POST">
                     <button id="submit">삭제</button>
-                </form>
+
                 <select id="sortCondition" name="sortCondition">
                     <option value="date" selected>작성일 순</option>
                     <option value="like">좋아요 순</option>
@@ -252,7 +252,7 @@
                 <% for(Board b : list) {%>
                 <tr>
                     <input type="hidden" value="<%= b.getArticleNo() %>">
-                    <td><input type="checkbox" value="selected" unchecked></td>
+                    <td><input type="checkbox" name="delete" value="<%= b.getArticleNo() %>"></td>
                     <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="80px" height="80px"></td>
                     <td><%= b.getArticleDate() %></td>
                     <td><%= b.getArticleViews() %></td>
@@ -262,7 +262,7 @@
                 </tr>
                 <% } %>
                 <% } %>
-
+                </form>
             </table>
             <div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
