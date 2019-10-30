@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board, java.util.ArrayList"%>
+<%
+	ArrayList<Board> blist = (ArrayList<Board>)request.getAttribute("blist");
+
+	String keyword = (String)request.getAttribute("keyword");
+	
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,38 +23,13 @@
 
         body {
           width : 100%;
-          height : 2200px;
-        }
+          height:2200px;
 
-         #navbar {
-            width:100%;
-            height:60px;
-            position:fixed;
-            z-index: 1;
-            color:white;
-            font-family: 'Fugaz One', cursive;
-        }
-
-        #category {
-          width: 100%;
-          height:60px;
-          position: fixed;
-          z-index: 1;
-          background: white;
-          opacity:0.8;
-          font-family: 'Paytone One', sans-serif;
-          font-size: 25px; 
-          font-style: italic;
-        }
-
-        .nav-link:hover {
-          text-decoration:underline;
-          font-weight:bold;
         }
 
         section {
             width: 100%;
-            height: 2000px;
+			height: 2000px;
         }
 
         hr {
@@ -92,7 +75,7 @@
 
         .search {
             width: 80%;
-            height: 500px;
+            height: 600px;
             margin: auto;
         }
 
@@ -110,6 +93,7 @@
             border-radius: 5px;
             float: left;
             margin: 2% 0 0 8.1%;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         .hastag button a {
@@ -119,6 +103,7 @@
         .searchTitle{
             height: 100px;
             text-align: left;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         .searchTitle h1 {
@@ -137,11 +122,10 @@
             width: 93%;
             margin: 1% 0 0 3%;
         }
-
+		
         .subImg {
-          background: darkgray;
           width: 20%;
-          height: 330px;
+          height: 380px;
           float: left;
           
         }
@@ -157,19 +141,22 @@
         .subImg3 {
           margin: 10px 6.5%;
         }
-
-        .thumbnail button {
-           text-align: center;
-           margin: 30px 0 0 48%;
-           border-radius: 5px;
+        
+        .thumbnail {
+        	height : 400px;
         }
-
-        .thumbnail button a {
-            color: black;
+        
+        #detail {
+        	font-family: 'Fugaz One', cursive;
+        	text-align: center;
+           	margin: 30px 0 0 48%;
+           	border-radius: 5px;
+        }
+        
+        #detail a {
+        	color: black;
             text-decoration: none;
         }
-
-
     </style>
 </head>
 <body>
@@ -197,7 +184,7 @@
             <button><a href="#">#오버핏가디건</a></button>
         </div>
         <div class="searchTitle">
-            <h1>OOO검색결과</h1>
+           <h1><%= keyword %> 검색결과</h1>
         </div>
     </div>
     <br>
@@ -206,68 +193,35 @@
             <h3>STYLE</h3>
             <hr>
         </div>
-        <div class="thumbnail">
-            <div class="subImg subImg1">
+        	<% if(blist.size() == 0) { %>
+ 		        <div class="thumbnail">
+        		<h1 style="text-align : center;"><%= keyword %> 검색 결과가 없습니다.</h1>
+        	<% } else if(blist.size() <= 3) {%>        	
+        		<%for(int i = 0; i < blist.size(); i++) { %>
+            	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
                 </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <button><a href="#">>>></a></button>
+            	</div>
+            <% } %>
+            <% } else { %>
+            	<%for(int i = 0; i < 3; i++) { %>
+            		<div class="subImg subImg1">
+                	<div class="card" style="width: 100%; height:100%;">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
+                	</div>
+            	</div>            	
+             <% } %>
+             <button id="detail"><a href="#">DETAIL</a></button>
+            <% } %> 
         </div>
-    </div>
-    <br>
-    <div class="search search3">
-        <div class="searchName">
-            <h3>OOTD</h3>
-            <hr>
-        </div>
-        <div class="thumbnail">
-            <div class="subImg subImg1">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <button><a href="#">>>></a></button>
-        </div>  
-    </div>
+    </div>    
     <br>
     <div class="search search4">
         <div class="searchName">
@@ -299,12 +253,39 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#">>>></a></button>
-        </div>  
+        </div>
+        <button id="detail"><a href="#">DETAIL</a></button>  
     </div>
 </section>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>
 </footer>
+<script>
+function goMain() {
+	location.href="<%= contextPath %>";
+}
+
+function goStyle() {
+	location.href="<%= contextPath %>/list.bo";
+}
+
+function goFavorite() {
+	location.href="<%= contextPath %>/list.fa";
+}
+
+function goEvent() {
+	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+}
+
+function goMypage() {
+	
+	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+	if("<%= gradeCode %>" == 'S'){
+		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+	} else {
+		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	}
+}
+</script>
 </body>
 </html>
