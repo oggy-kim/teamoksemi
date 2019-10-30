@@ -118,7 +118,7 @@ body {
 					회원이아니세요? <span onclick="memberJoin();">회원가입</span>
 				</p>
 				<p>
-					ID/비밀번호를 잃어버렸나요?<span>ID/비밀번호찾기</span>
+					ID/비밀번호를 잃어버렸나요?<span onclick="findPassword();">ID/비밀번호찾기</span>
 				</p>
 			</form>
 		</div>
@@ -129,7 +129,10 @@ body {
 </body>
 <script>
 	function memberJoin() {
-		location.href="<%= contextPath %>/memberJoin.me";
+		location.href="<%= contextPath %>/views/member/memberJoinForm.jsp";
+	}
+	function findPassword() {
+		location.href="<%= contextPath %>/views/member/findPwd.jsp";
 	}
 </script>
 </html>

@@ -36,7 +36,6 @@ public class MemberDao {
 			
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
-			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -62,6 +61,49 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return loginUser;
+	}
+	
+	public int insertMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertMember");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, m.getMemberId());
+			pstmt.setString(2, m.getMemberPwd());
+			pstmt.setString(3, m.getMemberNick());
+			pstmt.setString(4, m.getGender());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, m.getAge());
+			pstmt.setString(2, m.getLikeStyle());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public int withdrawMember(Connection conn, int memberNo) {
