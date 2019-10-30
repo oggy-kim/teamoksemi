@@ -45,8 +45,8 @@ public class BoardService {
 
         return listCount;
 	}
-
-	// 스타일 게시판 목록 불러오기
+  
+  	// 스타일 게시판 목록 불러오기
 	public int getListCount() {
 		Connection conn = getConnection();
         int listCount = new BoardDao().getListCount(conn);
@@ -84,5 +84,28 @@ public class BoardService {
 		ArrayList<WishList> list = new BoardDao().selectWishList(conn, currentPage, boardLimit, mNo);
 		
 		return list;
+	// QnA 게시판 문의글 등록 service
+	public int insertQnA(QnA q) {
+		Connection conn = getConnection();
+		int result = new BoardDao().insertQnA(conn, q);
+		
+		if(result > 0) {
+			commit(conn);
+		}
+		else {
+			rollback(conn);
+		}
+
+		close(conn);
+		
+		return result;
+	}
+	// QnA 게시판 세부내용 조회
+	public QnA detailQnA(int qnaNo) {
+		Connection conn = getConnection();
+		QnA q = new BoardDao().detailQnA(conn, qnaNo);
+
+		close(conn);
+		return q;
 	}
 }

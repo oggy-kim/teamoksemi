@@ -17,14 +17,14 @@ import member.model.vo.*;
 /**
  * Servlet implementation class SelectQnAServlet
  */
-@WebServlet(name="SelectQnAServlet", urlPatterns="/qna.look")
-public class SelectQnAServlet extends HttpServlet {
+@WebServlet(name="QnASelectServlet", urlPatterns="/qna.look")
+public class QnASelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectQnAServlet() {
+    public QnASelectServlet() {
         super();
     }
 

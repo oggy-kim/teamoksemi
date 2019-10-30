@@ -151,7 +151,53 @@ public class BoardDao {
         }
         return listCount;
 	}
+	public int insertQnA(Connection conn, QnA q) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		String sql = prop.getProperty("insertQnA");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, q.getMemberNo());
+			pstmt.setString(2, q.getQnaTitle());
+			pstmt.setString(3, q.getQnaContents());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+    // QnA 세부내역 불러오기
+    public QnA detailQnA(Connection conn, int qnaNo) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        QnA q = null;
 
+        String sql = prop.getProperty("detailQnA");
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, qnaNo);
+
+            rset = pstmt.executeQuery();
+
+            if(rset.next()) {
+                q = new QnA(rset.getInt(1), rset.getInt(2), rset.getDate(3),
+                            rset.getString(4), rset.getString(5), rset.getString(6).charAt(0), rset.getString(7));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rset);
+            close(pstmt);
+        }
+
+        return q;
+    }
 	// 스타일 게시판 dao
 	public int getListCount(Connection conn) {
 		int listCount = 0;
