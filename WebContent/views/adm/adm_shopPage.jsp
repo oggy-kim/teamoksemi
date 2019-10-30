@@ -278,31 +278,7 @@
     </style>
 </head>
 <body>
-<header>
-  <nav class="navbar navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="main.html" style="font-size : 28px;">LOOK SO FINE</a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="SEARCH" aria-label="SEARCH">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-    </form>
-  </nav>
-  <nav style="padding:60px 0;">
-      <ul class="nav justify-content-center" id="category">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;" >STYLE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"style="color: #000;">FAVORITE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="event.html"style="color: #000;">EVENT</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;">MY PAGE</a>
-        </li>
-      </ul>
-    </nav>
-</header>
+<%@ include file="../common/menubar.jsp" %>
 <nav>
   <br>
   <div class="menuLine">
@@ -319,14 +295,30 @@
 <section>
     <div class="menu">
         <ul class="category">
-            <li class="list"><a href="#">OVERVIEW</a></li>
-            <li class="list"><a href="#">회원관리</a></li>
-            <li class="list"><a href="#">게시물관리</a></li>
-            <li class="list"><a href="#">제휴쇼핑몰관리</a></li>
-            <li class="list"><a href="#">문의사항관리</a></li>
-            <li class="list"><a href="#">구글애널리틱스(예정)</a></li>            
+            <li class="list" onclick="goMember();">회원관리</li>
+            <li class="list" onclick="goBoard();">게시물관리</li>
+            <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
+            <li class="list" onclick="goQnA();">문의사항관리</li>
+            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
         </ul>
     </div>
+    <script>
+    	function goMember(){
+    		location.href="<%= contextPath%>/member.adm";
+    	}
+    	function goBoard(){
+    		location.href="<%= contextPath%>/board.adm";
+    	}
+    	function goShop(){
+    		location.href="<%= contextPath%>/shop.adm";
+    	}
+    	function goQnA(){
+    		location.href="<%= contextPath%>/qna.adm";
+    	}
+    	function goGA(){
+    		location.href="<%= contextPath%>/ga.adm";
+    	}
+    </script>
     <div class="line"></div>
     <div class="content">
         <div id="content_title_wrapper">

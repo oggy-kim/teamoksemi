@@ -226,6 +226,7 @@
 </style>
 </head>
 <body>
+<%@ include file="../common/menubar.jsp" %>
 <header>
   <nav class="navbar navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="main.html" style="font-size : 28px;">LOOK SO FINE</a>
@@ -267,14 +268,30 @@
 <section>
     <div class="menu">
         <ul class="category">
-            <li class="list"><a href="#">OVERVIEW</a></li>
-            <li class="list"><a href="#">회원관리</a></li>
-            <li class="list"><a href="#">게시물관리</a></li>
-            <li class="list"><a href="#">제휴쇼핑몰관리</a></li>
-            <li class="list"><a href="#">문의사항관리</a></li>
-            <li class="list"><a href="#">구글애널리틱스(예정)</a></li>            
+            <li class="list" onclick="goMember();">회원관리</li>
+            <li class="list" onclick="goBoard();">게시물관리</li>
+            <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
+            <li class="list" onclick="goQnA();">문의사항관리</li>
+            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
         </ul>
     </div>
+    <script>
+    	function goMember(){
+    		location.href="<%= contextPath%>/member.adm";
+    	}
+    	function goBoard(){
+    		location.href="<%= contextPath%>/board.adm";
+    	}
+    	function goShop(){
+    		location.href="<%= contextPath%>/shop.adm";
+    	}
+    	function goQnA(){
+    		location.href="<%= contextPath%>/qna.adm";
+    	}
+    	function goGA(){
+    		location.href="<%= contextPath%>/ga.adm";
+    	}
+    </script>
     <div class="line"></div>
     <div class="content">
         <div id="content_title_wrapper">

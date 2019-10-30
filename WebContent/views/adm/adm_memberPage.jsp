@@ -1,5 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, java.sql.Date, board.model.vo.*, member.model.vo.*"%>
+<%
+	// 회원정보 목록 
+	ArrayList<Member> mlist = (ArrayList<Member>)request.getAttribute("mlist");
+	
+	// 회원 상세정보 
+	Member m = (Member)session.getAttribute("loginUser");
+
+	String profile = m.getProfile(); // 프로필사진
+	int memberNo = m.getMemberNo(); // 회원번호
+	String gradeCode = m.getGradeCode(); // 회원등급코드
+	String memberId = m.getMemberId(); // 회원아이디
+	String memberNick = m.getMemberNick(); // 회원닉네임
+    String gender = m.getGender(); // 회원성별
+    
+    String likeStyle = m.getLikeStyle(); // 선호스타일
+    int birthYear = m.getBirthYear(); // 연령
+    Date entryDate = m.getEntryDate(); // 가입날짜
+    String memberStatus = m.getMemberStatus(); // 탈퇴여부
+    // 최근접속일 아직 처리 안함 (중간점검 이후 -> 장기미접속 회원은 강등회원으로 처리)
+    
+    // 회원 상세정보 박스 내, 회원 작성글 조회
+    ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+   
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -174,21 +198,31 @@
         .member_box {
             width : 80%;
             height : 25%;
-            /* border : 1px solid black; */
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
+
+
+		#member_detail {
+			display : none;
+		}
 
         .member_detail_box {
             width : 80%;
             height : 40%;
-            /* border : 1px solid black; */
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-        .table {
+        /* .table {
             text-align : center;
+            width : 85%;
+            margin : 3% 0 0 5%;
+            font-size : 15px;
+        } */
+        
+        #member_table, #member_board_table{
+       		text-align : center;
             width : 85%;
             margin : 3% 0 0 5%;
             font-size : 15px;
@@ -284,32 +318,8 @@
 
     </style>
 </head>
-<body>
-<header>
-  <nav class="navbar navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="main.html" style="font-size : 28px;">LOOK SO FINE</a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="SEARCH" aria-label="SEARCH">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-    </form>
-  </nav>
-  <nav style="padding:60px 0;">
-      <ul class="nav justify-content-center" id="category">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;" >STYLE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"style="color: #000;">FAVORITE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="event.html"style="color: #000;">EVENT</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;">MY PAGE</a>
-        </li>
-      </ul>
-    </nav>
-</header>
+<body>	
+	<%@ include file="../common/menubar.jsp" %>
 <nav>
   <br>
   <div class="menuLine">
@@ -326,18 +336,34 @@
 <section>
     <div class="menu">
         <ul class="category">
-            <li class="list"><a href="#">OVERVIEW</a></li>
-            <li class="list"><a href="#">회원관리</a></li>
-            <li class="list"><a href="#">게시물관리</a></li>
-            <li class="list"><a href="#">제휴쇼핑몰관리</a></li>
-            <li class="list"><a href="#">문의사항관리</a></li>
-            <li class="list"><a href="#">구글애널리틱스(예정)</a></li>            
+            <li class="list" onclick="goMember();">회원관리</li>
+            <li class="list" onclick="goBoard();">게시물관리</li>
+            <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
+            <li class="list" onclick="goQnA();">문의사항관리</li>
+            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
         </ul>
     </div>
+    <script>
+    	function goMember(){
+    		location.href="<%= contextPath%>/member.adm";
+    	}
+    	function goBoard(){
+    		location.href="<%= contextPath%>/board.adm";
+    	}
+    	function goShop(){
+    		location.href="<%= contextPath%>/shop.adm";
+    	}
+    	function goQnA(){
+    		location.href="<%= contextPath%>/qna.adm";
+    	}
+    	function goGA(){
+    		location.href="<%= contextPath%>/ga.adm";
+    	}
+    </script>
     <div class="line"></div>
     <div class="content">
         <div>
-            <h2 id="content_title"> &nbsp;&nbsp;회원관리</h2>
+            <h2 id="content_title">&nbsp;&nbsp;회원관리</h2>
         </div>
         <hr>
 
@@ -357,7 +383,6 @@
             <!-- 회원정보리스트 테이블 -->
             <table class="table" id="member_table">
                 <tr>
-                    <th></th>
                     <th>회원번호</th>
                     <th>아이디</th>
                     <th>닉네임</th>
@@ -365,70 +390,78 @@
                     <th>가입일자</th>
                     <th>최근접속일</th>
                 </tr>
-                <tr>    
-                    <td>1</td>
-                    <td>1</td>
-                    <td>test1@gmail.com</td>
-                    <td>테스트1어드민</td>
-                    <td>S</td>
-                    <td>19/10/24</td>
+                <% if(mlist.isEmpty()){ %>
+                <tr>
+                	<td colspan="6">등록된 회원내역이 없습니다.</td>
+                <tr>
+                <% } else { %>
+                <% for(Member ml : mlist){ %>    
+ 				<tr>
+                    <td><%= ml.getMemberNo() %></td>
+                    <td><%= ml.getMemberId() %></td>
+                    <td><%= ml.getMemberNick() %></td>
+                    <td><%= ml.getGradeCode() %></td>
+                    <td><%= ml.getEntryDate() %></td>
                     <td>최근접속일</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>test2@gmail.com</td>
-                    <td>테스트2쇼핑몰</td>
-                    <td>A</td>
-                    <td>19/10/24</td>
-                    <td>최근접속일</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>test3@gmail.com</td>
-                    <td>테스트3일반회원</td>
-                    <td>B</td>
-                    <td>19/10/24</td>
-                    <td>최근접속일</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>test4@gmail.com</td>
-                    <td>테스트4강등회원</td>
-                    <td>C</td>
-                    <td>19/10/24</td>
-                    <td>최근접속일</td>
-                </tr>    
-                <tr>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>test5@gmail.com</td>
-                    <td>테스트5탈퇴회원</td>
-                    <td>D</td>
-                    <td>19/10/24</td>
-                    <td>최근접속일</td>
-                </tr>
-            </table>
+                <% } %>
+                <% } %>   
+            </table> 
+            <!-- 페이지네이션 -->
+        <%--     <div class="pagingArea" align="center">
+               <!-- 맨 처음으로 (<<) -->
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=1'"> &lt;&lt; </button>
+
+               <!-- 이전 페이지로 (<) -->
+               <% if(currentPage == 1){ %>
+               <button disabled> &lt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+               <% } %>
+
+               <!-- 10개의 페이지 목록 -->
+               <% for(int p = startPage; p <= endPage; p++){ %>
+               <% if(p == currentPage){ %>
+               <button disabled> <%= p %> </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= p %>'"><%= p %></button>
+               <% } %>
+               <% } %>
+
+               <!-- 다음 페이지로 (>) -->
+               <% if(currentPage == maxPage){ %>
+               <button disabled> &gt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+               <% } %>
+
+               <!-- 맨 끝으로 (>>) -->
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+           </div> --%>
+            <script>
+            	// 회원정보 상세보기
+            	$(function(){
+            		$("#member_table td").mouseenter(function(){
+            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+            		}).mouseout(function(){
+            			$(this).parent().css({"background":"white"});
+            		}).click(function(){ // 회원정보 click시, 해당 회원의 상세정보가 하위에 표시
+            			var con = document.getElementById("member_detail");
+            		
+            			if(con.style.display != 'none'){
+            				con.style.display = 'none';
+            			} else {
+            				con.style.display = 'block';
+            				
+            				
+            				
+            				
+            				
+            			}
+            		}); 
+            	});
+            </script>
             <br>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
 
             <div class="searchArea">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
@@ -445,37 +478,37 @@
         <br>
         <br>
 
-        <div class="member_detail_box">
+        <div class="member_detail_box" id="member_detail">
             <h4 class="member_detail_title">회원 상세 정보</h4>
             <section id="member_detail_wrapper">
                 <!-- 프로필 사진 -->
                 <div class="member_profile_box">
                     <div id="member_photo_wrapper">
-                        <img id="member_photo" src="C:\Users\규내\Desktop\학원수업\3_WEBFRONT\semi_project\image\profile_example.jpg">
+                        <img id="member_photo" src="<%= profile %>">
                     </div>
                 </div>
                 <!-- 회원정보란 1 -->
                 <div class="member_detail_1">
-                    <table class="table-condesed" id="member_detail_table_1">
+                    <table class="table-condensed" id="member_detail_table_1">
                         <tr>
                             <td>회원번호</td>
-                            <td><span>1</span></td>
+                            <td><span><%= memberNo %></span></td>
                         </tr>
                         <tr>
                             <td>등급</td>
-                            <td><span>S</span></td>
+                            <td><span><%= gradeCode %></span></td>
                         </tr>
                         <tr>
                             <td>아이디</td>
-                            <td><span>test1@gmail.com</span></td>
+                            <td><span><%= memberId %></span></td>
                         </tr>
                         <tr>
                             <td>닉네임</td>
-                            <td><span>테스트1어드민</span></td>
+                            <td><span><%= memberNick %></span></td>
                         </tr>
                         <tr>
                             <td>성별</td>
-                            <td><span>M</span></td>
+                            <td><span><%= gender %></span></td>
                         </tr>
                     </table>
                 </div>
@@ -484,25 +517,25 @@
                     <table class="table-condensed" id="member_detail_table_2">
                         <tr>
                             <td>선호스타일</td>
-                            <td><span>따뜻한, 시크한</span></td>
+                            <td><span><%= likeStyle  %></span></td>
                         </tr>
                         <tr>
                             <!-- DB에서 AGE -> BIRTH로 변경해야 함! -->
                             <td>출생년도</td>
-                            <td><span>1990</span></td>
+                            <td><span><%= birthYear %></span></td>
                         </tr>
                         <tr>
                             <td>가입일자</td>
-                            <td><span>19/10/24</span></td>
+                            <td><span><%= entryDate %></span></td>
                         </tr>
                         <tr>
                             <!-- 아직 DB에 추가하지 않은 내용! -->
                             <td>최근접속일</td> 
-                            <td><span></span></td>
+                            <td><span>아직 추가 안함</span></td>
                         </tr>
                         <tr>
                             <td>현황</td>
-                            <td><span>Y</span></td>
+                            <td><span><%= memberStatus %></span></td>
                         </tr>
                     </table>
                 </div>
@@ -512,72 +545,34 @@
                 <table class="table" id="member_board_table">
                     <caption id="caption">작성한 게시물</caption>
                     <tr>
-                        <th>No.</th>
-                        <th>내용</th>
-                        <th>작성일</th>
-                        <th>찜갯수</th>
+                    	<th>번호</th>
+                        <th>게시사진</th>
+                        <th>게시일자</th>
                         <th>조회수</th>
+                        <th>찜수</th>
+                        <th>댓글수</th>
+                        <th>최근댓글</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <% if(mlist.isEmpty()){ %>
+               		 <tr>
+                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                	<tr>
+                	<% } else { %>
+                	<% for(Board b : list){ %>    
+ 					<tr>
+ 					<td><%= b.getArticleNo() %></td>
+                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" idth="80px" height="80px"></td>
+                    <td><%= b.getArticleDate() %></td>
+                    <td><%= b.getArticleViews() %></td>
+                    <td><%= b.getArticleLikes() %></td>
+                    <td><%= b.getArticleLikes() %></td> <!-- 댓글수 --> 
+                    <td><%= b.getArticleLikes() %></td> <!-- 최근댓글(아직 미구현) -->             
+                </tr>
+                <% } %>
+                <% } %>  
                 </table>
                 <!-- 페이지네이션 -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- 회원삭제, 등급관리 버튼 -->
-                <button type="button" id="delete_btn" style="margin-right:5%;">회원삭제</button>    
-                <button type="button" id="grade_upt_btn" style="margin-right:2%;">등급관리</button>
-                
-            </div>
-        </div>
+              
       
     </div>
 </section>

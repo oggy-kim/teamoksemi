@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -127,6 +132,9 @@
         }
     </style>
     <script>
+    
+    
+    
       $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=975353dea991d476ec748ec5b88c3a52&units=metric', function(data){
         var $ctemp = data.main.temp;
         var $chum = data.main.humidity;
@@ -141,7 +149,6 @@
       });
       
     </script>
-    
 </head>
 <body>
  	<%@ include file="menubar.jsp" %>
@@ -232,7 +239,13 @@ function goEvent() {
 }
 
 function goMypage() {
-	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	
+	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+	if("<%= gradeCode %>" == 'S'){
+		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+	} else {
+		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	}
 }
 </script>
 </body>

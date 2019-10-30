@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,8 +141,6 @@
             font-weight: 700;
         }
 </style>
-
-
 </head>
 <body>
  	<%@ include file="../common/menubar.jsp" %>
@@ -190,7 +187,6 @@
             location.href="<%= contextPath %>/withstyle.look";
         }
     </script>
-
 
     <div class="line"></div>
     <div class="content">

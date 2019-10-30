@@ -122,7 +122,6 @@
 	}
 	
 	return true;
-	// 여기까지 작성 했으면 LoginServlet 만들러 가기 ~!!
 }
 	function goMain() {
 		location.href="<%= contextPath %>";
