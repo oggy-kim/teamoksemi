@@ -87,7 +87,7 @@ public class MemberAddInfomation extends HttpServlet {
 			style = String.join(",", style);
 		}
 		
-		Member m  = new Member(userId , year , style1 , style2);
+		Member m  = new Member(userId , year , style1 + ",", style2);
 		
 		int result = new MemberService().updateMember(m);
 		
