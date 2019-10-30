@@ -50,7 +50,7 @@ public class AdmDao {
 		return listCount;
 	}
 
-	public ArrayList<Member> selectMList(Connection conn) {
+	public ArrayList<Member> selectMList(Connection conn, int currentPage, int boardLimit) {
 		ArrayList<Member> mlist = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -59,20 +59,20 @@ public class AdmDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			int startRow = (currentPage - 1) * boardLimit + 1;
-//			int endRow = startRow + boardLimit - 1;
-//			
-//			pstmt.setInt(1, startRow);
-//			pstmt.setInt(2, endRow);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				mlist.add(new Member(rset.getInt("MEMBER_NO"), 
-									rset.getString("MEMBER_ID"), 
-									rset.getString("MEMBER_NICK"),
-									rset.getString("GRADE_CODE"), 
-									rset.getDate("ENTRY_DATE")));
+				mlist.add(new Member(rset.getInt(1), 
+									rset.getString(2), 
+									rset.getString(3),
+									rset.getString(4), 
+									rset.getDate(5)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

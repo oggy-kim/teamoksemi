@@ -17,10 +17,10 @@ public class AdmService {
 		return listCount;
 	}
 
-	public ArrayList<Member> selectMList() {
+	public ArrayList<Member> selectMList(int currentPage, int boardLimit) {
 		Connection conn = getConnection();
 		
-		ArrayList<Member> list = new AdmDao().selectMList(conn);
+		ArrayList<Member> list = new AdmDao().selectMList(conn, currentPage, boardLimit);
 		close(conn);
 		return list;
 	}

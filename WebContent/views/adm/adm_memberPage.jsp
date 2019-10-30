@@ -22,6 +22,14 @@
     
     // 회원 상세정보 박스 내, 회원 작성글 조회
     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+    
+    PageInfo pi = (PageInfo)request.getAttribute("pi");
+
+    int listCount = pi.getListCount();
+    int currentPage = pi.getCurrentPage();
+    int maxPage = pi.getMaxPage();
+    int startPage = pi.getStartPage();
+    int endPage = pi.getEndPage();
    
 %>
 <!DOCTYPE html>
