@@ -45,10 +45,10 @@ public class MemberDao {
 									   rset.getString("MEMBER_ID"),
 									   rset.getString("MEMBER_PWD"),
 									   rset.getString("MEMBER_NICK"),
-									   rset.getString("GENDER").charAt(0),
+									   rset.getString("GENDER"),
 									   rset.getString("PROFILE"),
 									   rset.getString("LIKE_STYLE"),
-									   rset.getInt("AGE"),
+									   rset.getInt("BIRTH_YEAR"),
 									   rset.getDate("ENTRY_DATE"),
 									   rset.getString("MEMBER_STATUS"));
 				

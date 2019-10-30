@@ -27,13 +27,13 @@ public class BoardDao {
     }
 
 
-    public int getListCount(Connection conn, int memberNo) {
+    public int getMyListCount(Connection conn, int memberNo) {
         int listCount = 0;
 
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String sql = prop.getProperty("getListCount");
+        String sql = prop.getProperty("getMyListCount");
 
         try {
             pstmt = conn.prepareStatement(sql);
@@ -151,8 +151,6 @@ public class BoardDao {
         }
         return listCount;
 	}
-
-
 	public int insertQnA(Connection conn, QnA q) {
 		PreparedStatement pstmt = null;
 		int result = 0; 
@@ -200,4 +198,122 @@ public class BoardDao {
 
         return q;
     }
+	// 스타일 게시판 dao
+	public int getListCount(Connection conn) {
+		int listCount = 0;
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+
+	public ArrayList<Board> selectList(Connection conn, int currentPage, int boardLimit) {
+		ArrayList<Board> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (currentPage-1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2), rset.getInt(3), rset.getInt(4), rset.getInt(5), 
+								   rset.getString(6), rset.getDate(7), rset.getString(8)));
+				
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+		}
+		return list;
+	}
+
+	// 찜게시판 목록 불러오기 dao
+	public int getWishListCount(Connection conn, int mNo) {
+		int listCount = 0;
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getWishListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	public ArrayList<WishList> selectWishList(Connection conn, int currentPage, int boardLimit, int mNo) {
+		ArrayList<WishList> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectWishList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (currentPage-1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new WishList(rset.getInt(2),
+									  rset.getInt(3),
+									  rset.getDate(4),
+									  rset.getString(5),
+									  rset.getString(6)));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }
