@@ -30,6 +30,27 @@
                 $('.ca').prop('checked', this.checked);
             });
         });
+        
+        <script>
+        function goMain() {
+        	location.href="<%= contextPath %>";
+        }
+
+        function goStyle() {
+        	location.href="<%= contextPath %>/list.bo";
+        }
+
+        function goFavorite() {
+        	location.href="<%= contextPath %>/list.fa";
+        }
+
+        function goEvent() {
+        	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+        }
+
+        function goMypage() {
+        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+        }
     </script>
 <style>
 body {
