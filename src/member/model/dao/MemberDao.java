@@ -86,4 +86,24 @@ public class MemberDao {
 		return result;
 	}
 
+	public int updateMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, m.getAge());
+			pstmt.setString(2, m.getLikeStyle());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 }
