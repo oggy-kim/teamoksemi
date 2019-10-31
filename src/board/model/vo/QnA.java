@@ -5,6 +5,7 @@ import java.util.Date;
 public class QnA {
 	private int qnaNo; // QNA 글번호
 	private int memberNo; // 회원번호
+	private String memberNick; // 회원닉네임(추가)
 	private Date enrollDate; // 글 등록일
 	private String qnaTitle; // QNA 제목
 	private String qnaContents; // QNA 내용
@@ -18,7 +19,16 @@ public class QnA {
 		this.qnaTitle = qnaTitle;
 		this.qnaContents = qnaContents;
 	}
-	
+
+	public QnA(int qnaNo, String qnaTitle, String memberNick, Date enrollDate, char answerStatus) {
+		super();
+		this.qnaNo = qnaNo;
+		this.qnaTitle = qnaTitle;
+		this.memberNick = memberNick;
+		this.enrollDate = enrollDate;
+		this.answerStatus = answerStatus;
+	}
+
 	public QnA(int qnaNo, int memberNo, Date enrollDate, String qnaTitle, String qnaContents, char answerStatus,
 			String answerContents) {
 		super();
@@ -35,8 +45,6 @@ public class QnA {
 		return qnaNo;
 	}
 
-
-
 	public void setQnaNo(int qnaNo) {
 		this.qnaNo = qnaNo;
 	}
@@ -47,6 +55,14 @@ public class QnA {
 
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
+	}
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
 	}
 
 	public Date getEnrollDate() {
@@ -91,8 +107,8 @@ public class QnA {
 
 	@Override
 	public String toString() {
-		return "QnA [qnaNo=" + qnaNo + ", memberNo=" + memberNo + ", enrollDate=" + enrollDate + ", qnaTitle="
-				+ qnaTitle + ", qnaContents=" + qnaContents + ", answerStatus=" + answerStatus + ", answerContents="
-				+ answerContents + "]";
+		return "QnA [qnaNo=" + qnaNo + ", memberNo=" + memberNo + ", memberNick=" + memberNick + ", enrollDate="
+				+ enrollDate + ", qnaTitle=" + qnaTitle + ", qnaContents=" + qnaContents + ", answerStatus="
+				+ answerStatus + ", answerContents=" + answerContents + "]";
 	}
 }

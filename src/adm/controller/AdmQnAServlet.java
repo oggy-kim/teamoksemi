@@ -59,7 +59,7 @@ public class AdmQnAServlet extends HttpServlet {
 		
 		ArrayList<QnA> list = aService.selectQList(currentPage, boardLimit);
 		
-		RequestDispatcher view = request.getRequestDispatcher("views/adm/adm_memberPage.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("views/adm/adm_qnaPage.jsp");
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 

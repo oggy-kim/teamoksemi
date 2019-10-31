@@ -9,7 +9,7 @@
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	int endPage = pi.getEndPage(); 
 	
 %>
 <!DOCTYPE html>
@@ -105,9 +105,7 @@
             list-style-type: disc;
             float: left;
             font-size: 20px;
-            /* ------ 규내 수정 -----*/
             padding : 5% 0 0 0;
-            /* ---------------------*/
         }
 
         .line {
@@ -133,10 +131,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             /* ------ 규내 수정 -----*/
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
-            /* ---------------------*/
         }
 
         ul.category li a:hover {
@@ -252,32 +248,7 @@
 </head>
 <body>
 <%@ include file="../common/menubar.jsp" %>
-<header>
-  <nav class="navbar navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="main.html" style="font-size : 28px;">LOOK SO FINE</a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="SEARCH" aria-label="SEARCH">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-    </form>
-  </nav>
-  <nav style="padding:60px 0;">
-      <ul class="nav justify-content-center" id="category">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;" >STYLE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"style="color: #000;">FAVORITE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="event.html"style="color: #000;">EVENT</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #000;">MY PAGE</a>
-        </li>
-      </ul>
-    </nav>
-</header>
-<nav>
+
   <br>
   <div class="menuLine">
   <div class="div div1"><hr></div>
@@ -347,7 +318,7 @@
                		 <tr>
                 		<td colspan="5">작성된 게시글이 없습니다.</td>
                 	<tr>
-                	<% } else { %>s
+                	<% } else { %>
                 	<% for(QnA q : list){ %>    
  					<tr>
  					<td><%= q.getQnaNo() %></td>
@@ -390,7 +361,7 @@
 
                <!-- 맨 끝으로 (>>) -->
                <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
-          	 </div> 
+          	 </div>
 
           
             <div class="searchArea">
