@@ -324,12 +324,29 @@ $(function(){
 				 	var detail = "";
 				 	var num = result.articleNo;
 
-	           		detail += "<table border='1' style='text-align:center' width='100%' height='85%'><tr rowspan='5'><th>" + "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>" + "</th>" +
-                          "<td><p style='font-weight:bold;'>DATE</p><br> " + result.articleDate + "</td>" +
-                          "<td><p style='font-weight:bold;'>VIEWS</p><br> " + result.articleViews + "</td>" +
-                          "<td><p style='font-weight:bold;'>LIKES</p><br> " + result.articleLikes + "</td>" + 
-                          "<td><p style='font-weight:bold;'>CONTENT</p><br> " + result.articleContents + "</td></tr></table>" +
-                          "<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
+	           		detail += "<table border='1' style='text-align:center' width='100%'>" + 
+	           					"<tr>" +
+	           						"<th  colspan='5'>" + "STYLE" + "</th>" +
+	           					"</tr>" +
+	           					"<tr>" +
+	           						"<td colspan='3' rowspan='5'><img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'></td>" +
+	           					"</tr>" +
+	           					"<tr>" +
+           							"<td><p style='font-weight:bold;'>DATE</p></td>" +
+           							"<td><p style='font-weight:bold;'>" + result.articleDate + "</p></td>" + 
+           						"</tr>" +
+           						"<tr>" +
+       								"<td><p style='font-weight:bold;'>VIEWS</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleViews + "</p></td>" + 
+       							"</tr>" +
+       							"<tr>" +
+       								"<td><p style='font-weight:bold;'>LIKES</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleLikes + "</p></td>" + 
+       							"</tr>" +"<tr>" +
+       								"<td><p style='font-weight:bold;'>CONTENT</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleContents + "</p></td>" + 
+       							"</tr></table>" +
+                          		"<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
                           
                     detail += "<table>"
                  	console.log(detail);
@@ -345,6 +362,7 @@ $(function(){
 	});
 });
 
+// "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>"
 
 </script>
 </body>
