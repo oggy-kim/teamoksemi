@@ -20,6 +20,7 @@ public class QnA {
 		this.qnaContents = qnaContents;
 	}
 
+	// Adm QNA
 	public QnA(int qnaNo, String qnaTitle, String memberNick, Date enrollDate, char answerStatus) {
 		super();
 		this.qnaNo = qnaNo;

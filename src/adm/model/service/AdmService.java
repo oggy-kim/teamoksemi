@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import adm.model.dao.AdmDao;
 import board.model.vo.QnA;
 import member.model.vo.Member;
+import shop.model.vo.Shop;
 
 import static common.JDBCTemplate.*;
 
@@ -38,6 +39,21 @@ public class AdmService {
 		Connection conn = getConnection();
 		
 		ArrayList<QnA> list = new AdmDao().selectQList(conn, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	
+	public int getSListCount() {
+		Connection conn = getConnection();
+		int listCount = new AdmDao().getSListCount(conn);
+		close(conn);
+		return listCount;
+	}
+
+	public ArrayList<Shop> selectSList(int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Shop> list = new AdmDao().selectSList(conn, currentPage, boardLimit);
 		close(conn);
 		return list;
 	}

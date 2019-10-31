@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import board.model.vo.QnA;
 import member.model.vo.Member;
+import shop.model.vo.Shop;
 
 import static common.JDBCTemplate.*;
 
@@ -135,6 +136,68 @@ public class AdmDao {
 									rset.getString(4),
 									rset.getDate(5), 
 									rset.getString(6).charAt(0)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	
+	public int getSListCount(Connection conn) {
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getSListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public ArrayList<Shop> selectSList(Connection conn, int currentPage, int boardLimit) {
+		ArrayList<Shop> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			// 쇼핑몰 번호
+			while(rset.next()) {
+				list.add(new Shop(rset.getInt(2), 
+									rset.getString(3),
+									rset.getString(4),
+									rset.getString(5),
+									rset.getDate(6),
+									rset.getDate(7),
+									rset.getInt(8),
+									rset.getString(9)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
