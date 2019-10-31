@@ -172,7 +172,7 @@
   <div class="div div1"><hr></div>
   <div class="div div2">
       <div class="innermenu">
-          ADMINmm
+          ADMIN
       </div>
   </div>
   <div class="div div3"><hr></div>
@@ -204,6 +204,17 @@
     	}
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
+    	}
+    	function goStyle() {
+    		location.href="<%= contextPath %>/list.bo";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/list.fa";
+    	}
+
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
     	}
     </script>
     <div class="line"></div>

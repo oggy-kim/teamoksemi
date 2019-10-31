@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -218,7 +222,12 @@ function goEvent() {
 }
 
 function goMypage() {
-	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	
+	if("<%= gradeCode %>" == 'S'){
+		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+	} else {
+		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	}
 }
 </script>
 </body>

@@ -223,10 +223,6 @@
   <p>Copyright 2019. LOOKSOFINE.  All right reserved.</p>
 </footer>
 <script>
-function goMain() {
-	location.href="<%= contextPath %>";
-}
-
 function goStyle() {
 	location.href="<%= contextPath %>/list.bo";
 }

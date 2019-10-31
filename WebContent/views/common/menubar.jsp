@@ -90,9 +90,9 @@
     <a class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</a>
     <%if (loginUser != null) {%>
       <form class="form-inline" action="<%= contextPath %>/search.look">
-      <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-      <button type="button" class="btn btn-light" style="font-family: 'Do Hyeon', sans-serif;" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
+      <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
+      <button class="btn btn-outline-success" id="search" my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; color:white; border: 1px solid white;" disabled>SEARCH</button>
+      <button type="button" class="btn btn-light" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
     </form>
     <% } %>
   </nav>
@@ -115,22 +115,6 @@
 </header>
 <script>
 	
-	function validate(){
-	if($("#userId").val().trim().length==0){
-		alert("이메일를 입력하세요");
-		$("#userId").select();
-		return false;
-	}
-	
-	if($("#userPwd").val().trim().length==0){
-		alert("비밀번호를 입력하세요");
-		$("#userPwd").select();
-		return false;
-	}
-	
-	return true;
-	// 여기까지 작성 했으면 LoginServlet 만들러 가기 ~!!
-}
 	function goMain() {
 		location.href="<%= contextPath %>";
 	}
@@ -138,6 +122,19 @@
 	function logout(){
 		location.href = '<%= request.getContextPath() %>/logout.me';
 	}
+	
+	$(function(){
+		$("#keyword").change(function(){
+			if($("#keyword").val() != "") {
+				$("#search").attr('disabled', false);
+			} else {
+				$("#search").attr('disabled', true);
+				$("#search").css('color', 'white');
+			}
+		}); 		
+	});
+	
+	
 </script>
 
 </body>

@@ -345,4 +345,36 @@ public class BoardDao {
 		}		
 		return blist;
 	}
+
+
+	public Board searchDetail(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String sql = prop.getProperty("searchDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, articleNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt("ARTICLE_NO"),
+						rset.getInt("MEMBER_NO"),
+						rset.getInt("ARTICLE_VIEWS"),
+						rset.getInt("ARTICLE_WISHES"),
+						rset.getString("ARTICLE_CONTENTS"),
+						rset.getDate("ARTICLE_DATE"),
+						rset.getString("ARTICLE_STATUS"));
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
+	}
 }

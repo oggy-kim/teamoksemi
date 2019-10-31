@@ -119,4 +119,13 @@ public class BoardService {
 		
 		return blist;
 	}
+
+	public Board searchDetail(int articleNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDao().searchDetail(conn, articleNo);
+		
+		close(conn);
+		
+		return b;
+	}
 }

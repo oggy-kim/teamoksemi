@@ -75,7 +75,8 @@
 
         .search {
             width: 80%;
-            height: 600px;
+            height : auto;
+        	overflow:hidden;
             margin: auto;
         }
 
@@ -143,7 +144,8 @@
         }
         
         .thumbnail {
-        	height : 400px;
+        	height : auto;
+        	overflow:hidden;
         }
         
         #detail {
@@ -157,6 +159,16 @@
         	color: black;
             text-decoration: none;
         }
+        
+        .searchDetailForm {
+        	background:white;
+    		visibility: hidden;
+    		position: fixed;
+    		top: 15%;
+    		left: 20%;
+        	width: 60%;
+        	height: 70%;
+    	}
     </style>
 </head>
 <body>
@@ -196,10 +208,11 @@
         	<% if(blist.size() == 0) { %>
  		        <div class="thumbnail">
         		<h1 style="text-align : center;"><%= keyword %> 검색 결과가 없습니다.</h1>
-        	<% } else if(blist.size() <= 3) {%>        	
+        	<% } else if(blist.size() <= 6) {%>        	
         		<%for(int i = 0; i < blist.size(); i++) { %>
             	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
+                <input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
                     <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
                     <div class="card-body" height="30%">
                         <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
@@ -208,9 +221,10 @@
             	</div>
             <% } %>
             <% } else { %>
-            	<%for(int i = 0; i < 3; i++) { %>
+            	<%for(int i = 0; i < 6; i++) { %>
             		<div class="subImg subImg1">
                 	<div class="card" style="width: 100%; height:100%;">
+                	<input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
                     <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
                     <div class="card-body" height="30%">
                         <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
@@ -256,6 +270,8 @@
         </div>
         <button id="detail"><a href="#">DETAIL</a></button>  
     </div>
+    <div class="searchDetailForm" id="searchDetailForm">
+    </div>
 </section>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>
@@ -286,6 +302,50 @@ function goMypage() {
 		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
 	}
 }
+
+$(function(){
+	$(".card").click(function(){
+		 var articleNo = $(this).children("input").val();
+		 console.log(articleNo);
+		 $.ajax ({
+			 url:"searchdetail.look",
+			 data : {articleNo : articleNo},
+			 type:"get",
+			 dataType: "json",
+			 success:function(result){
+				 console.log(result);
+				 $("body").click(function(){
+					 $(".searchDetailForm").css({"visibility":"hidden"});
+					 $("body").css({"background":"none"});
+				 });
+				 $(".searchDetailForm").css("visibility", "visible");
+				 $("body").css({"background": "gray"});
+				 
+				 	var detail = "";
+				 	var num = result.articleNo;
+
+	           		detail += "<table border='1' style='text-align:center' width='100%' height='85%'><tr rowspan='5'><th>" + "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>" + "</th>" +
+                          "<td><p style='font-weight:bold;'>DATE</p><br> " + result.articleDate + "</td>" +
+                          "<td><p style='font-weight:bold;'>VIEWS</p><br> " + result.articleViews + "</td>" +
+                          "<td><p style='font-weight:bold;'>LIKES</p><br> " + result.articleLikes + "</td>" + 
+                          "<td><p style='font-weight:bold;'>CONTENT</p><br> " + result.articleContents + "</td></tr></table>" +
+                          "<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
+                          
+                    detail += "<table>"
+                 	console.log(detail);
+
+	           		$(".searchDetailForm").html(detail);
+	           		
+	           		console.log($('.searchDetailForm').html());
+				},
+             		error: function() {
+                 	console.log("ajax 연동실패");
+             }
+		 });
+	});
+});
+
+
 </script>
 </body>
 </html>
