@@ -130,6 +130,10 @@
           float: left;
           
         }
+        
+        .subImg:hover {
+        	cursor:pointer;
+        }
 
         .subImg1 {
           margin: 10px 6.5%;
@@ -161,7 +165,7 @@
         }
         
         .searchDetailForm {
-        	background:white;
+        	background:rgb(230,230,230);
     		visibility: hidden;
     		position: fixed;
     		top: 15%;
@@ -324,12 +328,12 @@ $(function(){
 				 	var detail = "";
 				 	var num = result.articleNo;
 
-	           		detail += "<table border='1' style='text-align:center' width='100%'>" + 
+	           		detail += "<table border='1' style='text-align:center' width='100%' height='80%'>" + 
 	           					"<tr>" +
-	           						"<th  colspan='5'>" + "STYLE" + "</th>" +
+	           						"<th  colspan='5'><hr><p style='font-size:20px;'>STYLE</p><hr></th>" +
 	           					"</tr>" +
 	           					"<tr>" +
-	           						"<td colspan='3' rowspan='5'><img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'></td>" +
+	           						"<td colspan='3' rowspan='5'><img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='450'></td>" +
 	           					"</tr>" +
 	           					"<tr>" +
            							"<td><p style='font-weight:bold;'>DATE</p></td>" +
@@ -342,13 +346,12 @@ $(function(){
        							"<tr>" +
        								"<td><p style='font-weight:bold;'>LIKES</p></td>" +
        								"<td><p style='font-weight:bold;'>" + result.articleLikes + "</p></td>" + 
-       							"</tr>" +"<tr>" +
+       							"</tr>" +
+       							"<tr>" +
        								"<td><p style='font-weight:bold;'>CONTENT</p></td>" +
        								"<td><p style='font-weight:bold;'>" + result.articleContents + "</p></td>" + 
        							"</tr></table>" +
                           		"<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
-                          
-                    detail += "<table>"
                  	console.log(detail);
 
 	           		$(".searchDetailForm").html(detail);
