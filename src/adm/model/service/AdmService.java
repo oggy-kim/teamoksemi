@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import adm.model.dao.AdmDao;
+import board.model.vo.Board;
 import board.model.vo.QnA;
 import member.model.vo.Member;
 import shop.model.vo.Shop;
@@ -54,6 +55,20 @@ public class AdmService {
 	public ArrayList<Shop> selectSList(int currentPage, int boardLimit) {
 		Connection conn = getConnection();
 		ArrayList<Shop> list = new AdmDao().selectSList(conn, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public int getBListCount() {
+		Connection conn = getConnection();
+		int listCount = new AdmDao().getBListCount(conn);
+		close(conn);
+		return listCount;
+	}
+
+	public ArrayList<Board> selectBList(int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Board> list = new AdmDao().selectBList(conn, currentPage, boardLimit);
 		close(conn);
 		return list;
 	}

@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import board.model.vo.Board;
 import board.model.vo.QnA;
 import member.model.vo.Member;
 import shop.model.vo.Shop;
@@ -113,6 +114,7 @@ public class AdmDao {
 		return listCount;
 	}
 
+	// 4. QNA리스트조회용 dao
 	public ArrayList<QnA> selectQList(Connection conn, int currentPage, int boardLimit) {
 		ArrayList<QnA> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -146,7 +148,7 @@ public class AdmDao {
 		return list;
 	}
 
-	
+	// 5. SHOP리스트갯수조회용 dao
 	public int getSListCount(Connection conn) {
 		int listCount = 0;
 		
@@ -171,6 +173,7 @@ public class AdmDao {
 		return listCount;
 	}
 
+	// 6. SHOP리스트조회용 dao
 	public ArrayList<Shop> selectSList(Connection conn, int currentPage, int boardLimit) {
 		ArrayList<Shop> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -188,7 +191,7 @@ public class AdmDao {
 			
 			rset = pstmt.executeQuery();
 			
-			// 쇼핑몰 번호
+			// 쇼핑몰 번호, 쇼핑몰이름, 상태, 등급, 계약일, 만료일, 계약금, 연락처
 			while(rset.next()) {
 				list.add(new Shop(rset.getInt(2), 
 									rset.getString(3),
@@ -198,6 +201,67 @@ public class AdmDao {
 									rset.getDate(7),
 									rset.getInt(8),
 									rset.getString(9)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	// 7. BOARD리스트갯수조회용 dao
+	public int getBListCount(Connection conn) {
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getBListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	// 8. BOARD리스트조회용 dao
+	public ArrayList<Board> selectBList(Connection conn, int currentPage, int boardLimit) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectBList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			// 게시글 번호, 게시글 내용, 작성자, 작성일, 찜수, 조회수
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2), 
+									rset.getString(3),
+									rset.getString(4),
+									rset.getDate(5),
+									rset.getInt(6),
+									rset.getInt(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
