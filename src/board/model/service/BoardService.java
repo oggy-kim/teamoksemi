@@ -85,4 +85,40 @@ public class BoardService {
 		
 		return list;
 	}
+
+	// 찜게시판 선택 삭제
+	public int deleteWish(int aNo, String[] arr) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().deleteWish(conn, aNo, arr);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	// 조회수 증가
+	/*public Board selectBoard(int articleNo) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		
+		int result = bDao.increaseCount(conn, articleNo);
+		
+		ArrayList<Board> b = null;
+		
+		if(result > 0) {
+			b = bDao.selectBoard(conn, articleNo);
+		}
+		return result;
+	}
+
+	public ArrayList<BoardComment> selectReplyList(int articleNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
 }

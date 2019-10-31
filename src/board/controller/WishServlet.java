@@ -19,7 +19,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class FavoriteServlet
  */
-@WebServlet("/list.fa")
+@WebServlet("/wishlist.look")
 public class WishServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

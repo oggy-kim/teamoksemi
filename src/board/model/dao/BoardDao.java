@@ -214,24 +214,28 @@ public class BoardDao {
 	public int getWishListCount(Connection conn, int mNo) {
 		int listCount = 0;
 		
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		String sql = prop.getProperty("getWishListCount");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mNo);
+			
+			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
+		
 		return listCount;
 	}
 
@@ -249,8 +253,9 @@ public class BoardDao {
 			int startRow = (currentPage-1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -270,4 +275,101 @@ public class BoardDao {
 		}
 		return list;
 	}
+
+	// 찜목록 삭제 dao
+	public int deleteWish(Connection conn, int aNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWish");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, aNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public int deleteWish(Connection conn, int aNo, String[] arr) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWish");
+		
+		int[] arr1 = new int[arr.length];
+		for(int i = 0; i < arr.length; i++) {
+			arr1[i] = Integer.parseInt(arr[i]);
+		}
+		
+		try {
+			for(int i = 0; i < arr1.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, aNo);
+				pstmt.setInt(2, arr1[i]);
+				
+				result = pstmt.executeUpdate();
+			}
+			
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 조회수 증가 dao
+	/*public int increaseCount(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, articleNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}*/
+
+	// 게시판 상세보기 dao 보류
+	/*public ArrayList<Board> selectBoard(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> b = null;
+		
+		String sql = prop.getProperty("selectBoard");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, articleNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new ArrayList<Board>(rset.getInt("member_no"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}*/
 }

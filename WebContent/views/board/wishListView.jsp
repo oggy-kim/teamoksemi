@@ -24,34 +24,6 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
-<script>
-        $(document).ready(function(){
-            $('.check-all').click(function(){
-                $('.ca').prop('checked', this.checked);
-            });
-        });
-        
-        <script>
-        function goMain() {
-        	location.href="<%= contextPath %>";
-        }
-
-        function goStyle() {
-        	location.href="<%= contextPath %>/list.bo";
-        }
-
-        function goFavorite() {
-        	location.href="<%= contextPath %>/list.fa";
-        }
-
-        function goEvent() {
-        	location.href="<%= contextPath %>/views/event/eventPage.jsp";
-        }
-
-        function goMypage() {
-        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-        }
-    </script>
 <style>
 body {
 	width: 100%;
@@ -209,7 +181,7 @@ hr {
 	</nav>
 	<br>
 	<section>
-		<form action="">
+		<form action="<%= contextPath %>/deletewish.look" method="post">
 			<table class="mytable" align="center">
 				<caption>표 제목</caption>
 				<tr>
@@ -221,13 +193,14 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
+				
 					<td coldspan="4">조회된 찜목록이 없습니다.</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
 					<input type="hidden" value="<%= w.getMemberNo() %>">
-					<td><input type="checkbox" id="select" style="width: 20px; height: 20px;" class="ca"></td>
+					<td><input type="checkbox" id="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
 					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getArticleNo() %>.jpg" width="130px" height="160px"></td>
 					<td><%= w.getWishDate() %></td>
 					<td><%= w.getWishMemo() %></td>
@@ -236,8 +209,9 @@ hr {
 				<% } %>
 			</table>
 
-			<button class="cart-select-delete-btn" type="submit">선택삭제</button>
+			<button class="cart-select-delete-btn" onclick="deleteWish();" type="submit">선택삭제</button>
 		</form>
+		
 		<br>
 		<br>
 
@@ -314,5 +288,36 @@ hr {
 	<footer class="copyRight">
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
+<script>
+        $(document).ready(function(){
+            $('.check-all').click(function(){
+                $('.ca').prop('checked', this.checked);
+            });
+        });
+        
+        function goMain() {
+        	location.href="<%= contextPath %>";
+        }
+
+        function goStyle() {
+        	location.href="<%= contextPath %>/boardlist.look";
+        }
+
+        function goFavorite() {
+        	location.href="<%= contextPath %>/wishlist.look";
+        }
+
+        function goEvent() {
+        	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+        }
+
+        function goMypage() {
+        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+        }
+        
+        function deleteWish() {
+        	location.href="<%= contextPath %>/deletewish.look";
+        }
+</script>
 </body>
 </html>

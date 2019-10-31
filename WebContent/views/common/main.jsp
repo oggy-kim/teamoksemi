@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,25 +23,21 @@
           width : 100%;
           height : 1600px;
         }
-
         header {
           width:100%;
           height:120px;
         }
-
         .mainArea {
           background: darkgray;
           width: 80%;
           height: 400px;
           margin: auto;
         }
-
         .mainImgArea{
             width: 80%;
             height: 100%;
             float: left;
         }
-
         .weatherArea {
             width: 20%;
             height: 100%;
@@ -48,92 +49,78 @@
             background: rgb(65, 65, 65);
             text-align: left;
         }
-
         .weatherArea .up {
           width: 100%;
           height: 60%;
         }
-
         .weatherArea .down {
           width: 100%;
           height: 40%;
         }
-
         .forecast {
           width:80%;
           height:100%;
           margin:auto;
         }
-
         .dailyImg {
           width:80%;
           height:100%;
           margin:auto;
         }
-
         .weatherArea .up img {
           width:100%;
           height:100%;
           padding:10px 0;
         }
-
         .mainImg {
             float: left;
         }
-
         .mainImg1 {
             width: 100%;
             height: 100%;
         }
-
         .middleArea {
           width: 80%;
           height: 500px;
           margin: auto;
         }
-
         .subImg {
           background: darkgray;
           width: 30%;
           height: 400px;
           float: left;
         }
-
         .subImg1 {
           margin: 10px 1.7%;
         }
-
         .subImg2 {
           margin: 10px 1.7%;
         }
-
         .subImg3 {
           margin: 10px 1.6%;
         }
-
         .styleImgArea{
           width: 80%;
 		  margin: 0 auto;
         }
-
         .copyRight {
           text-align: center;
           padding: 100px 0;
-
         }
-
         .cicon {
           text-transform: uppercase;
         }
     </style>
     <script>
+    
+    
+    
       $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=975353dea991d476ec748ec5b88c3a52&units=metric', function(data){
         var $ctemp = data.main.temp;
         var $chum = data.main.humidity;
         var $cwind = data.wind.speed;
         var $wIcon = data.weather[0].icon;
         var $wData = data.weather[0].main;
-
         $('.ctemp').prepend($ctemp);
         $('.chum').append($chum).append($('.per'));
         $('.cwind').append($cwind).append($('persec'));
@@ -141,7 +128,6 @@
       });
       
     </script>
-    
 </head>
 <body>
  	<%@ include file="menubar.jsp" %>
@@ -218,21 +204,23 @@
 function goMain() {
 	location.href="<%= contextPath %>";
 }
-
 function goStyle() {
-	location.href="<%= contextPath %>/list.bo";
+	location.href="<%= contextPath %>/boardlist.look";
 }
-
 function goFavorite() {
-	location.href="<%= contextPath %>/list.fa";
+	location.href="<%= contextPath %>/wishlist.look";
 }
-
 function goEvent() {
 	location.href="<%= contextPath %>/views/event/eventPage.jsp";
 }
-
 function goMypage() {
-	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	
+	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+	if("<%= gradeCode %>" == 'S'){
+		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+	} else {
+		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	}
 }
 </script>
 </body>
