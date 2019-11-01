@@ -85,6 +85,7 @@ public class BoardService {
 		
 		return list;
 	}
+
 	// QnA 게시판 문의글 등록 service
 	public int insertQnA(QnA q) {
 		Connection conn = getConnection();

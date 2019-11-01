@@ -6,11 +6,10 @@
 	
 	//request.getContextPath() 변수화
 	String contextPath = request.getContextPath();
-	
+  
 	//2_1_1. session 객체에 담겨진 loginUser 정보를 변수에 담기
 	Member loginUser = (Member) session.getAttribute("loginUser");
-	
-	
+
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -122,7 +121,7 @@
 	function logout(){
 		location.href = '<%= request.getContextPath() %>/logout.me';
 	}
-	
+
 	$(function(){
 		$("#keyword").change(function(){
 			if($("#keyword").val() != "") {
@@ -133,7 +132,7 @@
 			}
 		}); 		
 	});
-	
+
 	
 </script>
 

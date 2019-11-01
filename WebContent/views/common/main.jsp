@@ -134,8 +134,6 @@
     </style>
     <script>
     
-    
-    
       $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=975353dea991d476ec748ec5b88c3a52&units=metric', function(data){
         var $ctemp = data.main.temp;
         var $chum = data.main.humidity;
@@ -231,12 +229,11 @@ function goFavorite() {
 	location.href="<%= contextPath %>/list.fa";
 }
 
-function goEvent() {
+function goEvent() {s
 	location.href="<%= contextPath %>/views/event/eventPage.jsp";
 }
 
 function goMypage() {
-	
 	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
 	if("<%= gradeCode %>" == 'S'){
 		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
