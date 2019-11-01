@@ -5,6 +5,8 @@
 	Member m = (Member)session.getAttribute("loginUser");
 	String gradeCode = m.getGradeCode();	
 %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>

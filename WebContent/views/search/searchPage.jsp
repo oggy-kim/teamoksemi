@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board, java.util.ArrayList"%>
+<%
+	ArrayList<Board> blist = (ArrayList<Board>)request.getAttribute("blist");
+
+	String keyword = (String)request.getAttribute("keyword");
+	
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,38 +23,13 @@
 
         body {
           width : 100%;
-          height : 2200px;
-        }
+          height:2200px;
 
-         #navbar {
-            width:100%;
-            height:60px;
-            position:fixed;
-            z-index: 1;
-            color:white;
-            font-family: 'Fugaz One', cursive;
-        }
-
-        #category {
-          width: 100%;
-          height:60px;
-          position: fixed;
-          z-index: 1;
-          background: white;
-          opacity:0.8;
-          font-family: 'Paytone One', sans-serif;
-          font-size: 25px; 
-          font-style: italic;
-        }
-
-        .nav-link:hover {
-          text-decoration:underline;
-          font-weight:bold;
         }
 
         section {
             width: 100%;
-            height: 2000px;
+			height: 2000px;
         }
 
         hr {
@@ -92,7 +75,8 @@
 
         .search {
             width: 80%;
-            height: 500px;
+            height : auto;
+        	overflow:hidden;
             margin: auto;
         }
 
@@ -110,6 +94,7 @@
             border-radius: 5px;
             float: left;
             margin: 2% 0 0 8.1%;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         .hastag button a {
@@ -119,6 +104,7 @@
         .searchTitle{
             height: 100px;
             text-align: left;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         .searchTitle h1 {
@@ -137,13 +123,16 @@
             width: 93%;
             margin: 1% 0 0 3%;
         }
-
+		
         .subImg {
-          background: darkgray;
           width: 20%;
-          height: 330px;
+          height: 380px;
           float: left;
           
+        }
+        
+        .subImg:hover {
+        	cursor:pointer;
         }
 
         .subImg1 {
@@ -157,19 +146,33 @@
         .subImg3 {
           margin: 10px 6.5%;
         }
-
-        .thumbnail button {
-           text-align: center;
-           margin: 30px 0 0 48%;
-           border-radius: 5px;
+        
+        .thumbnail {
+        	height : auto;
+        	overflow:hidden;
         }
-
-        .thumbnail button a {
-            color: black;
+        
+        #detail {
+        	font-family: 'Fugaz One', cursive;
+        	text-align: center;
+           	margin: 30px 0 0 48%;
+           	border-radius: 5px;
+        }
+        
+        #detail a {
+        	color: black;
             text-decoration: none;
         }
-
-
+        
+        .searchDetailForm {
+        	background:rgb(230,230,230);
+    		visibility: hidden;
+    		position: fixed;
+    		top: 20%;
+    		left: 20%;
+        	width: 60%;
+        	height: 70%;
+    	}
     </style>
 </head>
 <body>
@@ -197,7 +200,7 @@
             <button><a href="#">#오버핏가디건</a></button>
         </div>
         <div class="searchTitle">
-            <h1>OOO검색결과</h1>
+           <h1><%= keyword %> 검색결과</h1>
         </div>
     </div>
     <br>
@@ -206,68 +209,37 @@
             <h3>STYLE</h3>
             <hr>
         </div>
-        <div class="thumbnail">
-            <div class="subImg subImg1">
+        	<% if(blist.size() == 0) { %>
+ 		        <div class="thumbnail">
+        		<h1 style="text-align : center;"><%= keyword %> 검색 결과가 없습니다.</h1>
+        	<% } else if(blist.size() <= 6) {%>        	
+        		<%for(int i = 0; i < blist.size(); i++) { %>
+            	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
+                <input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
                 </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <button><a href="#">>>></a></button>
+            	</div>
+            <% } %>
+            <% } else { %>
+            	<%for(int i = 0; i < 6; i++) { %>
+            		<div class="subImg subImg1">
+                	<div class="card" style="width: 100%; height:100%;">
+                	<input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
+                    <div class="card-body" height="30%">
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
+                    </div>                                       
+                	</div>
+            	</div>            	
+             <% } %>
+             <button id="detail"><a href="#">DETAIL</a></button>
+            <% } %> 
         </div>
-    </div>
-    <br>
-    <div class="search search3">
-        <div class="searchName">
-            <h3>OOTD</h3>
-            <hr>
-        </div>
-        <div class="thumbnail">
-            <div class="subImg subImg1">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg2">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="subImg subImg3">
-                <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <button><a href="#">>>></a></button>
-        </div>  
-    </div>
+    </div>    
     <br>
     <div class="search search4">
         <div class="searchName">
@@ -299,12 +271,102 @@
                     </div>
                 </div>
             </div>
-            <button><a href="#">>>></a></button>
-        </div>  
+        </div>
+        <button id="detail"><a href="#">DETAIL</a></button>  
+    </div>
+    <div class="searchDetailForm" id="searchDetailForm">
     </div>
 </section>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>
 </footer>
+<script>
+function goMain() {
+	location.href="<%= contextPath %>";
+}
+
+function goStyle() {
+	location.href="<%= contextPath %>/list.bo";
+}
+
+function goFavorite() {
+	location.href="<%= contextPath %>/list.fa";
+}
+
+function goEvent() {
+	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+}
+
+function goMypage() {
+	
+	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+	if("<%= gradeCode %>" == 'S'){
+		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+	} else {
+		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+	}
+}
+
+$(function(){
+	$(".card").click(function(){
+		 var articleNo = $(this).children("input").val();
+		 console.log(articleNo);
+		 $.ajax ({
+			 url:"searchdetail.look",
+			 data : {articleNo : articleNo},
+			 type:"get",
+			 dataType: "json",
+			 success:function(result){
+				 console.log(result);
+				 $("body").click(function(){
+					 $(".searchDetailForm").css({"visibility":"hidden"});
+					 $("body").css({"background":"none"});
+				 });
+				 $(".searchDetailForm").css("visibility", "visible");
+				 $("body").css({"background": "gray"});
+				 
+				 	var detail = "";
+				 	var num = result.articleNo;
+
+	           		detail += "<table border='1' style='text-align:center' width='100%' height='80%'>" + 
+	           					"<tr>" +
+	           						"<th  colspan='5'><p style='font-size:20px;'>STYLE</p></th>" +
+	           					"</tr>" +
+	           					"<tr>" +
+	           						"<td rowspan='5' style='width:500px;'><img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='400px;'></td>" +
+	           					"</tr>" +
+	           					"<tr>" +
+           							"<td><p style='font-weight:bold;'>DATE</p></td>" +
+           							"<td><p style='font-weight:bold;'>" + result.articleDate + "</p></td>" + 
+           						"</tr>" +
+           						"<tr>" +
+       								"<td><p style='font-weight:bold;'>VIEWS</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleViews + "</p></td>" + 
+       							"</tr>" +
+       							"<tr>" +
+       								"<td><p style='font-weight:bold;'>LIKES</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleLikes + "</p></td>" + 
+       							"</tr>" +
+       							"<tr>" +
+       								"<td><p style='font-weight:bold;'>CONTENT</p></td>" +
+       								"<td><p style='font-weight:bold;'>" + result.articleContents + "</p></td>" + 
+       							"</tr></table>" +
+                          		"<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
+                 	console.log(detail);
+
+	           		$(".searchDetailForm").html(detail);
+	           		
+	           		console.log($('.searchDetailForm').html());
+				},
+             		error: function() {
+                 	console.log("ajax 연동실패");
+             }
+		 });
+	});
+});
+
+// "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>"
+
+</script>
 </body>
 </html>

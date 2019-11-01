@@ -201,6 +201,17 @@
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
     	}
+    	function goStyle() {
+    		location.href="<%= contextPath %>/list.bo";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/list.fa";
+    	}
+
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
     </script>
     <div class="line"></div>
     <div class="content">

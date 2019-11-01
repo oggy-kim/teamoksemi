@@ -3,6 +3,7 @@ package member.model.vo;
 import java.sql.Date;
 
 public class Member implements java.io.Serializable{
+
    private static final long serialVersionUID = 501763206231505614L;
    private int memberNo; // 회원번호
    private String gradeCode; // 회원등급코드
@@ -145,4 +146,5 @@ public Member(int memberNo, String gradeCode, String memberId, String memberPwd,
    }
 
    
+
 }
