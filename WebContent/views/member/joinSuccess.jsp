@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String userId = (String)request.getAttribute("userId");
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -221,8 +224,8 @@
 <br>
 	<section>  
 <form id="updateinfo" action="<%= request.getContextPath() %>/updateinfo.me" 
-	method="post" encype="multipart.form-data" onsubmit="return addinformation();">
-  
+	method="post" enctype="multipart.form-data" onsubmit="return addinformation();">
+  	<input type="hidden" name="userId" value="<%= userId %>">
     <div class="inner-container">
         <div class="box">
           <h1 align="center">회원가입을 축하합니다.</h1>
@@ -231,10 +234,10 @@
           <p align="center"><span id="asd">필수사항</span><img src=""></img> / 선택사항<img src=""></img></p>
           <p align="center">※추가정보를 선택을 하지않으면 스타일추천을 받을수없습니다</p>
           
-          <label class="left">출생년도</label> <select id="year" onclick="appendYear();"> <option value="">- 선택하세요 -</option> </select> 
+          <label class="left">출생년도</label> <select id="year" name="year" onclick="appendYear();"> <option value="">- 선택하세요 -</option> </select> 
           <br>
           <label class="left">프로필사진</label>
-          <span><input type="file" id="upfile" name="upfile" /></span> <br>
+          <input type="file"  id="upfile"  name="upfile"><br>
           <div id='preview'></div>
 
     </span><br>
@@ -271,8 +274,8 @@
     <br>
     <!-- 선호스타일 : <span id="stylechoice"></span><br>
     선호스타일 : <span id="stylechoice"></span> -->
-    선호스타일 : <span id="s1"></span><br>
-    선호스타일 : <span id="s2"></span>
+    선호스타일 : <input type="text" id="s1" name="s1" readonly></input><br>
+    선호스타일 : <input type="text" id="s2" name="s2" readonly></input>
 
 
   </div>
@@ -313,22 +316,22 @@
             $("td").on("click", function() {
               
                     // 1. 처음 선택할 때
-                    if($("#s1").text() == ""){
+                    if($("#s1").val() == ""){
                       $(this).css("background", "red");                       
-                      $("#s1").text($(this).text());
+                      $("#s1").val($(this).text());
                     // 2. 두번째 선택할 때
-                    }else if($(this).text() != $("#s1").text() && $("#s1").text() != "" && $("#s2").text() == ""){
-                      $("#s2").text($(this).text());
+                    }else if($(this).text() != $("#s1").val() && $("#s1").val() != "" && $("#s2").val() == ""){
+                      $("#s2").val($(this).text());
                       $(this).css("background", "red"); 
                     // 3. 두 개 다 선택 되어 있을 때
                     }else{
                       // 이미 선택 된 값을 다시 클릭 할 때
-                      if($(this).text() == $("#s1").text() ){
-                        $("#s1").text($("#s2").text());
-                        $("#s2").text("");
+                      if($(this).text() == $("#s1").val() ){
+                        $("#s1").val($("#s2").val());
+                        $("#s2").val("");
                         $(this).css("background", "rgba(128, 128, 128,0.4)");
-                      }else if($(this).text() == $("#s2").text()){                       
-                        $("#s2").text("");
+                      }else if($(this).text() == $("#s2").val()){                       
+                        $("#s2").val("");
                         $(this).css("background" , "rgba(128, 128, 128,0.4)");
                       }
                     }            

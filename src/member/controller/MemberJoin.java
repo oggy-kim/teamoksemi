@@ -45,6 +45,7 @@ public class MemberJoin extends HttpServlet {
 		
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "회원가입 성공!!");
+			request.setAttribute("userId", userId);
 //			response.sendRedirect(request.getContextPath());
 			RequestDispatcher view = request.getRequestDispatcher("views/member/joinSuccess.jsp");
 			view.forward(request, response);
