@@ -168,7 +168,7 @@
         	background:rgb(230,230,230);
     		visibility: hidden;
     		position: fixed;
-    		top: 15%;
+    		top: 20%;
     		left: 20%;
         	width: 60%;
         	height: 70%;
@@ -330,10 +330,10 @@ $(function(){
 
 	           		detail += "<table border='1' style='text-align:center' width='100%' height='80%'>" + 
 	           					"<tr>" +
-	           						"<th  colspan='5'><hr><p style='font-size:20px;'>STYLE</p><hr></th>" +
+	           						"<th  colspan='5'><p style='font-size:20px;'>STYLE</p></th>" +
 	           					"</tr>" +
 	           					"<tr>" +
-	           						"<td colspan='3' rowspan='5'><img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='450'></td>" +
+	           						"<td rowspan='5' style='width:500px;'><img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='400px;'></td>" +
 	           					"</tr>" +
 	           					"<tr>" +
            							"<td><p style='font-weight:bold;'>DATE</p></td>" +

@@ -91,7 +91,7 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, m.getAge());
+			pstmt.setInt(1, m.getBirthYear());
 			pstmt.setString(2, m.getLikeStyle());
 			result = pstmt.executeUpdate();
 			
