@@ -4,6 +4,7 @@
 	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
 	Member m = (Member)session.getAttribute("loginUser");
 	String gradeCode = m.getGradeCode();	
+	int ran = (int)(1+5*Math.random());
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -133,8 +134,6 @@
     </style>
     <script>
     
-    
-    
       $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=975353dea991d476ec748ec5b88c3a52&units=metric', function(data){
         var $ctemp = data.main.temp;
         var $chum = data.main.humidity;
@@ -156,7 +155,7 @@
 <section>
   <div class="mainArea">
     <div class="mainImgArea">
-        <img class="mainImg mainImg1" src="<%= contextPath %>/resources/images/main.png">
+        <img class="mainImg mainImg1" src="<%= contextPath %>/resources/images/main/<%= ran %>.jpg">
     </div>  
     <div class="weatherArea">
         <div class="up">
@@ -179,27 +178,27 @@
   <div class="middleArea">
     <br>
     <div class="subImg subImg1">
-        <div class="card" style="width: 100%; height: 100%;">
+        <div class="card" style="width: 100%; height: 100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour1.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail >></a>
+                <a href="#" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
             </div>
         </div>
     </div>
     <div class="subImg subImg2">
-        <div class="card" style="width: 100%; height:100%;">
+        <div class="card" style="width: 100%; height:100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour2.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="float:right; text-decoration: none; background: darkgray;">detail>></a>
+                <a href="#" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
             </div>
         </div>
     </div>
     <div class="subImg subImg3">
-        <div class="card" style="width: 100%; height:100%;">
+        <div class="card" style="width: 100%; height:100%; border:0px;">
             <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
             <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -222,10 +221,6 @@
   <p>Copyright 2019. LOOKSOFINE.  All right reserved.</p>
 </footer>
 <script>
-function goMain() {
-	location.href="<%= contextPath %>";
-}
-
 function goStyle() {
 	location.href="<%= contextPath %>/list.bo";
 }
@@ -234,12 +229,11 @@ function goFavorite() {
 	location.href="<%= contextPath %>/list.fa";
 }
 
-function goEvent() {
+function goEvent() {s
 	location.href="<%= contextPath %>/views/event/eventPage.jsp";
 }
 
 function goMypage() {
-	
 	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
 	if("<%= gradeCode %>" == 'S'){
 		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";

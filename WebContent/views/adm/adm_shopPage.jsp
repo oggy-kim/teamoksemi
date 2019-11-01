@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*, shop.model.vo.Shop"%>
+<% 
+	// Shop 목록
+	ArrayList<Shop> list = (ArrayList<Shop>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
+	
+%>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -108,6 +120,12 @@
         .list {
             padding: 10px;
         }
+        
+        .list:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
         .sublist {
             padding: 10px;
         }
@@ -217,6 +235,13 @@
             margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
+
+		#shop_table {
+			text-align : center;
+            width : 85%;
+            margin : 3% 0 0 5%;
+            font-size : 15px;
+		}
 
         .table {
             text-align : center;
@@ -365,90 +390,73 @@
             <!-- 제휴 쇼핑몰 리스트 테이블 -->
             <table class="table" id="shop_table">
                 <tr>
-                    <th></th>
-                    <th>회사이름</th>
+                    <th>회사번호</th>
+                    <th>회사명</th>
                     <th>계약상태</th>
+                    <th>등급</th>
                     <th>계약시작일</th>
                     <th>계약만료일</th>
                     <th>계약금</th>
-                    <th>담당자</th>
                     <th>연락처</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>무신사</td>
-                    <th>Y</th>
-                    <td>00-00-00</td>
-                    <td>00-00-00</td>
-                    <td>1,500,-</td>
-                    <td>무신사</td>
-                    <td>010-1234-5678</td>
+                  <% if(list.isEmpty()){ %>
+               		 <tr>
+                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                	<tr>
+                	<% } else { %>
+                	<% for(Shop s : list){ %>    
+ 					<tr>
+ 					<td><%= s.getShopNo() %></td>
+                    <td><%= s.getShopName() %></td>
+                    <td><%= s.getStatus() %></td>
+                    <td><%= s.getShopGradeCode() %></td>
+                    <td><%= s.getContractDate() %></td>
+                    <td><%= s.getExpireDate() %></td>
+                    <td><%= s.getContractMoney() %></td>
+                    <td><%= s.getShopContact() %></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>스타일쉐어</td>
-                    <th>Y</th>
-                    <td>00-00-00</td>
-                    <td>00-00-00</td>
-                    <td>1,500,-</td>
-                    <td>스타일쉐어</td>
-                    <td>010-1234-5678</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <% } %>
+                <% } %>  
             </table>
             <br>
             <!-- 페이지네이션 -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
+             <div class="pagingArea" align="center">
+               <!-- 맨 처음으로 (<<) -->
+               <button onclick="location.href='<%= contextPath %>/.shop?currentPage=1'"> &lt;&lt; </button>
+
+               <!-- 이전 페이지로 (<) -->
+               <% if(currentPage == 1){ %>
+               <button disabled> &lt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/shop.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+               <% } %>
+
+               <!-- 10개의 페이지 목록 -->
+               <% for(int p = startPage; p <= endPage; p++){ %>
+               <% if(p == currentPage){ %>
+               <button disabled> <%= p %> </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/shop.adm?currentPage=<%= p %>'"><%= p %></button>
+               <% } %>
+               <% } %>
+
+               <!-- 다음 페이지로 (>) -->
+               <% if(currentPage == maxPage){ %>
+               <button disabled> &gt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/shop.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+               <% } %>
+
+               <!-- 맨 끝으로 (>>) -->
+               <button onclick="location.href='<%= contextPath %>/shop.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+          	 </div>
+          	 <br>
             <!-- 검색옵션, 검색버튼 -->
             <div class="searchArea">
                 <input type="search" style="display:inline-block;">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
+            <br>
             <!-- 수정, 삭제버튼-->
             <button type="button" id="delete_btn" style="margin-right:5%;">쇼핑몰삭제</button>    
             <button type="button" id="update_btn" style="margin-right:2%;">쇼핑몰수정</button>

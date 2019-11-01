@@ -315,7 +315,6 @@ public class BoardDao {
 		return list;
 	}
 
-
 	public int deleteMyList(Connection conn, String[] deleteList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -340,5 +339,67 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+
+	public ArrayList<Board> searchResult(Connection conn, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> blist = new ArrayList<>();
+		
+		String sql = prop.getProperty("searchResult");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				blist.add(new Board(rset.getInt("ARTICLE_NO"),
+									rset.getInt("MEMBER_NO"),
+									rset.getInt("ARTICLE_VIEWS"),
+									rset.getInt("ARTICLE_WISHES"),
+									rset.getString("ARTICLE_CONTENTS"),
+									rset.getDate("ARTICLE_DATE"),
+									rset.getString("ARTICLE_STATUS")));				
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return blist;
+	}
+
+
+	public Board searchDetail(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String sql = prop.getProperty("searchDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, articleNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt("ARTICLE_NO"),
+						rset.getInt("MEMBER_NO"),
+						rset.getInt("ARTICLE_VIEWS"),
+						rset.getInt("ARTICLE_WISHES"),
+						rset.getString("ARTICLE_CONTENTS"),
+						rset.getDate("ARTICLE_DATE"),
+						rset.getString("ARTICLE_STATUS"));
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
 	}
 }

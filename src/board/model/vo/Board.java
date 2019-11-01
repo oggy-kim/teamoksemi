@@ -7,6 +7,7 @@ public class Board implements java.io.Serializable{
 	
 	private int articleNo; // 게시판글번호
 	private int memberNo; // 회원번호
+	private String memberNick; // 회원아이디 (추가 19.10.31.)
 	private int articleViews; // 게시판조회수
 	private int articleLikes; // 게시판찜수
 	private String articleContents; // 게시판글 내용
@@ -15,11 +16,24 @@ public class Board implements java.io.Serializable{
 	
 	public Board() {}
 
-	public Board(int articleNo, int memberNo, int articleViews, int articleLikes, String articleContents,
-			Date articleDate, String status) {
+	// ADM BOARD
+	public Board(int articleNo, String memberNick, String articleContents, Date articleDate, int articleLikes, int articleViews
+			 ) {
+		super();
+		this.articleNo = articleNo;
+		this.articleContents = articleContents;
+		this.memberNick = memberNick;
+		this.articleDate = articleDate;
+		this.articleLikes = articleLikes;
+		this.articleViews = articleViews;
+	}
+
+	public Board(int articleNo, int memberNo, String memberNick, int articleViews, int articleLikes,
+			String articleContents, Date articleDate, String status) {
 		super();
 		this.articleNo = articleNo;
 		this.memberNo = memberNo;
+		this.memberNick = memberNick;
 		this.articleViews = articleViews;
 		this.articleLikes = articleLikes;
 		this.articleContents = articleContents;
@@ -41,6 +55,14 @@ public class Board implements java.io.Serializable{
 
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
+	}
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
 	}
 
 	public int getArticleViews() {
@@ -83,10 +105,18 @@ public class Board implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "Board [articleNo=" + articleNo + ", memberNo=" + memberNo + ", articleViews=" + articleViews
-				+ ", articleLikes=" + articleLikes + ", articleContents=" + articleContents + ", articleDate="
-				+ articleDate + ", status=" + status + "]";
+		return "Board [articleNo=" + articleNo + ", memberNo=" + memberNo + ", memberNick=" + memberNick
+				+ ", articleViews=" + articleViews + ", articleLikes=" + articleLikes + ", articleContents="
+				+ articleContents + ", articleDate=" + articleDate + ", status=" + status + "]";
 	}
+
+	
+	
+	
 }

@@ -34,13 +34,13 @@ public class AdmMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = (Member)request.getSession().getAttribute("loginUser");
 		
+		// 한글 인코딩
 		request.setCharacterEncoding("UTF-8");
+		
 		AdmService aService = new AdmService();
 		
-		int listCount = aService.getListCount();
-				
+		int listCount = aService.getListCount();		
 		int boardLimit = 10;
 		int currentPage = 1;
 		int pageLimit = 5;

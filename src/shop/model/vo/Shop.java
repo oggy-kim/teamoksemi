@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Shop implements java.io.Serializable{
 	private static final long serialVersionUID = 3526284197511410119L;
-	private String shopCode; // 쇼핑몰코드
+	private int shopNo; // 쇼핑몰번호 (String shopCode -> int shopNo로 변경)
 	private String shopGradeCode; // 쇼핑몰등급코드
 	private String shopName; // 쇼핑몰이름
 	private Date contractDate; // 계약일
@@ -16,10 +16,10 @@ public class Shop implements java.io.Serializable{
 	
 	public Shop() {}
 
-	public Shop(String shopCode, String shopGradeCode, String shopName, Date contractDate, Date expireDate,
+	public Shop(int shopNo, String shopGradeCode, String shopName, Date contractDate, Date expireDate,
 			int contractMoney, String shopPIC, String shopContact, String status) {
 		super();
-		this.shopCode = shopCode;
+		this.shopNo = shopNo;
 		this.shopGradeCode = shopGradeCode;
 		this.shopName = shopName;
 		this.contractDate = contractDate;
@@ -30,12 +30,26 @@ public class Shop implements java.io.Serializable{
 		this.status = status;
 	}
 
-	public String getShopCode() {
-		return shopCode;
+	// AdmShopPage
+	public Shop(int shopNo, String shopName, String status, String shopGradeCode,  Date contractDate, Date expireDate,
+			int contractMoney, String shopContact) {
+		super();
+		this.shopNo = shopNo; // int
+		this.shopName = shopName; // String
+		this.status = status; // String
+		this.shopGradeCode = shopGradeCode; // String
+		this.contractDate = contractDate; // Date
+		this.expireDate = expireDate; // Date
+		this.contractMoney = contractMoney; // int
+		this.shopContact = shopContact; // String
 	}
 
-	public void setShopCode(String shopCode) {
-		this.shopCode = shopCode;
+	public int getShopNo() {
+		return shopNo;
+	}
+
+	public void setShopNo(int shopNo) {
+		this.shopNo = shopNo;
 	}
 
 	public String getShopGradeCode() {
@@ -108,7 +122,7 @@ public class Shop implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Shop [shopCode=" + shopCode + ", shopGradeCode=" + shopGradeCode + ", shopName=" + shopName
+		return "Shop [shopNo=" + shopNo + ", shopGradeCode=" + shopGradeCode + ", shopName=" + shopName
 				+ ", contractDate=" + contractDate + ", expireDate=" + expireDate + ", contractMoney=" + contractMoney
 				+ ", shopPIC=" + shopPIC + ", shopContact=" + shopContact + ", status=" + status + "]";
 	}

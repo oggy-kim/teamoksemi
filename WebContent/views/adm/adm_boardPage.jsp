@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
+<% 
+	// Board 목록
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
+	
+%> 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -93,9 +105,7 @@
             list-style-type: disc;
             float: left;
             font-size: 20px;
-            /* ------ 규내 수정 -----*/
             padding : 5% 0 0 0;
-            /* ---------------------*/
         }
 
         .line {
@@ -108,6 +118,12 @@
         .list {
             padding: 10px;
         }
+        
+        .list:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
         .sublist {
             padding: 10px;
         }
@@ -115,10 +131,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             /* ------ 규내 수정 -----*/
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
-            /* ---------------------*/
         }
 
         ul.category li a:hover {
@@ -182,12 +196,35 @@
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-        .board_box, .board_detail_box {
+        .board_box {
             width : 80%;
-            height : 21%;
+            height : auto;
+        	overflow : hidden;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
+        
+        .board_detail_box {
+        	width : 80%;
+        	height : 21%;
+        	margin-left : 5%;
+        	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+        }
+        
+        #trend_table {
+        	text-align : center;
+            width : 85%;
+            margin : 1% 0 0 5%;
+            font-size : 15px;
+        }
+        
+        #board_table {
+        	text-align : center;
+        	width : 85%;
+        	margin : 1% 0 0 5%;
+        	font-size : 15px;
+        	
+        } 
 
         .table {
             text-align : center;
@@ -237,7 +274,6 @@
             cursor:pointer;
         }
         
-        /* --------------- */
 
     </style>
 </head>
@@ -368,11 +404,6 @@
 
         <div class="board_box">
             <h4 class="table_title">게시글 모아보기</h4>
-            <!-- 테이블 정렬 버튼 -->
-            <!-- <div class="sorting_box">
-                <button id="view_btn" style="display:inline-block;">작성일</button>
-                <button id="date_btn" style="display:inline-block;">조회수</button>       
-            </div> -->
             <div class="sorting_box">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
                     <option value="write_date">작성일</option>
@@ -380,7 +411,7 @@
                 </select>
             </div>
             <!-- 전체 게시글 테이블 -->
-            <table class="table" id="border_table">
+            <table class="table" id="board_table">
                 <tr>
                     <th>번호</th>
                     <th>내용</th>
@@ -390,70 +421,59 @@
                     <th>조회수</th>
                     <th>댓글수</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>학교 끝나고...</td>
-                    <td>수연</td>
-                    <td>19-10-24</td>
-                    <td>58</td>
-                    <td>000</td>
-                    <td>000</td>
+                  <% if(list.isEmpty()){ %>
+               		 <tr>
+                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                	<tr>
+                	<% } else { %>
+                	<% for(Board b : list){ %>    
+ 					<tr>
+ 					<td><%= b.getArticleNo() %></td>
+                    <td><%= b.getMemberNick() %></td>
+                    <td><%= b.getArticleContents() %></td>
+                    <td><%= b.getArticleDate() %></td>
+                    <td><%= b.getArticleLikes() %></td>
+                    <td><%= b.getArticleViews() %></td>
+                    <td>아직 구현 안함</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>학교 끝나고...</td>
-                    <td>수연</td>
-                    <td>19-10-24</td>
-                    <td>58</td>
-                    <td>000</td>
-                    <td>000</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>학교 끝나고...</td>
-                    <td>수연</td>
-                    <td>19-10-24</td>
-                    <td>58</td>
-                    <td>000</td>
-                    <td>000</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>학교 끝나고...</td>
-                    <td>수연</td>
-                    <td>19-10-24</td>
-                    <td>58</td>
-                    <td>000</td>
-                    <td>000</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>학교 끝나고...</td>
-                    <td>수연</td>
-                    <td>19-10-24</td>
-                    <td>58</td>
-                    <td>000</td>
-                    <td>000</td>
-                </tr>
+                <% } %>
+                <% } %>  
             </table>
             <br>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
+            <!-- 페이지네이션 -->
+             <div class="pagingArea" align="center">
+               <!-- 맨 처음으로 (<<) -->
+               <button onclick="location.href='<%= contextPath %>/.board?currentPage=1'"> &lt;&lt; </button>
+
+               <!-- 이전 페이지로 (<) -->
+               <% if(currentPage == 1){ %>
+               <button disabled> &lt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/board.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+               <% } %>
+
+               <!-- 10개의 페이지 목록 -->
+               <% for(int p = startPage; p <= endPage; p++){ %>
+               <% if(p == currentPage){ %>
+               <button disabled> <%= p %> </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/board.adm?currentPage=<%= p %>'"><%= p %></button>
+               <% } %>
+               <% } %>
+
+               <!-- 다음 페이지로 (>) -->
+               <% if(currentPage == maxPage){ %>
+               <button disabled> &gt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/board.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+               <% } %>
+
+               <!-- 맨 끝으로 (>>) -->
+               <button onclick="location.href='<%= contextPath %>/board.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+          	 </div>
+            </table>
+            <br>
+        	<!-- 페이지네이션 -->
 
             <div class="searchArea">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
@@ -467,8 +487,26 @@
             </div>
         </div>
         <br> 
+		<script>
+        // BOARD 상세보기
+            	$(function(){
+            		$("#board_table td").mouseenter(function(){
+            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+            		}).mouseout(function(){
+            			$(this).parent().css({"background":"white"});
+            		}).click(function(){ // Board click시, 해당 QNA 상세정보가 하위에 표시
+            			var con = document.getElementById("board_detail");
+            			if(con.style.display != 'none'){
+            				con.style.display = 'none';
+            			} else {
+            				con.style.display = 'block';
+            			}
+            		}); 
+            	});
+        </script>
 
-        <div class="board_detail_box">
+
+        <div class="board_detail_box" id="board_detail">
             <h4 class="board_detail_title">게시글 상세보기</h4>
                 
         </div>
