@@ -192,7 +192,7 @@ span {
 						<label class="left">비밀번호</label> <input type="password"
 							class="input" placeholder="비밀번호를 입력하세요" name="userPwd" required>
 						<br> <label class="left">비밀번호확인</label> <input
-							type="password" class="input" placeholder="6~12자리 영문 숫자로 입력"
+							type="password" class="input" placeholder="4~12자리 영문 숫자로 입력"
 							name="userPwd2" required> <label id="pwdResult"></label>
 						<br>
 						<button type="submit" id="btn2">가입하기</button>
@@ -221,6 +221,12 @@ span {
 		if(!(/^[가-힣0-9]{2,}$/.test($(".name").val()))){
 			alert('닉네임은 한글로 2글자 이상 입력');
 		}
+		});
+		
+		$("#joinForm input[name=userPwd]").change(function(){
+			if(!(/^[a-zA-Z0-9]{4,12}$/.test($("#joinForm input[name=userPwd]").val()))){
+				alert('영문자숫자4자이상입력하세요!');
+			}
 		});
 		
 		

@@ -70,14 +70,12 @@ public class MemberAddInfomation extends HttpServlet {
 				//request.getSession().setAttribute("msg","추가정보가 저장되었습니다.");
 				
 				String defaultName = multiRequest.getFilesystemName("upfile");
-				
 				File defaultFile = new File(savePath + "/" + defaultName);
 				File changeFile = new File(savePath + "/" + updateMember.getMemberNo() + defaultName.substring(defaultName.lastIndexOf('.')));
 				
 				defaultFile.renameTo(changeFile);
-				
-				//request.getSession().setAttribute("loginUser", updateMember);
 				response.sendRedirect(request.getContextPath());
+				request.getSession().setAttribute("msg", "회원가입에 성공했습니다 로그인해주세요");
 				
 			}else {
 				request.setAttribute("msg","추가정보 저장에 실패하였습니다.");
