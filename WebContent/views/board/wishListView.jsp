@@ -12,6 +12,10 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	//세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -316,11 +320,12 @@ hr {
 
         function goMypage() {
         	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
-        	if("<%= gradeCode %>" == 'S'){
-        		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
-        	} else {
-        		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-        	}
+    		if("<%= gradeCode %>" == 'S'){
+    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    		} else {
+    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    		}
+
         }
         
         function deleteWish() {

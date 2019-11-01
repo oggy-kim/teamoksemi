@@ -254,6 +254,7 @@ public class BoardDao {
 	      return list;
 	   }
 
+
 	// 찜게시판 목록 불러오기 dao
 	public int getWishListCount(Connection conn, int mNo) {
 	      int listCount = 0;
@@ -432,4 +433,37 @@ public class BoardDao {
 		}
 		return b;
 	}
+	
+	
+	   // 찜목록 삭제 dao
+	   public int deleteWish(Connection conn, int aNo, String[] arr) {
+	      int result = 0;
+	      
+	      PreparedStatement pstmt = null;
+	      String sql = prop.getProperty("deleteWish");
+	      
+	      int[] arrInt = new int[arr.length];
+	      for(int i = 0; i < arrInt.length; i++) {
+	         arrInt[i] = Integer.parseInt(arr[i]);
+	      }
+	      
+	      try {
+	         for(int i = 0; i < arrInt.length; i++) {
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, aNo);
+	            pstmt.setInt(2, arrInt[i]);
+	            
+	            result += pstmt.executeUpdate();
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {2
+	         close(pstmt);
+	      }
+	      return result;
+	   }
+	   
+	   
+	
 }
