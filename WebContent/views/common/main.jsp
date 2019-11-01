@@ -232,7 +232,7 @@ function goFavorite() {
 	location.href="<%= contextPath %>/list.fa";
 }
 
-function goEvent() {
+function goEvent() {s
 	location.href="<%= contextPath %>/views/event/eventPage.jsp";
 }
 

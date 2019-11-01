@@ -362,8 +362,7 @@
                <!-- 맨 끝으로 (>>) -->
                <button onclick="location.href='<%= contextPath %>/qna.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
           	 </div>
-
-          
+			<br>
             <div class="searchArea">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>

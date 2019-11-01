@@ -429,8 +429,8 @@
                 	<% for(Board b : list){ %>    
  					<tr>
  					<td><%= b.getArticleNo() %></td>
-                    <td><%= b.getArticleContents() %></td>
                     <td><%= b.getMemberNick() %></td>
+                    <td><%= b.getArticleContents() %></td>
                     <td><%= b.getArticleDate() %></td>
                     <td><%= b.getArticleLikes() %></td>
                     <td><%= b.getArticleViews() %></td>

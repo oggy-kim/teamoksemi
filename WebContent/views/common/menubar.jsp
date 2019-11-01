@@ -6,6 +6,7 @@
 	
 	//request.getContextPath() 변수화
 	String contextPath = request.getContextPath();
+
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -130,6 +131,11 @@
 	function logout(){
 		location.href = '<%= request.getContextPath() %>/logout.me';
 	}
+
+	function goEvent() {
+		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+	}
+	
 </script>
 
 </body>
