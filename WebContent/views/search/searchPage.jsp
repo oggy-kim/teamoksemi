@@ -85,11 +85,12 @@
         }
         .hastag {
             height: 100px;
+            margin:40px 0;
         }
         
         .hastag button {
             width: 10%;
-            height: 30%;
+        	height:auto;
             text-align: center;
             border-radius: 5px;
             float: left;
@@ -98,10 +99,12 @@
         }
 
         .hastag button a {
-            text-decoration: none;
+            text-decoration: none;            
+            font-size:25px;
         }
 
         .searchTitle{
+        	margin:0 0 0 10%;
             height: 100px;
             text-align: left;
             font-family: 'Do Hyeon', sans-serif;
@@ -109,6 +112,7 @@
 
         .searchTitle h1 {
             margin: 1% 0 0 3%;
+            font-size: 60px;
         }
         
         .searchName {
@@ -191,6 +195,9 @@
 </nav>
 <br>
 <section>
+	<div class="searchTitle">
+           <h1 style="font-family: 'Do Hyeon', sans-serif;"><%= keyword %> 검색결과</h1>
+        </div>
     <div class="search search1">
         <div class="hastag">
             <button><a href="#">#가디건</a></button>
@@ -198,10 +205,7 @@
             <button><a href="#">#여자가디건</a></button>
             <button><a href="#">#남자가디건</a></button>
             <button><a href="#">#오버핏가디건</a></button>
-        </div>
-        <div class="searchTitle">
-           <h1><%= keyword %> 검색결과</h1>
-        </div>
+        </div>        
     </div>
     <br>
     <div class="search search2">
@@ -247,32 +251,34 @@
             <hr>
         </div>
         <div class="thumbnail">
-            <div class="subImg subImg1">
+            <div class="subImg subImg1"><a style="text-decoration:none; color:black;" href="https://store.musinsa.com/app/product/search?type=&keyword_value=&keyword_url=&q=<%= keyword %>" target="_blank"> 
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/musinsa.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">무신사 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
-            <div class="subImg subImg2">
+            <div class="subImg subImg2"><a style="text-decoration:none; color:black;" href="https://www.styleshare.kr/search?keyword=<%= keyword %>" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/styleshare.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">스타일쉐어 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
-            <div class="subImg subImg3">
+            <div class="subImg subImg3"><a style="text-decoration:none; color:black;" href="https://search.shopping.naver.com/search/all.nhn?query=<%= keyword %>&cat_id=&frm=NVSHATC" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/naver.png" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">네이버쇼핑 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
-        <button id="detail"><a href="#">DETAIL</a></button>  
     </div>
     <div class="searchDetailForm" id="searchDetailForm">
     </div>
@@ -286,11 +292,11 @@ function goMain() {
 }
 
 function goStyle() {
-	location.href="<%= contextPath %>/list.bo";
+	location.href="<%= contextPath %>/boardlist.look";
 }
 
 function goFavorite() {
-	location.href="<%= contextPath %>/list.fa";
+	location.href="<%= contextPath %>/wishlist.look";
 }
 
 function goEvent() {
@@ -333,7 +339,7 @@ $(function(){
 	           						"<th  colspan='5'><p style='font-size:20px;'>STYLE</p></th>" +
 	           					"</tr>" +
 	           					"<tr>" +
-	           						"<td rowspan='5' style='width:500px;'><img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='400px;'></td>" +
+	           						"<td rowspan='5' style='width:500px;'><img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='500px;'></td>" +
 	           					"</tr>" +
 	           					"<tr>" +
            							"<td><p style='font-weight:bold;'>DATE</p></td>" +
@@ -364,8 +370,6 @@ $(function(){
 		 });
 	});
 });
-
-// "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>"
 
 </script>
 </body>
