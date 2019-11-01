@@ -253,7 +253,9 @@ public class BoardDao {
 	      }
 	      return list;
 	   }
-	
+
+
+	// 찜게시판 목록 불러오기 dao
 	public int getWishListCount(Connection conn, int mNo) {
 	      int listCount = 0;
 	      
@@ -291,8 +293,9 @@ public class BoardDao {
 			int startRow = (currentPage-1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -312,6 +315,35 @@ public class BoardDao {
 		}
 		return list;
 	}
+	
+	   // 찜목록 삭제 dao
+	   public int deleteWish(Connection conn, int aNo, String[] arr) {
+	      int result = 0;
+	      
+	      PreparedStatement pstmt = null;
+	      String sql = prop.getProperty("deleteWish");
+	      
+	      int[] arrInt = new int[arr.length];
+	      for(int i = 0; i < arrInt.length; i++) {
+	         arrInt[i] = Integer.parseInt(arr[i]);
+	      }
+	      
+	      try {
+	         for(int i = 0; i < arrInt.length; i++) {
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, aNo);
+	            pstmt.setInt(2, arrInt[i]);
+	            
+	            result += pstmt.executeUpdate();
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 
 	public int deleteMyList(Connection conn, String[] deleteList) {
 		PreparedStatement pstmt = null;

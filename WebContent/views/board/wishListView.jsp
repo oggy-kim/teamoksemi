@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();		
+
 	ArrayList<WishList> list = (ArrayList<WishList>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -322,6 +325,7 @@ hr {
     		} else {
     			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
     		}
+
         }
         
         function deleteWish() {
