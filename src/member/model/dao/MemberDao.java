@@ -50,6 +50,8 @@ public class MemberDao {
 									   rset.getInt("BIRTH_YEAR"),
 									   rset.getDate("ENTRY_DATE"),
 									   rset.getString("MEMBER_STATUS"));
+				
+				
 			}
 			
 		} catch (SQLException e) {
@@ -91,9 +93,26 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			
 			pstmt.setInt(1, m.getBirthYear());
 			pstmt.setString(2, m.getLikeStyle());
+			pstmt.setString(3, m.getMemberId());
+			
+			
 			result = pstmt.executeUpdate();
+//			MEMBER_NO
+//			GRADE_CODE
+//			MEMBER_ID
+//			MEMBER_PWD
+//			MEMBER_NICK
+//			GENDER
+//			PROFILE
+//			LIKE_STYLE
+//			BIRTH_YEAR
+//			ENTRY_DATE
+//			MEMBER_STATUS
+			
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,6 +141,44 @@ public class MemberDao {
             close(pstmt);
         }
         return result;
+	}
+
+	public Member selectMember(Connection conn, String memberId) {
+		Member mem = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectMember");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEMBER_NO"),
+									   rset.getString("GRADE_CODE"),
+									   rset.getString("MEMBER_ID"),
+									   rset.getString("MEMBER_PWD"),
+									   rset.getString("MEMBER_NICK"),
+									   rset.getString("GENDER"),
+									   rset.getString("PROFILE"),
+									   rset.getString("LIKE_STYLE"),
+									   rset.getInt("BIRTH_YEAR"),
+									   rset.getDate("ENTRY_DATE"),
+									   rset.getString("MEMBER_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mem;
 	}
 
 }

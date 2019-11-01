@@ -27,6 +27,20 @@ public class Member implements java.io.Serializable{
 	this.memberNick = memberNick;
 	this.entryDate = entryDate;
 }
+	public Member(String memberId, int birthYear, String likeStyle) {
+		super();
+		this.memberId = memberId;
+		this.likeStyle = likeStyle;
+		this.birthYear = birthYear;
+	}
+	
+	public Member(String memberId, String memberPwd, String memberNick, String gender) {
+		super();
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberNick = memberNick;
+		this.gender = gender;
+	}
 
 public Member(int memberNo, String gradeCode, String memberId, String memberPwd, String memberNick, String gender,
          String profile, String likeStyle, int birthYear, Date entryDate, String memberStatus) {

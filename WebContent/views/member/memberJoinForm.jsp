@@ -166,28 +166,37 @@
     
    <label class="left">비밀번호</label> <input type="password" class="input"
     placeholder="비밀번호를 입력하세요" name="userPwd" required> <br>
-    <label class="left">비밀번호확인</label> <input type="password" class="input" 
+    <label class="left">비밀번호확인</label> 
+    <input type="password" class="input" 
     placeholder="6~12자리 영문 숫자로 입력" name="userPwd2" required> <br>
-    <button id="btn2" onclick="joinSuccess();"type="submit">가입하기</button>
+    <button type="submit" id="btn2">가입하기</button>
   </div>
 </div>
 </form>
 </div>
 </section>
 	<script>
+	// 2. 유효성 검사
 	function joinValidate(){
-	if($("#joinForm input[name=userPwd]").val() != $("#joinForm input[name=userPwd2]").val()){
-		$("#pwdResult").text("비밀번호 불일치").css("color", "red");
-		return false;
-	}
-	
-	return true;
-	}
-	
+		if($("#joinForm input[name=userPwd]").val() != $("#joinForm input[name=userPwd2]").val()){
+			$("#pwdResult").text("비밀번호 불일치").css("color", "red");
+			return false;
+		}
+		
+		if(!(/^[가-힣]{2,}$/.test($(".name").val()))){
+			alert('닉네임은 한글로 2글자 이상 입력');
+			$(".name").select();
+			return false;
+		}
+		
+		return true;
 <%-- 	function joinSuccess() {
 		location.href="<%= contextPath %>/views/member/joinSuccess.jsp";
 		/* <a href="${pageContext.request.contextPath}views/member/joinSuccess.jsp"> */
 	} --%>
+	
+	
+		})
 	
 	</script>
 </body>

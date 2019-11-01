@@ -1,9 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
@@ -17,7 +15,6 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 
-import common.MyFileRenamePolicy;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
@@ -46,14 +43,17 @@ public class MemberAddInfomation extends HttpServlet {
 			int maxSize = 1024 * 1024 * 10;
 			
 //			String root = request.getSession().getServletContext();
+			
 			String savePath = "resources/images/profile";
 			
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 			
-			int mno = Integer.parseInt(request.getParameter("member_no"));
+			Member m = (Member)request.getAttribute("loginUser");
+			int mno = m.getMemberNo();
+			
 //			int mno = request.getParameter("member_no");
 			
-			MultipartRequest multiRequest = new MultipartRequest(request , savePath , maxSize , "UTF-8" , new MyFileRenamePolicy());
+			MultipartRequest multiRequest = new MultipartRequest(request , savePath , maxSize , "UTF-8" , new MyfileRenamePolicy(mno));
 			
 			ArrayList<String> changeFiles = new ArrayList<String>();
 			ArrayList<String> originfiles = new ArrayList<String>();
@@ -77,25 +77,28 @@ public class MemberAddInfomation extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		
-		String year = request.getParameter("year");
+		int year = Integer.parseInt(request.getParameter("year"));
 		String style1 = request.getParameter("s1");
 		String style2 = request.getParameter("s2");
-		String style = style1 + style2;
+		String style = style1 + "," + style2;
+//		String style = style1 + style2;
 		
-		 style = "";
-		if(style != null) {
-			style = String.join(",", style);
-		}
+//		 style = "";
+//		if(style != null) {
+//			style = String.join(",", style);
+//		}
 		
-		Member m  = new Member(userId , year , style1 + ",", style2);
+		Member m  = new Member(userId, year, style);
+		System.out.println(m);
+		Member updateMember = new MemberService().updateMember(m);
 		
-		int result = new MemberService().updateMember(m);
-		
-		if(result >  0) {
+		if(updateMember != null) {
 			request.getSession().setAttribute("msg","추가정보가 저장되었습니다.");
 			
-//			request.getSession().setAttribute("loginUser", updateMember);
+			request.getSession().setAttribute("loginUser", updateMember);
 			response.sendRedirect(request.getContextPath());
+			
+			
 		}else {
 			request.setAttribute("msg","추가정보 저장에 실패하였습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
