@@ -84,6 +84,7 @@ public class BoardService {
 		ArrayList<WishList> list = new BoardDao().selectWishList(conn, currentPage, boardLimit, mNo);
 		
 		return list;
+	}
 	// QnA 게시판 문의글 등록 service
 	public int insertQnA(QnA q) {
 		Connection conn = getConnection();
@@ -107,5 +108,24 @@ public class BoardService {
 
 		close(conn);
 		return q;
+	}
+	// 검색 조회
+	public ArrayList<Board> searchResult(String keyword) {
+		Connection conn = getConnection();
+		ArrayList<Board> blist = new BoardDao().searchResult(conn, keyword);
+		
+		close(conn);
+		
+		
+		return blist;
+	}
+
+	public Board searchDetail(int articleNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDao().searchDetail(conn, articleNo);
+		
+		close(conn);
+		
+		return b;
 	}
 }
