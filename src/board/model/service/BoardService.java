@@ -110,6 +110,21 @@ public class BoardService {
 		close(conn);
 		return q;
 	}
+	public int deleteMyList(String[] deleteList) {
+		Connection conn = getConnection();
+		int result = new BoardDao().deleteMyList(conn, deleteList);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+}
+
 	// 검색 조회
 	public ArrayList<Board> searchResult(String keyword) {
 		Connection conn = getConnection();
