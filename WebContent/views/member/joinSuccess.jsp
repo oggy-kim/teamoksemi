@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%
     	String userId = (String)request.getAttribute("userId");
+    	
     %>
 <!DOCTYPE html>
 <html>
@@ -224,7 +225,7 @@
 <br>
 	<section>  
 <form id="updateinfo" action="<%= request.getContextPath() %>/updateinfo.me" 
-	method="post" enctype="multipart.form-data" onsubmit="return addinformation();">
+	method="post" enctype="multipart/form-data" onsubmit="return addinformation();">
   	<input type="hidden" name="userId" value="<%= userId %>">
     <div class="inner-container">
         <div class="box">
