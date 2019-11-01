@@ -9,6 +9,8 @@
     int maxPage = pi.getMaxPage();
     int startPage = pi.getStartPage();
     int endPage = pi.getEndPage();
+    
+    ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -246,6 +248,16 @@ hr {
 	width: 80%;
 	margin: auto;
 }
+	.replyArea {
+		width:100%;
+		color:black;
+		background:white;
+		margin:auto;
+	}
+	
+	#replySelectArea{
+		height:300px;
+	}
 </style>
 </head>
 <body>
@@ -265,60 +277,69 @@ hr {
 			</div>
 			<br>
 			<div class="write">
-				<button onclick="write()">글쓰기</button>
-				<a>보류</a>
+				<button id="insertBtn" onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
 			</div>
 			<br>
 
 			<% if(list.isEmpty()) { %>
-			<div class="empty" algin="center">
-				조회된 리스트가 없습니다.
-			</div>
+			<div class="empty" algin="center">조회된 리스트가 없습니다.</div>
 			<% } else { %>
 			<% for(Board b : list) { %>
 			<div class="sharing sfirst">
-				<button id="popOpenBtn" class="popOpen">
-					<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px">
+				<button id="popOpenBtn" class="popOpen" onclick="location.href='<%= contextPath %>/views/board/boardDetailView.jsp'">
+					<input type="hidden" value="<%= b.getArticleNo() %>">
+					<img
+						src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg"
+						width="220px" height="260px">
 				</button>
 			</div>
 			<% } %>
-            <% } %>
+			<% } %>
 
-			<br clear="both">
+			<br clear="both"> <br>
 
-			<br>
-			
 			<div class="pagingArea" align="center">
-                <!-- 맨 처음으로 (<<) -->
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=1'"> &lt;&lt; </button>
+				<!-- 맨 처음으로 (<<) -->
+				<button
+					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'">
+					&lt;&lt;</button>
 
-                <!-- 이전 페이지로 (<) -->
-                <% if(currentPage == 1){ %>
-                <button disabled> &lt; </button>
-                <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
-                <% } %>
+				<!-- 이전 페이지로 (<) -->
+				<% if(currentPage == 1){ %>
+				<button disabled>&lt;</button>
+				<% } else { %>
+				<button
+					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'">
+					&lt;</button>
+				<% } %>
 
-                <!-- 10개의 페이지 목록 -->
-                <% for(int p = startPage; p <= endPage; p++){ %>
-                <% if(p == currentPage){ %>
-                <button disabled> <%= p %> </button>
-                <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= p %>'"><%= p %></button>
-                <% } %>
-                <% } %>
+				<!-- 10개의 페이지 목록 -->
+				<% for(int p = startPage; p <= endPage; p++){ %>
+				<% if(p == currentPage){ %>
+				<button disabled>
+					<%= p %>
+				</button>
+				<% } else { %>
+				<button
+					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
+				<% } %>
+				<% } %>
 
-                <!-- 다음 페이지로 (>) -->
-                <% if(currentPage == maxPage){ %>
-                <button disabled> &gt; </button>
-                <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
-                <% } %>
+				<!-- 다음 페이지로 (>) -->
+				<% if(currentPage == maxPage){ %>
+				<button disabled>&gt;</button>
+				<% } else { %>
+				<button
+					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'">
+					&gt;</button>
+				<% } %>
 
-                <!-- 맨 끝으로 (>>) -->
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
-            </div>
-            
+				<!-- 맨 끝으로 (>>) -->
+				<button
+					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'">
+					&gt;&gt;</button>
+			</div>
+
 			<div class="page-1">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
@@ -336,9 +357,11 @@ hr {
 			</div>
 		</div>
 
-		<br clear="both"> <br>
-		
-		<br><br><br><br><br>
+		<br clear="both"> <br> <br>
+		<br>
+		<br>
+		<br>
+		<br>
 
 		<div class="newlistArea">
 			<div class="menuLine">
@@ -375,11 +398,7 @@ hr {
 
 		</div>
 
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br> <br>
 
 		<div class="sponserArea">
 			<div class="menuLine">
@@ -440,9 +459,36 @@ hr {
 				<div class="user" style="width: 100%; height: 20%;">
 					<a>안녕하세요?</a>
 				</div>
-				<div class="reply" style="width: 100%; height: 50%;">
-					<a>댓글창</a>
+				
+				
+				<!-- ajax를 이용한 댓글 구현 -->
+				<div class="replyArea">
+				<!-- 불러온 댓글 리스트 보여주기 -->
+					<div id="replySelectArea">
+						<table id="replySelectTable" border="1" align="center">
+							<% if(rlist != null){ %>
+							<% for(BoardComment r : rlist){ %>
+							<tr>
+								<td width="100px"><%= r.getMemberNick() %></td>
+								<td width="400px"><%= r.getCommentContents() %></td>
+							</tr>
+							<% } %>
+							<% } %>
+						</table>
+					</div>
 				</div>
+					<!-- 댓글 작성하는 부분 -->
+					<div class="replyWriterArea">
+						<table align="center">
+							<tr>
+								<td>댓글 작성</td>
+								<td><textarea rows="2" cols="50" id="replyContent"></textarea></td>
+								<td><button id="addReply">댓글등록</button></td>
+							</tr>
+						</table>
+					</div>
+
+					
 				<div class="wish" style="width: 100%; height: 20%;">
 					<button onclick="wish()">찜하기</button>
 				</div>
@@ -459,7 +505,7 @@ hr {
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
 	<script>
-    $(document).ready(function(){
+    /* $(document).ready(function(){
             
         $(".popOpen").click(function(event){
      
@@ -481,15 +527,14 @@ hr {
             $("body").css("overflow","auto");
         });
          
-        
-    });
+    }); */
     
     function goStyle() {
-    	location.href="<%= contextPath %>/list.bo";
+    	location.href="<%= contextPath %>/boardlist.look";
     }
 
     function goFavorite() {
-    	location.href="<%= contextPath %>/list.fa";
+    	location.href="<%= contextPath %>/wishlist.look";
     }
 
     function goEvent() {
@@ -499,7 +544,19 @@ hr {
     function goMypage() {
     	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
     }
+    
+    /* 댓글 구현 */
+    <%-- $(function(){
+    	$("#addReply").click(function(){
+    		var writer = <%= loginUser.getMemberNo() %>;
+    		var aNo = <%= list.get(0) %>;
+    		var content = $("#replyContent").val();
+    	});
+    }); --%>
+    
+    
         
     </script>
+    
 </body>
 </html>

@@ -123,8 +123,6 @@ public class BoardService {
 		return result;
 	}
 
-}
-
 	// 검색 조회
 	public ArrayList<Board> searchResult(String keyword) {
 		Connection conn = getConnection();

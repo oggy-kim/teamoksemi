@@ -339,6 +339,7 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
 
 	public ArrayList<Board> searchResult(Connection conn, String keyword) {
 		PreparedStatement pstmt = null;
