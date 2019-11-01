@@ -176,10 +176,11 @@
     <script>
 
     	function goStyle() {
-    		location.href="<%= contextPath %>/views/style/stylePage.jsp";
+    		location.href="<%= contextPath %>/boardlist.look";
     	}
+
     	function goFavorite() {
-    		location.href="<%= contextPath %>/views/style/choicePage.jsp";
+    		location.href="<%= contextPath %>/wishlist.look";
     	}
     	function goEvent() {
     		location.href="<%= contextPath %>/views/event/eventPage.jsp";
