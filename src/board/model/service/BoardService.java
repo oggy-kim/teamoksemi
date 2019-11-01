@@ -85,6 +85,21 @@ public class BoardService {
 		
 		return list;
 	}
+	
+	// 찜게시판 선택 삭제
+	   public int deleteWish(int aNo, String[] arr) {
+	      Connection conn = getConnection();
+	      
+	      int result = new BoardDao().deleteWish(conn, aNo, arr);
+	      
+	      if(result > 0) {
+	         commit(conn);
+	      } else {
+	         rollback(conn);
+	      }
+	      close(conn);
+	      return result;
+	   }
 
 	// QnA 게시판 문의글 등록 service
 	public int insertQnA(QnA q) {
