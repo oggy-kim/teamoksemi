@@ -227,7 +227,6 @@
             <span class="dtn-delete">
                 <form action="<%= contextPath%>/deletemylist.look" method="POST">
                     <button id="submit">삭제</button>
-
                 <select id="sortCondition" name="sortCondition">
                     <option value="date" selected>작성일 순</option>
                     <option value="like">좋아요 순</option>
@@ -262,8 +261,9 @@
                 </tr>
                 <% } %>
                 <% } %>
-                </form>
+                
             </table>
+       				</form>
             <div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
                 <button onclick="location.href='<%= contextPath %>/mylist.look?currentPage=1'"> &lt;&lt; </button>

@@ -180,5 +180,54 @@ public class MemberDao {
 		}
 		return mem;
 	}
+	// Mypage 화면에서 개인정보 수정
+	public int updateMember(Connection conn, int memberNo, String memberPwd, int birthYear, String memberNick,
+			String likeStyle) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberPwd);
+			pstmt.setString(2, memberNick);
+			pstmt.setInt(3, birthYear);
+			pstmt.setString(4, likeStyle);
+			pstmt.setInt(5, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	// 닉네임 중복 확인
+	public int checkDuplicate(Connection conn, String memberNick) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0; 
+		String sql = prop.getProperty("checkDuplicateNick");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberNick);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
 
 }

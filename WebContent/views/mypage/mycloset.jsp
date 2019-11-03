@@ -137,8 +137,8 @@ ul.category ul>li {
 }
 
 .left {
-	width: 40%;
-	height: 700px;
+	width: 500px;
+	height: 75%;
 	border: 1px solid black;
 	box-sizing: border-box;
 	display: block;
@@ -154,14 +154,15 @@ ul.category ul>li {
 }
 
 .mycloset {
-	width: 99%;
-	height: 80%;
+	width: 100%;
+	height: 90%;
+	background-color: gray;
 }
 
 .left .button {
 	text-align: center;
-	width: 99%;
-	height: 10%;
+	width: 100%;
+	height: 8%;
 }
 
 .right .first {
@@ -220,6 +221,80 @@ ul.category ul>li {
 
 #select-acc {
 	visibility: collapse;
+}
+
+ul.cloth-list { list-style:none;}
+
+
+
+.carousel{
+    width: 450px; margin: 0 auto;
+	height: 140px; 
+    position: relative;
+}
+
+.carousel .view{
+    width: 450px ; margin: 0 auto;
+	height: 140px;
+    /* background-color: lightgray; */
+    overflow: hidden;
+}
+
+.carousel .view .cloth-list{
+    width: 1350px; 
+	margin-left: -450px;
+	height: 100%;
+}
+.carousel .view .cloth-list:after{content: "";display: block;clear: both;}
+
+.carousel .view .cloth-list > li{
+    float:left;
+}
+
+.carousel .view .cloth-list > li ul:after{content: "";display: block;clear: both;}
+
+.carousel .view .cloth-list > li ul {
+	width: 400px;
+}
+
+.carousel .view .cloth-list > li ul li{
+	list-style:none;
+    float: left;
+    width: 130px; height: 130px;
+    margin-left: 5px; margin-right: 5px;
+}
+
+.carousel .prev{
+    position: absolute;
+    left: 0; top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform:translateY(-50%);
+    transform: translateY(-50%); 
+}
+.carousel .prev img {
+	transform:rotateY(180deg);
+	width: 50px; height: 50px;
+}
+
+.carousel .next{
+    position: absolute;
+    right: 0; top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform:translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.carousel .next img {
+	width: 50px; height: 50px; 
+} 
+/* Carousel 기능구현 */
+
+.myclothimg {
+	width: 100%;
+	height: 100%;
+	-webkit-mask-box-image: url(<%= request.getContextPath() %>/resources/images/closet/hood.png);
 }
 
 
@@ -286,11 +361,116 @@ ul.category ul>li {
 					<button>옷 삭제</button>
 				</div>
 				<div class="content left mycloset">
-					내 옷장
-				<img src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)" width="100px" height="100px">
-
+					상의
+						<div class="carousel top">
+							<div class="view">
+								<ul class="cloth-list">
+									<li>
+										<ul>
+											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(1).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(1).getColourCode() %>)"></li>
+											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(2).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(2).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(3).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(3).getColourCode() %>)"></li>
+											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(4).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(4).getColourCode() %>)"></li>
+											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(5).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(5).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(6).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(6).getColourCode() %>)"></li>
+											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(7).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(7).getColourCode() %>)"></li>
+											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(8).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(8).getColourCode() %>)"></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+						</div>
+						<hr>
+						하의
+						<div class="carousel bottom">
+							<div class="view">
+								<ul class="cloth-list">
+									<li>
+										<ul>
+											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+						</div>
+						<hr>
+						악세사리
+						<div class="carousel acc">
+							<div class="view">
+								<ul class="cloth-list">
+									<li>
+										<ul>
+											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
+						</div>
 				</div>
+				<script>
+					$(document).ready(function(){
+						$('.next').click(function(){
+							$('.cloth-list').stop().animate({'margin-left':'900px'},function(){
+								$('.cloth-list>li').eq(0).appendTo('.cloth-list');
+								$('.cloth-list').css({'margin-left':'-450px'});
+							});
+						});
+						$('.prev').click(function(){
+							$('.cloth-list').stop().animate({'margin-left':'0px'},function(){
+								$('.cloth-list>li').eq(2).prependTo('.cloth-list');
+								$('.cloth-list').css({'margin-left':'-450px'});
+							});
+						});
+					});
 				
+				</script>
 			</div>
 			<form>
 				<div class="content right">
@@ -488,7 +668,7 @@ ul.category ul>li {
                   } else if(options.val() == 'bottom') {
                	  	$("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + $("#cloth-bottom").val() + '.png)'});
                   } else {
-               	  	$("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + $("cloth-acc").val() + '.png)'});
+               	  	$("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + $("#cloth-acc").val() + '.png)'});
                   };
               };
               colour.change = function(value, item) {

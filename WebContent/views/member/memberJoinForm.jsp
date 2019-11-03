@@ -150,7 +150,7 @@
       <div class="inner-container">
           <div class="box">
       <label class="left">닉네임</label>&nbsp;<input type="text" class="input name"  
-      placeholder="닉네임을 입력하세요" name="userNick"><button id="btn">중복확인</button><br>
+      placeholder="닉네임을 입력하세요" name="userNick"><button id="checkoverlap-btn">중복확인</button><br>
      <br>
       <label class="left">성별</label>
       <span id="spangender"><input type="radio" name="gender" value="M"><label id="gender1">남
@@ -176,6 +176,22 @@
 </div>
 </section>
 	<script>
+    var userNick = $("#userNick").val();
+    $.ajax({
+      url: "/checkoverlap.look",
+      data: {memberNick : $("#userNick").val()},
+      type: "post",
+      dataType: "int",
+      success: function(result){
+
+      },
+      error: function() {
+        console.log("통신실패");
+      }
+
+    });
+
+
 	// 2. 유효성 검사
 	function joinValidate(){
 		if($("#joinForm input[name=userPwd]").val() != $("#joinForm input[name=userPwd2]").val()){
