@@ -17,7 +17,7 @@ import board.model.vo.PageInfo;
 /**
  * Servlet implementation class BoardListServlet
  */
-@WebServlet("/list.bo")
+@WebServlet("/boardlist.look")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

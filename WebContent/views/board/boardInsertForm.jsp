@@ -87,6 +87,30 @@ body {
             font-size: 18px;
         }
         
+        .insertArea {
+			width:500px;
+			height:450px;
+			margin:auto;
+		}
+        
+        #titleImgArea:hover {
+        	cursor:pointer;
+        }
+        
+        #titleImgArea {
+			width:350px;
+			height:200px;
+			border:2px dashed darkgray;
+			text-align:center;
+			display:table-cell;
+			vertical-align:middle;
+		}
+	
+		.btnArea {
+			width:200px;
+			margin:auto;
+		}
+        
     </style>
 </head>
 <body>
@@ -113,9 +137,52 @@ body {
 					<table align="center">
 						<tr>
 							<td>사진</td>
-							<
+							<td colspan="2">
+								<div id="titleImgArea">
+									<img id="titleImg" width="350" height="200">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="100px">내용</td>
+							<td colspan="2"><textarea name="content" rows="5" cols="30" style="resize:none;"></textarea>
 						</tr>
 					</table>
+					
+					<div id="fileArea">
+						<input type="file" id="thumbnailImg" name="thumbnailImg" onchange="LoadImg(this,1)">
+					</div>
+					
+					<script>
+					$(function(){
+						$("fileArea").hide();
+						
+						$("#titleImgArea").click(function(){
+							$("thumbnailImg").click();
+						});
+					});
+
+					function LoadImg(value, num){
+						if(value.files && value.files[0]){
+							var reader = new FileReader();
+							
+							reader.onload = function(e){
+								
+								$("#titleImg").attr("src", e.target.result);
+								
+								reader.readAsDataURL(value.files[0]);
+							}
+						}
+					}
+					
+					</script>
+					
+					<br>
+					
+					<div class="btnArea">
+						<button type="button" onclick="javascript:history.back();">취소하기</button>
+						<button type="submit">작성완료</button>
+					</div>	
 				</div>
 			</form>
 		</div>
@@ -144,6 +211,8 @@ function goMypage() {
 		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
 	}
 }
+
+
 </script>
 </body>
 </html>

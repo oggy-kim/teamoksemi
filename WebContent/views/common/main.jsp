@@ -222,11 +222,11 @@
 </footer>
 <script>
 function goStyle() {
-	location.href="<%= contextPath %>/list.bo";
+	location.href="<%= contextPath %>/boardlist.look";
 }
 
 function goFavorite() {
-	location.href="<%= contextPath %>/list.fa";
+	location.href="<%= contextPath %>/wishlist.look";
 }
 
 function goEvent() {s

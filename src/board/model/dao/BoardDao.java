@@ -537,8 +537,8 @@ public class BoardDao {
 			
 			rset = pstmt.executeQuery();
 			
+			rlist = new ArrayList<BoardComment>();
 			while(rset.next()) {
-				rlist = new ArrayList<BoardComment>();
 				rlist.add(new BoardComment(rset.getInt(2),
 						   				   rset.getInt(3),
 						   				   rset.getString(4),

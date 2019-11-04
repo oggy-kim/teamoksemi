@@ -80,20 +80,23 @@ public class BoardDetailServlet extends HttpServlet {
 		ArrayList<BoardComment> rlist = bService.selectCommentList(currentPage, boardLimit, aNo);
 
 		
-		RequestDispatcher view = request.getRequestDispatcher("views/board/boardListView.jsp");
+		/*RequestDispatcher view = request.getRequestDispatcher("views/board/boardListView.jsp");
 		request.setAttribute("rlist", rlist);
 		request.setAttribute("pi", pi);
 		
-		view.forward(request, response);
+		view.forward(request, response);*/
 		
-		System.out.println(rlist);
 		
 		if(board != null) {
 			request.setAttribute("board", board);
 			
 			request.setAttribute("rlist", rlist);
 			
+			request.setAttribute("pi", pi);
+			
+			System.out.println(board);
 			System.out.println(rlist);
+			System.out.println(pi);
 			
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 		} else {

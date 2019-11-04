@@ -292,13 +292,13 @@ img:hover {
 			
 			<div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=1'"> &lt;&lt; </button>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'"> &lt;&lt; </button>
 
                 <!-- 이전 페이지로 (<) -->
                 <% if(currentPage == 1){ %>
                 <button disabled> &lt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
                 <% } %>
 
                 <!-- 10개의 페이지 목록 -->
@@ -306,7 +306,7 @@ img:hover {
                 <% if(p == currentPage){ %>
                 <button disabled> <%= p %> </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= p %>'"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
                 <% } %>
                 <% } %>
 
@@ -314,11 +314,11 @@ img:hover {
                 <% if(currentPage == maxPage){ %>
                 <button disabled> &gt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
                 <% } %>
 
                 <!-- 맨 끝으로 (>>) -->
-                <button onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
             </div>
             
 			<div class="page-1">
@@ -483,15 +483,14 @@ img:hover {
             $("body").css("overflow","auto");
         });
          
-        
     });
     
     function goStyle() {
-    	location.href="<%= contextPath %>/list.bo";
+    	location.href="<%= contextPath %>/boardlist.look";
     }
 
     function goFavorite() {
-    	location.href="<%= contextPath %>/list.fa";
+    	location.href="<%= contextPath %>/wishlist.look";
     }
 
     function goEvent() {
