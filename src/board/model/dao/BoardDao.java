@@ -70,7 +70,7 @@ public class BoardDao {
             pstmt.setInt(1, memberNo);
             pstmt.setInt(2, startRow);
             pstmt.setInt(3, endRow);
-
+            
             rset = pstmt.executeQuery();
 
             while(rset.next()) {
@@ -223,63 +223,65 @@ public class BoardDao {
 
 
 	public ArrayList<Board> selectList(Connection conn, int currentPage, int boardLimit) {
-		ArrayList<Board> list = new ArrayList<>();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			int startRow = (currentPage-1) * boardLimit + 1;
-			int endRow = startRow + boardLimit - 1;
-			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Board(rset.getInt(2), rset.getInt(3), rset.getInt(4), rset.getInt(5), 
-								   rset.getString(6), rset.getDate(7), rset.getString(8)));
-				
-            }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-		}
-		return list;
-	}
+	      ArrayList<Board> list = new ArrayList<>();
+	      
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      String sql = prop.getProperty("selectList");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         int startRow = (currentPage-1) * boardLimit + 1;
+	         int endRow = startRow + boardLimit - 1;
+	         
+	         pstmt.setInt(1, startRow);
+	         pstmt.setInt(2, endRow);
+	         rset = pstmt.executeQuery();
+	         
+	         while(rset.next()) {
+	            list.add(new Board(rset.getInt(2), rset.getString(3), rset.getString(4), 
+	                           rset.getDate(5), rset.getInt(6), rset.getInt(7)));
+	            
+	            }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	      }
+	      return list;
+	   }
 
 	// 찜게시판 목록 불러오기 dao
-	public int getWishListCount(Connection conn, int mNo) {
-		int listCount = 0;
-		
-		Statement stmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("getWishListCount");
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql);
-			
-			if(rset.next()) {
-				listCount = rset.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(stmt);
-		}
-		return listCount;
-	}
+	public int getWishListCount(Connection conn, int memberNo) {
+	      int listCount = 0;
+	      
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      String sql = prop.getProperty("getWishListCount");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, memberNo);
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return listCount;
+	   }
 
-	public ArrayList<WishList> selectWishList(Connection conn, int currentPage, int boardLimit, int mNo) {
+	public ArrayList<WishList> selectWishList(Connection conn, int currentPage, int boardLimit, int memberNo) {
 		ArrayList<WishList> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -293,8 +295,9 @@ public class BoardDao {
 			int startRow = (currentPage-1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -314,6 +317,35 @@ public class BoardDao {
 		}
 		return list;
 	}
+	
+	   // 찜목록 삭제 dao
+	   public int deleteWish(Connection conn, int aNo, String[] arr) {
+	      int result = 0;
+	      
+	      PreparedStatement pstmt = null;
+	      String sql = prop.getProperty("deleteWish");
+	      
+	      int[] arrInt = new int[arr.length];
+	      for(int i = 0; i < arrInt.length; i++) {
+	         arrInt[i] = Integer.parseInt(arr[i]);
+	      }
+	      
+	      try {
+	         for(int i = 0; i < arrInt.length; i++) {
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, aNo);
+	            pstmt.setInt(2, arrInt[i]);
+	            
+	            result += pstmt.executeUpdate();
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 
 	public int deleteMyList(Connection conn, String[] deleteList) {
 		PreparedStatement pstmt = null;
@@ -339,6 +371,7 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
 
 	public ArrayList<Board> searchResult(Connection conn, String keyword) {
 		PreparedStatement pstmt = null;
@@ -402,4 +435,150 @@ public class BoardDao {
 		}
 		return b;
 	}
+
+	// 조회수 증가 dao
+	public int increaseCount(Connection conn, int aNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, aNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 게시판 상세보기 dao
+	public Board selectBoard(Connection conn, int aNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String sql = prop.getProperty("selectBoardDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, aNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt(2),
+							rset.getString(4),
+							  rset.getString(3),
+							  rset.getDate(5),
+							  rset.getInt(6),
+							  rset.getInt(7));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
+	}
+
+
+	/*public ArrayList<BoardComment> selectCommentList(Connection conn, int aNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<BoardComment> rlist = null;
+		
+		String sql = prop.getProperty("selectCommentList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, aNo);
+			
+			rset = pstmt.executeQuery();
+			
+			rlist = new ArrayList<BoardComment>();
+			
+			while(rset.next()) {
+				rlist.add(new BoardComment(rset.getInt(2),
+										   rset.getInt(3),
+										   rset.getString(4),
+										   rset.getString(5),
+										   rset.getString(6)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rlist;
+	}*/
+
+	public ArrayList<BoardComment> selectCommentList(Connection conn, int currentPage, int boardLimit, int aNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<BoardComment> rlist = null;
+		
+		String sql = prop.getProperty("selectCommentList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (currentPage-1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, aNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				rlist = new ArrayList<BoardComment>();
+				rlist.add(new BoardComment(rset.getInt(2),
+						   				   rset.getInt(3),
+						   				   rset.getString(4),
+						   				   rset.getString(5),
+						   				   rset.getString(6)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+
+	public int insertComment(Connection conn, BoardComment c) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String sql = prop.getProperty("insertComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getArticleNo());
+			pstmt.setString(2, c.getMemberNick());
+			pstmt.setString(3, c.getCommentContents());
+			
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 }

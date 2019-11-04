@@ -4,18 +4,18 @@ public class BoardComment implements java.io.Serializable{
 	private static final long serialVersionUID = 9178762038941847015L;
 	
 	private int commentNo; // 댓글번호
-	private int memberNo; // 댓글작성자
 	private int articleNo; // 글번호
+	private String memberNick; // 댓글작성자
 	private String commentContents; // 게시판댓글내용
 	private String commentStatus; // 게시판댓글삭제여부
 	
 	public BoardComment() {}
 
-	public BoardComment(int commentNo, int memberNo, int articleNo, String commentContents, String commentStatus) {
+	public BoardComment(int commentNo,  int articleNo, String memberNick, String commentContents, String commentStatus) {
 		super();
 		this.commentNo = commentNo;
-		this.memberNo = memberNo;
 		this.articleNo = articleNo;
+		this.memberNick = memberNick;
 		this.commentContents = commentContents;
 		this.commentStatus = commentStatus;
 	}
@@ -28,12 +28,12 @@ public class BoardComment implements java.io.Serializable{
 		this.commentNo = commentNo;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public String getMemberNick() {
+		return memberNick;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
 	}
 
 	public int getArticleNo() {
@@ -62,7 +62,7 @@ public class BoardComment implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "BoardComment [commentNo=" + commentNo + ", memberNo=" + memberNo + ", articleNo=" + articleNo
+		return "BoardComment [commentNo=" + commentNo + ", articleNo=" + articleNo + ", memberNick=" + memberNick
 				+ ", commentContents=" + commentContents + ", commentStatus=" + commentStatus + "]";
 	}
 }

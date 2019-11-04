@@ -24,34 +24,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
-<script>
-        $(document).ready(function(){
-            $('.check-all').click(function(){
-                $('.ca').prop('checked', this.checked);
-            });
-        });
-        
-        <script>
-        function goMain() {
-        	location.href="<%= contextPath %>";
-        }
 
-        function goStyle() {
-        	location.href="<%= contextPath %>/list.bo";
-        }
-
-        function goFavorite() {
-        	location.href="<%= contextPath %>/list.fa";
-        }
-
-        function goEvent() {
-        	location.href="<%= contextPath %>/views/event/eventPage.jsp";
-        }
-
-        function goMypage() {
-        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-        }
-    </script>
 <style>
 body {
 	width: 100%;
@@ -314,5 +287,32 @@ hr {
 	<footer class="copyRight">
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
+	<script>
+        $(document).ready(function(){
+            $('.check-all').click(function(){
+                $('.ca').prop('checked', this.checked);
+            });
+        });
+        
+        function goMain() {
+        	location.href="<%= contextPath %>";
+        }
+
+        function goStyle() {
+        	location.href="<%= contextPath %>/list.bo";
+        }
+
+        function goFavorite() {
+        	location.href="<%= contextPath %>/list.fa";
+        }
+
+        function goEvent() {
+        	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+        }
+
+        function goMypage() {
+        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+        }
+    </script>
 </body>
 </html>

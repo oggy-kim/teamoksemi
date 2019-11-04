@@ -246,6 +246,10 @@ hr {
 	width: 80%;
 	margin: auto;
 }
+
+img:hover {
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -265,7 +269,7 @@ hr {
 			</div>
 			<br>
 			<div class="write">
-				<button onclick="write()">글쓰기</button>
+				<button onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
 				<a>보류</a>
 			</div>
 			<br>
@@ -277,9 +281,7 @@ hr {
 			<% } else { %>
 			<% for(Board b : list) { %>
 			<div class="sharing sfirst">
-				<button id="popOpenBtn" class="popOpen">
-					<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px">
-				</button>
+				<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px" class="picture" title="<%= b.getArticleNo() %>">
 			</div>
 			<% } %>
             <% } %>
@@ -499,6 +501,12 @@ hr {
     function goMypage() {
     	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
     }
+    
+    $(".picture").click(function(){
+    	var aNo = $(this).attr('title');
+    	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
+    	
+    });
         
     </script>
 </body>

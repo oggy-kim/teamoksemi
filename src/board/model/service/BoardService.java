@@ -68,23 +68,38 @@ public class BoardService {
 	}
 
 	// 찜게시판 목록 불러오기
-	public int getWishListCount(int mNo) {
+	public int getWishListCount(int memberNo) {
 		Connection conn = getConnection();
 		
-        int listCount = new BoardDao().getWishListCount(conn, mNo);
+        int listCount = new BoardDao().getWishListCount(conn, memberNo);
 
         close(conn);
         
 		return listCount;
 	}
 
-	public ArrayList<WishList> selectWishList(int currentPage, int boardLimit, int mNo) {
+	public ArrayList<WishList> selectWishList(int currentPage, int boardLimit, int memberNo) {
 		Connection conn = getConnection();
 		
-		ArrayList<WishList> list = new BoardDao().selectWishList(conn, currentPage, boardLimit, mNo);
+		ArrayList<WishList> list = new BoardDao().selectWishList(conn, currentPage, boardLimit, memberNo);
 		
 		return list;
 	}
+	
+	// 찜게시판 선택 삭제
+	   public int deleteWish(int aNo, String[] arr) {
+	      Connection conn = getConnection();
+	      
+	      int result = new BoardDao().deleteWish(conn, aNo, arr);
+	      
+	      if(result > 0) {
+	         commit(conn);
+	      } else {
+	         rollback(conn);
+	      }
+	      close(conn);
+	      return result;
+	   }
 
 	// QnA 게시판 문의글 등록 service
 	public int insertQnA(QnA q) {
@@ -110,6 +125,7 @@ public class BoardService {
 		close(conn);
 		return q;
 	}
+	
 	public int deleteMyList(String[] deleteList) {
 		Connection conn = getConnection();
 		int result = new BoardDao().deleteMyList(conn, deleteList);
@@ -122,8 +138,6 @@ public class BoardService {
 		close(conn);
 		return result;
 	}
-
-}
 
 	// 검색 조회
 	public ArrayList<Board> searchResult(String keyword) {
@@ -144,4 +158,76 @@ public class BoardService {
 		
 		return b;
 	}
+
+	// 게시판 상세보기 서비스(조회수 증가)
+	public Board selectBoard(int aNo) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		
+		int result = bDao.increaseCount(conn, aNo);
+		
+		Board b = null;
+		
+		if(result > 0) {
+			b = bDao.selectBoard(conn, aNo);
+			commit(conn);
+		}  else {
+			rollback(conn);
+		}
+		close(conn);
+		return b;
+	}
+
+	// 게시글 선택해오기(조회수 증가 x)
+	public Board selectBoardNoCnt(int aNo) {
+		Connection conn = getConnection();
+		
+		Board b = new BoardDao().selectBoard(conn, aNo);
+		
+		close(conn);
+		
+		return b;
+	}
+
+	// 선택한 게시글의 댓글 리스트 조회용 서비스
+	/*public ArrayList<BoardComment> selectCommentList(int aNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<BoardComment> rlist = new BoardDao().selectCommentList(conn, aNo);
+		
+		close(conn);
+		
+		return rlist;
+	}*/
+	
+	public ArrayList<BoardComment> selectCommentList(int currentPage, int boardLimit, int aNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<BoardComment> rlist = new BoardDao().selectCommentList(conn, currentPage, boardLimit, aNo);
+		
+		close(conn);
+		
+		return rlist;
+	}
+
+	public ArrayList<BoardComment> insertComment(BoardComment c) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		
+		int result = bDao.insertComment(conn, c);
+		
+		ArrayList<BoardComment> rlist = null;
+		
+		if(result > 0) {
+			commit(conn);
+			rlist = bDao.selectCommentList(conn, 1, 5, c.getArticleNo());
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return rlist;
+	}
+
 }
