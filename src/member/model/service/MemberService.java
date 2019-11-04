@@ -24,6 +24,7 @@ public class MemberService {
 		
 		if(result > 0) {
 			commit(conn);
+			
 		} else {
 			rollback(conn);
 		}
@@ -64,6 +65,24 @@ public class MemberService {
 		}
 		close(conn);
 
+		return result;
+	}
+
+	public int nickcheck(String nickname) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().nickcheck(conn, nickname);
+		
+		close(conn);
+
+		return result;
+	}
+
+	public int emailcheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().emailcheck(conn , userId);
+		close(conn);
 		return result;
 	}
 
