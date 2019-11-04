@@ -103,7 +103,7 @@
             border-radius: 15px;
             position:absolute;
             margin-left: 40%;
-            margin-top: 26%;
+            margin-top: 30%;
             padding-left: 15px;
             padding-right: 15px;
             padding-top: 5px;
@@ -116,7 +116,7 @@
             border-radius: 15px;
             position:absolute;
             margin-left: 48%;
-            margin-top: 26%;
+            margin-top: 30%;
             padding-left: 15px;
             padding-right: 15px;
             padding-top: 5px;
@@ -174,8 +174,8 @@
          }
          #preview {
           position:absolute;
-          top:calc(50vh - 200px);
-          left:calc(40vw - 200px);
+          top:calc(30vh - 200px);
+          left:calc(30vw - 200px);
          }
          td {
            padding: 7px;
@@ -307,7 +307,7 @@
                     var reader = new FileReader();
                     
                     reader.onload = function(e) {
-                        $('#preview').html("<img src=" + e.target.result + " width='100' height='100'>");
+                        $('#preview').html("<img src=" + e.target.result + " width='250' height='250'>");
                     }
                     reader.readAsDataURL(this.files[0]);
                 }

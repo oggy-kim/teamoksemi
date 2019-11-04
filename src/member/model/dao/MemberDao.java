@@ -180,20 +180,54 @@ public class MemberDao {
 	public int nickcheck(Connection conn, String nickname) {
 		
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		int result = 0;
 		
-		String query = prop.getProperty("idCheck");
+		String query = prop.getProperty("nickCheck");
 		
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1,nickname);
-			result = pstmt.executeUpdate();
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+				
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rset);
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int emailcheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("emailCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
 		return result;
 	}
 

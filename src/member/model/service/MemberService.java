@@ -73,13 +73,16 @@ public class MemberService {
 		
 		int result = new MemberDao().nickcheck(conn, nickname);
 		
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
 		close(conn);
 
+		return result;
+	}
+
+	public int emailcheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().emailcheck(conn , userId);
+		close(conn);
 		return result;
 	}
 

@@ -3,7 +3,6 @@ package member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
-import member.model.vo.Member;
 
 /**
- * Servlet implementation class member_nickcheck
+ * Servlet implementation class Member_emailcheck
  */
-@WebServlet("/membernickcheck.look")
-public class member_nickcheck extends HttpServlet {
+@WebServlet("/memberemailcheck.look")
+public class Member_emailcheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public member_nickcheck() {
+    public Member_emailcheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,19 +31,16 @@ public class member_nickcheck extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		String userId = request.getParameter("userId");
 		
-		String nickname = request.getParameter("userNick");
-		
-		Member m = new Member();
-		m.getMemberNick();
-		
-		int result = new MemberService().nickcheck(nickname);
+		int result = new MemberService().emailcheck(userId);
 		PrintWriter out = response.getWriter();
 		
 		if(result > 0 ) {
 			out.print("fail");
 		}else {
 			out.print("success");
+			
 		}
 		
 	}

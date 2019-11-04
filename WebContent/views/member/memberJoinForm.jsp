@@ -136,11 +136,33 @@ span {
 #spangender {
 	margin-left: 20px;
 }
+
+#eamil-check {
+	padding: 5px;
+	margin-left: 3%;
+	background: rgba(59, 182, 11, 0.5);
+	color: white;
+	border: 1px;
+	border-radius: 5px;
+}
+
+#check-overlap {
+	padding: 5px;
+	background: rgba(59, 182, 11, 0.5);
+	color: white;
+	border: 1px;
+	border-radius: 5px;
+}
+
 /* #pwdResult {
 	color:red;
 	background: red;
 	border:5px;
 } */
+.div {
+	color: black;
+	/* background: white; */
+}
 </style>
 
 </head>
@@ -174,12 +196,11 @@ span {
 						<label class="left">닉네임</label>&nbsp;<input type="text"
 							class="input name" placeholder="닉네임을 입력하세요" name="userNick"
 							id="userNick">
-						<button id="check-overlap" type="button">중복확인</button><label id="checkmsg"></label>
-						
-						<br> <br> <label class="left">성별</label> <span
-							id="spangender"><input type="radio" name="gender"
-							value="M"><label id="gender1">남 </label><input
-							type="radio" id="gedner2" name="gender" value="F"><label
+						<button id="check-overlap" type="button">중복확인</button>
+						<label id="checkmsg"></label> <br> <br> <label
+							class="left">성별</label> <span id="spangender"><input
+							type="radio" name="gender" value="M"><label id="gender1">남
+						</label><input type="radio" id="gedner2" name="gender" value="F"><label
 							id="gender1">여</label> </span><br>
 
 						<!-- 기본적인기능 다완성하고 추가기능구현하기
@@ -187,15 +208,16 @@ span {
     <label class="left">코드번호</label> <input type="text" class="input" placeholder="코드번호를 입력하세요">
     <label id="checkbox"><input type="checkbox" checked><span>인증완료</span></label><br> -->
 						<label class="left">이메일</label>&nbsp;<input type="email"
-							class="input" placeholder="이메일을 입력하세요" name="userId" required><br>
-
-						<label class="left">비밀번호</label> <input type="password"
-							class="input" placeholder="비밀번호를 입력하세요" name="userPwd" required>
-						<br> <label class="left">비밀번호확인</label> <input
-							type="password" class="input" placeholder="4~12자리 영문 숫자로 입력"
-							name="userPwd2" required> <label id="pwdResult"></label>
-						<br>
-						<button type="submit" id="btn2">가입하기</button>
+							class="input" placeholder="이메일을 입력하세요" name="userId" id="userId"
+							required>
+						<button id="eamil-check" type="button">중복확인</button>
+						<label id="emailmsg"></label><br> <label class="left">비밀번호</label>
+						<input type="password" class="input" placeholder="비밀번호를 입력하세요"
+							name="userPwd" required> <br> <label class="left">비밀번호확인</label>
+						<input type="password" class="input"
+							placeholder="4~12자리 영문 숫자로 입력" name="userPwd2" required>
+						<label id="pwdResult"></label> <br>
+						<button type="submit" id="btn2" disabled>가입하기</button>
 					</div>
 				</div>
 			</form>
@@ -203,6 +225,24 @@ span {
 	</section>
 	<script>
 	// 2. 유효성 검사
+		
+	function joinValidate() {
+		if(!(/^[가-힣0-9]{2,}$/.test($(".name").val()))){
+			alert('닉네임은 한글로 2글자 이상 입력');
+			return false;
+		}
+		
+		if(!(/^[a-zA-Z0-9]{4,12}$/.test($("#joinForm input[name=userPwd]").val()))){
+			alert('영문자숫자4자이상입력하세요!');
+			return false;
+		}
+		
+		if($("#joinForm input[name=userPwd]").val() != $("#joinForm input[name=userPwd2]").val()){
+			$("#pwdResult").text("비밀번호 불일치");
+			return false;
+		} 	
+		return true;
+	}
 	
 	$(function(){
 		//패스워드일치여부
@@ -210,12 +250,10 @@ span {
 			console.log($(this).val());
 			if($("#joinForm input[name=userPwd]").val() != $(this).val()){
 				$("#pwdResult").text("비밀번호 불일치").css("color", "red");
-		}else {
+			}else {
 			$("#pwdResult").text("");
-		}
+			}
 		});
-		
-		
 		//닉네임유효성검사
 		$("#userNick").change(function(){
 		if(!(/^[가-힣0-9]{2,}$/.test($(".name").val()))){
@@ -231,30 +269,53 @@ span {
 		
 		
 	});
+	
+	
+	
+	
+	
+	
+/* 	function joinValidate() {
+		$("#btn2").click(function(){
+		if(flag1 == false && flag2 == false && flag3 == false) {
+			return false;
+		}
+		});
+		return true;
+	}; */
 
 	
-	 var userNick = $("userNick").val();
+	
+	
+	
+
+	//닉네임 중복확인 aJax
 	
 	$("#check-overlap").click(function(){
+		var userNick = $("#userNick").val();
 		$.ajax({
-			url:"<%= request.getContextPath() %>/membernickcheck.look" ,
+			url:"<%=request.getContextPath()%>/membernickcheck.look" ,
 			type : "post",
 			data : {userNick:userNick},
 			success : function(result) {
-				if(result == "success" ) {
-					$("#checkmsg").text('사용가능한 닉네임입니다.');
-					alert('사용가능한 닉네임입니다.');
-					
-					/* if(isUsable) {
-						$("#btn2").removeAttr("disabled"); //회원가입버튼활성화
-					} */
-						
-					
-				}else {
+				console.log(result);
+				if(result == "fail" ) {
 					$("#checkmsg").text("닉네임이 중복되었습니다 다시 입력해주세요")
 					alert('닉네임이 중복되었습니다 다시 입력해주세요.');
 					 $("#userNick").val("");
 					$("#userNick").focus(); 
+						
+				}else {
+					$("#checkmsg").text("");
+					if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
+						$("#userNick").prop("readonly" , true);
+						isUsable = true;
+					}else {
+						userNick.focus();
+					}
+				if(isUsable) {
+					$("#btn2").removeAttr("disabled");
+				} 
 				}
 			},
 			error : function(e) {
@@ -265,8 +326,42 @@ span {
 		})
 	});
 	
-	
+	//이메일(아이디) 중복확인 aJax
+	$("#eamil-check").click(function(){
+	var userId = $("#userId").val();
+	/* console.log(userId); */
+		$.ajax({
+			url : "<%=request.getContextPath()%>/memberemailcheck.look",
+				type : "post",
+				data : {
+					userId : userId
+				},
+				success : function(result) {
+					if (result == "fail") {
+						$("#emailmsg").text("이메일이 중복되었습니다 다시 입력해주세요");
+						$("userId").val("");
+						$("#userId").focus();
 
+					} else {
+						if (confirm("사용 가능한 이메일입니다. 사용하시겠습니까?")) {
+							$("#emailmsg").text("");
+							$("#userId").prop("readonly", true);
+							isUsable = true;
+						} else {
+							userId.focus();
+						}
+						if (isUsable) {
+							$("#btn2").removeAttr("disabled");
+						}
+					}
+				},
+				error : function(e) {
+					console.log("ajax 통신실패");
+					console.log(e);
+				}
+
+			})
+		});
 	</script>
 </body>
 </html>
