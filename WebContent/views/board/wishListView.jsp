@@ -31,6 +31,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
+
 <style>
 body {
 	width: 100%;
@@ -295,7 +296,7 @@ hr {
 	<footer class="copyRight">
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
-<script>
+	<script>
         $(document).ready(function(){
             $('.check-all').click(function(){
                 $('.ca').prop('checked', this.checked);
@@ -319,18 +320,8 @@ hr {
         }
 
         function goMypage() {
-        	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
-    		if("<%= gradeCode %>" == 'S'){
-    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
-    		} else {
-    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-    		}
-
+        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
         }
-        
-        function deleteWish() {
-        	location.href="<%= contextPath %>/deletewish.look";
-        }
-</script>
+    </script>
 </body>
 </html>
