@@ -10,23 +10,32 @@ import member.model.vo.Member;
 
 
 public class MyFileRenamePolicy implements FileRenamePolicy{
+	
+
+	private int mno;
+
+
+	public MyFileRenamePolicy(int mno) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public java.io.File rename(File mno) {
 		
-		String name = mno.getName();
+/*		String name = mno.getName();
 		
 		String ext = "";
-		//member_no
+		
 		int dot = name.lastIndexOf(".");
 		
 		if(dot != -1) {
 			ext = name.substring(dot);
 		}
+		String fileName = mno + ext;*/
 		
-		String fileName = ".jpg";
+		String fileName = mno + ".jpg";
 		
-		File newFile = new File(mno.getParent(), fileName);
-		
+		File newFile = new File(mno, fileName);
+//		.getParent()	
 		return newFile;
 	}
 

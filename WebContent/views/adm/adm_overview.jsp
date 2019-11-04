@@ -204,11 +204,9 @@
     	function goStyle() {
     		location.href="<%= contextPath %>/boardlist.look";
     	}
-
     	function goFavorite() {
     		location.href="<%= contextPath %>/wishlist.look";
     	}
-
     	function goEvent() {
     		location.href="<%= contextPath %>/views/event/eventPage.jsp";
     	}

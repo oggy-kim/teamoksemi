@@ -1,29 +1,27 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
-import member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberJoin
+ * Servlet implementation class Member_emailcheck
  */
-@WebServlet("/insert.me")
-public class MemberJoin extends HttpServlet {
+@WebServlet("/memberemailcheck.look")
+public class Member_emailcheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberJoin() {
+    public Member_emailcheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,29 +31,16 @@ public class MemberJoin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
 		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		String userNick = request.getParameter("userNick");
-		String gender = request.getParameter("gender");
 		
+		int result = new MemberService().emailcheck(userId);
+		PrintWriter out = response.getWriter();
 		
-		Member m = new Member(userId, userPwd,userNick,gender);
-				
-		int result = new MemberService().insertMember(m);
-		
-		if(result > 0) {
-			request.getSession().setAttribute("msg", "회원가입 성공!!");
-			request.setAttribute("userId", userId);
-			RequestDispatcher view = request.getRequestDispatcher("views/member/joinSuccess.jsp");
-			view.forward(request, response);
+		if(result > 0 ) {
+			out.print("fail");
+		}else {
+			out.print("success");
 			
-			
-			
-		} else {
-			request.setAttribute("msg", "회원 가입에 실패하였습니다.");
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);
 		}
 		
 	}

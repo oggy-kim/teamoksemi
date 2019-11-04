@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+	
     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
     PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -9,6 +12,12 @@
     int maxPage = pi.getMaxPage();
     int startPage = pi.getStartPage();
     int endPage = pi.getEndPage();
+    
+    ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
+    
+ 	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+ 	Member m = (Member)session.getAttribute("loginUser");
+ 	String gradeCode = m.getGradeCode();
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -275,22 +284,19 @@ img:hover {
 			<br>
 
 			<% if(list.isEmpty()) { %>
-			<div class="empty" algin="center">
-				조회된 리스트가 없습니다.
-			</div>
+			<div class="empty" algin="center">조회된 리스트가 없습니다.</div>
 			<% } else { %>
 			<% for(Board b : list) { %>
 			<div class="sharing sfirst">
 				<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px" class="picture" title="<%= b.getArticleNo() %>">
 			</div>
 			<% } %>
-            <% } %>
+			<% } %>
 
-			<br clear="both">
+			<br clear="both"> <br>
 
-			<br>
-			
 			<div class="pagingArea" align="center">
+
                 <!-- 맨 처음으로 (<<) -->
                 <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'"> &lt;&lt; </button>
 
@@ -338,9 +344,11 @@ img:hover {
 			</div>
 		</div>
 
-		<br clear="both"> <br>
-		
-		<br><br><br><br><br>
+		<br clear="both"> <br> <br>
+		<br>
+		<br>
+		<br>
+		<br>
 
 		<div class="newlistArea">
 			<div class="menuLine">
@@ -377,11 +385,7 @@ img:hover {
 
 		</div>
 
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br> <br>
 
 		<div class="sponserArea">
 			<div class="menuLine">
@@ -442,9 +446,36 @@ img:hover {
 				<div class="user" style="width: 100%; height: 20%;">
 					<a>안녕하세요?</a>
 				</div>
-				<div class="reply" style="width: 100%; height: 50%;">
-					<a>댓글창</a>
+				
+				
+				<!-- ajax를 이용한 댓글 구현 -->
+				<div class="replyArea">
+				<!-- 불러온 댓글 리스트 보여주기 -->
+					<div id="replySelectArea">
+						<table id="replySelectTable" border="1" align="center">
+							<% if(rlist != null){ %>
+							<% for(BoardComment r : rlist){ %>
+							<tr>
+								<td width="100px"><%= r.getMemberNick() %></td>
+								<td width="400px"><%= r.getCommentContents() %></td>
+							</tr>
+							<% } %>
+							<% } %>
+						</table>
+					</div>
 				</div>
+					<!-- 댓글 작성하는 부분 -->
+					<div class="replyWriterArea">
+						<table align="center">
+							<tr>
+								<td>댓글 작성</td>
+								<td><textarea rows="2" cols="50" id="replyContent"></textarea></td>
+								<td><button id="addReply">댓글등록</button></td>
+							</tr>
+						</table>
+					</div>
+
+					
 				<div class="wish" style="width: 100%; height: 20%;">
 					<button onclick="wish()">찜하기</button>
 				</div>
@@ -461,7 +492,7 @@ img:hover {
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
 	<script>
-    $(document).ready(function(){
+    /* $(document).ready(function(){
             
         $(".popOpen").click(function(event){
      
@@ -498,15 +529,15 @@ img:hover {
     }
 
     function goMypage() {
-    	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+    	if("<%= gradeCode %>" == 'S'){
+    		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    	} else {
+    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    	}
     }
-    
-    $(".picture").click(function(){
-    	var aNo = $(this).attr('title');
-    	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
-    	
-    });
         
     </script>
+    
 </body>
 </html>

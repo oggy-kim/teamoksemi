@@ -30,7 +30,7 @@
     int maxPage = pi.getMaxPage();
     int startPage = pi.getStartPage();
     int endPage = pi.getEndPage();
-   
+     
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -358,6 +358,31 @@
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
     	}
+   	
+   	  
+   	  	function goStyle() {
+   	    	location.href="<%= contextPath %>/boardlist.look";
+   	    }
+
+   	    function goFavorite() {
+   	    	location.href="<%= contextPath %>/wishlist.look";
+   	    }
+
+   	    function goEvent() {
+   	    	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+   	    }
+
+   	    function goMypage() {
+   	    	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+   	    	if("<%= gradeCode %>" == 'S'){
+   	    		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+   	    	} else {
+   	    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+   	    	}
+   	    }
+      	    
+  
+  </script>
     </script>
     <div class="line"></div>
     <div class="content">

@@ -1,10 +1,9 @@
 package member.model.service;
 
 import java.sql.*;
-import static common.JDBCTemplate.*;
-
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import static common.JDBCTemplate.*;
 
 public class MemberService {
 
@@ -25,6 +24,7 @@ public class MemberService {
 		
 		if(result > 0) {
 			commit(conn);
+			
 		} else {
 			rollback(conn);
 		}
@@ -34,12 +34,14 @@ public class MemberService {
 		return result;
 	}
 
-	public int updateMember(Member m) {
+	public Member updateMember(Member m) {
 		Connection conn = getConnection();
+		Member updateMem = null;
 		
 		int result = new MemberDao().updateMember(conn, m);
 		
 		if(result > 0) {
+			updateMem = new MemberDao().selectMember(conn, m.getMemberId());
 			commit(conn);
 			
 		} else {
@@ -48,7 +50,7 @@ public class MemberService {
 		
 		close(conn);
 		
-		return result;
+		return updateMem;
 	}
 
 	public int withdrawMember(int memberNo) {
@@ -63,6 +65,24 @@ public class MemberService {
 		}
 		close(conn);
 
+		return result;
+	}
+
+	public int nickcheck(String nickname) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().nickcheck(conn, nickname);
+		
+		close(conn);
+
+		return result;
+	}
+
+	public int emailcheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().emailcheck(conn , userId);
+		close(conn);
 		return result;
 	}
 

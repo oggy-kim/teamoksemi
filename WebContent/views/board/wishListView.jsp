@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();		
+
 	ArrayList<WishList> list = (ArrayList<WishList>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -9,6 +12,10 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	//세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -182,7 +189,7 @@ hr {
 	</nav>
 	<br>
 	<section>
-		<form action="">
+		<form action="<%= contextPath %>/deletewish.look" method="post">
 			<table class="mytable" align="center">
 				<caption>표 제목</caption>
 				<tr>
@@ -194,13 +201,14 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
+				
 					<td coldspan="4">조회된 찜목록이 없습니다.</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
 					<input type="hidden" value="<%= w.getMemberNo() %>">
-					<td><input type="checkbox" id="select" style="width: 20px; height: 20px;" class="ca"></td>
+					<td><input type="checkbox" id="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
 					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getArticleNo() %>.jpg" width="130px" height="160px"></td>
 					<td><%= w.getWishDate() %></td>
 					<td><%= w.getWishMemo() %></td>
@@ -209,8 +217,9 @@ hr {
 				<% } %>
 			</table>
 
-			<button class="cart-select-delete-btn" type="submit">선택삭제</button>
+			<button class="cart-select-delete-btn" onclick="deleteWish();" type="submit">선택삭제</button>
 		</form>
+		
 		<br>
 		<br>
 

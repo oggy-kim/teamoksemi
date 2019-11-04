@@ -1,9 +1,8 @@
 package member.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import common.MyFileRenamePolicy;
 import member.model.service.MemberService;
@@ -45,62 +45,51 @@ public class MemberAddInfomation extends HttpServlet {
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024 * 1024 * 10;
 			
-//			String root = request.getSession().getServletContext();
-			String savePath = "resources/images/profile";
+			String root = request.getSession().getServletContext().getRealPath("/");
 			
-			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+			System.out.println(root);
 			
-			int mno = Integer.parseInt(request.getParameter("member_no"));
-//			int mno = request.getParameter("member_no");
+			String savePath = root + "resources/images/profile";
 			
-			MultipartRequest multiRequest = new MultipartRequest(request , savePath , maxSize , "UTF-8" , new MyFileRenamePolicy());
+			System.out.println(savePath);
 			
-			ArrayList<String> changeFiles = new ArrayList<String>();
-			ArrayList<String> originfiles = new ArrayList<String>();
+			MultipartRequest multiRequest = new MultipartRequest(request , savePath , maxSize , "UTF-8" , new DefaultFileRenamePolicy());
 			
-			Enumeration<String> files = multiRequest.getFileNames();
 			
-			while(files.hasMoreElements()) {
+			String userId = multiRequest.getParameter("userId");
+			int year = Integer.parseInt(multiRequest.getParameter("year"));
+			String style1 = multiRequest.getParameter("s1");
+			String style2 = multiRequest.getParameter("s2");
+			String style = style1 + "," + style2;
+			
+			Member m  = new Member(userId, year, style);
+			System.out.println(m);
+			Member updateMember = new MemberService().updateMember(m);
+			
+			if(updateMember != null) {
+				//request.getSession().setAttribute("msg","추가정보가 저장되었습니다.");
 				
-				String name = files.nextElement();
+				String defaultName = multiRequest.getFilesystemName("upfile");
+				File defaultFile = new File(savePath + "/" + defaultName);
+				File changeFile = new File(savePath + "/" + updateMember.getMemberNo() + defaultName.substring(defaultName.lastIndexOf('.')));
 				
-				if(multiRequest.getFilesystemName(name) != null) {
-					
-					String originName = multiRequest.getOriginalFileName(name);
-					
-				}
+				defaultFile.renameTo(changeFile);
+				response.sendRedirect(request.getContextPath());
+				request.getSession().setAttribute("msg", "회원가입에 성공했습니다 로그인해주세요");
+				
+			}else {
+				request.setAttribute("msg","추가정보 저장에 실패하였습니다.");
+				RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+				view.forward(request, response);
 			}
 			
-		}
-		
-		
-		
-		String userId = request.getParameter("userId");
-		
-		String year = request.getParameter("year");
-		String style1 = request.getParameter("s1");
-		String style2 = request.getParameter("s2");
-		String style = style1 + style2;
-		
-		 style = "";
-		if(style != null) {
-			style = String.join(",", style);
-		}
-		
-		Member m  = new Member(userId , year , style1 + ",", style2);
-		
-		int result = new MemberService().updateMember(m);
-		
-		if(result >  0) {
-			request.getSession().setAttribute("msg","추가정보가 저장되었습니다.");
 			
-//			request.getSession().setAttribute("loginUser", updateMember);
-			response.sendRedirect(request.getContextPath());
-		}else {
-			request.setAttribute("msg","추가정보 저장에 실패하였습니다.");
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);
+			
+			
+			
 		}
+		
+		
 		
 	}
 

@@ -4,6 +4,8 @@
 	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
 	Member m = (Member)session.getAttribute("loginUser");
 	String gradeCode = m.getGradeCode();	
+	
+	// 메인화면 사진 변화 난수값
 	int ran = (int)(1+5*Math.random());
 %>
 <!DOCTYPE html>
@@ -229,7 +231,7 @@ function goFavorite() {
 	location.href="<%= contextPath %>/wishlist.look";
 }
 
-function goEvent() {s
+function goEvent() {
 	location.href="<%= contextPath %>/views/event/eventPage.jsp";
 }
 
