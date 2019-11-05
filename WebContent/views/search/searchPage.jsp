@@ -357,7 +357,7 @@ $(function(){
        								"<td><p style='font-weight:bold;'>CONTENT</p></td>" +
        								"<td><p style='font-weight:bold;'>" + result.articleContents + "</p></td>" + 
        							"</tr></table>" +
-                          		"<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
+                          		"<button id='detail'><a href='<%= contextPath %>/boardlist.look'>" + "DETAIL" + "</a></button>";
                  	console.log(detail);
 
 	           		$(".searchDetailForm").html(detail);
