@@ -194,7 +194,7 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-					<td coldspan="4">조회된 찜목록이 없습니다.</td>
+					<td coldspan="4">조회된 찜목록이 없습니다</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
