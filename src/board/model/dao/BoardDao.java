@@ -550,4 +550,35 @@ public class BoardDao {
 		return result;
 	}
 
+
+	public Board selectMainBoard(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board board = null;
+		
+		String sql = prop.getProperty("selectMainBoard");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				board = new Board(rset.getInt("ARTICLE_NO"),
+						rset.getInt("MEMBER_NO"),
+						rset.getInt("ARTICLE_VIEWS"),
+						rset.getInt("ARTICLE_WISHES"),
+						rset.getString("ARTICLE_CONTENTS"),
+						rset.getDate("ARTICLE_DATE"),
+						rset.getString("ARTICLE_STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return board;
+	}
+
 }
