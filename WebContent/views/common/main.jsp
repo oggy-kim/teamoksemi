@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8" import="board.model.vo.*"%>
 <%
 	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
 	Member m = (Member)session.getAttribute("loginUser");
@@ -7,6 +7,9 @@
 	
 	// 메인화면 사진 변화 난수값
 	int ran = (int)(1+5*Math.random());
+	
+	// 게시판
+	Board board = (Board)request.getAttribute("board");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -227,7 +230,7 @@
     <br>
     <div class="subImg subImg1">
         <div class="card" style="width: 100%; height: 100%; border:0px;">
-            <img src="<%= contextPath %>/resources/images/tour1.jpg" class="card-img-top">
+            <img src="<%= contextPath %>/resources/images/board/1.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
