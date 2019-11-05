@@ -74,11 +74,11 @@ public class AdmDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				mlist.add(new Member(rset.getInt("MEMBER_NO"), 
-									rset.getString("MEMBER_ID"), 
-									rset.getString("MEMBER_NICK"),
-									rset.getString("GRADE_CODE"), 
-									rset.getDate("ENTRY_DATE")));
+				mlist.add(new Member(rset.getInt(2), 
+									rset.getString(3), 
+									rset.getString(4),
+									rset.getString(5), 
+									rset.getDate(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -148,6 +148,51 @@ public class AdmDao {
 		return list;
 	}
 
+	
+	public ArrayList<QnA> sortQList(Connection conn, int sortId, int currentPage, int boardLimit) {
+		ArrayList<QnA> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+		
+		if(sortId == 1){ // 답변여부
+			sql = prop.getProperty("sortQList1");
+		} else if (sortId == 2){ // 오래된 순
+			sql = prop.getProperty("sortQList2");
+		} else { // 최신순
+			sql = prop.getProperty("selectQList");
+		}
+		
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new QnA(rset.getInt(2), 
+									rset.getString(3), 
+									rset.getString(4),
+									rset.getDate(5), 
+									rset.getString(6).charAt(0)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
+	
+	
 	// 5. SHOP리스트갯수조회용 dao
 	public int getSListCount(Connection conn) {
 		int listCount = 0;
@@ -271,5 +316,118 @@ public class AdmDao {
 		}
 		return list;
 	}
+
+	// shop sorting 
+	public int sortSList(Connection conn, String sort) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("sortSList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sort);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Board> sortBList(Connection conn, int sortId, int currentPage, int boardLimit) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+		
+		if(sortId == 1){ // 찜갯수
+			sql = prop.getProperty("sortBList1");
+		} else if (sortId == 2){ // 조회수
+			sql = prop.getProperty("sortBList2");
+		} else { // 작성일
+			sql = prop.getProperty("selectBList");
+		}
+		
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2), 
+						rset.getString(3),
+						rset.getString(4),
+						rset.getDate(5),
+						rset.getInt(6),
+						rset.getInt(7)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Shop> sortSList(Connection conn, int sortId, int currentPage, int boardLimit) {
+		ArrayList<Shop> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = null;
+		
+		if(sortId == 1){ // 계약금
+			sql = prop.getProperty("sortSList1");
+		} else { // 계약상태
+			sql = prop.getProperty("selectSList");
+		}
+		
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Shop(rset.getInt(2), 
+						rset.getString(3),
+						rset.getString(4),
+						rset.getString(5),
+						rset.getDate(6),
+						rset.getDate(7),
+						rset.getInt(8),
+						rset.getString(9)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	
 
 }

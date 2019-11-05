@@ -426,7 +426,7 @@ public class BoardDao {
 	         
 	      } catch (SQLException e) {
 	         e.printStackTrace();
-	      } finally {2
+	      } finally {
 	         close(pstmt);
 	      }
 	      return result;

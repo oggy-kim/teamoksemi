@@ -43,7 +43,17 @@ public class AdmService {
 		close(conn);
 		return list;
 	}
-
+	
+	public ArrayList<QnA> sortQList(int sortId, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		
+		ArrayList<QnA> list = new AdmDao().sortQList(conn, sortId, currentPage, boardLimit);
+		close(conn);
+		return list;
+		
+	}
+	
+	/* --------------------------------------------------------- */
 	
 	public int getSListCount() {
 		Connection conn = getConnection();
@@ -58,6 +68,17 @@ public class AdmService {
 		close(conn);
 		return list;
 	}
+	
+	// shop sorting
+	public int sortSList(String sort) {
+		Connection conn = getConnection();
+		int result = new AdmDao().sortSList(conn, sort);
+		close(conn);
+		return result;
+	}
+	
+	
+	/* --------------------------------------------------------- */
 
 	public int getBListCount() {
 		Connection conn = getConnection();
@@ -72,6 +93,21 @@ public class AdmService {
 		close(conn);
 		return list;
 	}
+
+	public ArrayList<Board> sortBList(int sortId, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Board> list = new AdmDao().sortBList(conn, sortId, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Shop> sortSList(int sortId, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Shop> list = new AdmDao().sortSList(conn, sortId, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
 
 	
 }

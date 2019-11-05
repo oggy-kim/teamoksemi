@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+   <!--  <script src="../../js/sorttable.js"></script> -->
+    
     <style>
 
         body {
@@ -176,6 +178,14 @@
 
         /* ----------------- board ---------------- */
 
+		/* Sortable tables */
+		table.sortable thead {
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
+		
 
         /* -- 테이블 정렬 -- */
 
@@ -264,6 +274,7 @@
         .searchArea {
             width:60%;
             margin-left:30%;
+            margin-botton:10%;
         } 
         
         #searchBtn{
@@ -371,7 +382,8 @@
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
             <!-- 인기 게시글 테이블 -->
-            <table class="table" id="trend_table">
+            <table class="sortable table" id="trend_table" class="sortable">
+            <thead>
                 <tr>
                     <th>순위</th>
                     <th>내용</th>
@@ -381,9 +393,11 @@
                     <th>조회수</th>
                     <th>댓글수</th>
                 </tr>
+               </thead>
+               <tbody>
                 <tr>
                     <td>1</td>
-                    <td>학교 끝나고...</td>
+                    <td>아직</td>
                     <td>수연</td>
                     <td>19-10-24</td>
                     <td>58</td>
@@ -392,7 +406,7 @@
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>학교 끝나고...</td>
+                    <td>구현</td>
                     <td>수연</td>
                     <td>19-10-24</td>
                     <td>58</td>
@@ -401,7 +415,7 @@
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td>학교 끝나고...</td>
+                    <td>안</td>
                     <td>수연</td>
                     <td>19-10-24</td>
                     <td>58</td>
@@ -410,7 +424,7 @@
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td>학교 끝나고...</td>
+                    <td>했</td>
                     <td>수연</td>
                     <td>19-10-24</td>
                     <td>58</td>
@@ -419,13 +433,14 @@
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td>학교 끝나고...</td>
+                    <td>음</td>
                     <td>수연</td>
                     <td>19-10-24</td>
                     <td>58</td>
                     <td>000</td>
                     <td>000</td>
                 </tr>
+               </tbody>
             </table>
         </div> 
         <br>
@@ -434,13 +449,15 @@
         <div class="board_box">
             <h4 class="table_title">게시글 모아보기</h4>
             <div class="sorting_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="write_date">작성일</option>
+                    <option value="like_num">찜갯수</option>
                     <option value="view_num">조회수</option>
                 </select>
             </div>
             <!-- 전체 게시글 테이블 -->
-            <table class="table" id="board_table">
+            <table class="sortable table" id="board_table">
+                <thead id="board_table1">
                 <tr>
                     <th>번호</th>
                     <th>내용</th>
@@ -450,24 +467,76 @@
                     <th>조회수</th>
                     <th>댓글수</th>
                 </tr>
-                  <% if(list.isEmpty()){ %>
-               		 <tr>
-                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                </thead>
+                <tbody id="board_table2">
+                </tbody>
+                <% if(list.isEmpty()){ %>
+               	<tbody>
+               		<tr>
+                		<td colspan="7">작성된 게시글이 없습니다.</td>
                 	<tr>
+                </tbody>	
                 	<% } else { %>
                 	<% for(Board b : list){ %>    
+ 				<tbody>	
  					<tr>
- 					<td><%= b.getArticleNo() %></td>
-                    <td><%= b.getMemberNick() %></td>
-                    <td><%= b.getArticleContents() %></td>
-                    <td><%= b.getArticleDate() %></td>
-                    <td><%= b.getArticleLikes() %></td>
-                    <td><%= b.getArticleViews() %></td>
-                    <td>아직 구현 안함</td>
-                </tr>
+	 					<td><%= b.getArticleNo() %></td>
+	                    <td><%= b.getMemberNick() %></td>
+	                    <td><%= b.getArticleContents() %></td>
+	                    <td><%= b.getArticleDate() %></td>
+	                    <td><%= b.getArticleLikes() %></td>
+	                    <td><%= b.getArticleViews() %></td>
+	                    <td>아직 구현 안함</td>
+                	</tr>
+                </tbody>	
                 <% } %>
-                <% } %>  
+                <% } %>
             </table>
+            <script>
+           <%--  $("#sortCondition").change(function(){
+        		var sort = this.value;
+        		console.log(sort);
+        		
+        		$.ajax({
+        			url : "<%= contextPath %>/sortBoard.adm",
+        			type : "post",
+        			dataType : "json",
+        			data : {sort:sort},// key:value 
+        			success : function(data){
+        				console.log('성공');
+        				console.log(sort);
+        				var $tableBody = $("#board_table2");
+        				
+        				//$tableBody.empty();
+        				$tableBody.html(""); // 테이블 초기화
+        			
+        				for(var key in data){
+              				var $tr = $("<tr>");
+							var $noTd = $("<td>").text(data[key].articleNo);
+              				var $nickTd = $("<td>").text(data[key].memberNick);
+							var $contentTd = $("<td>").text(data[key].articleContents);
+							var $dateTd = $("<td>").text(data[key].articleDate);
+							var $likeTd = $("<td>").text(data[key].articleLikes);
+							var $viewTd = $("<td>").text(data[key].articleViews);	
+							
+							$tr.append($noTd);
+							$tr.append($nickTd);
+							$tr.append($nickTd);
+							$tr.append($contentTd);
+							$tr.append($dateTd);
+							$tr.append($likeTd);
+							$tr.append($viewTd);
+							
+							$tableBody.append($tr);
+        				}
+        				
+        			},
+        			error : function(){
+        				console.log('실패');
+        			}
+        		});
+        	}); --%>
+            </script>
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -503,7 +572,6 @@
             </table>
             <br>
         	<!-- 페이지네이션 -->
-
             <div class="searchArea">
                 <select id="searchCondition" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>
@@ -532,12 +600,11 @@
            			}
            		}); 
            	});
-      
 
-
+        </script>
         <div class="board_detail_box" id="board_detail">
             <h4 class="board_detail_title">게시글 상세보기</h4>
-                
+             
         </div>
     </div>
 </section>
