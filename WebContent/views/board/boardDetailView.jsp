@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
 	Board board = (Board)request.getAttribute("board");
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	
 	ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
+	
+	String gradeCode = m.getGradeCode();
 	
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -122,6 +125,10 @@
         	width:550px;
         }
         
+        #addComment {
+        	width:80px;
+        }
+        
 
     </style>
 </head>
@@ -146,6 +153,7 @@
 			<img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" width="350px" height="400px">
 		</div>
 		<div class="right">
+		<br>
 			<div class="tableArea">
 				<%-- <table align="center" width="550px">
 					<tr>
@@ -179,6 +187,8 @@
 			</table>
 			</div>
 			
+			<br><br>
+			
 			<div class="CommentArea">
 				<div id="CommentSelectArea">
 				<table id="CommentSelectTable" border="1" align="center">
@@ -197,7 +207,9 @@
 				</table>
 				</div>
 				
-							<div class="pagingArea" align="center">
+				<br><br>
+				
+				<div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
                 <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=1'"> &lt;&lt; </button>
 
@@ -231,7 +243,7 @@
 				<div class="CommentWriterArea">
 					<table align="center">
 						<tr>
-							<td><textarea rows="3" cols="80" id="CommentContent"></textarea>
+							<td><textarea rows="3" cols="70" id="CommentContent"></textarea>
 							<td><button id="addComment">댓글등록</button>
 					</table>
 				</div>
@@ -276,6 +288,27 @@
 			});
 		});
 	});
+	
+	function goStyle() {
+		location.href="<%= contextPath %>/boardlist.look";
+	}
+
+	function goFavorite() {
+		location.href="<%= contextPath %>/wishlist.look";
+	}
+
+	function goEvent() {s
+		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+	}
+
+	function goMypage() {
+		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+		if("<%= gradeCode %>" == 'S'){
+			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+		} else {
+			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+		}
+	}
 </script>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>

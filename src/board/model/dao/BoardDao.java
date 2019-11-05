@@ -489,35 +489,6 @@ public class BoardDao {
 		return b;
 	}
 
-
-	/*public ArrayList<BoardComment> selectCommentList(Connection conn, int aNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<BoardComment> rlist = null;
-		
-		String sql = prop.getProperty("selectCommentList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, aNo);
-			
-			rset = pstmt.executeQuery();
-			
-			rlist = new ArrayList<BoardComment>();
-			
-			while(rset.next()) {
-				rlist.add(new BoardComment(rset.getInt(2),
-										   rset.getInt(3),
-										   rset.getString(4),
-										   rset.getString(5),
-										   rset.getString(6)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return rlist;
-	}*/
-
 	public ArrayList<BoardComment> selectCommentList(Connection conn, int currentPage, int boardLimit, int aNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
