@@ -280,43 +280,42 @@ public class BoardDao {
 	      }
 	      return listCount;
 	   }
-
-	public ArrayList<WishList> selectWishList(Connection conn, int currentPage, int boardLimit, int memberNo) {
-		ArrayList<WishList> list = new ArrayList<>();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectWishList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			int startRow = (currentPage-1) * boardLimit + 1;
-			int endRow = startRow + boardLimit - 1;
-			
-			pstmt.setInt(1, memberNo);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new WishList(rset.getInt(2),
-									  rset.getInt(3),
-									  rset.getDate(4),
-									  rset.getString(5),
-									  rset.getString(6)));
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
+	   public ArrayList<WishList> selectWishList(Connection conn, int currentPage, int boardLimit, int memberNo) {
+		      ArrayList<WishList> list = new ArrayList<>();
+		      
+		      PreparedStatement pstmt = null;
+		      ResultSet rset = null;
+		      
+		      String sql = prop.getProperty("selectWishList");
+		      
+		      try {
+		         pstmt = conn.prepareStatement(sql);
+		         
+		         int startRow = (currentPage-1) * boardLimit + 1;
+		         int endRow = startRow + boardLimit - 1;
+		         
+		         pstmt.setInt(1, memberNo);
+		         pstmt.setInt(2, startRow);
+		         pstmt.setInt(3, endRow);
+		         
+		         rset = pstmt.executeQuery();
+		         
+		         while(rset.next()) {
+		            list.add(new WishList(rset.getInt(2),
+		                             rset.getInt(3),
+		                             rset.getDate(4),
+		                             rset.getString(5),
+		                             rset.getString(6)));
+		            
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      } finally {
+		         close(rset);
+		         close(pstmt);
+		      }
+		      return list;
+		   }
 	
 	   // 찜목록 삭제 dao
 	   public int deleteWish(Connection conn, int aNo, String[] arr) {
@@ -434,8 +433,8 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return b;
-	}	
-	
+	}
+    
 	// 조회수 증가 dao
 	public int increaseCount(Connection conn, int aNo) {
 		PreparedStatement pstmt = null;
