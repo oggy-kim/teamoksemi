@@ -190,7 +190,6 @@ public class AdmDao {
 			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
-			
 			// 쇼핑몰 번호, 쇼핑몰이름, 상태, 등급, 계약일, 만료일, 계약금, 연락처
 			while(rset.next()) {
 				list.add(new Shop(rset.getInt(2), 

@@ -11,6 +11,10 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage(); 
 	
+	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+ 	Member m = (Member)session.getAttribute("loginUser");
+ 	String gradeCode = m.getGradeCode();
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -272,6 +276,7 @@
         </ul>
     </div>
     <script>
+    	// SUB-NAVI
     	function goMember(){
     		location.href="<%= contextPath%>/member.adm";
     	}
@@ -287,6 +292,28 @@
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
     	}
+    	
+    	// MAIN NAVIBAR  
+    	function goStyle() {
+   	    	location.href="<%= contextPath %>/boardlist.look";
+   	    }
+
+   	    function goFavorite() {
+   	    	location.href="<%= contextPath %>/wishlist.look";
+   	    }
+
+   	    function goEvent() {
+   	    	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+   	    }
+
+   	    function goMypage() {
+   	    	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+   	    	if("<%= gradeCode %>" == 'S'){
+   	    		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+   	    	} else {
+   	    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+   	    	}
+   	    }
     </script>
     <div class="line"></div>
     <div class="content">

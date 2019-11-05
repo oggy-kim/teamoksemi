@@ -33,7 +33,6 @@ public class SearchDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = (Member) request.getSession().getAttribute("loginUser");
 		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 		
 		Board b = new BoardService().searchDetail(articleNo);

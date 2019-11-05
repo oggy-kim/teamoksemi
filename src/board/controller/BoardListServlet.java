@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
+import board.model.vo.BoardComment;
 import board.model.vo.PageInfo;
 
 /**
@@ -72,6 +74,26 @@ public class BoardListServlet extends HttpServlet {
 		request.setAttribute("pi", pi);
 		
 		view.forward(request, response);
+		
+		/*int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+		
+		Board board = null;
+		
+		boolean flag = false;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals("articleNo"+articleNo)) {
+					flag = true;
+				}
+			}
+			
+			if(!flag) {
+				board = new BoardService().selectBoard(articleNo);
+			}
+		}
+		
+		ArrayList<BoardComment> rlist = new BoardService().selectReplyList(articleNo);*/
 	}
 
 	/**
