@@ -495,7 +495,7 @@
         <br>
         <br>
 
-        <%-- <div class="member_detail_box" id="member_detail">
+    <%--    <div class="member_detail_box" id="member_detail">
             <h4 class="member_detail_title">회원 상세 정보</h4>
             <section id="member_detail_wrapper">
                 <!-- 프로필 사진 -->
@@ -578,7 +578,7 @@
                 	<% for(Board b : list){ %>    
  					<tr>
  					<td><%= b.getArticleNo() %></td>
-                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" idth="80px" height="80px"></td>
+                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" width="80px" height="80px"></td>
                     <td><%= b.getArticleDate() %></td>
                     <td><%= b.getArticleViews() %></td>
                     <td><%= b.getArticleLikes() %></td>
@@ -586,8 +586,8 @@
                 </tr>
                 <% } %>
                 <% } %>  
-                </table>
-                <!-- 페이지네이션 --> --%>
+                </table> --%>
+                <!-- 페이지네이션 추가--> 
               
       
     </div>
