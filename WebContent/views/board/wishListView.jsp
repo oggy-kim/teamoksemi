@@ -12,10 +12,6 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	
-	//세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
-	Member m = (Member)session.getAttribute("loginUser");
-	String gradeCode = m.getGradeCode();
 %>
 <!DOCTYPE html>
 <html lang="ko">
