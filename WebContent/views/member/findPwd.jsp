@@ -9,8 +9,8 @@
     <style>
 
         body {
-          width : 100%;
-          height : 1600px;
+          background: url('<%= request.getContextPath() %>/resources/images/background2.jpg') no-repeat;
+	      	background-size : cover;
         }
         section {
             width: 100%;
@@ -52,7 +52,7 @@
             width:600px;
             height:450px;
             position:absolute;
-            top:calc(65vh - 200px);
+            top:calc(60vh - 200px);
             left:calc(45vw - 200px);
             overflow:hidden;
           }
@@ -64,12 +64,16 @@
             color:#fff;
             padding:30px 0px;
             padding-top: 5px;
+            background: rgba(100, 100, 100, 0.8);
             }
             #h3tag {
             position:absolute;
             color:black;
             }
             pre {
+              margin-top: 50px;
+              margin-bottom: 50px;
+              margin-left: 50px;
               margin-right: 50px;
               font-size: 1.2em;
               font-weight: bold;
@@ -82,6 +86,9 @@
               padding-top: 5px;
               width:50%;
               margin-left: 15%;
+              margin-right: 15%;
+              margin-top: 0;
+              margin-bottom: 15%;
               border:2px solid rgba(122, 120, 120,0.5);
               border-radius: 5px;
             }
@@ -112,8 +119,12 @@
             }
             #loginbtn {
               position:absolute;
-              top:calc(65vh - 200px);
+              top:calc(60vh - 200px);
               left:calc(22.5vw - 200px);
+              margin-top: 0;
+              margin-bottom:5%;
+              margin-left: 3%;
+              margin-right: 5%;
               background: rgba(17, 156, 98,0.8);
               color:white;
               border:1px;
@@ -122,7 +133,6 @@
             .pptag {
               width:42%;
               border: 1px solid gray;
-
             }
             .span3 {
               top:calc(30vh - 200px);
@@ -134,7 +144,7 @@
             .span1{
               position:absolute;
               top:calc(49vh - 200px);
-              left:calc(27vw - 200px);
+              left:calc(28vw - 200px);
             }
             .span2 {
               position:absolute;
@@ -178,7 +188,9 @@
   <form method="POST">
     <input type="email" class="login email" type="text" placeholder="  이메일 또는 닉네임을 입력하세요"><br>
     <button type="submit" class="login button send">로그인 링크 보내기</button>
-    <span id="oror"><span class="pptag span1"></span><p align="center" id="ptag">또는</p><span class="pptag span2"></span></span>
+    <span class="pptag span1"></span>
+    <p id="ptag" align="center">또는</p>
+    <span class="pptag span2"></span>
   </form>
   <br>
   <a href="#" id="atag">새 계정 만들기</a><br>

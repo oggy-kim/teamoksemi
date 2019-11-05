@@ -11,6 +11,13 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage(); 
 	
+	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+ 	Member m = (Member)session.getAttribute("loginUser");
+ 	String gradeCode = m.getGradeCode();
+ 	
+ 	// sorting 기준 변수 받기
+	String sort = (String)request.getAttribute("sort");
+	
 %>    
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,6 +28,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+<!--<script src="../../js/sorttable.js"></script> -->
     <style>
 
         body {
@@ -31,7 +39,7 @@
         #navbar {
             width:100%;
             height:60px;
-            position:fixed;
+            position:fix ed;
             z-index: 1;
             color:white;
             font-family: 'Fugaz One', cursive;
@@ -105,9 +113,7 @@
             list-style-type: disc;
             float: left;
             font-size: 20px;
-            /* ------ 규내 수정 -----*/
             padding : 5% 0 0 0;
-            /* ---------------------*/
         }
 
         .line {
@@ -133,10 +139,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             /* ------ 규내 수정 -----*/
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
-            /* ---------------------*/
         }
 
         ul.category li a:hover {
@@ -178,15 +182,20 @@
 
         /* -------------sorting_box------------- */
 
+		
+		/* Sortable tables */
+		table.sortable thead {
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
+		
         .sorting_box {
             margin-right:10%;
             margin-bottom:1%;
             float : right;
         }
-
-     
-        
-        /* ---------------------------------- */
 
 
         .sales_box {
@@ -205,7 +214,7 @@
         .profit_detail_wrapper {
             height : 45%;
             width : 100%;
-            margin-top : 2%;
+            margin-top : 0;
         }
 
         #vertical_line {
@@ -231,10 +240,18 @@
 
         .shop_box {
             width : 80%;
-            height : 23%;
+			height : auto;
+        	overflow : hidden;
             margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
+        
+         .shop_detail_box {
+         	width : 80%;
+         	height : 23%;
+         	margin-left : 5%;
+            box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+         }
 
 		#shop_table {
 			text-align : center;
@@ -257,14 +274,14 @@
             font-size: 28px; 
         }
 
-        .board_detail {
+        .shop_detail {
             width : 80%;
             height : 20%;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-        .board_detail_title {
+        .shop_detail_title {
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
             font-family: 'Do Hyeon', sans-serif; 
@@ -284,6 +301,7 @@
         .searchArea {
             width:30%;
             margin-left:35%;
+            margin-botton:10%;
         } 
         
         #searchBtn{
@@ -294,11 +312,14 @@
             color:white;
             border-radius:5px;
         }
+        
         #searchBtn:hover {
             cursor:pointer;
         }
 
-        /* --------------- */
+		.btnArea {
+			 margin-botton:10%;
+		}
 
     </style>
 </head>
@@ -328,6 +349,7 @@
         </ul>
     </div>
     <script>
+    	// SUB-NAVI
     	function goMember(){
     		location.href="<%= contextPath%>/member.adm";
     	}
@@ -343,13 +365,35 @@
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
     	}
+    	
+    	// MAIN NAVIBAR
+    	function goStyle() {
+   	    	location.href="<%= contextPath %>/boardlist.look";
+   	    }
+
+   	    function goFavorite() {
+   	    	location.href="<%= contextPath %>/wishlist.look";
+   	    }
+
+   	    function goEvent() {
+   	    	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+   	    }
+
+   	    function goMypage() {
+   	    	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+   	    	if("<%= gradeCode %>" == 'S'){
+   	    		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+   	    	} else {
+   	    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+   	    	}
+   	    }
     </script>
     <div class="line"></div>
     <div class="content">
         <div id="content_title_wrapper">
             <h2 id="content_title"> &nbsp;&nbsp;제휴쇼핑몰관리</h2>
         </div>
-        <hr><br>
+        <hr>
 
         <div class="sales_box">
             <h4 class="box_title">수익 및 거래총량</h4>
@@ -374,7 +418,6 @@
                     <p style="font-size:75px; text-align:left;">KRW00,000,000</p>
                 </div>
             </div>
-            
         </div> 
         <br>
         <br>
@@ -382,13 +425,15 @@
         <div class="shop_box">
             <h4 class="table_title">제휴 쇼핑몰 리스트</h4>
             <div class="sorting_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
-                    <option value="cont_status">계약상태</option>
+                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="cont_money">계약금</option>
+                    <option value="cont_status">계약상태</option>
                 </select>
             </div>
+            
             <!-- 제휴 쇼핑몰 리스트 테이블 -->
-            <table class="table" id="shop_table">
+            <table class="sortable table" id="shop_table">
+                <thead>
                 <tr>
                     <th>회사번호</th>
                     <th>회사명</th>
@@ -399,25 +444,78 @@
                     <th>계약금</th>
                     <th>연락처</th>
                 </tr>
-                  <% if(list.isEmpty()){ %>
+                </thead>
+            	<tbody id="shop_table2">
+                <% if(list.isEmpty()){ %>
                		 <tr>
-                		<td colspan="5">작성된 게시글이 없습니다.</td>
-                	<tr>
-                	<% } else { %>
-                	<% for(Shop s : list){ %>    
- 					<tr>
- 					<td><%= s.getShopNo() %></td>
-                    <td><%= s.getShopName() %></td>
-                    <td><%= s.getStatus() %></td>
-                    <td><%= s.getShopGradeCode() %></td>
-                    <td><%= s.getContractDate() %></td>
-                    <td><%= s.getExpireDate() %></td>
-                    <td><%= s.getContractMoney() %></td>
-                    <td><%= s.getShopContact() %></td>
-                </tr>
-                <% } %>
+                		<td colspan="8">작성된 게시글이 없습니다.</td>
+                	 </tr>
+               	<% } else { %>
+               	<% for(Shop s : list){ %>    
+					<tr>
+	 					<td><%= s.getShopNo() %></td>
+	                    <td><%= s.getShopName() %></td>
+	                    <td><%= s.getStatus() %></td>
+	                    <td><%= s.getShopGradeCode() %></td>
+	                    <td><%= s.getContractDate() %></td>
+	                    <td><%= s.getExpireDate() %></td>
+	                    <td><%= s.getContractMoney() %></td>
+	                    <td><%= s.getShopContact() %></td>
+               		</tr>
+                	<% } %>
                 <% } %>  
+               	</tbody>	
             </table>
+            <script>
+            	// shop sorting
+            $("#sortCondition").change(function(){
+            		var sort = this.value;
+            		
+            		$.ajax({
+            			url : "<%= contextPath %>/sortShop.adm",
+            			type : "post",
+            			dataType : "json",
+            			data : {sort:sort},// key:value 
+            			success : function(data){
+            				console.log('성공');
+            				console.log(sort);
+            				var $tableBody = $("#shop_table2");
+            				
+            				//$tableBody.empty();
+            				$tableBody.html(""); // 테이블 초기화
+            			
+            				for(var key in data){
+	              				var $tr = $("<tr>");
+	            				var $noTd = $("<td>").text(data[key].shopNo);
+	            				var $nameTd = $("<td>").text(data[key].shopName);
+								var $statusTd = $("<td>").text(data[key].status);
+								var $gradeTd = $("<td>").text(data[key].shopGradeCode);
+								var $contdTd = $("<td>").text(data[key].contractDate);
+								var $exdTd = $("<td>").text(data[key].expireDate);
+								var $contmTd = $("<td>").text(data[key].contractMoney);
+								var $shopcTd = $("<td>").text(data[key].shopContact);
+	            				
+								$tr.append($noTd);
+								$tr.append($nameTd);
+								$tr.append($statusTd);
+								$tr.append($gradeTd);
+								$tr.append($contdTd);
+								$tr.append($exdTd);
+								$tr.append($contmTd);
+								$tr.append($shopcTd);
+								
+								$tableBody.append($tr);
+								
+            				}
+            				
+            			},
+            			error : function(){
+            				console.log('실패');
+            			}
+            		});
+            	});
+            
+            </script>
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -457,12 +555,36 @@
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
             <br>
-            <!-- 수정, 삭제버튼-->
-            <button type="button" id="delete_btn" style="margin-right:5%;">쇼핑몰삭제</button>    
-            <button type="button" id="update_btn" style="margin-right:2%;">쇼핑몰수정</button>
-
+            
         </div>
         <br> 
+        <script>
+        // SHOP 상세보기
+           	$(function(){
+           		$("#shop_table td").mouseenter(function(){
+           			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+           		}).mouseout(function(){
+           			$(this).parent().css({"background":"white"});
+           		}).click(function(){ // SHOP click시, 해당 SHOP 상세정보가 하위에 표시
+           			var con = document.getElementById("shop_detail");
+           			if(con.style.display != 'none'){
+           				con.style.display = 'none';
+           			} else {
+           				con.style.display = 'block';
+           			}
+           		}); 
+           	});
+     	</script>
+
+		<div class="shop_detail_box" id="shop_detail">
+            <h4 class="shop_detail_title">쇼핑몰 상세보기</h4>
+               
+            <!-- 수정, 삭제버튼-->
+            <div class="btnArea">	
+            	<button type="button" id="delete_btn" style="margin-right:5%;">쇼핑몰삭제</button>    
+            	<button type="button" id="update_btn" style="margin-right:2%;">쇼핑몰수정</button>
+			</div>
+        </div>
 
     </div>
 </section>

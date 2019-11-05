@@ -11,6 +11,11 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage(); 
 	
+	// 세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
+ 	Member m = (Member)session.getAttribute("loginUser");
+ 	String gradeCode = m.getGradeCode();
+ 	
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,6 +26,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+
     <style>
 
         body {
@@ -172,7 +178,13 @@
 
         /* -----------------  qna & qna_detail ------------------------ */
 
-        
+        /* Sortable tables */
+		table.sortable thead {
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
 
         /* -------------sorting_box------------- */
 
@@ -187,8 +199,9 @@
 
         .qna_box {
             width : 80%;
-            height : 18%;
-
+            /* height : 18%; */
+			height : auto;	
+        	overflow : hidden;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
@@ -229,6 +242,7 @@
         .searchArea {
             width:60%;
             margin-left:30%;
+            margin-botton:10%;
         } 
         
         #searchBtn{
@@ -239,11 +253,11 @@
             color:white;
             border-radius:5px;
         }
+        
         #searchBtn:hover {
             cursor:pointer;
         }
-        /* --------------- */
-
+     
 </style>
 </head>
 <body>
@@ -272,6 +286,7 @@
         </ul>
     </div>
     <script>
+    	// SUB-NAVI
     	function goMember(){
     		location.href="<%= contextPath%>/member.adm";
     	}
@@ -287,6 +302,28 @@
     	function goGA(){
     		location.href="<%= contextPath%>/ga.adm";
     	}
+    	
+    	// MAIN NAVIBAR  
+    	function goStyle() {
+   	    	location.href="<%= contextPath %>/boardlist.look";
+   	    }
+
+   	    function goFavorite() {
+   	    	location.href="<%= contextPath %>/wishlist.look";
+   	    }
+
+   	    function goEvent() {
+   	    	location.href="<%= contextPath %>/views/event/eventPage.jsp";
+   	    }
+
+   	    function goMypage() {
+   	    	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+   	    	if("<%= gradeCode %>" == 'S'){
+   	    		location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+   	    	} else {
+   	    		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+   	    	}
+   	    }
     </script>
     <div class="line"></div>
     <div class="content">
@@ -300,13 +337,16 @@
             <h4 class="qna_title">QnA</h4>
             <!-- 테이블 정렬 버튼 -->
             <div class="sorting_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
-                    <option value="write_date">작성일</option>
+                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
+                    <option value="newest_date">최신순</option>
+                    <option value="oldest_date">오래된순</option>
                     <option value="comment_status">답변여부</option>
                 </select>
             </div>
+            
             <!-- QnA 리스트 테이블 -->
-            <table class="table" id="qna_table">
+            <table class="sortable table" id="qna_table">
+                <thead id="qna_table1">
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
@@ -314,22 +354,80 @@
                     <th>작성일</th>
                     <th>답변여부</th>
                 </tr>
+                </thead>
+               <tbody id="qna_table2">
                 <% if(list.isEmpty()){ %>
-               		 <tr>
+               		<tr>
                 		<td colspan="5">작성된 게시글이 없습니다.</td>
-                	<tr>
-                	<% } else { %>
-                	<% for(QnA q : list){ %>    
+                	</tr>
+               	<% } else { %>
+               	<% for(QnA q : list){ %>    
  					<tr>
- 					<td><%= q.getQnaNo() %></td>
-                    <td><%= q.getQnaTitle() %></td>
-                    <td><%= q.getMemberNick() %></td>
-                    <td><%= q.getEnrollDate() %></td>
-                    <td><%= q.getAnswerStatus() %></td>
-                </tr>
+	 					<td><%= q.getQnaNo() %></td>
+	                    <td><%= q.getQnaTitle() %></td>
+	                    <td><%= q.getMemberNick() %></td>
+	                    <td><%= q.getEnrollDate() %></td>
+	                    <td><%= q.getAnswerStatus() %></td>
+                	</tr>
+               		<% } %>
                 <% } %>
-                <% } %>  
+                </tbody>
             </table>
+            <script>
+            	// 테이블 정렬  sorting
+        		<%-- $(function(){
+        			$("#searchCondition").change(function(){
+	        			var sort = this.value;
+	        			console.log(sort);
+	        			location.href="<%= contextPath%>/sortQNA.adm?sort="+sort;
+	 	        		/* if(sort == "comment_status"){
+	 	        			console.log($("#qna_table>tr").eq(1));
+	 	        			console.log($("#qna_table td.col5:not(:contains('Y')").text()); */
+		 	        		/* $("#qna_table td.col5:contains('N')").parent().show();
+	 		        		$("#qna_table td.col5:not(:contains('Y')").parent().hide(); } */    		
+        			});
+        		}); --%>
+        		
+        		$("#sortCondition").change(function(){
+            		var sort = this.value;
+            		
+            		$.ajax({
+            			url : "<%= contextPath %>/sortQNA.adm",
+            			type : "post",
+            			dataType : "json",
+            			data : {sort:sort},// key:value 
+            			success : function(data){
+            				console.log('성공');
+            				console.log(sort);
+            				var $tableBody = $("#qna_table2");
+            				
+            				//$tableBody.empty();
+            				$tableBody.html(""); // 테이블 초기화
+            			
+            				for(var key in data){
+	              				var $tr = $("<tr>");
+	            				var $noTd = $("<td>").text(data[key].qnaNo);
+								var $titleTd = $("<td>").text(data[key].qnaTitle);
+								var $nickTd = $("<td>").text(data[key].memberNick);
+								var $dateTd = $("<td>").text(data[key].enrollDate);
+								var $statusTd = $("<td>").text(data[key].answerStatus);
+	            				
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($nickTd);
+								$tr.append($dateTd);
+								$tr.append($statusTd);
+								
+								$tableBody.append($tr);
+            				}
+            				
+            			},
+            			error : function(){
+            				console.log('실패');
+            			}
+            		});
+            	});
+            </script>
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -373,13 +471,13 @@
                 <input type="search" style="display:inline-block;">
              <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
-
+			<br>
         </div>
         <br> 
         <script>
         // QNA 상세보기
             	$(function(){
-            		$("#qna_table td").mouseenter(function(){
+            		$("#qna_table2 td").mouseenter(function(){
             			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
             		}).mouseout(function(){
             			$(this).parent().css({"background":"white"});
@@ -397,9 +495,6 @@
         <div class="qna_detail_box" id="qna_detail">
             <h4 class="qna_detail_title">QnA 상세보기</h4>
             
-            
-
-         
         </div>
 
 </div>
