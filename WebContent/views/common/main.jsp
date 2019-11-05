@@ -52,25 +52,15 @@
             color: white;
             margin: auto;
             font-family: 'Fugaz One', cursive;
-            font-size: 20px;
+            font-size: 30px;
             background: rgb(65, 65, 65);
             text-align: left;
-        }
-
-        .weatherArea .up {
-          width: 100%;
-          height: 60%;
-        }
-
-        .weatherArea .down {
-          width: 100%;
-          height: 40%;
         }
 
         .forecast {
           width:80%;
           height:100%;
-          margin:auto;
+          margin:20px 0 0 30px;
         }
 
         .dailyImg {
@@ -181,7 +171,7 @@
         $('.ctemp').prepend($ctemp);
         $('.chum').append($chum).append($('.per'));
         $('.cwind').append($cwind).append($('persec'));
-        $('.cicon').append('<img src="http://openweathermap.org/img/w/' + $wIcon + '.png" />').append($wData);
+        $('.cicon').append('<img src="http://openweathermap.org/img/w/' + $wIcon + '.png" style="width:100px; height:100px;">').append($wData);
         
         $('.fIcon1').append('<img src="http://openweathermap.org/img/w/' + $fIcon1 + '.png" style="width:100px; height:100px;">')
         $('.fIcon2').append('<img src="http://openweathermap.org/img/w/' + $fIcon2 + '.png" style="width:100px; height:100px;">')
@@ -223,20 +213,13 @@
         <img class="mainImg mainImg1" src="<%= contextPath %>/resources/images/main/<%= ran %>.jpg">
     </div>  
     <div class="weatherArea">
-        <div class="up">
-          <div class="dailyImg">
-            <img src="<%= contextPath %>/resources/images/daily.png">
-          </div>
-        </div>
-        <div class="down">
           <div class="forecast">
             <div class="cicon"></div>
             <label>TEMP : </label> <label class="ctemp"> &deg;C</label>
-            <br>
+            <br><br>
             <label class="chum">HUM : </label> <label>%</label>
-            <br>
+            <br><br>
             <label class="cwind">WIND : </label> <label>m/s</label>
-          </div>
         </div>
     </div>
   </div>
