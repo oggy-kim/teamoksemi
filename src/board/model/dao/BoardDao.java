@@ -434,39 +434,7 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return b;
-	}	
-	
-	   // 찜목록 삭제 dao
-	   public int deleteWish(Connection conn, int aNo, String[] arr) {
-	      int result = 0;
-	      
-	      PreparedStatement pstmt = null;
-	      String sql = prop.getProperty("deleteWish");
-	      
-	      int[] arrInt = new int[arr.length];
-	      for(int i = 0; i < arrInt.length; i++) {
-	         arrInt[i] = Integer.parseInt(arr[i]);
-	      }
-	      
-	      try {
-	         for(int i = 0; i < arrInt.length; i++) {
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setInt(1, aNo);
-	            pstmt.setInt(2, arrInt[i]);
-	            
-	            result += pstmt.executeUpdate();
-	         }
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(pstmt);
-	      }
-	      return result;
-	   }
-	   
-	   
-
+	}
 	// 조회수 증가 dao
 	public int increaseCount(Connection conn, int aNo) {
 		PreparedStatement pstmt = null;
