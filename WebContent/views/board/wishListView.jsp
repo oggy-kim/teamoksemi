@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();		
+
 	ArrayList<WishList> list = (ArrayList<WishList>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -28,10 +31,11 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
+
 <style>
 body {
 	width: 100%;
-	height: 1200px;
+	height: 1000px;
 }
 
 #navbar {
@@ -62,7 +66,7 @@ body {
 
 section {
 	width: 100%;
-	height: 850px;
+	height: 500px;
 }
 
 hr {
@@ -197,8 +201,7 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-				
-					<td coldspan="4">조회된 찜목록이 없습니다.</td>
+					<td coldspan="4">조회된 찜목록이 없습니다..</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
@@ -261,7 +264,7 @@ hr {
 				&gt;&gt;</button>
 		</div>
 
-		<div class="page-1">
+		<!-- <div class="page-1">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<li class="page-item"><a class="page-link" href="#"
@@ -275,16 +278,7 @@ hr {
 					</a></li>
 				</ul>
 			</nav>
-		</div>
-
-		<div class="page-2">
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="SEARCH" aria-label="SEARCH">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-					style="background: black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-			</form>
-		</div>
+		</div> -->
 
 	</section>
 	<br>
@@ -292,7 +286,7 @@ hr {
 	<footer class="copyRight">
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
-<script>
+	<script>
         $(document).ready(function(){
             $('.check-all').click(function(){
                 $('.ca').prop('checked', this.checked);
@@ -316,17 +310,8 @@ hr {
         }
 
         function goMypage() {
-        	// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
-    		if("<%= gradeCode %>" == 'S'){
-    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
-    		} else {
-    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-    		}
+        	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
         }
-        
-        function deleteWish() {
-        	location.href="<%= contextPath %>/deletewish.look";
-        }
-</script>
+    </script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();	
+	
     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
     PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -252,16 +255,10 @@ hr {
 	width: 80%;
 	margin: auto;
 }
-	.replyArea {
-		width:100%;
-		color:black;
-		background:white;
-		margin:auto;
-	}
-	
-	#replySelectArea{
-		height:300px;
-	}
+
+img:hover {
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -281,7 +278,7 @@ hr {
 			</div>
 			<br>
 			<div class="write">
-				<button id="insertBtn" onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
+				<button onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
 			</div>
 			<br>
 
@@ -290,12 +287,7 @@ hr {
 			<% } else { %>
 			<% for(Board b : list) { %>
 			<div class="sharing sfirst">
-				<button id="popOpenBtn" class="popOpen" onclick="location.href='<%= contextPath %>/views/board/boardDetailView.jsp'">
-					<input type="hidden" value="<%= b.getArticleNo() %>">
-					<img
-						src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg"
-						width="220px" height="260px">
-				</button>
+				<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px" class="picture" title="<%= b.getArticleNo() %>">
 			</div>
 			<% } %>
 			<% } %>
@@ -303,48 +295,38 @@ hr {
 			<br clear="both"> <br>
 
 			<div class="pagingArea" align="center">
-				<!-- 맨 처음으로 (<<) -->
-				<button
-					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'">
-					&lt;&lt;</button>
 
-				<!-- 이전 페이지로 (<) -->
-				<% if(currentPage == 1){ %>
-				<button disabled>&lt;</button>
-				<% } else { %>
-				<button
-					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'">
-					&lt;</button>
-				<% } %>
+                <!-- 맨 처음으로 (<<) -->
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'"> &lt;&lt; </button>
 
-				<!-- 10개의 페이지 목록 -->
-				<% for(int p = startPage; p <= endPage; p++){ %>
-				<% if(p == currentPage){ %>
-				<button disabled>
-					<%= p %>
-				</button>
-				<% } else { %>
-				<button
-					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
-				<% } %>
-				<% } %>
+                <!-- 이전 페이지로 (<) -->
+                <% if(currentPage == 1){ %>
+                <button disabled> &lt; </button>
+                <% } else { %>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+                <% } %>
 
-				<!-- 다음 페이지로 (>) -->
-				<% if(currentPage == maxPage){ %>
-				<button disabled>&gt;</button>
-				<% } else { %>
-				<button
-					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'">
-					&gt;</button>
-				<% } %>
+                <!-- 10개의 페이지 목록 -->
+                <% for(int p = startPage; p <= endPage; p++){ %>
+                <% if(p == currentPage){ %>
+                <button disabled> <%= p %> </button>
+                <% } else { %>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
+                <% } %>
+                <% } %>
 
-				<!-- 맨 끝으로 (>>) -->
-				<button
-					onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'">
-					&gt;&gt;</button>
-			</div>
+                <!-- 다음 페이지로 (>) -->
+                <% if(currentPage == maxPage){ %>
+                <button disabled> &gt; </button>
+                <% } else { %>
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+                <% } %>
 
-			<div class="page-1">
+                <!-- 맨 끝으로 (>>) -->
+                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+            </div>
+            
+			<!-- <div class="page-1">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item"><a class="page-link" href="#"
@@ -358,7 +340,7 @@ hr {
 						</a></li>
 					</ul>
 				</nav>
-			</div>
+			</div> -->
 		</div>
 
 		<br clear="both"> <br> <br>
@@ -509,30 +491,6 @@ hr {
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
 	<script>
-    /* $(document).ready(function(){
-            
-        $(".popOpen").click(function(event){
-     
-            $("#popupDiv").css({
-                "top": (($(window).height()-$("#popupDiv").outerHeight())/2+$(window).scrollTop())+"px",
-                "left": (($(window).width()-$("#popupDiv").outerWidth())/2+$(window).scrollLeft())+"px"
-                 
-            }); 
-                
-            $("#popup_mask").css("display","block");
-            $("#popupDiv").css("display","block");
-                
-            $("body").css("overflow","hidden");
-        });
-            
-        $("#popCloseBtn").click(function(event){
-            $("#popup_mask").css("display","none");
-            $("#popupDiv").css("display","none");
-            $("body").css("overflow","auto");
-        });
-         
-    }); */
-    
     function goStyle() {
     	location.href="<%= contextPath %>/boardlist.look";
     }
@@ -553,17 +511,6 @@ hr {
     		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
     	}
     }
-    
-    /* 댓글 구현 */
-    <%-- $(function(){
-    	$("#addReply").click(function(){
-    		var writer = <%= loginUser.getMemberNo() %>;
-    		var aNo = <%= list.get(0) %>;
-    		var content = $("#replyContent").val();
-    	});
-    }); --%>
-    
-    
         
     </script>
     

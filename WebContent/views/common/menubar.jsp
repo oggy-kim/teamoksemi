@@ -109,6 +109,7 @@
         <li class="nav-item">
           <p class="nav-link" style="color: #000;" onclick="goMypage();">MY PAGE</p>
         </li>
+        
       </ul>
     </nav>
 </header>

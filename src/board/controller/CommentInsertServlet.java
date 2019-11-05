@@ -1,6 +1,7 @@
-package search.controller;
+package board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import board.model.service.BoardService;
-import board.model.vo.Board;
-import member.model.vo.Member;
+import board.model.vo.BoardComment;
 
 /**
- * Servlet implementation class SearchDetailServlet
+ * Servlet implementation class CommentInsertServlet
  */
-@WebServlet("/searchdetail.look")
-public class SearchDetailServlet extends HttpServlet {
+@WebServlet("/insertcomment.look")
+public class CommentInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchDetailServlet() {
+    public CommentInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,18 +34,21 @@ public class SearchDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+		int articleno = Integer.parseInt(request.getParameter("articleno"));
+		String writer = request.getParameter("writer");
+		String content = request.getParameter("content");
 		
-		Board b = new BoardService().searchDetail(articleNo);
+		BoardComment c = new BoardComment();
+		c.setArticleNo(articleno);
+		c.setMemberNick(writer);
+		c.setCommentContents(content);
 		
-		if(b != null) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(b, response.getWriter());
-		} else {
-			request.setAttribute("msg", "세부 내용 읽기에 실패하셨습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		ArrayList<BoardComment> rlist = new BoardService().insertComment(c);
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rlist, response.getWriter());
 	}
 
 	/**
