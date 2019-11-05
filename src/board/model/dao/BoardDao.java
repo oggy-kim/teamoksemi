@@ -433,6 +433,7 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return b;
+	}
     
 	// 조회수 증가 dao
 	public int increaseCount(Connection conn, int aNo) {
