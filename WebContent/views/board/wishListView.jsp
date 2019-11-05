@@ -35,7 +35,7 @@
 <style>
 body {
 	width: 100%;
-	height: 1200px;
+	height: 1000px;
 }
 
 #navbar {
@@ -66,7 +66,7 @@ body {
 
 section {
 	width: 100%;
-	height: 850px;
+	height: 500px;
 }
 
 hr {
@@ -201,8 +201,7 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-				
-					<td coldspan="4">조회된 찜목록이 없습니다.</td>
+					<td coldspan="4">조회된 찜목록이 없습니다..</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
@@ -265,7 +264,7 @@ hr {
 				&gt;&gt;</button>
 		</div>
 
-		<div class="page-1">
+		<!-- <div class="page-1">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<li class="page-item"><a class="page-link" href="#"
@@ -279,16 +278,7 @@ hr {
 					</a></li>
 				</ul>
 			</nav>
-		</div>
-
-		<div class="page-2">
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="SEARCH" aria-label="SEARCH">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-					style="background: black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-			</form>
-		</div>
+		</div> -->
 
 	</section>
 	<br>

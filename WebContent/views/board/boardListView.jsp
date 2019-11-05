@@ -279,7 +279,6 @@ img:hover {
 			<br>
 			<div class="write">
 				<button onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
-				<a>보류</a>
 			</div>
 			<br>
 
@@ -327,7 +326,7 @@ img:hover {
                 <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
             </div>
             
-			<div class="page-1">
+			<!-- <div class="page-1">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item"><a class="page-link" href="#"
@@ -341,7 +340,7 @@ img:hover {
 						</a></li>
 					</ul>
 				</nav>
-			</div>
+			</div> -->
 		</div>
 
 		<br clear="both"> <br> <br>
@@ -492,30 +491,6 @@ img:hover {
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
 	<script>
-    /* $(document).ready(function(){
-            
-        $(".popOpen").click(function(event){
-     
-            $("#popupDiv").css({
-                "top": (($(window).height()-$("#popupDiv").outerHeight())/2+$(window).scrollTop())+"px",
-                "left": (($(window).width()-$("#popupDiv").outerWidth())/2+$(window).scrollLeft())+"px"
-                 
-            }); 
-                
-            $("#popup_mask").css("display","block");
-            $("#popupDiv").css("display","block");
-                
-            $("body").css("overflow","hidden");
-        });
-            
-        $("#popCloseBtn").click(function(event){
-            $("#popup_mask").css("display","none");
-            $("#popupDiv").css("display","none");
-            $("body").css("overflow","auto");
-        });
-         
-    });
-    
     function goStyle() {
     	location.href="<%= contextPath %>/boardlist.look";
     }
