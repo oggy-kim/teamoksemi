@@ -6,10 +6,10 @@
 	
 	// 회원 상세정보 
 	Member m = (Member)session.getAttribute("loginUser");
-
-	String profile = m.getProfile(); // 프로필사진
-	int memberNo = m.getMemberNo(); // 회원번호
 	String gradeCode = m.getGradeCode(); // 회원등급코드
+
+	/* String profile = m.getProfile(); // 프로필사진
+	int memberNo = m.getMemberNo(); // 회원번호
 	String memberId = m.getMemberId(); // 회원아이디
 	String memberNick = m.getMemberNick(); // 회원닉네임
     String gender = m.getGender(); // 회원성별
@@ -17,8 +17,8 @@
     String likeStyle = m.getLikeStyle(); // 선호스타일
     int birthYear = m.getBirthYear(); // 연령
     Date entryDate = m.getEntryDate(); // 가입날짜
-    String memberStatus = m.getMemberStatus(); // 탈퇴여부
-    // 최근접속일 아직 처리 안함 (중간점검 이후 -> 장기미접속 회원은 강등회원으로 처리)
+    String memberStatus = m.getMemberStatus(); // 탈퇴여부 
+    // 최근접속일 아직 처리 안함 (중간점검 이후 -> 장기미접속 회원은 강등회원으로 처리) */
     
     // 회원 상세정보 박스 내, 회원 작성글 조회
     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+    <!--  sortable  -->
+    <script src="../../js/sorttable.js"></script>
 
     <style>
 
@@ -126,9 +128,7 @@
             list-style-type: disc;
             float: left;
             font-size: 20px;
-            /* ------ 규내 수정 -----*/
             padding : 5% 0 0 0;
-            /* ---------------------*/
         }
 
         .line {
@@ -390,7 +390,6 @@
             <h2 id="content_title">&nbsp;&nbsp;회원관리</h2>
         </div>
         <hr>
-
         <br>
         <br>
         <div class="member_box">
@@ -496,7 +495,7 @@
         <br>
         <br>
 
-        <div class="member_detail_box" id="member_detail">
+    <%--    <div class="member_detail_box" id="member_detail">
             <h4 class="member_detail_title">회원 상세 정보</h4>
             <section id="member_detail_wrapper">
                 <!-- 프로필 사진 -->
@@ -537,7 +536,7 @@
                     <table class="table-condensed" id="member_detail_table_2">
                         <tr>
                             <td>선호스타일</td>
-                            <td><span><%= likeStyle  %></span></td>
+                            <td><span><%= likeStyle %></span></td>
                         </tr>
                         <tr>
                             <td>출생년도</td>
@@ -570,27 +569,25 @@
                         <th>조회수</th>
                         <th>찜수</th>
                         <th>댓글수</th>
-                        <th>최근댓글</th>
                     </tr>
                 <% if(mlist.isEmpty()){ %>
                		 <tr>
-                		<td colspan="5">작성된 게시글이 없습니다.</td>
+                		<td colspan="6">작성된 게시글이 없습니다.</td>
                 	<tr>
                 	<% } else { %>
                 	<% for(Board b : list){ %>    
  					<tr>
  					<td><%= b.getArticleNo() %></td>
-                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" idth="80px" height="80px"></td>
+                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" width="80px" height="80px"></td>
                     <td><%= b.getArticleDate() %></td>
                     <td><%= b.getArticleViews() %></td>
                     <td><%= b.getArticleLikes() %></td>
-                    <td><%= b.getArticleLikes() %></td> <!-- 댓글수 --> 
-                    <td><%= b.getArticleLikes() %></td> <!-- 최근댓글(아직 미구현) -->             
+                    <td><%= b.getArticleLikes() %></td> <!-- 댓글수 -->           
                 </tr>
                 <% } %>
                 <% } %>  
-                </table>
-                <!-- 페이지네이션 -->
+                </table> --%>
+                <!-- 페이지네이션 추가--> 
               
       
     </div>

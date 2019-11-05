@@ -3,29 +3,31 @@ package adm.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import adm.model.service.AdmService;
-import board.model.vo.PageInfo;
-import member.model.vo.Member;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import adm.model.service.AdmService;
+import board.model.vo.Board;
+import board.model.vo.PageInfo;
+import board.model.vo.QnA;
 
 /**
- * Servlet implementation class AdmMember
+ * Servlet implementation class AdmSortBoardServlet
  */
-@WebServlet("/member.adm")
-public class AdmMemberServlet extends HttpServlet {
+@WebServlet("/sortBoard.adm")
+public class AdmSortBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmMemberServlet() {
+    public AdmSortBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +36,22 @@ public class AdmMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String sort = request.getParameter("sort");
+		int sortId = 0;
 		
-		// 한글 인코딩
-		request.setCharacterEncoding("UTF-8");
+		if (sort.equals("write_date")) { 
+			sortId = 1;
+		} else if (sort.equals("like_num")) {
+			sortId = 2;
+		} else if (sort.equals("view_num")) {
+			sortId = 3;
+		}
+		
+		System.out.println(sortId);
 		
 		AdmService aService = new AdmService();
 		
-		int listCount = aService.getListCount();		
+		int listCount = aService.getBListCount();		
 		int boardLimit = 10;
 		int currentPage = 1;
 		int pageLimit = 5;
@@ -58,14 +69,16 @@ public class AdmMemberServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Member> mlist = aService.selectMList(currentPage, boardLimit);
+		ArrayList<Board> list = aService.sortBList(sortId, currentPage, boardLimit);
 		
-		RequestDispatcher view = request.getRequestDispatcher("views/adm/adm_memberPage.jsp");
-		request.setAttribute("mlist", mlist);
-		request.setAttribute("pi", pi);
-
-		view.forward(request, response);
-	
+		System.out.println("list" + list);
+		System.out.println("pi" + pi);
+		System.out.println("sort" + sortId);
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(list, response.getWriter());
 		
 	}
 
