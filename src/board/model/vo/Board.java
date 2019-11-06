@@ -8,6 +8,9 @@ public class Board implements java.io.Serializable{
 	private int articleNo; // 게시판글번호
 	private int memberNo; // 회원번호
 	private String memberNick; // 회원아이디 (추가 19.10.31.)
+	private int articleWishes; // 찜 횟수(추가 19.11.06 - 준섭) 
+	private String profile; // 프로필사진(추가 19.11.06 - 준섭)
+	private String likeStyle; // 선호스타일(추가 19.11.06 - 준섭)
 	private int articleViews; // 게시판조회수
 	private int articleLikes; // 게시판찜수
 	private String articleContents; // 게시판글 내용
@@ -53,6 +56,19 @@ public class Board implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public Board(int memberNo, int articleNO, int articleViews, int articleWishes, 
+			String articleContents, String memberNick, String profile, String likeStyle) {
+		super();
+		this.memberNo = memberNo;
+		this.articleNo = articleNO;
+		this.articleViews = articleViews;
+		this.articleWishes = articleWishes;
+		this.articleContents = articleContents;
+		this.memberNick = memberNick;
+		this.profile = profile;
+		this.likeStyle = likeStyle;
+	}
+
 	public int getArticleNo() {
 		return articleNo;
 	}
@@ -75,6 +91,30 @@ public class Board implements java.io.Serializable{
 
 	public void setMemberNick(String memberNick) {
 		this.memberNick = memberNick;
+	}
+
+	public int getArticleWishes() {
+		return articleWishes;
+	}
+
+	public void setArticleWishes(int articleWishes) {
+		this.articleWishes = articleWishes;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getLikeStyle() {
+		return likeStyle;
+	}
+
+	public void setLikeStyle(String likeStyle) {
+		this.likeStyle = likeStyle;
 	}
 
 	public int getArticleViews() {
@@ -124,9 +164,14 @@ public class Board implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Board [articleNo=" + articleNo + ", memberNo=" + memberNo + ", memberNick=" + memberNick
+				+ ", articleWishes=" + articleWishes + ", profile=" + profile + ", likeStyle=" + likeStyle
 				+ ", articleViews=" + articleViews + ", articleLikes=" + articleLikes + ", articleContents="
 				+ articleContents + ", articleDate=" + articleDate + ", status=" + status + "]";
 	}
+
+	
+
+	
 
 	
 	
