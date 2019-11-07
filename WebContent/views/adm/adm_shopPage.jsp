@@ -4,7 +4,7 @@
 	// Shop 목록
 	ArrayList<Shop> list = (ArrayList<Shop>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
+
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -17,6 +17,7 @@
  	
  	// sorting 기준 변수 받기
 	String sort = (String)request.getAttribute("sort");
+ 	
 	
 %>    
 <!DOCTYPE html>
@@ -28,7 +29,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-<!--<script src="../../js/sorttable.js"></script> -->
     <style>
 
         body {
@@ -247,11 +247,19 @@
         }
         
          .shop_detail_box {
+         	visibility : hidden; 
          	width : 80%;
          	height : 23%;
          	margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
          }
+
+		#shop_detail_contents { /* 다시 조정하기 */
+			width : 80%;
+			height : 80%;
+			margin-top : 15%;
+			margin-left : 5%;			
+		}
 
 		#shop_table {
 			text-align : center;
@@ -299,9 +307,9 @@
         /* -------search--------- */
 
         .searchArea {
-            width:30%;
-            margin-left:35%;
-            margin-botton:10%;
+            width:60%;
+            margin-left:30%;
+            margin-bottom:5%;
         } 
         
         #searchBtn{
@@ -344,8 +352,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>       
         </ul>
     </div>
     <script>
@@ -361,9 +368,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
     	
     	// MAIN NAVIBAR
@@ -419,8 +423,7 @@
                 </div>
             </div>
         </div> 
-        <br>
-        <br>
+        <br><br>
 
         <div class="shop_box">
             <h4 class="table_title">제휴 쇼핑몰 리스트</h4>
@@ -433,7 +436,7 @@
             
             <!-- 제휴 쇼핑몰 리스트 테이블 -->
             <table class="sortable table" id="shop_table">
-                <thead>
+                <thead id="shop_tabl2">
                 <tr>
                     <th>회사번호</th>
                     <th>회사명</th>
@@ -451,71 +454,21 @@
                 		<td colspan="8">작성된 게시글이 없습니다.</td>
                 	 </tr>
                	<% } else { %>
-               	<% for(Shop s : list){ %>    
+               	<% for(Shop sl : list){ %>    
 					<tr>
-	 					<td><%= s.getShopNo() %></td>
-	                    <td><%= s.getShopName() %></td>
-	                    <td><%= s.getStatus() %></td>
-	                    <td><%= s.getShopGradeCode() %></td>
-	                    <td><%= s.getContractDate() %></td>
-	                    <td><%= s.getExpireDate() %></td>
-	                    <td><%= s.getContractMoney() %></td>
-	                    <td><%= s.getShopContact() %></td>
+	 					<td id="sNo"><%= sl.getShopNo() %></td>
+	                    <td><%= sl.getShopName() %></td>
+	                    <td><%= sl.getStatus() %></td>
+	                    <td><%= sl.getShopGradeCode() %></td>
+	                    <td><%= sl.getContractDate() %></td>
+	                    <td><%= sl.getExpireDate() %></td>
+	                    <td><%= sl.getContractMoney() %></td>
+	                    <td><%= sl.getShopContact() %></td>
                		</tr>
                 	<% } %>
                 <% } %>  
                	</tbody>	
             </table>
-            <script>
-            	// shop sorting
-            $("#sortCondition").change(function(){
-            		var sort = this.value;
-            		
-            		$.ajax({
-            			url : "<%= contextPath %>/sortShop.adm",
-            			type : "post",
-            			dataType : "json",
-            			data : {sort:sort},// key:value 
-            			success : function(data){
-            				console.log('성공');
-            				console.log(sort);
-            				var $tableBody = $("#shop_table2");
-            				
-            				//$tableBody.empty();
-            				$tableBody.html(""); // 테이블 초기화
-            			
-            				for(var key in data){
-	              				var $tr = $("<tr>");
-	            				var $noTd = $("<td>").text(data[key].shopNo);
-	            				var $nameTd = $("<td>").text(data[key].shopName);
-								var $statusTd = $("<td>").text(data[key].status);
-								var $gradeTd = $("<td>").text(data[key].shopGradeCode);
-								var $contdTd = $("<td>").text(data[key].contractDate);
-								var $exdTd = $("<td>").text(data[key].expireDate);
-								var $contmTd = $("<td>").text(data[key].contractMoney);
-								var $shopcTd = $("<td>").text(data[key].shopContact);
-	            				
-								$tr.append($noTd);
-								$tr.append($nameTd);
-								$tr.append($statusTd);
-								$tr.append($gradeTd);
-								$tr.append($contdTd);
-								$tr.append($exdTd);
-								$tr.append($contmTd);
-								$tr.append($shopcTd);
-								
-								$tableBody.append($tr);
-								
-            				}
-            				
-            			},
-            			error : function(){
-            				console.log('실패');
-            			}
-            		});
-            	});
-            
-            </script>
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -551,7 +504,11 @@
           	 <br>
             <!-- 검색옵션, 검색버튼 -->
             <div class="searchArea">
-                <input type="search" style="display:inline-block;">
+            	<select id="searchCondition" name="sort" style="display:inline-block;">
+                    <option>-----</option>
+                    <option value="shopName">회사명</option>
+                </select>
+                <input type="text" style="display:inline-block;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
             <br>
@@ -559,31 +516,186 @@
         </div>
         <br> 
         <script>
-        // SHOP 상세보기
-           	$(function(){
-           		$("#shop_table td").mouseenter(function(){
-           			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-           		}).mouseout(function(){
-           			$(this).parent().css({"background":"white"});
-           		}).click(function(){ // SHOP click시, 해당 SHOP 상세정보가 하위에 표시
-           			var con = document.getElementById("shop_detail");
-           			if(con.style.display != 'none'){
-           				con.style.display = 'none';
-           			} else {
-           				con.style.display = 'block';
-           			}
-           		}); 
-           	});
+        // SHOP 상세보기 -> 선생님 수정
+        	/* $(function(){ // 동적 대상 function 주기
+            		$('#shop_table2 td').on({'mouseenter' : function(){
+            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+            		}, 'mouseout' : function(){
+            			$(this).parent().css({"background":"white"});
+            		}, 'click' : function(){ // SHOP click시, 해당 SHOP 상세정보가 하위에 표시
+            			
+            			var shopNo = $(this).parent().children("#sNo").html();
+            		
+                        console.log(shopNo); 
+                       
+            		});
+        	});  */
+        
+        	// 동적 대상 function 주기
+        	$(function(){ 
+        		$(document).on('mouseenter', '#shop_table2 td', function(){
+        			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+        		}).on('mouseout', '#shop_table2 td', function(){
+        			$(this).parent().css({"background":"white"});
+        		});             		
+        	});
+        	
+        	// 정렬하기
+        	$("#sortCondition").change(function(){
+        		var sort = this.value;
+        		
+        		$.ajax({
+        			url : "<%= contextPath %>/sortShop.adm",
+        			type : "post",
+        			dataType : "json",
+        			data : {sort:sort},// key:value 
+        			success : function(data){
+        				console.log('성공');
+        				console.log(sort);
+        				var $tableBody = $("#shop_table2");
+        				
+        				//$tableBody.empty();
+        				$tableBody.html(""); // 테이블 초기화
+        			
+        				for(var key in data){
+              				var $tr = $("<tr>");
+            				var $noTd = $("<td>").text(data[key].shopNo);
+            				var $nameTd = $("<td>").text(data[key].shopName);
+							var $statusTd = $("<td>").text(data[key].status);
+							var $gradeTd = $("<td>").text(data[key].shopGradeCode);
+							var $contdTd = $("<td>").text(data[key].contractDate);
+							var $exdTd = $("<td>").text(data[key].expireDate);
+							var $contmTd = $("<td>").text(data[key].contractMoney);
+							var $shopcTd = $("<td>").text(data[key].shopContact);
+            				
+							$tr.append($noTd);
+							$tr.append($nameTd);
+							$tr.append($statusTd);
+							$tr.append($gradeTd);
+							$tr.append($contdTd);
+							$tr.append($exdTd);
+							$tr.append($contmTd);
+							$tr.append($shopcTd);
+							
+							$tableBody.append($tr);
+
+        				}
+        				
+        			},
+        			error : function(){
+        				console.log('실패');
+        			}
+        		});
+        	});
+        	
+        	// 상세보기 
+        	$(function(){ 
+        		$(document).on('click', '#shop_table2 td', function(){
+        			        	
+                    var shopNo = $(this).parent().children("#sNo").html();
+                    // console.log("shopNo="+shopNo); // ok
+                    
+                    $.ajax({
+                        url: "<%= contextPath %>/detailShop.adm",
+                        data: {shopNo : shopNo},
+                        type: "get",
+                        dataType: "json",
+                        success : function(result){ 
+        					console.log("ajax 연동성공");
+                        	// console.log(result);
+        	           		$("#shop_detail").css({"visibility":"visible"});
+
+        	           		var detail = "";
+
+        	           		detail += "<div id='shop_detail_contents'><div>회사번호 : " + result.shopNo + "</div>" +
+                                     "<div>회사명 : " + result.shopName + "</div>" +
+                                     "<div>계약상태 : " + result.status + "</div>" +
+                                     "<div>등급 : " + result.shopGradeCode + "</div>" + 
+                                     "<div>계약시작일 : " + result.contractDate + "</div>" +
+                                     "<div>계약만료일 : " + result.expireDate + "</div>" +
+                                     "<div>계약금 : " + result.contractMoney + "</div>" +
+                                     "<div>담당자 : " + result.shopPIC + "</div>" +
+                                     "<div>연락처 : " + result.shopContact + "</div></div>" +
+                                     "<div class='btnArea'><button type='button' id='delete_btn' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
+                                     "<button type='button' id='update_btn' style='margin-right : 2%;'>쇼핑몰수정</button></div>";
+                                     
+                            console.log(detail);
+
+        	           		$("#shop_detail").html(detail);
+        	           		
+        	           		// console.log($('#shop_detail').html());
+        				
+                        },
+                        error: function() {
+                            console.log("ajax 연동실패");
+                        }
+                    });
+                });
+            });
+        	
+        	
+        	// 검색하기
+        	$(function(){
+        			$(document).on('click', "#searchBtn", function(){
+        				var sort = $("#searchCondition").val();
+        				var keyword = $("#searchKeyword").val();
+        				
+        				console.log(sort);
+        				console.log(keyword);
+        				
+        				$.ajax({
+                			url : "<%= contextPath %>/searchShop.adm",
+                			type : "get",
+                			dataType : "json",
+                			data : {sort:sort, keyword:keyword},// key:value 
+                			success : function(data){
+                				console.log('성공');
+                				console.log(sort);
+                				var $tableBody = $("#shop_table2");
+                				
+                				$tableBody.html("");
+                			
+                				for(var key in data){
+    	              				var $tr = $("<tr>");
+    	            				var $noTd = $("<td>").text(data[key].shopNo);
+    	            				var $nameTd = $("<td>").text(data[key].shopName);
+    								var $statusTd = $("<td>").text(data[key].status);
+    								var $gradeTd = $("<td>").text(data[key].shopGradeCode);
+    								var $contdTd = $("<td>").text(data[key].contractDate);
+    								var $exdTd = $("<td>").text(data[key].expireDate);
+    								var $contmTd = $("<td>").text(data[key].contractMoney);
+    								var $shopcTd = $("<td>").text(data[key].shopContact);
+    	            				
+    								$tr.append($noTd);
+    								$tr.append($nameTd);
+    								$tr.append($statusTd);
+    								$tr.append($gradeTd);
+    								$tr.append($contdTd);
+    								$tr.append($exdTd);
+    								$tr.append($contmTd);
+    								$tr.append($shopcTd);
+    								
+    								$tableBody.append($tr);
+                				}
+                				
+                			},
+                			error : function(){
+                				console.log('실패');
+                			}
+        			});
+        		});
+        		});
+        	
      	</script>
 
 		<div class="shop_detail_box" id="shop_detail">
             <h4 class="shop_detail_title">쇼핑몰 상세보기</h4>
                
             <!-- 수정, 삭제버튼-->
-            <div class="btnArea">	
+           <!--  <div class="btnArea">	
             	<button type="button" id="delete_btn" style="margin-right:5%;">쇼핑몰삭제</button>    
             	<button type="button" id="update_btn" style="margin-right:2%;">쇼핑몰수정</button>
-			</div>
+			</div> -->
         </div>
 
     </div>

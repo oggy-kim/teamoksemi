@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-   <!--  <script src="../../js/sorttable.js"></script> -->
-    
     <style>
 
         body {
@@ -274,7 +272,7 @@
         .searchArea {
             width:60%;
             margin-left:30%;
-            margin-botton:10%;
+            margin-bottom:5%;
         } 
         
         #searchBtn{
@@ -313,8 +311,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>          
         </ul>
     </div>
     <script>
@@ -330,9 +327,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
     	
     	// MAIN NAVIBAR
@@ -465,20 +459,15 @@
                     <th>작성일</th>
                     <th>찜갯수</th>
                     <th>조회수</th>
-                    <th>댓글수</th>
                 </tr>
                 </thead>
                 <tbody id="board_table2">
-                </tbody>
                 <% if(list.isEmpty()){ %>
-               	<tbody>
                		<tr>
-                		<td colspan="7">작성된 게시글이 없습니다.</td>
+                		<td colspan="6">작성된 게시글이 없습니다.</td>
                 	<tr>
-                </tbody>	
                 	<% } else { %>
                 	<% for(Board b : list){ %>    
- 				<tbody>	
  					<tr>
 	 					<td><%= b.getArticleNo() %></td>
 	                    <td><%= b.getMemberNick() %></td>
@@ -486,14 +475,15 @@
 	                    <td><%= b.getArticleDate() %></td>
 	                    <td><%= b.getArticleLikes() %></td>
 	                    <td><%= b.getArticleViews() %></td>
-	                    <td>아직 구현 안함</td>
                 	</tr>
-                </tbody>	
                 <% } %>
                 <% } %>
+                </tbody>
             </table>
+            
             <script>
-           <%--  $("#sortCondition").change(function(){
+            // sorting
+            $("#sortCondition").change(function(){
         		var sort = this.value;
         		console.log(sort);
         		
@@ -535,8 +525,9 @@
         				console.log('실패');
         			}
         		});
-        	}); --%>
+        	});
             </script>
+            
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -573,34 +564,83 @@
             <br>
         	<!-- 페이지네이션 -->
             <div class="searchArea">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="searchCondition" name="sort" style="display:inline-block;">
                     <option>-----</option>
-                    <option value="title">제목</option>
                     <option value="content">내용</option>
                     <option value="writer">작성자</option>
                 </select>
-                <input type="search" style="display:inline-block;">
+                <input type="text" style="display:inline-block;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
         </div>
         <br> 
 		<script>
         // BOARD 상세보기
-           	$(function(){
-           		$("#board_table td").mouseenter(function(){
-           			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-           		}).mouseout(function(){
-           			$(this).parent().css({"background":"white"});
-           		}).click(function(){ // Board click시, 해당 QNA 상세정보가 하위에 표시
-           			var con = document.getElementById("board_detail");
-           			if(con.style.display != 'none'){
-           				con.style.display = 'none';
-           			} else {
-           				con.style.display = 'block';
-           			}
-           		}); 
-           	});
-
+        			$(function(){ // 동적 대상 function 주기
+            		$(document).on('mouseenter', '#board_table2 td', function(){
+            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+            		}).on('mouseout', '#board_table2 td', function(){
+            			$(this).parent().css({"background":"white"});
+            		}).on('click', '#board_table2 td', function(){ // BOARD click시, 해당 BOARD 상세정보가 하위에 표시
+            			var con = document.getElementById("board_detail");
+            			if(con.style.display != 'none'){
+            				con.style.display = 'none';
+            			} else {
+            				con.style.display = 'block';
+            			}
+            		})
+        			}); 
+        
+        // 검색하기 -> 검색결과가 안뜸
+        $(function(){
+       			$(document).on('click', "#searchBtn", function(){
+       				var sort = $("#searchCondition").val();
+       				var keyword = $("#searchKeyword").val();
+       				
+       				console.log(sort);
+       				console.log(keyword);
+       				
+       				$.ajax({
+               			url : "<%= contextPath %>/searchBoard.adm",
+               			type : "get",
+               			dataType : "json",
+               			data : {sort:sort, keyword:keyword},// key:value 
+               			success : function(data){
+               				console.log('성공');
+               				console.log(sort);
+               				var $tableBody = $("#board_table2");
+               				
+               				$tableBody.html("");
+               			
+               				for(var key in data){
+               					var $tr = $("<tr>");
+    							var $noTd = $("<td>").text(data[key].articleNo);
+                  				var $nickTd = $("<td>").text(data[key].memberNick);
+    							var $contentTd = $("<td>").text(data[key].articleContents);
+    							var $dateTd = $("<td>").text(data[key].articleDate);
+    							var $likeTd = $("<td>").text(data[key].articleLikes);
+    							var $viewTd = $("<td>").text(data[key].articleViews);	
+    							
+    							$tr.append($noTd);
+    							$tr.append($nickTd);
+    							$tr.append($nickTd);
+    							$tr.append($contentTd);
+    							$tr.append($dateTd);
+    							$tr.append($likeTd);
+    							$tr.append($viewTd);
+    							
+    							$tableBody.append($tr);	
+               				}
+               				
+               			},
+               			error : function(){
+               				console.log('실패');
+               			}
+       			});
+       		});
+       		});
+        
+        
         </script>
         <div class="board_detail_box" id="board_detail">
             <h4 class="board_detail_title">게시글 상세보기</h4>

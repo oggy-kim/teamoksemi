@@ -14,20 +14,20 @@ import com.google.gson.GsonBuilder;
 
 import adm.model.service.AdmService;
 import board.model.vo.PageInfo;
-import board.model.vo.QnA;
+import member.model.vo.Member;
 import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmSortShopServlet
+ * Servlet implementation class AdmSearchMemberServlet
  */
-@WebServlet("/sortShop.adm")
-public class AdmSortShopServlet extends HttpServlet {
+@WebServlet("/searchMember.adm")
+public class AdmSearchMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmSortShopServlet() {
+    public AdmSearchMemberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,20 +36,27 @@ public class AdmSortShopServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String sort = request.getParameter("sort");
+		String keyword = request.getParameter("keyword");
+		
+		System.out.println(sort);
+		System.out.println(keyword);
+		
 		int sortId = 0;
 		
-		if (sort.equals("cont_money")) { // 계약금
+		if (sort.equals("member_no")) { 
 			sortId = 1;
-		} else if (sort.equals("cont_status")) { // 계약상태
+		} else if (sort.equals("member_id")) {
 			sortId = 2;
-		} 
-		
- 		// System.out.println(sortId);
+		} else { // member_nick
+			sortId = 3;
+		}
 		
 		AdmService aService = new AdmService();
 		
-		int listCount = aService.getSListCount();		
+		int listCount = aService.getListCount();		
 		int boardLimit = 10;
 		int currentPage = 1;
 		int pageLimit = 5;
@@ -67,17 +74,16 @@ public class AdmSortShopServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Shop> list = aService.sortSList(sortId, currentPage, boardLimit);
+		ArrayList<Member> list = aService.searchMList(sortId, keyword, currentPage, boardLimit);
 		
-//		System.out.println("list" + list);
-//		System.out.println("pi" + pi);
-//		System.out.println("sort" + sortId);
+		System.out.println("list" + list);
+		System.out.println("pi" + pi);
+		System.out.println("sort" + sortId);
 		
 		response.setContentType("application/json; charset=utf-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(list, response.getWriter());
-		
 	}
 
 	/**

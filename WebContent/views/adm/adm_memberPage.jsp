@@ -7,21 +7,9 @@
 	// 회원 상세정보 
 	Member m = (Member)session.getAttribute("loginUser");
 	String gradeCode = m.getGradeCode(); // 회원등급코드
-
-	/* String profile = m.getProfile(); // 프로필사진
-	int memberNo = m.getMemberNo(); // 회원번호
-	String memberId = m.getMemberId(); // 회원아이디
-	String memberNick = m.getMemberNick(); // 회원닉네임
-    String gender = m.getGender(); // 회원성별
-    
-    String likeStyle = m.getLikeStyle(); // 선호스타일
-    int birthYear = m.getBirthYear(); // 연령
-    Date entryDate = m.getEntryDate(); // 가입날짜
-    String memberStatus = m.getMemberStatus(); // 탈퇴여부 
-    // 최근접속일 아직 처리 안함 (중간점검 이후 -> 장기미접속 회원은 강등회원으로 처리) */
     
     // 회원 상세정보 박스 내, 회원 작성글 조회
-    ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list"); 
     
     PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -41,8 +29,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-    <!--  sortable  -->
-    <script src="../../js/sorttable.js"></script>
 
     <style>
 
@@ -196,6 +182,14 @@
 
          /* -------------------- member -------------------- */
 
+ 		/* Sortable tables */
+		table.sortable thead {
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
+
         .sorting_box {
             margin-right:10%;
             margin-bottom:1%;
@@ -204,24 +198,21 @@
   
         .member_box {
             width : 80%;
-            height : 25%;
+            height : auto;
+        	overflow : hidden;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-
-		#member_detail {
-			display : none;
-		}
-
-        .member_detail_box {
+       #member_detail {
+        	visibility : hidden;
             width : 80%;
             height : 40%;
-            margin : 0 0 0 5%;
+            margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
         
-        #member_table, #member_board_table{
+        #member_table, #member_board_table {
        		text-align : center;
             width : 85%;
             margin : 3% 0 0 5%;
@@ -235,55 +226,55 @@
             font-size: 28px; 
         }
 
-        #member_detail_wrapper {
+        /* #member_detail_wrapper {
             width : 95%;
             height : 25%;
             margin : 5% auto;
-        }
+        } */
 
-        .member_profile_box {
+        /* .member_profile_box {
             width : 20%;
             height : 100%;
             display : inline-block;
             border : 1px solid black;
             margin : 0 3%;
-        }
+        } */
 
-        #member_photo_wrapper {
+        /* #member_photo_wrapper {
             margin : 5%;
             float : left;
             width : 90%;
             height : 90%;
-        }
+        } */
 
-        #member_photo {
+        /* #member_photo {
             width : 100%;
             height : 100%;
-        }
+        } */
 
-        .member_detail_1, .member_detail_2 {
+        /* .member_detail_1, .member_detail_2 {
             width : 30%;
             height : 100%;
             margin : 0 1%;
             display : inline-block;
-        }
+        } */
 
-        #member_detail_table_1, #member_detail_table_2 {
+        /* #member_detail_table_1, #member_detail_table_2 {
             height : 100%;
             width : 100%;
-        }
+        } */
 
-        #caption {
+        /* #caption {
             caption-side:top;
             font-size:15px;
             color : black;
-        }
+        } */
 
-        .member_detail_table td {
+        /* .member_detail_table td {
             padding : 0 2% 0 2%;
             border : 1px solid black;
             height : 15%;
-        }
+        } */
 
         /*-- 등급관리, 회원삭제 버튼 --*/
 
@@ -300,6 +291,7 @@
         .searchArea {
             width:60%;
             margin-left:30%;
+            margin-bottom:5%;
         } 
         
         #searchBtn{
@@ -338,8 +330,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>        
         </ul>
     </div>
     <script>
@@ -354,9 +345,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
    	
    	  
@@ -389,47 +377,50 @@
         <div>
             <h2 id="content_title">&nbsp;&nbsp;회원관리</h2>
         </div>
-        <hr>
-        <br>
-        <br>
+        <hr><br><br>
         <div class="member_box">
             <h4 class="table_title">회원 정보 목록</h4>
             <!-- 테이블 정렬 드롭박스 -->
             <div class="sorting_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="member_no">회원번호</option>
-                    <option value="member_id">아이디</option>
+                    <option value="member_nick">닉네임</option>
                     <option value="grade">등급</option>
-                    <option value="join_date">가입일자</option>
+                    <option value="entry_date">가입일자</option>
                 </select>
             </div>
             <!-- 회원정보리스트 테이블 -->
-            <table class="table" id="member_table">
+            <table class="sortable table" id="member_table">
+                <thead id="member_table1">
                 <tr>
                     <th>회원번호</th>
                     <th>아이디</th>
                     <th>닉네임</th>
                     <th>등급</th>
                     <th>가입일자</th>
-                    <th>최근접속일</th>
+                 	<!-- <th>최근접속일</th> -->
                 </tr>
+                </thead>
+                <tbody id="member_table2">
                 <% if(mlist.isEmpty()){ %>
-                <tr>
-                	<td colspan="6">등록된 회원내역이 없습니다.</td>
-                <tr>
+	                <tr>
+	                	<td colspan="6">등록된 회원내역이 없습니다.</td>
+	                <tr>
                 <% } else { %>
                 <% for(Member ml : mlist){ %>    
- 				<tr>
-                    <td><%= ml.getMemberNo() %></td>
-                    <td><%= ml.getMemberId() %></td>
-                    <td><%= ml.getMemberNick() %></td>
-                    <td><%= ml.getGradeCode() %></td>
-                    <td><%= ml.getEntryDate() %></td>
-                    <td>최근접속일</td>
-                </tr>
+	 				<tr>
+	                    <td id="mNo"><%= ml.getMemberNo() %></td>
+	                    <td><%= ml.getMemberId() %></td>
+	                    <td><%= ml.getMemberNick() %></td>
+	                    <td><%= ml.getGradeCode() %></td>
+	                    <td><%= ml.getEntryDate() %></td>
+	                    <!-- <td>최근접속일</td> -->
+	                </tr>
                 <% } %>
-                <% } %>   
+                <% } %> 
+                </tbody>  
             </table> 
+            
             <!-- 페이지네이션 -->
         	 <div class="pagingArea" align="center">
                <!-- 맨 처음으로 (<<) -->
@@ -461,137 +452,213 @@
                <!-- 맨 끝으로 (>>) -->
                <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
            </div> 
-            <script>
-            	// 회원정보 상세보기
-            	$(function(){
-            		$("#member_table td").mouseenter(function(){
-            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-            		}).mouseout(function(){
-            			$(this).parent().css({"background":"white"});
-            		}).click(function(){ // 회원정보 click시, 해당 회원의 상세정보가 하위에 표시
-            			var con = document.getElementById("member_detail");
-            			if(con.style.display != 'none'){
-            				con.style.display = 'none';
-            			} else {
-            				con.style.display = 'block';
-            			}
-            		}); 
-            	});
-            </script>
+         
             <br>
-
             <div class="searchArea">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="searchCondition" name="sort" style="display:inline-block;">
                     <option>-----</option>
                     <option value="member_no">회원번호</option>
                     <option value="member_id">아이디</option>
                     <option value="member_nick">닉네임</option>
                 </select>
-                <input type="search" style="display:inline-block;">
+                <input type="text" style="display:inline-block;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
         </div>
 
-        <br>
-        <br>
-
-    <%--    <div class="member_detail_box" id="member_detail">
-            <h4 class="member_detail_title">회원 상세 정보</h4>
-            <section id="member_detail_wrapper">
-                <!-- 프로필 사진 -->
-                <div class="member_profile_box">
-                    <div id="member_photo_wrapper">
-                        <img id="member_photo" src="<%= profile %>">
-                    </div>
-                </div>
-                <!-- 회원정보란 1 -->
-                <div class="member_detail_1">
-                    <table class="table-condensed" id="member_detail_table_1">
-                        <tr>
-                            <td>회원번호</td>
-                            <td><span><%= memberNo %></span></td>
-                        </tr>
-                        <tr>
-                            <td>등급</td>
-                            <td><span><%= gradeCode %></span></td>
-                        </tr>
-                        <tr>
-                            <td>아이디</td>
-                            <td><span><%= memberId %></span></td>
-                        </tr>
-                        <tr>
-                            <td>닉네임</td>
-                            <td><span><%= memberNick %></span></td>
-                        </tr>
-                        <tr>
-                            <td>성별</td>
-                            <td><span><%= gender %></span></td>
-                        </tr>
-                        
-                        
-                    </table>
-                </div>
-                <!-- 회원정보란 2-->
-                <div class="member_detail_2">
-                    <table class="table-condensed" id="member_detail_table_2">
-                        <tr>
-                            <td>선호스타일</td>
-                            <td><span><%= likeStyle %></span></td>
-                        </tr>
-                        <tr>
-                            <td>출생년도</td>
-                            <td><span><%= birthYear %></span></td>
-                        </tr>
-                        <tr>
-                            <td>가입일자</td>
-                            <td><span><%= entryDate %></span></td>
-                        </tr>
-                        <tr>
-                            <!-- 아직 DB에 추가하지 않은 내용! -->
-                            <td>최근접속일</td> 
-                            <td><span>아직 추가 안함</span></td>
-                        </tr>
-                        <tr>
-                            <td>현황</td>
-                            <td><span><%= memberStatus %></span></td>
-                        </tr>
-                    </table>
-                </div>
+        <br><br> <!-- detail_box 다시 만들기 -->
+    
             </section>
             <!-- 해당 회원의 작성한 게시물 테이블 -->
             <div class="member_detail_3">
                 <table class="table" id="member_board_table">
                     <caption id="caption">작성한 게시물</caption>
+                    <thead id="member_board_table1">
                     <tr>
                     	<th>번호</th>
                         <th>게시사진</th>
                         <th>게시일자</th>
                         <th>조회수</th>
                         <th>찜수</th>
-                        <th>댓글수</th>
+                        <!-- <th>댓글수</th> -->
                     </tr>
-                <% if(mlist.isEmpty()){ %>
-               		 <tr>
-                		<td colspan="6">작성된 게시글이 없습니다.</td>
-                	<tr>
+                    </thead>
+                    <tbody id="member_board_table2">
+                <%-- 	<% if(list == null){ %>
+	               		<tr>
+	                		<td colspan="5">작성된 게시글이 없습니다.</td>
+	                	<tr>
                 	<% } else { %>
                 	<% for(Board b : list){ %>    
  					<tr>
- 					<td><%= b.getArticleNo() %></td>
-                    <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo()%>.jpg" width="80px" height="80px"></td>
-                    <td><%= b.getArticleDate() %></td>
-                    <td><%= b.getArticleViews() %></td>
-                    <td><%= b.getArticleLikes() %></td>
-                    <td><%= b.getArticleLikes() %></td> <!-- 댓글수 -->           
-                </tr>
+	 					<td><%= b.getArticleNo() %></td>
+	                    <td></td>
+	                    <td><%= b.getArticleDate() %></td>
+	                    <td><%= b.getArticleViews() %></td>
+	                    <td><%= b.getArticleLikes() %></td>
+	                    <td><%= b.getArticleLikes() %></td>
+	                     <!-- 댓글수 -->           
+                	</tr>
                 <% } %>
-                <% } %>  
-                </table> --%>
+                <% } %> --%>
+                </tbody>  
+                </table> 
                 <!-- 페이지네이션 추가--> 
-              
-      
-    </div>
-</section>
+	           
+              	
+       	<script>
+            	
+           // 동적 대상 function 주기
+          	$(function(){ 
+          		$(document).on('mouseenter', '#member_table2 td', function(){
+          			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+          		}).on('mouseout', '#member_table2 td', function(){
+          			$(this).parent().css({"background":"white"});
+          		});             		
+          	});
+           
+           // 정렬하기
+           	 $("#sortCondition").change(function(){
+           		var sort = this.value;
+           		console.log(sort);
+           		
+           		$.ajax({
+           			url : "<%= contextPath %>/sortMember.adm",
+           			type : "post",
+           			dataType : "json",
+           			data : {sort:sort},// key:value 
+           			success : function(data){
+           				console.log('성공');
+           				console.log(sort);
+           				var $tableBody = $("#member_table2");
+
+           				$tableBody.html(""); // 테이블 초기화
+           			
+           				for(var key in data){
+                 				var $tr = $("<tr>");
+   							var $noTd = $("<td>").text(data[key].memberNo);
+                 				var $idTd = $("<td>").text(data[key].memberId);
+   							var $nickTd = $("<td>").text(data[key].memberNick);
+   							var $codeTd = $("<td>").text(data[key].gradeCode);
+   							var $entdTd = $("<td>").text(data[key].entryDate);	
+   							
+   							$tr.append($noTd);
+   							$tr.append($idTd);
+   							$tr.append($nickTd);
+   							$tr.append($codeTd);
+   							$tr.append($entdTd);
+   							
+   							$tableBody.append($tr);
+           				}
+           				
+           			},
+           			error : function(){
+           				console.log('실패');
+           			}
+           		});
+           	});
+           
+           
+          // 상세보기 
+          $(function(){ 
+         		$(document).on('click', '#member_table2 td', function(){
+         			        	
+                     var memberNo = $(this).parent().children("#mNo").html();
+                     // console.log("memberNo="+memberNo); // ok
+                     
+                     $.ajax({
+                         url: "<%= contextPath %>/detailMember.adm",
+                         data: {memberNo : memberNo},
+                         type: "get",
+                         dataType: "json",
+                         success : function(result){ 
+         					console.log("ajax 연동성공");
+                         	// console.log(result);
+         	           		$("#member_detail").css({"visibility":"visible"});
+
+         	           		var detail = "";
+
+         	           		detail += "<div id='member_detail_contents'><div>회원번호 : " + result.memberNo + "</div>" +
+                                      "<div>회원등급 : " + result.gradeCode + "</div>" +
+                                      "<div>회원아이디 : " + result.memberId + "</div>" +
+                                      "<div>회원닉네임 : " + result.memberNick + "</div>" + 
+                                      "<div>성별 : " + result.gender + "</div>" +
+                                      "<div>프로필사진 : " + result.profile + "</div>" +
+                                      "<div>선호스타일 : " + result.likeStyle + "</div>" +
+                                      "<div>출생년도 : " + result.birthYear + "</div>" +
+                                      "<div>가입날짜 : " + result.entryDate + "</div>" +
+                                      "<div>탈퇴여부 : " + result.memberStatus + "</div>" +
+                                      "<div class='btnArea'><button type='button' id='delete_btn' style='margin-right : 5%;'>회원삭제</button>" +
+                                      "<button type='button' id='update_btn' style='margin-right : 2%;'>회원수정</button></div>";
+                                      
+                            // console.log(detail);
+
+         	           		$("#member_detail").html(detail);
+         	           		
+         	           		// console.log($('#shop_detail').html());
+         				
+                         },
+                         error: function() {
+                             console.log("ajax 연동실패");
+                         }
+                     });
+                 });
+             });
+
+          // 검색하기
+      	$(function(){
+     			$(document).on('click', "#searchBtn", function(){
+     				var sort = $("#searchCondition").val();
+     				var keyword = $("#searchKeyword").val();
+     				
+     				console.log(sort);
+     				console.log(keyword);
+     				
+     				$.ajax({
+             			url : "<%= contextPath %>/searchMember.adm",
+             			type : "get",
+             			dataType : "json",
+             			data : {sort:sort, keyword:keyword},// key:value 
+             			success : function(data){
+             				console.log('성공');
+             				console.log(sort);
+             				var $tableBody = $("#member_table2");
+             				
+             				$tableBody.html("");
+             			
+             				for(var key in data){
+             					var $tr = $("<tr>");
+   							var $noTd = $("<td>").text(data[key].memberNo);
+                 				var $idTd = $("<td>").text(data[key].memberId);
+   							var $nickTd = $("<td>").text(data[key].memberNick);
+   							var $codeTd = $("<td>").text(data[key].gradeCode);
+   							var $entdTd = $("<td>").text(data[key].entryDate);	
+   							
+   							$tr.append($noTd);
+   							$tr.append($idTd);
+   							$tr.append($nickTd);
+   							$tr.append($codeTd);
+   							$tr.append($entdTd);
+   							
+   							$tableBody.append($tr);
+             				}
+             				
+             			},
+             			error : function(){
+             				console.log('실패');
+             			}
+     			});
+     		});
+     		});
+        	
+          	</script>
+          	
+      <div class="member_detail_box" id="member_detail">
+          <h4 class="member_detail_title">회원 상세 정보</h4>
+            
+  	  </div>
+  	</div>
+  		
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>
 </footer>

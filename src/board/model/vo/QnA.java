@@ -9,7 +9,7 @@ public class QnA {
 	private Date enrollDate; // 글 등록일
 	private String qnaTitle; // QNA 제목
 	private String qnaContents; // QNA 내용
-	private char answerStatus; // 답변여부(Default 'N')
+	private String answerStatus; // 답변여부(Default 'N')
 	private String answerContents; // 답변 내용
 	
 	public QnA() {}
@@ -21,7 +21,7 @@ public class QnA {
 	}
 
 	// Adm QNA
-	public QnA(int qnaNo, String qnaTitle, String memberNick, Date enrollDate, char answerStatus) {
+	public QnA(int qnaNo, String qnaTitle, String memberNick, Date enrollDate, String answerStatus) {
 		super();
 		this.qnaNo = qnaNo;
 		this.qnaTitle = qnaTitle;
@@ -29,8 +29,21 @@ public class QnA {
 		this.enrollDate = enrollDate;
 		this.answerStatus = answerStatus;
 	}
+	
+	// Adm QNA 상세보기  
+	public QnA(int qnaNo, String qnaTitle, String memberNick, Date enrollDate, String qnaContents,
+			String answerStatus, String answerContents) {
+		super();
+		this.qnaNo = qnaNo;
+		this.qnaTitle = qnaTitle;
+		this.memberNick = memberNick;
+		this.enrollDate = enrollDate;
+		this.qnaContents = qnaContents;
+		this.answerStatus = answerStatus;
+		this.answerContents = answerContents;
+	}
 
-	public QnA(int qnaNo, int memberNo, Date enrollDate, String qnaTitle, String qnaContents, char answerStatus,
+	public QnA(int qnaNo, int memberNo, Date enrollDate, String qnaTitle, String qnaContents, String answerStatus,
 			String answerContents) {
 		super();
 		this.qnaNo = qnaNo;
@@ -41,6 +54,7 @@ public class QnA {
 		this.answerStatus = answerStatus;
 		this.answerContents = answerContents;
 	}
+	
 
 	public int getQnaNo() {
 		return qnaNo;
@@ -90,11 +104,11 @@ public class QnA {
 		this.qnaContents = qnaContents;
 	}
 
-	public char getAnswerStatus() {
+	public String getAnswerStatus() {
 		return answerStatus;
 	}
 
-	public void setAnswerStatus(char answerStatus) {
+	public void setAnswerStatus(String answerStatus) {
 		this.answerStatus = answerStatus;
 	}
 

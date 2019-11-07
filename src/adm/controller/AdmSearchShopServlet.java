@@ -18,16 +18,16 @@ import board.model.vo.QnA;
 import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmSortShopServlet
+ * Servlet implementation class AdmSearchShopServlet
  */
-@WebServlet("/sortShop.adm")
-public class AdmSortShopServlet extends HttpServlet {
+@WebServlet("/searchShop.adm")
+public class AdmSearchShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmSortShopServlet() {
+    public AdmSearchShopServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,16 +36,19 @@ public class AdmSortShopServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String sort = request.getParameter("sort");
+		String keyword = request.getParameter("keyword");
+		
+		System.out.println(sort);
+		System.out.println(keyword);
+		
 		int sortId = 0;
 		
-		if (sort.equals("cont_money")) { // 계약금
+		if (sort.equals("shopName")) { 
 			sortId = 1;
-		} else if (sort.equals("cont_status")) { // 계약상태
-			sortId = 2;
 		} 
-		
- 		// System.out.println(sortId);
 		
 		AdmService aService = new AdmService();
 		
@@ -67,17 +70,16 @@ public class AdmSortShopServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Shop> list = aService.sortSList(sortId, currentPage, boardLimit);
+		ArrayList<Shop> list = aService.searchSList(sortId, keyword, currentPage, boardLimit);
 		
-//		System.out.println("list" + list);
-//		System.out.println("pi" + pi);
-//		System.out.println("sort" + sortId);
+		System.out.println("list" + list);
+		System.out.println("pi" + pi);
+		System.out.println("sort" + sortId);
 		
 		response.setContentType("application/json; charset=utf-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(list, response.getWriter());
-		
 	}
 
 	/**

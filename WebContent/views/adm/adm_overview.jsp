@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-
     <style>
 
         body {
@@ -181,8 +180,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>          
         </ul>
     </div>
     <script>
@@ -197,9 +195,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
     	function goStyle() {
     		location.href="<%= contextPath %>/boardlist.look";
