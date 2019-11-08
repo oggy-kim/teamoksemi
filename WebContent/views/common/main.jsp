@@ -221,10 +221,13 @@
     			console.log(result);
     			console.log(result.up);
     			console.log(result.down);
+    			console.log(result.ac);
     			var ran1 = parseInt(result.up.length * Math.random());
     			var ran2 = parseInt(result.down.length * Math.random());
+    			var ran3 = parseInt(result.ac.length * Math.random());
     			console.log(ran1);
     			console.log(ran2);
+    			console.log(ran3);
     			document.getElementById( 'recommend1' ).setAttribute('src', 'resources/images/closet/' + result.up[ran1].typeCode  + '.png')
     			document.getElementById( 'recommend2' ).setAttribute('src', 'resources/images/closet/' + result.down[ran2].typeCode  + '.png')
     		},
