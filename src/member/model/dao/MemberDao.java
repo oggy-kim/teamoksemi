@@ -231,4 +231,87 @@ public class MemberDao {
 		return result;
 	}
 
+	public int updatePwd(Connection conn, String memberId, String newPwd) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, newPwd);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member selectemail(Connection conn, String id) {
+		Member mem = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectemail");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEMBER_NO"),
+									   rset.getString("GRADE_CODE"),
+									   rset.getString("MEMBER_ID"),
+									   rset.getString("MEMBER_PWD"),
+									   rset.getString("MEMBER_NICK"),
+									   rset.getString("GENDER"),
+									   rset.getString("PROFILE"),
+									   rset.getString("LIKE_STYLE"),
+									   rset.getInt("BIRTH_YEAR"),
+									   rset.getDate("ENTRY_DATE"),
+									   rset.getString("MEMBER_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("select : " + mem);
+		return mem;
+	}
+
+	   public int resetPwd(Connection conn,  Member m) {
+		   PreparedStatement pstmt = null;
+		      int result = 0;
+		      
+		      String query = prop.getProperty("resetPwd");
+		      
+		      try {
+		    	  System.out.println("비번 : " + m.getMemberPwd() + ", 아이디 : " + m.getMemberId());
+		         pstmt = conn.prepareStatement(query);
+		         pstmt.setString(1, m.getMemberPwd());
+		         pstmt.setString(2, m.getMemberId());
+		         result = pstmt.executeUpdate();
+		         System.out.println("update : " + result);
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }finally {
+		         close(pstmt);
+		      }
+		      System.out.println("update : " + result);
+		      return result;
+		   }
+
 }

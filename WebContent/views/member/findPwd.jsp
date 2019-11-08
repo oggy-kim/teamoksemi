@@ -55,6 +55,7 @@
             top:calc(60vh - 200px);
             left:calc(45vw - 200px);
             overflow:hidden;
+            background: rgba(223, 217, 230, 0.8);
           }
         .box{
             position:absolute;
@@ -64,7 +65,6 @@
             color:#fff;
             padding:30px 0px;
             padding-top: 5px;
-            background: rgba(100, 100, 100, 0.8);
             }
             #h3tag {
             position:absolute;
@@ -81,14 +81,12 @@
             }
             .email {
               position:absolute;
-              top:calc(35vh - 200px);
-              left:calc(12vw - 200px);
+              margin-left: 20%;
+              margin-bottom: 35%;
+              margin-top:5%;
+              margin-right: 40%;
               padding-top: 5px;
               width:50%;
-              margin-left: 15%;
-              margin-right: 15%;
-              margin-top: 0;
-              margin-bottom: 15%;
               border:2px solid rgba(122, 120, 120,0.5);
               border-radius: 5px;
             }
@@ -106,33 +104,24 @@
               padding-right: 15px;
               height: 8%;
             }
-            #ptag {
-              color:black;
-              margin-top:17%;
-              margin-right: 50px;
-            }
             #atag {
               position:absolute;
-              top:calc(55vh - 200px);
-              left:calc(22vw - 200px);
+              margin-left: 36%;
+              margin-bottom: 10%;
+              margin-top:25%;
+              margin-right: 20%;
               font-size: 1.2em;
             }
             #loginbtn {
+              margin-left: 40%;
+              margin-bottom: 10%;
+              margin-top:35%;
+              margin-right: 20%;
               position:absolute;
-              top:calc(60vh - 200px);
-              left:calc(22.5vw - 200px);
-              margin-top: 0;
-              margin-bottom:5%;
-              margin-left: 3%;
-              margin-right: 5%;
               background: rgba(17, 156, 98,0.8);
               color:white;
               border:1px;
               border-radius: 12px;
-            }
-            .pptag {
-              width:42%;
-              border: 1px solid gray;
             }
             .span3 {
               top:calc(30vh - 200px);
@@ -141,21 +130,25 @@
               width:100%;
               border: 1px solid gray;
             }
-            .span1{
-              position:absolute;
-              top:calc(49vh - 200px);
-              left:calc(28vw - 200px);
-            }
-            .span2 {
-              position:absolute;
-              top:calc(49vh - 200px);
-              left:calc(9vw - 200px);
-            }
             .send {
-              position:absolute;
-              top:calc(38vh - 200px);
-              left:calc(8vw - 200px);
+              margin-left: 32%;
+              margin-bottom: 10%;
+              margin-top:10%;
+              margin-right: 15%;
             }
+            #email-code {
+              margin-left: -10%;
+              margin-bottom: 10%;
+              margin-top:40%;
+              margin-right: 30%;
+            }
+            #code {
+              margin-left: 28%;
+              margin-bottom: 10%;
+              margin-top:40%;
+              margin-right: 30%;
+            }
+
 
     </style>
 </head>
@@ -183,20 +176,76 @@
       <br>
   <div class="span3"></div>
   <br>
-  <pre align="center">이메일 또는 닉네임을 입력하면
-다시 계정에 로그인 할 수 있는 링크를 보내드립니다.</pre>
-  <form method="POST">
-    <input type="email" class="login email" type="text" placeholder="  이메일 또는 닉네임을 입력하세요"><br>
-    <button type="submit" class="login button send">로그인 링크 보내기</button>
-    <span class="pptag span1"></span>
-    <p id="ptag" align="center">또는</p>
-    <span class="pptag span2"></span>
+  <pre align="center">이메일을 입력하면 다시 계정에 
+비밀번호설정을 할 수 있는 인증코드를 보내드립니다.</pre>
+
+  <form method="POST" action="<%= request.getContextPath() %>/changePage.look">
+    <input type="email" class="login email" id="email" name="email" placeholder="  이메일 또는 닉네임을 입력하세요"><br>
   </form>
+  
+  
   <br>
+   <div class="form-group" style="width: 38%; margin: 10px auto;">  
+     <button type="button" id="email-code" class="btn btn-primary btn-lg btn-block" onclick="send_mail();">보내기</button>
+  </div>  
   <a href="#" id="atag">새 계정 만들기</a><br>
-  <button type="submit" id="loginbtn" >로그인으로</button>
+  <button type="button" id="loginbtn" >로그인으로</button>
+  
+  
+  <span id="code">
+  <input type="text" placeholder="인증코드를 입력하세요." name="emailcode" id="emailcode">
+  <button type="button" id="check-email-code-check" onclick="send_emailcheck();">확인</button>
+</span>
   </div>
-  </div>
+  
+  <script type="text/javascript">
+  code;
+  
+  //ajax는 이메일보내기용
+	function send_mail() {
+		var email = $("#email").val();
+		$.ajax({
+			url : "<%=request.getContextPath()%>/sendEmail.look",
+			type : "post",
+			data : {email : email },
+			success : function(result) {
+				alert('이메일 인증코드가 발급되었습니다. 인증코드를 입력해주세요.');
+				console.log(result);
+				code=result;
+				},
+			error : function(e) {
+				console.log('통실실패');
+				console.log(e);
+			}
+		});
+	}
+
+
+
+	  <%-- <form method="POST" action="<%= request.getContextPath() %>/changePage.look">
+	    <input type="email" class="login email" id="email" name="email" placeholder="  이메일 또는 닉네임을 입력하세요"><br>
+	  </form>
+	  
+	  <input type="text" placeholder="인증코드를 입력하세요." name="emailcode" id="emailcode"> --%>
+
+	 //인증코드를 받고나서 제출하는기능
+function send_emailcheck(){
+	var email = $("#email").val();
+	var emailcode = $("#emailcode").val();
+	//인증번호 맞을경우
+	
+	//인증번호확인
+	if(code == emailcode) {
+		$("form").submit(); //맞으면 form 제출하면 서블릿으로 가니깐 name Parameter로 setAttribute시킬수있음.
+		$("#email").val();
+		//틀릴경우다시입력
+	}else {
+		alert('코드가 일치하지않습니다.');
+	}
+	
+}
+</script>
+
 </section>
 </body>
 </html>
