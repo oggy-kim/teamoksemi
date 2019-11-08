@@ -72,12 +72,6 @@
           margin:auto;
         }
 
-        .weatherArea .up img {
-          width:100%;
-          height:100%;
-          padding:10px 0;
-        }
-
         .mainImg {
             float: left;
         }
@@ -96,8 +90,19 @@
         .subImg {
           background: darkgray;
           width: 30%;
-          height: 400px;
+          height: 420px;
           float: left;
+          border:1px solid lightgray;
+          border-radius: 5px;
+        }
+        
+        .subImg > div {
+        	border:1px solid lightgray;
+        	border-radius: 5px;
+        }
+        
+        .subImg1:hover, .subImg2:hover {
+        	cursor:pointer;
         }
 
         .subImg1 {
@@ -151,11 +156,12 @@
     <script>
     
     $.getJSON('http://api.openweathermap.org/data/2.5/forecast?id=1835848&APPID=975353dea991d476ec748ec5b88c3a52&units=metric&cnt=7', function(data){
-        var $ctemp = data.list[0].main.temp;
+        var $cTemp = data.list[0].main.temp;
         var $chum = data.list[0].main.humidity;
         var $cwind = data.list[0].wind.speed;
         var $wData = data.list[0].weather[0].main;
         var $wIcon = data.list[0].weather[0].icon;
+        var cTemp = $cTemp;
         
         var $fIcon1 = data.list[1].weather[0].icon;
         var $fIcon2 = data.list[2].weather[0].icon;
@@ -171,7 +177,7 @@
         var $fData5 = data.list[5].weather[0].main;
         var $fData6 = data.list[6].weather[0].main;
         
-        $('.ctemp').prepend($ctemp);
+        $('.cTemp').prepend($cTemp);
         $('.chum').append($chum).append($('.per'));
         $('.cwind').append($cwind).append($('persec'));
         $('.cicon').append('<img src="http://openweathermap.org/img/w/' + $wIcon + '.png" style="width:100px; height:100px;">').append($wData);
@@ -201,9 +207,33 @@
         	date++;
         	$(".fData" + cnt).prepend(year + '-' + month + '-' + date);
         	cnt++;
+        }); 
+        	
+        console.log(cTemp);
+        var memberNo = <%= m.getMemberNo() %>;
+        $.ajax ({
+        	url:"recommend.look",
+        	data : {cTemp : cTemp, memberNo : memberNo},
+        	type:"get",
+    		dataType: "json",
+    		success:function(result){
+    			console.log("성공");	
+    			console.log(result);
+    			console.log(result.up);
+    			console.log(result.down);
+    			var ran1 = parseInt(result.up.length * Math.random());
+    			var ran2 = parseInt(result.down.length * Math.random());
+    			console.log(ran1);
+    			console.log(ran2);
+    			document.getElementById( 'recommend1' ).setAttribute('src', 'resources/images/closet/' + result.up[ran1].typeCode  + '.png')
+    			document.getElementById( 'recommend2' ).setAttribute('src', 'resources/images/closet/' + result.down[ran2].typeCode  + '.png')
+    		},
+    		error:function() {
+    			console.log("ajax 연동실패");
+    		}
         });
-        
       });
+    	
       
     </script>
 </head>
@@ -218,7 +248,7 @@
     <div class="weatherArea">
           <div class="forecast">
             <div class="cicon"></div>
-            <label>TEMP : </label> <label class="ctemp"> &deg;C</label>
+            <label>TEMP : </label> <label class="cTemp"> &deg;C</label>
             <br><br>
             <label class="chum">HUM : </label> <label>%</label>
             <br><br>
@@ -228,28 +258,31 @@
   </div>
   <div class="middleArea">
     <br>
-    <div class="subImg subImg1">
+    <div class="subImg subImg1" onclick="goStyle();">
         <div class="card" style="width: 100%; height: 100%; border:0px;">
-            <img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" width="100" height="220" class="card-img-top">
-            <div class="card-body">
+        	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">BEST</p>
+            <img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" class="card-img-top" style="width:100%; height:50%;">
+            <div class="card-body" style="width:100%; height:35%;">
                 <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">#OOTD</h5>
                 <p class="card-text" style="font-family: 'Do Hyeon', sans-serif; font-size:30px; font-style: italic;"><%= board.getArticleContents() %></p>
-                <a href="<%= contextPath %>/boardlist.look" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
+                <p style="font-family: 'Paytone One', sans-serif; font-size:15px; font-style: italic;"> &hearts; &nbsp; <%= board.getArticleLikes() %> </p>
             </div>
         </div>
     </div>
     <div class="subImg subImg2">
         <div class="card" style="width: 100%; height:100%; border:0px;">
-            <img src="<%= contextPath %>/resources/images/tour2.jpg" class="card-img-top">
+        	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">RECOMMEND</p>
+            <img class="card-img-top" id="recommend1" style="width:50%; height:25%; margin:auto;">
+            <img class="card-img-top" id="recommend2" style="width:50%; height:25%; margin:auto;">
             <div class="card-body">
-                <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary" style="margin:20px 0 0 42%; text-decoration: none; background: darkgray;">>>></a>
+                <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">TODAY RECOMMEND</h5>
+                <p class="card-text" style="font-family: 'Do Hyeon', sans-serif; font-size:20px; font-style: italic;">오늘같은 날씨에 이런 옷 어떠세요?</p>
             </div>
         </div>
     </div>
     <div class="subImg subImg3">
         <div class="card" style="width: 100%; height:100%; border:0px;">
+    	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">FORECAST</p>
         	<div class="forecastArea">
         		<div class="forecastIcon">
         			<div class="fIcon fIcon1"></div>
@@ -260,7 +293,7 @@
         			<div class="fIcon fIcon6"></div>
         		</div>
         	</div>
-            <div class="card-body" style="font-family: 'Fugaz One', cursive;">
+            <div class="card-body" style="font-family: 'Fugaz One', cursive; height:40%; padding:0;">
             	<div class="fData fData1"><br></div>
             	<div class="fData fData2"><br></div>
             	<div class="fData fData3"><br></div>
@@ -271,13 +304,15 @@
         </div>
     </div>
   </div>
+  <br><br>
   <!-- 스타일 이미지 -->
   <div class="styleImgArea">
-     <div class="fotorama" data-fit="contain" data-arrows="true" data-width="100%" data-height="80%" data-ratio="4/3" data-allowfullscreen="true" data-autoplay="3000">
-        <img src="<%= contextPath %>/resources/images/style1.PNG" class="inner">
-        <img src="<%= contextPath %>/resources/images/style2.PNG" class="inner">
-        <img src="<%= contextPath %>/resources/images/style3.PNG" class="inner">
-        <img src="<%= contextPath %>/resources/images/style4.PNG" class="inner">
+     <div class="fotorama" data-fit="contain" data-arrows="false" data-width="100%" 
+     		data-height="80%" data-ratio="4/3" data-autoplay="5000" onclick="goEvent();">
+        <img src="<%= contextPath %>/resources/images/banner/styleshare.jpg">
+        <img src="<%= contextPath %>/resources/images/banner/musinsa.jpg">
+        <img src="<%= contextPath %>/resources/images/banner/styleshare1.jpg">
+        <img src="<%= contextPath %>/resources/images/banner/musinsa1.jpg">
       </div>
    </div>
 </section>
