@@ -40,6 +40,7 @@ public class MyclosetRecommendServlet extends HttpServlet {
 		ArrayList<Closet> clist = null;
 		ArrayList<Closet> up = new ArrayList<>();
 		ArrayList<Closet> down = new ArrayList<>();
+		ArrayList<Closet> ac = new ArrayList<>();
 		
 		if(cTemp >= -10 && cTemp < 5 ) {
 			clist = new ClosetService().recommendWinter(memberNo);
@@ -53,14 +54,17 @@ public class MyclosetRecommendServlet extends HttpServlet {
 			for(Closet c : clist) {
 				if(c.getTypeOption() == 1) {
 					up.add(c);
-				} else {
+				} else if(c.getTypeOption() == 2) {
 					down.add(c);
+				} else {
+					ac.add(c);
 				}
 			}
 		}
 		HashMap<String, ArrayList<Closet>> ClosetMap = new HashMap<>();
 		ClosetMap.put("up", up);
 		ClosetMap.put("down", down);
+		ClosetMap.put("ac", ac);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
