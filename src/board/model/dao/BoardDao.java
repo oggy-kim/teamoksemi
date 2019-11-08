@@ -222,8 +222,8 @@ public class BoardDao {
 	}
 
 
-	public ArrayList<Board> selectList(Connection conn, int currentPage, int boardLimit) {
-	      ArrayList<Board> list = new ArrayList<>();
+	public ArrayList<Attachment> selectList(Connection conn, int currentPage, int boardLimit) {
+	      ArrayList<Attachment> list = new ArrayList<>();
 	      
 	      PreparedStatement pstmt = null;
 	      ResultSet rset = null;
@@ -241,10 +241,13 @@ public class BoardDao {
 	         rset = pstmt.executeQuery();
 	         
 	         while(rset.next()) {
-	            list.add(new Board(rset.getInt(2), rset.getString(3), rset.getString(4), 
-	                           rset.getDate(5), rset.getInt(6), rset.getInt(7)));
-	            
-	            }
+	        	 Attachment at = new Attachment();
+	        	 at.setArticleNo(rset.getInt("article_no"));
+	        	 at.setChangeName(rset.getString("change_name"));
+	        	 at.setFilePath(rset.getString("file_path"));
+	        	 
+	        	 list.add(at);
+	         }
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
@@ -302,11 +305,17 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new WishList(rset.getInt(2),
-									  rset.getInt(3),
-									  rset.getDate(4),
-									  rset.getString(5),
-									  rset.getString(6)));
+				WishList w = new WishList();
+				
+				w.setWishNo(rset.getInt("wish_no"));
+				w.setMemberNo(rset.getInt("member_no"));
+				w.setArticleNo(rset.getInt("article_no"));
+				w.setWishDate(rset.getDate("wish_date"));
+				w.setWishMemo(rset.getString("wish_memo"));
+				w.setWishStatus(rset.getString("wish_status"));
+				w.setChangeName(rset.getString("change_name"));
+				
+				list.add(w);
 				
 			}
 		} catch (SQLException e) {
@@ -361,11 +370,9 @@ public class BoardDao {
 			for(int i = 0; i < deleteListInt.length; i++) {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, deleteListInt[i]);		
-				System.out.println(pstmt);
 				result += pstmt.executeUpdate();
 			}			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -550,5 +557,161 @@ public class BoardDao {
 		}
 		return result;
 	}
+
+
+	public int getCommentList(Connection conn, int aNo) {
+		int listCount = 0;
+	      
+	    PreparedStatement pstmt = null;
+	    ResultSet rset = null;
+	      
+	    String sql = prop.getProperty("getCommentList");
+	    
+	    try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, aNo);
+			
+			rset = pstmt.executeQuery();
+
+            if(rset.next()) {
+                listCount = rset.getInt(1);
+            }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listCount;
+	}
+
+
+	public int insertWish(Connection conn, WishList w) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("insertWish");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, w.getMemberNo());
+			pstmt.setInt(2, w.getArticleNo());
+			pstmt.setString(3, w.getWishMemo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int insertBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String sql = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b.getMemberNo());
+			pstmt.setString(2, b.getArticleContents());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public int insertAttachment(Connection conn, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++) {
+				Attachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public Attachment selectChangeName(Connection conn, int aNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Attachment at = null;
+		
+		String sql = prop.getProperty("selectChangeName");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, aNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment(rset.getInt(1),
+						rset.getInt(2),
+						rset.getString(3),
+						rset.getString(4),
+						rset.getString(5),
+						rset.getDate(6),
+						rset.getString(7));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return at;
+	}
+
+
+	public int increaseCountt(Connection conn, int aNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("increaseCountt");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, aNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }

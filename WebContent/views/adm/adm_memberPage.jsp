@@ -41,8 +41,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-    <!--  sortable  -->
-    <script src="../../js/sorttable.js"></script>
 
     <style>
 
@@ -396,7 +394,7 @@
             <h4 class="table_title">회원 정보 목록</h4>
             <!-- 테이블 정렬 드롭박스 -->
             <div class="sorting_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="member_no">회원번호</option>
                     <option value="member_id">아이디</option>
                     <option value="grade">등급</option>

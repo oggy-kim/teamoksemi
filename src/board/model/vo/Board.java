@@ -53,6 +53,12 @@ public class Board implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public Board(int memberNo, String articleContents) {
+		super();
+		this.memberNo = memberNo;
+		this.articleContents = articleContents;
+	}
+
 	public int getArticleNo() {
 		return articleNo;
 	}
