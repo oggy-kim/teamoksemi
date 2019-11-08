@@ -7,23 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import adm.model.service.AdmService;
-import member.model.vo.Member;
+import board.model.service.BoardService;
+import board.model.vo.Board;
 import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmDetailMemberServlet
+ * Servlet implementation class AdmUpdateFormServlet
  */
-@WebServlet("/detailMember.adm")
-public class AdmDetailMemberServlet extends HttpServlet {
+@WebServlet("/updateForm.shop")
+public class AdmUpdateFormShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailMemberServlet() {
+    public AdmUpdateFormShopServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +31,17 @@ public class AdmDetailMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
+		System.out.println("shopNo="+shopNo);
 		
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
-		System.out.println(memberNo);
-
-		Member m = new AdmService().detailMember(memberNo);
+		Shop shop = new AdmService().selectShop(shopNo);
+		System.out.println("shop="+shop);
 		
-		System.out.println(m);
-		
-		if(m != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(m, response.getWriter());
-		} else {
-			request.setAttribute("msg", "세부 내용 읽기에 실패하셨습니다.");
+		if(shop != null) {
+			request.setAttribute("shop", shop);
+			request.getRequestDispatcher("views/adm/adm_shopUpdatePage.jsp").forward(request, response);
+		}else {
+			request.setAttribute("msg", "쇼핑몰 수정페이지를 불러오는데 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

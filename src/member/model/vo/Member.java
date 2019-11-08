@@ -1,6 +1,6 @@
 package member.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Member implements java.io.Serializable{
    private static final long serialVersionUID = 501763206231505614L;
