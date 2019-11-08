@@ -11,6 +11,7 @@
     int endPage = pi.getEndPage();
     
     ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
+    ArrayList<Attachment> flist = (ArrayList<Attachment>)request.getAttribute("flist");
     
 
 	Member m = (Member)session.getAttribute("loginUser");
@@ -21,8 +22,6 @@
 <head>
 <meta charset="UTF-8">
 <title>LOOK SO FINE</title>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -30,6 +29,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gaegu|McLaren&display=swap" rel="stylesheet">
 <style>
 body {
 	width: 100%;
@@ -64,6 +64,7 @@ body {
 
 section {
 	width: 100%;
+	
 }
 
 hr {
@@ -183,51 +184,6 @@ hr {
 	height: 20px;
 }
 
-#popupDiv { /* 팝업창 css */
-	top: 0px;
-	position: absolute;
-	background: white;
-	width: 1200px;
-	height: 700px;
-	display: none;
-	z-index: 2;
-	border-radius: 10px;
-}
-
-#popup_mask { /* 팝업 배경 css */
-	position: fixed;
-	width: 100%;
-	height: 1000px;
-	top: 0px;
-	left: 0px;
-	display: none;
-	background-color: #000;
-	opacity: 0.8;
-}
-
-#popCloseBtn {
-	background: white;
-	position: absolute;
-	left: 95%;
-	z-index: 100;
-	margin-right: 8px;
-	width: 40px;
-	height: 40px;
-	border: 1px solid white;
-}
-
-#popOpenBtn {
-	background: white;
-	border: 1px solid white;
-	height: 250px;
-}
-
-.popOpen {
-	background: white;
-	border: 1px solid white;
-	height: 250px;
-}
-
 .display {
 	display: inline-block;
 }
@@ -256,6 +212,78 @@ hr {
 img:hover {
 	cursor:pointer;
 }
+
+.pop-layer .pop-container {
+  padding: 20px 25px;
+}
+
+.pop-layer p.ctxt {
+  color: #666;
+  line-height: 25px;
+}
+
+.pop-layer .btn-r {
+  width: 100%;
+  margin: 10px 0 20px;
+  padding-top: 10px;
+  border-top: 1px solid #DDD;
+  text-align: right;
+}
+
+.pop-layer {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 410px;
+  height: auto;
+  background-color: #fff;
+  border: 5px solid #3571B5;
+  z-index: 10;
+}
+
+.dim-layer {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.dim-layer .dimBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.dim-layer .pop-layer {
+  display: block;
+}
+
+a.btn-layerClose {
+  display: inline-block;
+  height: 25px;
+  padding: 0 14px 0;
+  border: 1px solid #304a8a;
+  background-color: #3f5a9d;
+  font-size: 13px;
+  color: #fff;
+  line-height: 25px;
+}
+
+a.btn-layerClose:hover {
+  border: 1px solid #091940;
+  background-color: #1f326a;
+  color: #fff;
+}
 </style>
 </head>
 <body>
@@ -277,17 +305,47 @@ img:hover {
 			<div class="write">
 				<button onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
 			</div>
+			<div style="height: 10px;"></div>
+			<a href="#layer2" class="btn-example">★한번은 클릭해주세요</a>
+			<div class="dim-layer">
+				<div class="dimBg"></div>
+				<div id="layer2" class="pop-layer">
+					<div class="pop-container">
+						<div class="pop-conts">
+							<!--content //-->
+							<p class="ctxt mb20">
+								★게시글 이용시 주의사항★<br>
+								<br> 해당 사진 클릭시 상세보기 페이지로 이동합니다.<br>
+								<br> 게시물 상세보기에서 댓글을 작성할 수 있습니다.<br>
+								<br> 댓글은 작성시 본인이 삭제할 수 없기에 신중히 댓글을 달아주세요!
+							</p>
+
+							<div class="btn-r">
+								<a href="#" class="btn-layerClose">Close</a>
+							</div>
+							<!--// content-->
+						</div>
+					</div>
+				</div>
+			</div>
 			<br>
 
-			<% if(list.isEmpty()) { %>
+			<%
+				if (flist.isEmpty()) {
+			%>
 			<div class="empty" algin="center">조회된 리스트가 없습니다.</div>
 			<% } else { %>
-			<% for(Board b : list) { %>
-			<div class="sharing sfirst">
-				<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px" class="picture" title="<%= b.getArticleNo() %>">
-			</div>
+			<%-- <% for(Board b : list) { %> --%>
+				<%-- <input type="hidden" value="<%= b.getArticleNo() %>"> --%>
+				<% for(Attachment at : flist){ %>
+					<%-- <% if(b.getArticleNo() == at.getArticleNo()){ %> --%>
+					<div class="sharing sfirst">
+						<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="220px" height="260px" class="picture" title="<%= at.getArticleNo() %>">
+					</div>
 			<% } %>
 			<% } %>
+			<%-- <% } %> --%>
+			<%-- <% } %> --%>
 
 			<br clear="both"> <br>
 
@@ -359,23 +417,23 @@ img:hover {
 				</div>
 			</div>
 			<div class="newlist sfirst">
-				<a href="" target="_blank"><img src="image/ui/n1.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/n1.jpg"
 					class="newlist-img1" style="width: 100%; height: 100%;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="image/ui/n2.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/n2.jpg"
 					class="newlist-img2" style="width: 100%; height: 100%;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="image/ui/n3.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/n3.jpg"
 					class="newlist-img3" style="width: 100%; height: 100%;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="image/ui/n4.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/n4.jpg"
 					class="newlist-img4" style="width: 100%; height: 100%;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="image/ui/n5.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/n5.jpg"
 					class="newlist-img5" style="width: 100%; height: 100%;"></a>
 			</div>
 
@@ -397,7 +455,7 @@ img:hover {
 			</div>
 
 			<div class="sponser pfirst">
-				<a href="" target="_blank"><img src="image/ui/s1.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/s2.jpg"
 					class="sponser-img1"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-a">
@@ -406,7 +464,7 @@ img:hover {
 			</div>
 
 			<div class="sponser psecond">
-				<a href="" target="_blank"><img src="image/ui/s2.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/s1.jpg"
 					class="sponser-img2"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-b">
@@ -415,66 +473,12 @@ img:hover {
 			</div>
 
 			<div class="sponser pthird">
-				<a href="" target="_blank"><img src="image/ui/s3.jpg"
+				<a href="" target="_blank"><img src="resources/images/newsponser/s3.jpg"
 					class="sponser-img3"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-c">
 					<h4 style="text-align: center;">PUMA FALL WINTER</h4>
 					</p></a>
-			</div>
-
-		</div>
-
-		<div id="popup_mask"></div>
-		<!-- 팝업 배경 DIV -->
-
-		<div id="popupDiv">
-			<!-- 팝업창 -->
-			<button id="popCloseBtn">
-				<img src="image/ui/delete.png" style="width: 40px; height: 40px;">
-			</button>
-			<div class="display left">
-				<div class="leftsection">
-					<img src="image/ui/1.jpg" style="width: 100%; height: 100%;">
-				</div>
-			</div>
-			<div class="display right">
-				<div class="user" style="width: 100%; height: 20%;">
-					<a>안녕하세요?</a>
-				</div>
-				
-				
-				<!-- ajax를 이용한 댓글 구현 -->
-				<div class="replyArea">
-				<!-- 불러온 댓글 리스트 보여주기 -->
-					<div id="replySelectArea">
-						<table id="replySelectTable" border="1" align="center">
-							<% if(rlist != null){ %>
-							<% for(BoardComment r : rlist){ %>
-							<tr>
-								<td width="100px"><%= r.getMemberNick() %></td>
-								<td width="400px"><%= r.getCommentContents() %></td>
-							</tr>
-							<% } %>
-							<% } %>
-						</table>
-					</div>
-				</div>
-					<!-- 댓글 작성하는 부분 -->
-					<div class="replyWriterArea">
-						<table align="center">
-							<tr>
-								<td>댓글 작성</td>
-								<td><textarea rows="2" cols="50" id="replyContent"></textarea></td>
-								<td><button id="addReply">댓글등록</button></td>
-							</tr>
-						</table>
-					</div>
-
-					
-				<div class="wish" style="width: 100%; height: 20%;">
-					<button onclick="wish()">찜하기</button>
-				</div>
 			</div>
 
 		</div>
@@ -509,7 +513,48 @@ img:hover {
     	}
     }
         
-    </script>
+    $(".picture").click(function(){
+    	var aNo = $(this).attr('title');
+    	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
+    });
     
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
+    });
+    function layer_popup(el){
+
+        var $el = $(el);
+        var isDim = $el.prev().hasClass('dimBg');
+
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 띄우기
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
+    </script>    
 </body>
 </html>

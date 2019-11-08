@@ -55,16 +55,16 @@ public class BoardService {
 		return listCount;
 	}
 
-	public ArrayList<Board> selectList(int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectList(int currentPage, int boardLimit) {
 		Connection conn = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().selectList(conn, currentPage, boardLimit);
+		ArrayList<Attachment> flist = new BoardDao().selectList(conn, currentPage, boardLimit);
 		
 		// 이후 SQL Developer에 데이터 만들기 server.sql
 		
 		close(conn);
 		
-		return list;
+		return flist;
 	}
 
 	// 찜게시판 목록 불러오기
@@ -230,15 +230,87 @@ public class BoardService {
 		return rlist;
 	}
 
-	public Board selectMainBoard() {
+	public int getCommentList(int aNo) {
 		Connection conn = getConnection();
 		
-		Board board = new BoardDao().selectMainBoard(conn);
+        int listCount = new BoardDao().getCommentList(conn, aNo);
+
+        close(conn);
+        
+		return listCount;
+	}
+
+	public int insertWish(WishList w) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().insertWish(conn, w);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/*public int insertWish(WishList w) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		
+		int result = bDao.increaseCountt(conn, w);
+		
+		WishList w = null;
+		
+		if(result > 0) {
+			w = bDao.insertWish(conn, w);
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		return result;
+	}*/
+
+	public int insertThumbnail(Board b, ArrayList<Attachment> fileList) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		
+		int result1 = bDao.insertBoard(conn, b);
+		int result2 = bDao.insertAttachment(conn, fileList);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1;
+	}
+
+	public Attachment selectChangeName(int aNo) {
+		Connection conn = getConnection();
+		
+		Attachment at = new BoardDao().selectChangeName(conn, aNo);
 		
 		close(conn);
 		
+		return at;
+	}
+
+	public int increaseCountt(int aNo) {
+		Connection conn = getConnection();
 		
-		return board;
+		int result = new BoardDao().increaseCountt(conn, aNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

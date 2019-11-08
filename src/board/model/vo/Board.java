@@ -56,17 +56,10 @@ public class Board implements java.io.Serializable{
 		this.status = status;
 	}
 
-	public Board(int memberNo, int articleNO, int articleViews, int articleWishes, 
-			String articleContents, String memberNick, String profile, String likeStyle) {
+	public Board(int memberNo, String articleContents) {
 		super();
 		this.memberNo = memberNo;
-		this.articleNo = articleNO;
-		this.articleViews = articleViews;
-		this.articleWishes = articleWishes;
 		this.articleContents = articleContents;
-		this.memberNick = memberNick;
-		this.profile = profile;
-		this.likeStyle = likeStyle;
 	}
 
 	public int getArticleNo() {
@@ -171,9 +164,5 @@ public class Board implements java.io.Serializable{
 
 	
 
-	
 
-	
-	
-	
 }

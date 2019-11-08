@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
+import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
 import board.model.vo.WishList;
@@ -58,12 +59,13 @@ public class WishServlet extends HttpServlet {
         }
 
         PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
-
+        
         ArrayList<WishList> list = bService.selectWishList(currentPage, boardLimit, m.getMemberNo());
-
+        
         RequestDispatcher view = request.getRequestDispatcher("views/board/wishListView.jsp");
         request.setAttribute("list", list);
         request.setAttribute("pi", pi);
+        
         view.forward(request, response);
 	}
 
