@@ -312,5 +312,16 @@ public class BoardService {
 		close(conn);
 		return result;
 	}
+	
+	public Board selectMainBoard() {
+	      Connection conn = getConnection();
+	      
+	      Board board = new BoardDao().selectMainBoard(conn);
+	      
+	      close(conn);
+	      
+	      
+	      return board;
+	   }
 
 }
