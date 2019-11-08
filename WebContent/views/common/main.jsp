@@ -269,7 +269,7 @@
             </div>
         </div>
     </div>
-    <div class="subImg subImg2">
+    <div class="subImg subImg2" onclick="goMyCloset();">
         <div class="card" style="width: 100%; height:100%; border:0px;">
         	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">RECOMMEND</p>
             <img class="card-img-top" id="recommend1" style="width:50%; height:25%; margin:auto;">
@@ -340,6 +340,10 @@ function goMypage() {
 	} else {
 		location.href="<%= contextPath %>/views/mypage/myPage.jsp";
 	}
+}
+
+function goMyCloset() {
+	location.href = "<%= contextPath %>/closet.look";
 }
 
 
