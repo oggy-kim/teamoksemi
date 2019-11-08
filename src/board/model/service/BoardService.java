@@ -230,4 +230,15 @@ public class BoardService {
 		return rlist;
 	}
 
+	public Board selectMainBoard() {
+		Connection conn = getConnection();
+		
+		Board board = new BoardDao().selectMainBoard(conn);
+		
+		close(conn);
+		
+		
+		return board;
+	}
+
 }

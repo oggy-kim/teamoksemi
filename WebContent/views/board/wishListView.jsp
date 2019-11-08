@@ -197,13 +197,13 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-					<td coldspan="4">조회된 찜목록이 없습니다..</td>
+					<td colspan="4">조회된 찜목록이 없습니다..</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
 					<input type="hidden" value="<%= w.getMemberNo() %>">
-					<td><input type="checkbox" id="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
+					<td><input type="checkbox" class="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
 					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getArticleNo() %>.jpg" width="130px" height="160px"></td>
 					<td><%= w.getWishDate() %></td>
 					<td><%= w.getWishMemo() %></td>
@@ -285,7 +285,7 @@ hr {
 	<script>
         $(document).ready(function(){
             $('.check-all').click(function(){
-                $('.ca').prop('checked', this.checked);
+                $('.select').prop('checked', this.checked);
             });
         });
         
