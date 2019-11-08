@@ -130,6 +130,7 @@ body {
 			</form>
 		</div>
 	</div>
+
 	<%} else {
 		response.sendRedirect("views/common/main.jsp");
 	}%>
@@ -161,6 +162,11 @@ body {
 	/* meta name="google-signin-scope" content="profile email"> */
 		
 </script>
+	<%} else { %>
+		<script>
+			location.href="<%= contextPath%>/mainboard.look";
+		</script>
+	<% }%>
 </body>
 <script>
 	function memberJoin() {

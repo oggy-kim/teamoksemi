@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
-
     <style>
 
         body {
@@ -181,8 +180,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>          
         </ul>
     </div>
     <script>
@@ -197,9 +195,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
     	function goStyle() {
     		location.href="<%= contextPath %>/boardlist.look";
@@ -217,6 +212,28 @@
             <h2 id="content_title"> &nbsp;&nbsp;OVERVIEW</h2>
         </div>
         <hr><br>
+         <div class="overview_box" style="background:yellowgreen; width:1000px; height:80px;">
+            <br>
+            <h4 class="welcome_message">&nbsp;&nbsp;관리자 페이지입니다. 무엇을 도와드릴까요? </h4>
+        </div> 
+        
+        <div>
+        	<div>
+        		<h3>회원관리</h3>
+        		<p>모든 회원들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        	<div>
+        		<h3>게시물관리</h3>
+        		<p>모든 회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        	<div>
+        		<h3>게시물관리</h3>
+        		<p>모든 회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        </div>
 
         
 </section>

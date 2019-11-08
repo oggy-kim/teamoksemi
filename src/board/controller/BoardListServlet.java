@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
+import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.PageInfo;
@@ -67,10 +68,10 @@ public class BoardListServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Board> list = bService.selectList(currentPage, boardLimit);
+		ArrayList<Attachment> flist = bService.selectList(currentPage, boardLimit);
 		
 		RequestDispatcher view = request.getRequestDispatcher("views/board/boardListView.jsp");
-		request.setAttribute("list", list);
+		request.setAttribute("flist", flist);
 		request.setAttribute("pi", pi);
 		
 		view.forward(request, response);

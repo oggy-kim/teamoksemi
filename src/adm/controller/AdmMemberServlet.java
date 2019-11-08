@@ -65,8 +65,6 @@ public class AdmMemberServlet extends HttpServlet {
 		request.setAttribute("pi", pi);
 
 		view.forward(request, response);
-	
-		
 	}
 
 	/**

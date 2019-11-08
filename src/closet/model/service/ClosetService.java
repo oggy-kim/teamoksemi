@@ -45,4 +45,34 @@ public class ClosetService {
 		return count;
 	}
 
+	public ArrayList<Closet> recommendWinter(int memberNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<Closet> clist = new ClosetDao().recommendWinter(conn, memberNo);
+		
+		close(conn);
+		
+		return clist;
+	}
+
+	public ArrayList<Closet> recommendSF(int memberNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<Closet> clist = new ClosetDao().recommendSF(conn, memberNo);
+		
+		close(conn);
+		
+		return clist;
+	}
+
+	public ArrayList<Closet> recommendSummer(int memberNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<Closet> clist = new ClosetDao().recommendSummer(conn, memberNo);
+		
+		close(conn);
+		
+		return clist;
+	}
+
 }

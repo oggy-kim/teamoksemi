@@ -130,4 +130,115 @@ public class ClosetDao {
 		return count;
 	}
 
+	public ArrayList<Closet> recommendWinter(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Closet> clist = new ArrayList<>();
+		
+		String sql = prop.getProperty("recommendWinter");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				clist.add(new Closet(rset.getInt(2),
+									 rset.getInt(3),
+									 rset.getString(4),
+									 rset.getInt(5),
+									 rset.getString(6),
+									 rset.getString(7),
+									 rset.getString(8),
+									 rset.getString(9),
+									 rset.getString(10),
+									 rset.getDate(11),
+									 rset.getString(12),
+									 rset.getString(13),
+									 rset.getString(14),
+									 rset.getDate(15)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return clist;
+	}
+
+	public ArrayList<Closet> recommendSF(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Closet> clist = new ArrayList<>();
+		
+		String sql = prop.getProperty("recommendSF");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				clist.add(new Closet(rset.getInt(2),
+									 rset.getInt(3),
+									 rset.getString(4),
+									 rset.getInt(5),
+									 rset.getString(6),
+									 rset.getString(7),
+									 rset.getString(8),
+									 rset.getString(9),
+									 rset.getString(10),
+									 rset.getDate(11),
+									 rset.getString(12),
+									 rset.getString(13),
+									 rset.getString(14),
+									 rset.getDate(15)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return clist;
+	}
+
+	public ArrayList<Closet> recommendSummer(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Closet> clist = new ArrayList<>();
+		
+		String sql = prop.getProperty("recommendSummer");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				clist.add(new Closet(rset.getInt(2),
+									 rset.getInt(3),
+									 rset.getString(4),
+									 rset.getInt(5),
+									 rset.getString(6),
+									 rset.getString(7),
+									 rset.getString(8),
+									 rset.getString(9),
+									 rset.getString(10),
+									 rset.getDate(11),
+									 rset.getString(12),
+									 rset.getString(13),
+									 rset.getString(14),
+									 rset.getDate(15)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return clist;
+	}
+
 }
