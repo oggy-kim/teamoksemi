@@ -13,21 +13,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import adm.model.service.AdmService;
+import board.model.vo.Board;
 import board.model.vo.PageInfo;
-import board.model.vo.QnA;
 import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmSortShopServlet
+ * Servlet implementation class AdmSearchBoardServlet
  */
-@WebServlet("/sortShop.adm")
-public class AdmSortShopServlet extends HttpServlet {
+@WebServlet("/searchBoard.adm")
+public class AdmSearchBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmSortShopServlet() {
+    public AdmSearchBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,20 +36,25 @@ public class AdmSortShopServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String sort = request.getParameter("sort");
+		String keyword = request.getParameter("keyword");
+		
+		System.out.println(sort);
+		System.out.println(keyword);
+		
 		int sortId = 0;
 		
-		if (sort.equals("cont_money")) { // 계약금
+		if (sort.equals("content")) { 
 			sortId = 1;
-		} else if (sort.equals("cont_status")) { // 계약상태
+		} else { // writer
 			sortId = 2;
-		} 
-		
- 		// System.out.println(sortId);
+		}
 		
 		AdmService aService = new AdmService();
 		
-		int listCount = aService.getSListCount();		
+		int listCount = aService.getBListCount();		
 		int boardLimit = 10;
 		int currentPage = 1;
 		int pageLimit = 5;
@@ -67,11 +72,11 @@ public class AdmSortShopServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Shop> list = aService.sortSList(sortId, currentPage, boardLimit);
+		ArrayList<Board> list = aService.searchBList(sortId, keyword, currentPage, boardLimit);
 		
-//		System.out.println("list" + list);
-//		System.out.println("pi" + pi);
-//		System.out.println("sort" + sortId);
+		System.out.println("list" + list);
+		System.out.println("pi" + pi);
+		System.out.println("sort" + sortId);
 		
 		response.setContentType("application/json; charset=utf-8");
 		

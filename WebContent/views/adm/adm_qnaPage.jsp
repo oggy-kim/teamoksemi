@@ -214,6 +214,7 @@
 		}
 
         .qna_detail_box {
+        	visibility : hidden;
             width : 80%;
             height : 25%;
             margin : 0 0 0 5%;
@@ -242,7 +243,7 @@
         .searchArea {
             width:60%;
             margin-left:30%;
-            margin-botton:10%;
+            margin-bottom:5%;
         } 
         
         #searchBtn{
@@ -281,8 +282,7 @@
             <li class="list" onclick="goMember();">회원관리</li>
             <li class="list" onclick="goBoard();">게시물관리</li>
             <li class="list" onclick="goShop();">제휴쇼핑몰관리</li>
-            <li class="list" onclick="goQnA();">문의사항관리</li>
-            <li class="list" onclick="goGA();">구글애널리틱스(예정)</li>            
+            <li class="list" onclick="goQnA();">문의사항관리</li>     
         </ul>
     </div>
     <script>
@@ -298,9 +298,6 @@
     	}
     	function goQnA(){
     		location.href="<%= contextPath%>/qna.adm";
-    	}
-    	function goGA(){
-    		location.href="<%= contextPath%>/ga.adm";
     	}
     	
     	// MAIN NAVIBAR  
@@ -363,7 +360,7 @@
                	<% } else { %>
                	<% for(QnA q : list){ %>    
  					<tr>
-	 					<td><%= q.getQnaNo() %></td>
+	 					<td id="qNo"><%= q.getQnaNo() %></td>
 	                    <td><%= q.getQnaTitle() %></td>
 	                    <td><%= q.getMemberNick() %></td>
 	                    <td><%= q.getEnrollDate() %></td>
@@ -373,61 +370,6 @@
                 <% } %>
                 </tbody>
             </table>
-            <script>
-            	// 테이블 정렬  sorting
-        		<%-- $(function(){
-        			$("#searchCondition").change(function(){
-	        			var sort = this.value;
-	        			console.log(sort);
-	        			location.href="<%= contextPath%>/sortQNA.adm?sort="+sort;
-	 	        		/* if(sort == "comment_status"){
-	 	        			console.log($("#qna_table>tr").eq(1));
-	 	        			console.log($("#qna_table td.col5:not(:contains('Y')").text()); */
-		 	        		/* $("#qna_table td.col5:contains('N')").parent().show();
-	 		        		$("#qna_table td.col5:not(:contains('Y')").parent().hide(); } */    		
-        			});
-        		}); --%>
-        		
-        		$("#sortCondition").change(function(){
-            		var sort = this.value;
-            		
-            		$.ajax({
-            			url : "<%= contextPath %>/sortQNA.adm",
-            			type : "post",
-            			dataType : "json",
-            			data : {sort:sort},// key:value 
-            			success : function(data){
-            				console.log('성공');
-            				console.log(sort);
-            				var $tableBody = $("#qna_table2");
-            				
-            				//$tableBody.empty();
-            				$tableBody.html(""); // 테이블 초기화
-            			
-            				for(var key in data){
-	              				var $tr = $("<tr>");
-	            				var $noTd = $("<td>").text(data[key].qnaNo);
-								var $titleTd = $("<td>").text(data[key].qnaTitle);
-								var $nickTd = $("<td>").text(data[key].memberNick);
-								var $dateTd = $("<td>").text(data[key].enrollDate);
-								var $statusTd = $("<td>").text(data[key].answerStatus);
-	            				
-								$tr.append($noTd);
-								$tr.append($titleTd);
-								$tr.append($nickTd);
-								$tr.append($dateTd);
-								$tr.append($statusTd);
-								
-								$tableBody.append($tr);
-            				}
-            				
-            			},
-            			error : function(){
-            				console.log('실패');
-            			}
-            		});
-            	});
-            </script>
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -462,39 +404,164 @@
           	 </div>
 			<br>
             <div class="searchArea">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="searchCondition" name="sort" style="display:inline-block;">
                     <option>-----</option>
                     <option value="title">제목</option>
-                    <option value="content">내용</option>
                     <option value="writer">작성자</option>
                 </select>
-                <input type="search" style="display:inline-block;">
-             <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
+                <input type="text" style="display:inline-block;" id="searchKeyword">
+             	<button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
 			<br>
         </div>
         <br> 
         <script>
         // QNA 상세보기
-            	$(function(){
-            		$("#qna_table2 td").mouseenter(function(){
+            	$(function(){ // 동적 대상 function 주기 (수정하기)
+            		$(document).on('mouseenter', '#qna_table2 td', function(){
             			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-            		}).mouseout(function(){
+            		}).on('mouseout', '#qna_table2 td', function(){
             			$(this).parent().css({"background":"white"});
-            		}).click(function(){ // QNA click시, 해당 QNA 상세정보가 하위에 표시
-            			var con = document.getElementById("qna_detail");
-            			if(con.style.display != 'none'){
-            				con.style.display = 'none';
-            			} else {
-            				con.style.display = 'block';
-            			}
-            		}); 
+            		});             		
             	});
+        
+            	// 정렬하기
+        		$("#sortCondition").change(function(){
+            		var sort = this.value;
+            		
+            		$.ajax({
+            			url : "<%= contextPath %>/sortQNA.adm",
+            			type : "post",
+            			dataType : "json",
+            			data : {sort:sort},// key:value 
+            			success : function(data){
+            				console.log('성공');
+            				console.log(sort);
+            				var $tableBody = $("#qna_table2");
+            				
+            				$tableBody.html(""); // 테이블 초기화
+            			
+            				for(var key in data){
+	              				var $tr = $("<tr>");
+	            				var $noTd = $("<td>").text(data[key].qnaNo);
+								var $titleTd = $("<td>").text(data[key].qnaTitle);
+								var $nickTd = $("<td>").text(data[key].memberNick);
+								var $dateTd = $("<td>").text(data[key].enrollDate);
+								var $statusTd = $("<td>").text(data[key].answerStatus);
+	            				
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($nickTd);
+								$tr.append($dateTd);
+								$tr.append($statusTd);
+								
+								$tableBody.append($tr);
+            				}
+            				
+            			},
+            			error : function(){
+            				console.log('실패');
+            			}
+            		});
+            	});
+        
+            	
+        		// 상세보기 
+            	$(function(){ 
+            		$(document).on('click', '#qna_table2 td', function(){
+            			        	
+                        var qnaNo = $(this).parent().children("#qNo").html();
+                        console.log("qnaNo="+qnaNo); 
+                        
+                        $.ajax({
+                            url: "<%= contextPath %>/detailQNA.adm",
+                            data: {qnaNo : qnaNo},
+                            type: "get",
+                            dataType: "json",
+                            success : function(result){ 
+            					console.log("ajax 연동성공");
+                            	// console.log(result);
+            	           		$("#qna_detail").css({"visibility":"visible"});
+
+            	           		var detail = "";
+
+            	           		detail += "<div id='qna_detail_contents'><div>글번호 : " + result.qnaNo + "</div>" +
+                                         "<div>회원번호 : " + result.memberNo + "</div>" +
+                                         "<div>회원닉네임 : " + result.memberNick + "</div>" +
+                                         "<div>작성일 : " + result.enrollDate + "</div>" + 
+                                         "<div>QNA제목 : " + result.qnaTitle + "</div>" +
+                                         "<div>QNA내용 : " + result.qnaContents + "</div>" +
+                                         "<div>답변여부 : " + result.answerStatus + "</div>" +
+                                         "<div>답변내용 : " + result.answerContents + "</div>" +
+                                         "<input type='text' id='answer' value='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'>" +
+                                         "<div class='answerArea'><button type='submit' id='answer_btn' style='margin-right : 5%;'>답변등록</button>" +
+                                         "</div>";
+                                         
+                                console.log(detail);
+
+            	           		$("#qna_detail").html(detail);
+            	           		
+            	           		// console.log($('#shop_detail').html());
+            				
+                            },
+                            error: function() {
+                                console.log("ajax 연동실패");
+                            }
+                        });
+                    });
+                });
+        
+        		// 검색하기
+        		$(function(){
+        			$(document).on('click', "#searchBtn", function(){
+        				var sort = $("#searchCondition").val();
+        				var keyword = $("#searchKeyword").val();
+        				
+        				console.log(sort);
+        				console.log(keyword);
+        				
+        				$.ajax({
+                			url : "<%= contextPath %>/searchQNA.adm",
+                			type : "get",
+                			dataType : "json",
+                			data : {sort:sort, keyword:keyword},// key:value 
+                			success : function(data){
+                				console.log('성공');
+                				console.log(sort);
+                				var $tableBody = $("#qna_table2");
+                				
+                				$tableBody.html("");
+                			
+                				for(var key in data){
+    	              				var $tr = $("<tr>");
+    	            				var $noTd = $("<td>").text(data[key].qnaNo);
+    								var $titleTd = $("<td>").text(data[key].qnaTitle);
+    								var $nickTd = $("<td>").text(data[key].memberNick);
+    								var $dateTd = $("<td>").text(data[key].enrollDate);
+    								var $statusTd = $("<td>").text(data[key].answerStatus);
+    	            				
+    								$tr.append($noTd);
+    								$tr.append($titleTd);
+    								$tr.append($nickTd);
+    								$tr.append($dateTd);
+    								$tr.append($statusTd);
+    								
+    								$tableBody.append($tr);
+                				}
+                				
+                			},
+                			error : function(){
+                				console.log('실패');
+                			}
+        			});
+        		});
+        		});
+        		
+        		
         </script>
 
         <div class="qna_detail_box" id="qna_detail">
             <h4 class="qna_detail_title">QnA 상세보기</h4>
-            
         </div>
 
 </div>

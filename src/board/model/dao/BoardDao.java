@@ -394,13 +394,14 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				blist.add(new Board(rset.getInt("ARTICLE_NO"),
-									rset.getInt("MEMBER_NO"),
-									rset.getInt("ARTICLE_VIEWS"),
-									rset.getInt("ARTICLE_WISHES"),
-									rset.getString("ARTICLE_CONTENTS"),
-									rset.getDate("ARTICLE_DATE"),
-									rset.getString("ARTICLE_STATUS")));				
+				blist.add(new Board(rset.getInt(2),
+									rset.getInt(3),
+									rset.getInt(4),
+									rset.getInt(5),
+									rset.getString(6),
+									rset.getString(7),
+									rset.getString(8),
+									rset.getString(9)));				
 			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -426,13 +427,17 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				b = new Board(rset.getInt("ARTICLE_NO"),
-						rset.getInt("MEMBER_NO"),
-						rset.getInt("ARTICLE_VIEWS"),
-						rset.getInt("ARTICLE_WISHES"),
-						rset.getString("ARTICLE_CONTENTS"),
-						rset.getDate("ARTICLE_DATE"),
-						rset.getString("ARTICLE_STATUS"));
+				b = new Board(rset.getInt(2),
+							  rset.getInt(3),
+							  rset.getInt(4),
+							  rset.getInt(5),
+							  rset.getString(6),
+							  rset.getString(7),
+							  rset.getString(8),
+							  rset.getString(9));
+				
+				
+					
 			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -441,8 +446,8 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return b;
-	}	
-	
+	}
+    
 	// 조회수 증가 dao
 	public int increaseCount(Connection conn, int aNo) {
 		PreparedStatement pstmt = null;
@@ -713,5 +718,5 @@ public class BoardDao {
 		return result;
 	}
 
-
+        
 }

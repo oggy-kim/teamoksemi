@@ -108,6 +108,63 @@ public class AdmService {
 		return list;
 	}
 
+	public ArrayList<Member> sortMList(int sortId, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Member> list = new AdmDao().sortMList(conn, sortId, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<QnA> searchQList(int sortId, String keyword, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<QnA> list = new AdmDao().searchQList(conn, sortId, keyword, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Shop> searchSList(int sortId, String keyword, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Shop> list = new AdmDao().searchSList(conn, sortId, keyword, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Board> searchBList(int sortId, String keyword, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Board> list = new AdmDao().searchBList(conn, sortId, keyword, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Member> searchMList(int sortId, String keyword, int currentPage, int boardLimit) {
+		Connection conn = getConnection();
+		ArrayList<Member> list = new AdmDao().searchMList(conn, sortId, keyword, currentPage, boardLimit);
+		close(conn);
+		return list;
+	}
+
+	
+	public Shop detailShop(int shopNo) {
+		Connection conn = getConnection();
+		Shop s = new AdmDao().detailShop(conn, shopNo);
+		close(conn);
+		return s;
+	}
+
+	public Member detailMember(int memberNo) {
+		Connection conn = getConnection();
+		Member m = new AdmDao().detailMember(conn, memberNo);
+		close(conn);
+		return m;
+	}
+
+	public QnA detailQnA(int qnaNo) {
+		Connection conn = getConnection();
+		QnA q = new AdmDao().detailQnA(conn, qnaNo);
+		close(conn);
+		return q;
+	}
+
 
 	
 }

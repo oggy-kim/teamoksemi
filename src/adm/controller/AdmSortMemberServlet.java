@@ -13,21 +13,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import adm.model.service.AdmService;
+import board.model.vo.Board;
 import board.model.vo.PageInfo;
-import board.model.vo.QnA;
-import shop.model.vo.Shop;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class AdmSortShopServlet
+ * Servlet implementation class AdmSortMemberServlet
  */
-@WebServlet("/sortShop.adm")
-public class AdmSortShopServlet extends HttpServlet {
+@WebServlet("/sortMember.adm")
+public class AdmSortMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmSortShopServlet() {
+    public AdmSortMemberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,17 +39,21 @@ public class AdmSortShopServlet extends HttpServlet {
 		String sort = request.getParameter("sort");
 		int sortId = 0;
 		
-		if (sort.equals("cont_money")) { // 계약금
+		if (sort.equals("member_nick")) { 
 			sortId = 1;
-		} else if (sort.equals("cont_status")) { // 계약상태
+		} else if (sort.equals("grade")) {
 			sortId = 2;
-		} 
+		} else if (sort.equals("entry_date")) {
+			sortId = 3;
+		} else { // member_no
+			sortId = 4;
+		}
 		
- 		// System.out.println(sortId);
+		System.out.println(sortId);
 		
 		AdmService aService = new AdmService();
 		
-		int listCount = aService.getSListCount();		
+		int listCount = aService.getListCount();		
 		int boardLimit = 10;
 		int currentPage = 1;
 		int pageLimit = 5;
@@ -67,11 +71,11 @@ public class AdmSortShopServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Shop> list = aService.sortSList(sortId, currentPage, boardLimit);
+		ArrayList<Member> list = aService.sortMList(sortId, currentPage, boardLimit);
 		
-//		System.out.println("list" + list);
-//		System.out.println("pi" + pi);
-//		System.out.println("sort" + sortId);
+		System.out.println("list" + list);
+		System.out.println("pi" + pi);
+		System.out.println("sort" + sortId);
 		
 		response.setContentType("application/json; charset=utf-8");
 		

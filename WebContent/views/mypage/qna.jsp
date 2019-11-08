@@ -374,9 +374,6 @@
 				<button onclick="showQnAInsertForm();">Q&A 문의글 등록</button>
             </div>
             
-            
-            
-            
             <table id="myQnAList">
                 <tr>
                     <th width="100">문의일자</th>

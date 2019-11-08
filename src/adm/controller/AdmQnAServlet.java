@@ -62,7 +62,6 @@ public class AdmQnAServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("views/adm/adm_qnaPage.jsp");
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
-
 		view.forward(request, response);
 	}
 

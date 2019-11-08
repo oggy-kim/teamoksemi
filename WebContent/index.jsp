@@ -120,9 +120,11 @@ body {
 			</form>
 		</div>
 	</div>
-	<%} else {
-		response.sendRedirect("views/common/main.jsp");
-	}%>
+	<%} else { %>
+		<script>
+			location.href="<%= contextPath%>/mainboard.look";
+		</script>
+	<% }%>
 </body>
 <script>
 	function memberJoin() {
