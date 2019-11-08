@@ -6,11 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+   <meta name="google-signin-scope" content="profile email">
+    <meta name="622197783999-03c4o995p58tlsad0d4qf1u2vdcgefg6.apps.googleusercontent.com" content="AIzaSyDWrhkx_a0nmyutYJzBSOkpwqPD6HSfZ_Q.apps.googleusercontent.com">
+ <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<!-- <meta name="google-signin-client_id"
+content="AIzaSyDWrhkx_a0nmyutYJzBSOkpwqPD6HSfZ_Q.apps.googleusercontent.com"> -->
 <style>
 
 body {
 	background: url('<%= request.getContextPath() %>/resources/images/background2.jpg') no-repeat;
-	background-size : cover;
+	background-size : cover; 
 }
 .inner {
 	position: absolute;
@@ -98,6 +105,8 @@ body {
 }
 
 </style>
+
+
 </head>
 <body>
 	<%@ include file="views/common/menubar.jsp" %>	
@@ -117,12 +126,41 @@ body {
 				<p>
 					ID/비밀번호를 잃어버렸나요?<span onclick="findPassword();">ID/비밀번호찾기</span>
 				</p>
+	<div class="g-sigin2" data-onsuccess="onSignIn"></div>
 			</form>
 		</div>
 	</div>
 	<%} else {
 		response.sendRedirect("views/common/main.jsp");
 	}%>
+	
+	
+	 <script>
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+        };
+	function onSignIn(googleuser) {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().thin(function() {
+			console.log("User signed out");
+		});
+		auth2.disconnect();
+		
+	}
+	/* meta name="google-signin-scope" content="profile email"> */
+		
+</script>
 </body>
 <script>
 	function memberJoin() {
