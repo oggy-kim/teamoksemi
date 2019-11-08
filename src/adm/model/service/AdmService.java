@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import adm.model.dao.AdmDao;
+import board.model.dao.BoardDao;
 import board.model.vo.Board;
 import board.model.vo.QnA;
 import member.model.vo.Member;
@@ -69,7 +70,6 @@ public class AdmService {
 		return list;
 	}
 	
-	// shop sorting
 	public int sortSList(String sort) {
 		Connection conn = getConnection();
 		int result = new AdmDao().sortSList(conn, sort);
@@ -163,6 +163,82 @@ public class AdmService {
 		QnA q = new AdmDao().detailQnA(conn, qnaNo);
 		close(conn);
 		return q;
+	}
+
+	public int deleteShop(int shopNo) {
+		Connection conn = getConnection();
+		int result = new AdmDao().deleteShop(conn, shopNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
+	public int updateShop(Shop shop) {
+		Connection conn = getConnection();
+		
+		int result = new AdmDao().updateShop(conn, shop);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public Shop selectShop(int shopNo) {
+		Connection conn = getConnection();
+		Shop s = new AdmDao().selectShop(conn, shopNo);
+		System.out.println("s="+s);
+		close(conn);
+		return s;
+	}
+
+	public int deleteMember(int memberNo) {
+		Connection conn = getConnection();
+		int result = new AdmDao().deleteMember(conn, memberNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
+	public Member selectMember(int memberNo) {
+		Connection conn = getConnection();
+		Member m = new AdmDao().selectMember(conn, memberNo);
+		System.out.println("m="+m);
+		close(conn);
+		return m;
+	}
+
+	public int updateMember(Member member) {
+		Connection conn = getConnection();
+		
+		int result = new AdmDao().updateMember(conn, member);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 
 

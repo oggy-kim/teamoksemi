@@ -523,11 +523,8 @@
             		}, 'mouseout' : function(){
             			$(this).parent().css({"background":"white"});
             		}, 'click' : function(){ // SHOP click시, 해당 SHOP 상세정보가 하위에 표시
-            			
             			var shopNo = $(this).parent().children("#sNo").html();
-            		
                         console.log(shopNo); 
-                       
             		});
         	});  */
         
@@ -616,10 +613,12 @@
                                      "<div>계약금 : " + result.contractMoney + "</div>" +
                                      "<div>담당자 : " + result.shopPIC + "</div>" +
                                      "<div>연락처 : " + result.shopContact + "</div></div>" +
-                                     "<div class='btnArea'><button type='button' id='delete_btn' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
-                                     "<button type='button' id='update_btn' style='margin-right : 2%;'>쇼핑몰수정</button></div>";
+                                     "<div class='btnArea'><button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
+                                     "<button type='button' id='update_btn' onclick='updateShop();' style='margin-right : 2%;'>쇼핑몰수정</button></div>" +
+                                     "<form action='' id='detailForm' method='post'><input type='hidden' name='shopNo' value='"+result.shopNo+"'></form>";
                                      
                             console.log(detail);
+                            console.log(result.shopNo);
 
         	           		$("#shop_detail").html(detail);
         	           		
@@ -632,6 +631,7 @@
                     });
                 });
             });
+        	
         	
         	
         	// 검색하기
@@ -688,14 +688,21 @@
         	
      	</script>
 
+		<script>
+		function deleteShop() {
+    		$("#detailForm").attr("action", "<%= contextPath%>/delete.shop");
+    		$("#detailForm").submit();
+     		/* alert("성공적으로 삭제되었습니다."); */
+    	}
+    	
+    	function updateShop(){
+    		$("#detailForm").attr("action", "<%= contextPath%>/updateForm.shop"); 
+    		$("#detailForm").submit();
+    	}
+		</script>
+
 		<div class="shop_detail_box" id="shop_detail">
             <h4 class="shop_detail_title">쇼핑몰 상세보기</h4>
-               
-            <!-- 수정, 삭제버튼-->
-           <!--  <div class="btnArea">	
-            	<button type="button" id="delete_btn" style="margin-right:5%;">쇼핑몰삭제</button>    
-            	<button type="button" id="update_btn" style="margin-right:2%;">쇼핑몰수정</button>
-			</div> -->
         </div>
 
     </div>

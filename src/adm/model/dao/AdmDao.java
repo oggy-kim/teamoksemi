@@ -3,7 +3,7 @@ package adm.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -722,6 +722,156 @@ public class AdmDao {
 		}
 		return q;
 	}
+
+	public int deleteShop(Connection conn, int shopNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteShop");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, shopNo);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int updateShop(Connection conn, Shop shop) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateShop");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setString(1, shop.getShopGradeCode());
+			pstmt.setInt(2, shop.getShopNo());
+			// shopName, contractMoney, shopPIC
+			// , shopContract, cdate, edate 추가 예정
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Shop selectShop(Connection conn, int shopNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Shop s = null;
+
+		String query = prop.getProperty("selectShop");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, shopNo);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				s = new Shop(rset.getInt(2), rset.getString(3),
+                        rset.getString(4), rset.getString(5), rset.getDate(6), rset.getDate(7),
+						rset.getInt(8), rset.getString(9));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return s;
+	}
+
+	
+
+	public int deleteMember(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteMember");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public Member selectMember(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member m = null;
+
+		String query = prop.getProperty("selectMember");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, memberNo);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				m = new Member(rset.getInt(1), //no
+						rset.getString(2), // gradeCode
+						rset.getString(3), //id
+						rset.getString(5), // nick
+						rset.getString(6), // gender
+						rset.getString(7), // profile
+						rset.getString(8), // likeStyle
+						rset.getInt(9), // birthYear
+						rset.getDate(10), // entryDate
+						rset.getString(11)); // memberStatus
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+
+	public int updateMember(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateMember");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setString(1, member.getGradeCode());
+			pstmt.setInt(2, member.getMemberNo());
+			// 나머지도 추가 예정
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
 
 	
 

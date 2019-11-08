@@ -7,23 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import adm.model.service.AdmService;
-import member.model.vo.Member;
-import shop.model.vo.Shop;
+import board.model.service.BoardService;
 
 /**
- * Servlet implementation class AdmDetailMemberServlet
+ * Servlet implementation class AdmDeleteShopServlet
  */
-@WebServlet("/detailMember.adm")
-public class AdmDetailMemberServlet extends HttpServlet {
+@WebServlet("/delete.shop")
+public class AdmDeleteShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailMemberServlet() {
+    public AdmDeleteShopServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +29,20 @@ public class AdmDetailMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
+		System.out.println(shopNo);
 		
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
-		System.out.println(memberNo);
-
-		Member m = new AdmService().detailMember(memberNo);
+		int result = new AdmService().deleteShop(shopNo);
+		System.out.println(result);
 		
-		System.out.println(m);
-		
-		if(m != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(m, response.getWriter());
+		if(result > 0) {
+			response.sendRedirect("shop.adm");
+			request.setAttribute("msg", "성공적으로 삭제되었습니다.");
 		} else {
-			request.setAttribute("msg", "세부 내용 읽기에 실패하셨습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg", "쇼핑몰 삭제에 실패했습니다.");
 		}
+		
 	}
 
 	/**

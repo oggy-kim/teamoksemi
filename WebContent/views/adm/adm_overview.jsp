@@ -212,6 +212,28 @@
             <h2 id="content_title"> &nbsp;&nbsp;OVERVIEW</h2>
         </div>
         <hr><br>
+         <div class="overview_box" style="background:yellowgreen; width:1000px; height:80px;">
+            <br>
+            <h4 class="welcome_message">&nbsp;&nbsp;관리자 페이지입니다. 무엇을 도와드릴까요? </h4>
+        </div> 
+        
+        <div>
+        	<div>
+        		<h3>회원관리</h3>
+        		<p>모든 회원들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        	<div>
+        		<h3>게시물관리</h3>
+        		<p>모든 회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        	<div>
+        		<h3>게시물관리</h3>
+        		<p>모든 회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
+        	
+        </div>
 
         
 </section>

@@ -217,7 +217,7 @@
         	visibility : hidden;
             width : 80%;
             height : 25%;
-            margin : 0 0 0 5%;
+            margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
@@ -486,14 +486,14 @@
             	           		var detail = "";
 
             	           		detail += "<div id='qna_detail_contents'><div>글번호 : " + result.qnaNo + "</div>" +
-                                         "<div>회원번호 : " + result.memberNo + "</div>" +
+                                         /* "<div>회원번호 : " + result.memberNo + "</div>" + */
                                          "<div>회원닉네임 : " + result.memberNick + "</div>" +
                                          "<div>작성일 : " + result.enrollDate + "</div>" + 
                                          "<div>QNA제목 : " + result.qnaTitle + "</div>" +
                                          "<div>QNA내용 : " + result.qnaContents + "</div>" +
                                          "<div>답변여부 : " + result.answerStatus + "</div>" +
                                          "<div>답변내용 : " + result.answerContents + "</div>" +
-                                         "<input type='text' id='answer' value='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'>" +
+                                         "<input type='text' id='answer' value='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기' style='width:1000px; height:300px;' >" +
                                          "<div class='answerArea'><button type='submit' id='answer_btn' style='margin-right : 5%;'>답변등록</button>" +
                                          "</div>";
                                          
