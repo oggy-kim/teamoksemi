@@ -132,12 +132,12 @@ public class AdmDao {
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
+			while(rset.next()) { // qnaNo, qnaTitle, memberNick, enrollDate, answerStatus 
 				list.add(new QnA(rset.getInt(2), 
-									rset.getString(3), 
-									rset.getString(4),
-									rset.getDate(5), 
-									rset.getString(6)));
+									rset.getString(5), 
+									rset.getString(3),
+									rset.getDate(4), 
+									rset.getString(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -174,12 +174,12 @@ public class AdmDao {
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
+			while(rset.next()) {  // qnaNo, qnaTitle, memberNick, enrollDate, answerStatus 
 				list.add(new QnA(rset.getInt(2), 
-									rset.getString(3), 
-									rset.getString(4),
-									rset.getDate(5), 
-									rset.getString(6)));
+						rset.getString(5), 
+						rset.getString(3),
+						rset.getDate(4), 
+						rset.getString(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -297,12 +297,12 @@ public class AdmDao {
 			
 			// 게시글 번호, 게시글 내용, 작성자, 작성일, 찜수, 조회수
 			while(rset.next()) {
-				list.add(new Board(rset.getInt(2), 
-									rset.getString(3),
-									rset.getString(4),
-									rset.getDate(5),
-									rset.getInt(6),
-									rset.getInt(7)));
+				list.add(new Board(rset.getInt(2), // ARTICLE_NO
+									rset.getString(8), // ARTICLE_CONTENTS
+									rset.getString(3), // MEMBER_NICK
+									rset.getDate(9), // ARTICLE_DATE
+									rset.getInt(7), // ARTICLE_WISHES 
+									rset.getInt(6))); // ARTICLE_VIEWS
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -366,12 +366,12 @@ public class AdmDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Board(rset.getInt(2), 
-						rset.getString(3),
-						rset.getString(4),
-						rset.getDate(5),
-						rset.getInt(6),
-						rset.getInt(7)));
+				list.add(new Board(rset.getInt(2), // ARTICLE_NO
+						rset.getString(8), // ARTICLE_CONTENTS
+						rset.getString(3), // MEMBER_NICK
+						rset.getDate(9), // ARTICLE_DATE
+						rset.getInt(7), // ARTICLE_WISHES 
+						rset.getInt(6))); // ARTICLE_VIEWS
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -474,12 +474,13 @@ public class AdmDao {
 		ResultSet rset = null;
 		String sql = null;
 		
-		if(sortId == 1){ // title
+		if(sortId == 1){ // title --> ok
 			sql = prop.getProperty("searchQList1");
-		} else { // writer 
+		} else if (sortId == 2){ // writer 
 			sql = prop.getProperty("searchQList2");
-		} 
-
+		} else { // 그 외
+			sql = prop.getProperty("selectBList");
+		}
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -493,11 +494,12 @@ public class AdmDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new QnA(rset.getInt(2), 
-						rset.getString(3), 
-						rset.getString(4),
-						rset.getDate(5), 
-						rset.getString(6)));
+				list.add(new QnA( // qnaNo, qnaTitle, memberNick, enrollDate, answerStatus 
+						rset.getInt(2), 
+						rset.getString(5), 
+						rset.getString(3),
+						rset.getDate(4), 
+						rset.getString(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -557,8 +559,10 @@ public class AdmDao {
 		
 		if(sortId == 1){ // contents
 			sql = prop.getProperty("searchBList1");
-		} else { // writer
+		} else if (sortId == 2) { // writer
 			sql = prop.getProperty("searchBList2");
+		} else { // 그 외
+			System.out.println("selectBList");
 		}
 
 		try {
@@ -573,14 +577,14 @@ public class AdmDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Board(rset.getInt(2), 
-						rset.getString(3),
-						rset.getString(4),
-						rset.getDate(5),
-						rset.getInt(6),
-						rset.getInt(7)));
-						
+				list.add(new Board(rset.getInt(2), // ARTICLE_NO
+						rset.getString(8), // ARTICLE_CONTENTS
+						rset.getString(3), // MEMBER_NICK
+						rset.getDate(9), // ARTICLE_DATE
+						rset.getInt(7), // ARTICLE_WISHES 
+						rset.getInt(6))); // ARTICLE_VIEWS	
 			}
+			System.out.println(list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -707,11 +711,11 @@ public class AdmDao {
 			
 			if(rset.next()) {
 				q = new QnA(rset.getInt(2), // qna글번호
-							rset.getString(3), // 제목
-							rset.getString(4), // 회원닉네임
-							rset.getDate(5), // 글 등록일
-							rset.getString(7), // 내용
-							rset.getString(6), // 답변여부
+							rset.getString(5), // 제목
+							rset.getString(3), // 회원닉네임
+							rset.getDate(4), // 글 등록일
+							rset.getString(6), // 내용
+							rset.getString(7), // 답변여부
 							rset.getString(8)); // 답변내용			
 			}
 		} catch (SQLException e) {
@@ -721,6 +725,43 @@ public class AdmDao {
 			close(pstmt);
 		}
 		return q;
+	}
+	
+	
+	public Board detailBoard(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String sql = prop.getProperty("detailBoard");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, articleNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt(2), // ARTICLE_NO 
+						rset.getString(3), // ARTICE_NICK
+						rset.getString(4), // PROFILE
+						rset.getString(5), // LIKE_STYLE
+						rset.getInt(6), // ARTICLE_VIEWS
+						rset.getInt(7), // ARTICLE_WISHES
+						rset.getString(8), // ARTICLE_CONTENTS
+						rset.getDate(9), // ARTICLE_DATE
+						rset.getString(10)); // ARTICLE_STATUS
+			}
+			
+			System.out.println(b);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
 	}
 
 	public int deleteShop(Connection conn, int shopNo) {
@@ -871,7 +912,26 @@ public class AdmDao {
 		return result;
 	}
 
-	
+	public int deleteBoard(Connection conn, int articleNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteBoard");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNo);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+
+	}
 
 	
 

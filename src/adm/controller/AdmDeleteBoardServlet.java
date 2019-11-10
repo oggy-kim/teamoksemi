@@ -7,23 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import adm.model.service.AdmService;
-import member.model.vo.Member;
-import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmDetailMemberServlet
+ * Servlet implementation class AdmDeleteBoardServlet
  */
-@WebServlet("/detailMember.adm")
-public class AdmDetailMemberServlet extends HttpServlet {
+@WebServlet("/delete.board")
+public class AdmDeleteBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailMemberServlet() {
+    public AdmDeleteBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +28,21 @@ public class AdmDetailMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+		System.out.println(articleNo);
 		
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
-		// System.out.println(memberNo);
-
-		Member m = new AdmService().detailMember(memberNo);
+		int result = new AdmService().deleteBoard(articleNo);
+		System.out.println(result);
 		
-		// System.out.println(m);
-		
-		if(m != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(m, response.getWriter());
+		if(result > 0) {
+			System.out.println("왜안돌아오니");
+			response.sendRedirect("board.adm");
+			// request.setAttribute("msg", "서블릿_게시물이 성공적으로 삭제되었습니다.");
 		} else {
-			// request.setAttribute("msg", "회원상세정보 조회에 실패하셨습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			// request.setAttribute("msg", "게시물 삭제에 실패했습니다.");
 		}
+		
 	}
 
 	/**

@@ -47,8 +47,10 @@ public class AdmSearchQNAServlet extends HttpServlet {
 		
 		if (sort.equals("title")) { 
 			sortId = 1;
-		} else {
+		} else if (sort.equals("writer")){
 			sortId = 2;
+		} else {
+			sortId = 3;
 		}
 		
 		AdmService aService = new AdmService();

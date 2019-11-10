@@ -41,15 +41,17 @@ public class AdmSearchBoardServlet extends HttpServlet {
 		String sort = request.getParameter("sort");
 		String keyword = request.getParameter("keyword");
 		
-		System.out.println(sort);
-		System.out.println(keyword);
+		System.out.println("sort="+sort);
+		System.out.println("keyword="+keyword);
 		
 		int sortId = 0;
 		
-		if (sort.equals("content")) { 
+		if (sort.equals("contents")) { 
 			sortId = 1;
-		} else { // writer
+		} else if (sort.equals("wrtier")){ // writer
 			sortId = 2;
+		} else {
+			sortId = 3;
 		}
 		
 		AdmService aService = new AdmService();

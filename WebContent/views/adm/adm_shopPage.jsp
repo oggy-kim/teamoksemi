@@ -256,9 +256,10 @@
 
 		#shop_detail_contents { /* 다시 조정하기 */
 			width : 80%;
-			height : 80%;
-			margin-top : 15%;
-			margin-left : 5%;			
+			height : 60%;
+			margin-top : 2%;
+			margin-left : 5%;
+			border : 1px solid black;			
 		}
 
 		#shop_table {
@@ -604,7 +605,7 @@
 
         	           		var detail = "";
 
-        	           		detail += "<div id='shop_detail_contents'><div>회사번호 : " + result.shopNo + "</div>" +
+        	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4><div id='shop_detail_contents'><div>회사번호 : " + result.shopNo + "</div>" +
                                      "<div>회사명 : " + result.shopName + "</div>" +
                                      "<div>계약상태 : " + result.status + "</div>" +
                                      "<div>등급 : " + result.shopGradeCode + "</div>" + 
@@ -632,8 +633,7 @@
                 });
             });
         	
-        	
-        	
+
         	// 검색하기
         	$(function(){
         			$(document).on('click', "#searchBtn", function(){
@@ -702,7 +702,7 @@
 		</script>
 
 		<div class="shop_detail_box" id="shop_detail">
-            <h4 class="shop_detail_title">쇼핑몰 상세보기</h4>
+            
         </div>
 
     </div>

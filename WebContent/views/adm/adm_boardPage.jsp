@@ -217,6 +217,7 @@
         }
         
         .board_detail_box {
+        	visibility : hidden;
         	width : 80%;
         	height : 21%;
         	margin-left : 5%;
@@ -265,6 +266,14 @@
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 28px; 
         }
+
+		#delete_board_btn, #delete_comment_btn {
+			float : right;
+            background:gray;
+            border:gray;
+            color:white;
+            border-radius:5px;
+		}
 
 
         /* --------------search------------ */
@@ -365,11 +374,11 @@
             <br>
             <!-- 인기 게시글 조회기간 설정 -->
             <div class="date_box">
-                <select id="searchCondition" name="searchCondition" style="display:inline-block;">
+                <select id="searchCondition1" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>
-                    <option value="title">조회수</option>
-                    <option value="content">찜갯수</option>
-                    <option value="writer">댓글수</option>
+                    <option value="trend_title">조회수</option>
+                    <option value="trend_content">찜갯수</option>
+                    <option value="trend_writer">댓글수</option>
                 </select>    
                 <input type="date" name="start_date" id="start_date">
                 <input type="date" name="end_date" id="end_date">
@@ -469,7 +478,7 @@
                 	<% } else { %>
                 	<% for(Board b : list){ %>    
  					<tr>
-	 					<td><%= b.getArticleNo() %></td>
+	 					<td id="aNo"><%= b.getArticleNo() %></td>
 	                    <td><%= b.getMemberNick() %></td>
 	                    <td><%= b.getArticleContents() %></td>
 	                    <td><%= b.getArticleDate() %></td>
@@ -480,54 +489,6 @@
                 <% } %>
                 </tbody>
             </table>
-            
-            <script>
-            // sorting
-            $("#sortCondition").change(function(){
-        		var sort = this.value;
-        		console.log(sort);
-        		
-        		$.ajax({
-        			url : "<%= contextPath %>/sortBoard.adm",
-        			type : "post",
-        			dataType : "json",
-        			data : {sort:sort},// key:value 
-        			success : function(data){
-        				console.log('성공');
-        				console.log(sort);
-        				var $tableBody = $("#board_table2");
-        				
-        				//$tableBody.empty();
-        				$tableBody.html(""); // 테이블 초기화
-        			
-        				for(var key in data){
-              				var $tr = $("<tr>");
-							var $noTd = $("<td>").text(data[key].articleNo);
-              				var $nickTd = $("<td>").text(data[key].memberNick);
-							var $contentTd = $("<td>").text(data[key].articleContents);
-							var $dateTd = $("<td>").text(data[key].articleDate);
-							var $likeTd = $("<td>").text(data[key].articleLikes);
-							var $viewTd = $("<td>").text(data[key].articleViews);	
-							
-							$tr.append($noTd);
-							$tr.append($nickTd);
-							$tr.append($nickTd);
-							$tr.append($contentTd);
-							$tr.append($dateTd);
-							$tr.append($likeTd);
-							$tr.append($viewTd);
-							
-							$tableBody.append($tr);
-        				}
-        				
-        			},
-        			error : function(){
-        				console.log('실패');
-        			}
-        		});
-        	});
-            </script>
-            
             <br>
             <!-- 페이지네이션 -->
              <div class="pagingArea" align="center">
@@ -562,43 +523,130 @@
           	 </div>
             </table>
             <br>
-        	<!-- 페이지네이션 -->
             <div class="searchArea">
-                <select id="searchCondition" name="sort" style="display:inline-block;">
+                <select id="searchCondition2" name="sort" style="display:inline-block;">
                     <option>-----</option>
-                    <option value="content">내용</option>
-                    <option value="writer">작성자</option>
+                     <option value="contents">내용</option>
+                     <option value="writer">작성자</option>
                 </select>
                 <input type="text" style="display:inline-block;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
         </div>
         <br> 
+        
 		<script>
         // BOARD 상세보기
-        			$(function(){ // 동적 대상 function 주기
-            		$(document).on('mouseenter', '#board_table2 td', function(){
-            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-            		}).on('mouseout', '#board_table2 td', function(){
-            			$(this).parent().css({"background":"white"});
-            		}).on('click', '#board_table2 td', function(){ // BOARD click시, 해당 BOARD 상세정보가 하위에 표시
-            			var con = document.getElementById("board_detail");
-            			if(con.style.display != 'none'){
-            				con.style.display = 'none';
-            			} else {
-            				con.style.display = 'block';
-            			}
-            		})
-        			}); 
+    		$(function(){ // 동적 대상 function 주기
+           		$(document).on('mouseenter', '#board_table2 td', function(){
+           			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+           		}).on('mouseout', '#board_table2 td', function(){
+           			$(this).parent().css({"background":"white"});
+           		});
+    		}); 
+       
+        // 정렬하기
+            $("#sortCondition").change(function(){
+        		var sort = this.value;
+        		console.log(sort);
+        		
+        		$.ajax({
+        			url : "<%= contextPath %>/sortBoard.adm",
+        			type : "post",
+        			dataType : "json",
+        			data : {sort:sort},// key:value 
+        			success : function(data){
+        				console.log('정렬하기_ajax연동성공');
+        				console.log(sort);
+        				var $tableBody = $("#board_table2");
+        				
+        				//$tableBody.empty();
+        				$tableBody.html(""); // 테이블 초기화
+        			
+        				for(var key in data){
+              				var $tr = $("<tr>");
+							var $noTd = $("<td>").text(data[key].articleNo);
+              				var $nickTd = $("<td>").text(data[key].memberNick);
+							var $contentTd = $("<td>").text(data[key].articleContents);
+							var $dateTd = $("<td>").text(data[key].articleDate);
+							var $likeTd = $("<td>").text(data[key].articleLikes);
+							var $viewTd = $("<td>").text(data[key].articleViews);	
+							
+							$tr.append($noTd);
+							$tr.append($nickTd);
+							$tr.append($nickTd);
+							$tr.append($contentTd);
+							$tr.append($dateTd);
+							$tr.append($likeTd);
+							$tr.append($viewTd);
+							
+							$tableBody.append($tr);
+        				}
+        				
+        			},
+        			error : function(){
+        				console.log('정렬하기_ajax 연동실패');
+        			}
+        		});
+        	});
+
+        // 상세보기
+             $(function(){ 
+          		$(document).on('click', '#board_table2 td', function(){
+          			        	
+                      var aNo = $(this).parent().children("#aNo").html();
+                      console.log("aNo="+aNo); 
+                      
+                      $.ajax({
+                          url: "<%= contextPath %>/detailBoard.adm",
+                          data: {aNo : aNo},
+                          type: "get",
+                          dataType: "json",
+                          success : function(result){ 
+          					console.log("상세보기_ajax 연동성공");
+                          	// console.log(result);
+          	           		$("#board_detail").css({"visibility":"visible"});
+
+          	           		var detail = "";
+
+          	           		detail += " <h4 class='board_detail_title'>게시글 상세보기</h4><div id='board_detail_contents' style='display:inline-block; border:1px solid black;'><div>게시판 글번호 : " + result.articleNo + "</div>" +
+                                       /* "<div>회원번호 : " + result.memberNo + "</div>" + */
+                                       "<div>회원닉네임 : " + result.memberNick + "</div>" +
+                                       "<div>프로필 사진 : " + result.profile + "</div>" +
+                                       "<div>선호스타일 : " + result.likeStyle + "</div>" +
+                                       "<div>조회수 : " + result.articleViews + "</div>" +
+                                       "<div>찜수 : " + result.ariticleLikes + "</div>" +
+                                       "<div>내용 : " + result.articleContents + "</div>" + 
+                                       "<div>작성일 : " + result.articleDate + "</div>" +
+                                       "<div>등록여부 : " + result.status + "</div></div>" +
+                                   	   // "<div>댓글 : </div>" : 댓글은 어떻게 넣지?	
+                                       "<div class='btnArea'><button type='button' id='delete_board_btn' style='margin-right : 5%;' onclick='deleteBoard();'>게시물삭제</button>" +
+                                       "<button type='button' id='delete_comment_btn' style='margin-right : 2%;' onclick='deleteBoardComment();'>댓글삭제</button></div>" + 
+                                       "<form action='' id='detailForm' method='post'><input type='hidden' name='articleNo' value='"+result.articleNo+"'></form>";                                       
+                              
+                                       // console.log(detail);
+
+          	           		$("#board_detail").html(detail);
+          	           		
+          	           		// console.log($('#board_detail').html());
+          				
+                          },
+                          error: function() {
+                              console.log("상세보기_ajax 연동실패");
+                          }
+                      });
+                  });
+              });
+
         
-        // 검색하기 -> 검색결과가 안뜸
+        // 검색하기 -> 내용 검색 안되고, 작성자 검색만 됨(19.11.10.)
         $(function(){
        			$(document).on('click', "#searchBtn", function(){
-       				var sort = $("#searchCondition").val();
+       				var sort = $("#searchCondition2").val();
        				var keyword = $("#searchKeyword").val();
        				
-       				console.log(sort);
-       				console.log(keyword);
+       				console.log("jsp_sort="+sort);
+       				console.log("jsp_keyword="+keyword);
        				
        				$.ajax({
                			url : "<%= contextPath %>/searchBoard.adm",
@@ -606,7 +654,7 @@
                			dataType : "json",
                			data : {sort:sort, keyword:keyword},// key:value 
                			success : function(data){
-               				console.log('성공');
+               				console.log('검색하기_ajax 연동 성공');
                				console.log(sort);
                				var $tableBody = $("#board_table2");
                				
@@ -634,16 +682,32 @@
                				
                			},
                			error : function(){
-               				console.log('실패');
+               				console.log('검색하기_ajax 연동 실패');
                			}
        			});
        		});
        		});
         
-        
         </script>
+        
+        <script>
+		function deleteBoard() {
+    		$("#detailForm").attr("action", "<%= contextPath%>/delete.board");
+    		$("#detailForm").submit();
+    		alert("성공적으로 삭제되었습니다.");
+    	}
+    	
+		// 어떻게 하지?ㅋㅋㅋㅋㅋㅋ
+    	function deletBoardComment(){
+    		$("#detailForm").attr("action", "<%= contextPath%>/delete.comment"); 
+    		$("#detailForm").submit();
+    	}
+		</script>
+        
+        
+        
         <div class="board_detail_box" id="board_detail">
-            <h4 class="board_detail_title">게시글 상세보기</h4>
+           
              
         </div>
     </div>

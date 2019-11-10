@@ -485,23 +485,22 @@
 
             	           		var detail = "";
 
-            	           		detail += "<div id='qna_detail_contents'><div>글번호 : " + result.qnaNo + "</div>" +
+            	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4><div id='qna_detail_contents' style='display:inline-block; border:1px solid black; margin-left:2%;'><div>글번호 : " + result.qnaNo + "</div>" +
                                          /* "<div>회원번호 : " + result.memberNo + "</div>" + */
                                          "<div>회원닉네임 : " + result.memberNick + "</div>" +
                                          "<div>작성일 : " + result.enrollDate + "</div>" + 
                                          "<div>QNA제목 : " + result.qnaTitle + "</div>" +
                                          "<div>QNA내용 : " + result.qnaContents + "</div>" +
                                          "<div>답변여부 : " + result.answerStatus + "</div>" +
-                                         "<div>답변내용 : " + result.answerContents + "</div>" +
-                                         "<input type='text' id='answer' value='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기' style='width:1000px; height:300px;' >" +
-                                         "<div class='answerArea'><button type='submit' id='answer_btn' style='margin-right : 5%;'>답변등록</button>" +
+                                         "<div>답변내용 : " + result.answerContents + "</div></div>" +
+                                         "<div class='answerArea' style='display:inline-block;'><input type='text' id='answer' style='width:800px; height:200px;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'><button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button>" +
                                          "</div>";
                                          
                                 console.log(detail);
 
             	           		$("#qna_detail").html(detail);
             	           		
-            	           		// console.log($('#shop_detail').html());
+            	           		// console.log($('#qna_detail').html());
             				
                             },
                             error: function() {
@@ -511,7 +510,7 @@
                     });
                 });
         
-        		// 검색하기
+        		// 검색하기 --> 제목검색 가능, 작성자 검색 불가
         		$(function(){
         			$(document).on('click', "#searchBtn", function(){
         				var sort = $("#searchCondition").val();
@@ -561,7 +560,7 @@
         </script>
 
         <div class="qna_detail_box" id="qna_detail">
-            <h4 class="qna_detail_title">QnA 상세보기</h4>
+            
         </div>
 
 </div>

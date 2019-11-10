@@ -139,7 +139,7 @@
         ul.category li a {
             margin:auto;
             color: black;
-             font-family: 'Do Hyeon', sans-serif; 
+            font-family: 'Do Hyeon', sans-serif; 
             font-size: 25px; 
         }
 
@@ -199,7 +199,7 @@
             width : 80%;
             height : auto;
         	overflow : hidden;
-            margin : 0 0 0 5%;
+            margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
@@ -226,11 +226,18 @@
             font-size : 15px;
         }
 
-         .table_title, .member_detail_title { /* 회원 정보 목록, 회원 정보 */
+         .table_title { /* 회원 정보 목록, 회원 정보 */
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 28px; 
+        }
+        
+        .member_detail_title {
+			margin : 3% 0 0 5%;
+            padding : 2% 0 0 0;
+            font-family: 'Do Hyeon', sans-serif; 
+            font-size: 28px;        
         }
 
         /* #member_detail_wrapper {
@@ -546,17 +553,18 @@
 
          	           		var detail = "";
 
-         	           		detail += "<div id='member_detail_contents'><div>회원번호 : " + result.memberNo + "</div>" +
-                                      "<div>회원등급 : " + result.gradeCode + "</div>" +
+         	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
+         	           				  "<div class='member_detail_contents' id='content1' style='display:inline-block; width:200px; height:250px; border:1px solid black; margin-left:2%;'><div>프로필사진 : " + result.profile + "</div></div>" +
+         	           				  "<div class='member_detail_contents' id='content2' style='display:inline-block; width:30%; height:45%; border:1px solid black; margin-left:2%;'><div>회원번호 : " + result.memberNo + "</div>" +
                                       "<div>회원아이디 : " + result.memberId + "</div>" +
                                       "<div>회원닉네임 : " + result.memberNick + "</div>" + 
                                       "<div>성별 : " + result.gender + "</div>" +
-                                      "<div>프로필사진 : " + result.profile + "</div>" +
+                                      "<div>회원등급 : " + result.gradeCode + "</div></div>" +
+                                      "<div class='member_detail_contents' id='content3' style='display:inline-block; width:30%; height:45%; border:1px solid black; margin-left:2%;'><div>출생년도 : " + result.birthYear + "</div>" +
                                       "<div>선호스타일 : " + result.likeStyle + "</div>" +
-                                      "<div>출생년도 : " + result.birthYear + "</div>" +
                                       "<div>가입날짜 : " + result.entryDate + "</div>" +
-                                      "<div>현황 : " + result.memberStatus + "</div>" +
-                                      "<div class='btnArea'><button type='button' id='delete_btn' style='margin-right : 5%;' onclick='deleteMember();'>회원삭제</button>" +
+                                      "<div>현황 : " + result.memberStatus + "</div></div>" +
+                                      "<div class='btnArea' style='display:inline-block; width:'100px;''><button type='button' id='delete_btn' style='margin-right : 5%;' onclick='deleteMember();'>회원삭제</button>" +
                                       "<button type='button' id='update_btn' style='margin-right : 2%;' onclick='updateMember();'>회원수정</button></div>" + 
                                       "<form action='' id='detailForm' method='post'><input type='hidden' name='memberNo' value='"+result.memberNo+"'></form>";
                                       
@@ -622,13 +630,13 @@
           	</script>
           	
        	<script>
-				function deleteMember() {
+		function deleteMember() {
     		$("#detailForm").attr("action", "<%= contextPath%>/delete.member");
     		$("#detailForm").submit();
      		alert("성공적으로 삭제되었습니다.");
     	}
     	
-    			function updateMember(){
+    	function updateMember(){
     		$("#detailForm").attr("action", "<%= contextPath%>/updateForm.member"); 
     		$("#detailForm").submit();
     	}
@@ -636,8 +644,9 @@
           	
       <div class="member_detail_box" id="member_detail_box">
           <h4 class="member_detail_title">회원 상세 정보</h4>
+        
              <!-- 해당 회원의 작성한 게시물 테이블 -->
-            <div class="member_detail_3">
+            <%-- <div class="member_detail_3">
                 <table class="table" id="member_board_table">
                     <caption id="caption">작성한 게시물</caption>
                     <thead id="member_board_table1">
@@ -667,9 +676,9 @@
 	                     <!-- 댓글수 -->           
                 	</tr>
                 <% } %>
-                <% } %> --%>
+                <% } %> 
                 </tbody>  
-                </table> 
+                </table> --%>
                 <!-- 페이지네이션 추가--> 
   	  </div>
   
