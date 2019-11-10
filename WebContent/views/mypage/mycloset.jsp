@@ -5,14 +5,13 @@
 	int topCount = (int) request.getAttribute("topCount");
 	int bottomCount = (int) request.getAttribute("bottomCount");
 	int accCount = (int) request.getAttribute("accCount");
+	int num = 0;
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>LOOKSOFINE - 나의옷장</title>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -22,6 +21,10 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet" />
+<!-- Owl StyleSheet -->
+<link href="<%= request.getContextPath() %>/css/owl.carousel.min.css" rel="stylesheet">
+<!-- Colorpicker StyleSheet-->
+<link href="<%= request.getContextPath() %>/css/bcp.min.css" rel="stylesheet">
 <style>
 #navbar {
 	width: 100%;
@@ -139,13 +142,14 @@ ul.category ul>li {
 .left {
 	width: 500px;
 	height: 75%;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	box-sizing: border-box;
 	display: block;
+	margin: auto;
 }
 
 .right {
-	width: 50%;
+	width: 40%;
 	height: 1000px;
 	/* border: 1px solid black; */
 	box-sizing: border-box;
@@ -154,9 +158,10 @@ ul.category ul>li {
 }
 
 .mycloset {
+	border-radius: 10px;
 	width: 100%;
 	height: 90%;
-	background-color: gray;
+	background-color: rgb(184, 184, 184);
 }
 
 .left .button {
@@ -173,6 +178,8 @@ ul.category ul>li {
 }
 
 .right .thumbnail {
+	background-color: lightgray;
+	border-radius: 10px;
 	width: 40%;
 	height: 200px;
 	position: relative;
@@ -187,15 +194,18 @@ ul.category ul>li {
 	-webkit-mask-box-image: url(<%= request.getContextPath() %>/resources/images/closet/question.png);
 }
 
-#thumbnail-add {
-	width: 90%;
-	height: 20%;
+#add-btn {
 	margin: auto;
+	width: 100%;
+}
+/* 
+#thumbnail-add {
+	height: 20%;
 	margin: auto;
 	position: absolute;
 	bottom: 0;
 	left: 35%;
-}
+} */
 
 .right .cloth {
 	width: 99%;
@@ -205,10 +215,8 @@ ul.category ul>li {
 .select-form {
 	width: 99%;
 	height: 80%;
-}
-
-.select-form tr {
-	padding: 100px;
+	border-collapse: separate;
+	border-spacing: 5 5px;
 }
 
 #select-top {
@@ -223,84 +231,37 @@ ul.category ul>li {
 	visibility: collapse;
 }
 
-ul.cloth-list { list-style:none;}
-
-
-
-.carousel{
-    width: 450px; margin: 0 auto;
-	height: 140px; 
-    position: relative;
-}
-
-.carousel .view{
-    width: 450px ; margin: 0 auto;
-	height: 140px;
-    /* background-color: lightgray; */
-    overflow: hidden;
-}
-
-.carousel .view .cloth-list{
-    width: 1350px; 
-	margin-left: -450px;
-	height: 100%;
-}
-.carousel .view .cloth-list:after{content: "";display: block;clear: both;}
-
-.carousel .view .cloth-list > li{
-    float:left;
-}
-
-.carousel .view .cloth-list > li ul:after{content: "";display: block;clear: both;}
-
-.carousel .view .cloth-list > li ul {
-	width: 400px;
-}
-
-.carousel .view .cloth-list > li ul li{
-	list-style:none;
-    float: left;
-    width: 130px; height: 130px;
-    margin-left: 5px; margin-right: 5px;
-}
-
-.carousel .prev{
-    position: absolute;
-    left: 0; top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform:translateY(-50%);
-    transform: translateY(-50%); 
-}
-.carousel .prev img {
-	transform:rotateY(180deg);
-	width: 50px; height: 50px;
-}
-
-.carousel .next{
-    position: absolute;
-    right: 0; top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform:translateY(-50%);
-    transform: translateY(-50%);
-}
-
-.carousel .next img {
-	width: 50px; height: 50px; 
-} 
-/* Carousel 기능구현 */
-
-.myclothimg {
-	width: 100%;
-	height: 100%;
-	-webkit-mask-box-image: url(<%= request.getContextPath() %>/resources/images/closet/hood.png);
-}
-
+/* 나의 옷장 carousel 스타일 */
+.cloth-vec {
+        height: 120px;
+		width: 120px;
+      }
+      .clothlist {
+        width: 100%;
+        overflow: hidden;
+      }
+      .owl-nav,
+      .owl-dots {
+        display: block;
+        text-align: center;
+      }
+      .owl-nav .owl-prev,
+      .owl-nav .owl-next {
+        display: inline-block;
+        margin: 5px;
+      }
+      .owl-dots .owl-dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 5px;
+      }
+      .owl-dots .active {
+        background-color: #666;
+      }
 
 </style>
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
-	rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp"%>
@@ -361,120 +322,135 @@ ul.cloth-list { list-style:none;}
 					<button>옷 삭제</button>
 				</div>
 				<div class="content left mycloset">
-					상의
-						<div class="carousel top">
-							<div class="view">
-								<ul class="cloth-list">
-									<li>
-										<ul>
-											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(1).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(1).getColourCode() %>)"></li>
-											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(2).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(2).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(3).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(3).getColourCode() %>)"></li>
-											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(4).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(4).getColourCode() %>)"></li>
-											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(5).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(5).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(6).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(6).getColourCode() %>)"></li>
-											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(7).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(7).getColourCode() %>)"></li>
-											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(8).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(8).getColourCode() %>)"></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-						</div>
-						<hr>
-						하의
-						<div class="carousel bottom">
-							<div class="view">
-								<ul class="cloth-list">
-									<li>
-										<ul>
-											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-						</div>
-						<hr>
-						악세사리
-						<div class="carousel acc">
-							<div class="view">
-								<ul class="cloth-list">
-									<li>
-										<ul>
-											<li class="a1"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a2"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a3"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a4"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a5"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a6"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-									<li>
-										<ul>
-											<li class="a7"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a8"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-											<li class="a9"><img class="myclothimg" src="<%= request.getContextPath() %>/resources/images/closet/<%= list.get(0).getTypeCode().toLowerCase() %>.png" style="background-color: rgb(<%=list.get(0).getColourCode() %>)"></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<p class="prev"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-							<p class="next"><img src="<%= contextPath %>/resources/images/icon/next.png"></p>
-						</div>
-				</div>
-				<script>
-					$(document).ready(function(){
-						$('.next').click(function(){
-							$('.cloth-list').stop().animate({'margin-left':'900px'},function(){
-								$('.cloth-list>li').eq(0).appendTo('.cloth-list');
-								$('.cloth-list').css({'margin-left':'-450px'});
-							});
-						});
-						$('.prev').click(function(){
-							$('.cloth-list').stop().animate({'margin-left':'0px'},function(){
-								$('.cloth-list>li').eq(2).prependTo('.cloth-list');
-								$('.cloth-list').css({'margin-left':'-450px'});
-							});
-						});
-					});
-				
-				</script>
+						<script type="text/javascript"
+						src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+						<script src="<%= request.getContextPath() %>/js/owl.carousel.js"></script>
+						<h5>상의(총 <%= topCount %>벌)</h5>
+						<div class="clothlist mytop">
+								<% for(Closet c : list) {
+									if(c.getTypeOption() == 1) { %>
+									<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+									<% num++;
+									}
+								} %>
+							  </div>		
+
+							  <script>
+									var carousel = $(".clothlist.mytop");
+									carousel.owlCarousel({
+									  loop: true,
+									  margin: 10,
+									  nav: true,
+									  responsive: {
+										0: {
+										  items: 1
+										},
+										600: {
+										  items: 2
+										},
+										1000: {
+										  items: 3
+										}
+									  }
+									});
+									/* Mousewheel에 따른 이벤트 구현 */
+									// carousel.on("mousewheel", ".owl-stage", function(e) {
+									//   if (e.deltaY > 0) {
+									// 	carousel.trigger("next.carousel");
+									//   } else{
+									// 	carousel.trigger("prev.carousel");
+									//   }
+									//   e.preventDefault();
+									// });
+								  </script>
+<hr>
+<h5>하의(총 <%= bottomCount %>벌)</h5>
+<div class="clothlist mybottom">
+		<% for(Closet c : list) {
+			if(c.getTypeOption() == 2) { %>
+			<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+			<% num++;
+			}
+		} %>
+	  </div>		
+	 
+	  <script>
+			var carousel = $(".clothlist.mybottom");
+			carousel.owlCarousel({
+			  loop: true,
+			  margin: 10,
+			  nav: true,
+			  responsive: {
+				0: {
+				  items: 1
+				},
+				600: {
+				  items: 2
+				},
+				1000: {
+				  items: 3
+				}
+			  }
+			});
+			/* Mousewheel에 따른 이벤트 구현 */
+			// carousel.on("mousewheel", ".owl-stage", function(e) {
+			//   if (e.deltaY > 0) {
+			// 	carousel.trigger("next.carousel");
+			//   } else{
+			// 	carousel.trigger("prev.carousel");
+			//   }
+			//   e.preventDefault();
+			// });
+		  </script>
+				<hr>
+<h5>악세사리(총 <%= accCount %>벌)</h5>
+<div class="clothlist myacc">
+		<% for(Closet c : list) {
+			if(c.getTypeOption() == 3) { %>
+			<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+			<% num++;
+			}
+		} %>
+	  </div>		
+
+	  <script>
+			var carousel = $(".clothlist.myacc");
+			carousel.owlCarousel({
+			  loop: true,
+			  margin: 10,
+			  nav: true,
+			  responsive: {
+				0: {
+				  items: 1
+				},
+				600: {
+				  items: 2
+				},
+				1000: {
+				  items: 3
+				}
+			  }
+			});
+			/* Mousewheel에 따른 이벤트 구현 */
+			// carousel.on("mousewheel", ".owl-stage", function(e) {
+			//   if (e.deltaY > 0) {
+			// 	carousel.trigger("next.carousel");
+			//   } else{
+			// 	carousel.trigger("prev.carousel");
+			//   }
+			//   e.preventDefault();
+			// });
+		  </script>
+
+			
+		</div>
 			</div>
+
+			<!-- content right -->
 			<form>
 				<div class="content right">
 					<div class="content right first">
+						<h5>분류 선택</h5>
 						<select class="ui-choose" id="options">
 							<option value="top">상의</option>
 							<option value="bottom">하의</option>
@@ -483,52 +459,51 @@ ul.cloth-list { list-style:none;}
 					</div>
 					<div class="content right thumbnail">
 						<div id="thumbnail-pic" align="center"
-							style="background-color: rgb(211, 33, 45);"></div>
+							style="background-color: rgb(224, 20, 34);"></div>
 						<div id="thumbnail-add">
-							<button type="button" id="add-btn">추가</button>
+							<button type="button" id="add-btn">내 옷장에 추가!</button>
 						</div>
 					</div>
 					<div class="content right cloth style">
 						<table class="select-form">
 							<tr>
-								<td style="width: 100px">옷 이름</td>
-								<td><input type="text" name="clothname" id="clothname"
-									placeholder="미입력시 자동입력" /></td>
+								<td style="width: 100px">선호하는 옷?</td>
+								<td><input type="checkbox" name="likestatus" id="likestatus" value="Y"></td>
 							</tr>
 							<tr id="select-top">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-top"
 									name="clothtype">
-										<option value="tshirts">반팔티</option>
-										<option value="mantoman">맨투맨</option>
-										<option value="hood">후드티</option>
-										<option value="knit">니트</option>
-										<option value="cardigan">가디건</option>
-										<option value="padding">패딩</option>
-										<option value="jacket">자켓</option>
-										<option value="blouse">원피스</option>
+										<option value="TSHIRTS">반팔티</option>
+										<option value="MANTOMAN">맨투맨</option>
+										<option value="HOOD">후드티</option>
+										<option value="KNIT">니트</option>
+										<option value="CARDIGAN">가디건</option>
+										<option value="PADDING">패딩</option>
+										<option value="JACKET">자켓</option>
+										<option value="BLOUSE">원피스</option>
 								</select></td>
 							</tr>
 							<tr id="select-bottom">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-bottom"
 									name="clothtype">
-										<option value="cotton">면바지</option>
-										<option value="jean">청바지</option>
-										<option value="short">반바지</option>
-										<option value="shortskirt">짧은치마</option>
-										<option value="longskirt">긴치마</option>
+										<option value="COTTON">면바지</option>
+										<option value="JEAN">청바지</option>
+										<option value="SHORT">반바지</option>
+										<option value="SSKIRT">짧은치마</option>
+										<option value="LSKIRT">긴치마</option>
 								</select></td>
 							</tr>
 							<tr id="select-acc">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-acc"
 									name="clothtype">
-										<option value="cap">모자</option>
-										<option value="scarf">목도리</option>
-										<option value="sneakers">스니커즈</option>
-										<option value="dressshoes">구두</option>
-										<option value="sandal">샌들</option>
+										<option value="CAP">모자</option>
+										<option value="SCARF">목도리</option>
+										<option value="SNEAKERS">스니커즈</option>
+										<option value="DRESSSHOES">구두</option>
+										<option value="SANDAL">샌들</option>
 								</select></td>
 							</tr>
 							<tr>
@@ -565,6 +540,26 @@ ul.cloth-list { list-style:none;}
 										<option value="30,30,30">나도몰라</option>
 										<option value="100,100,100">기타</option>
 								</select></td>
+								<!-- color picker 작업중-->
+								<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+								<script src="<%= contextPath %>/js/bcp.min.js"></script>
+								<script src="<%= contextPath %>/js/bcp.en.min.js"></script>
+								<script>
+								
+								$('.ui-choose').attr("selected").bcp();
+								$('#colour').on('pcb.refresh', function (e) {
+									if ($('#colour').val() == "기타") {
+										console.log("성공!");
+										let color = $(this).bcp('color');
+										if (color.value) {
+											$("#thumbnail-pic").attr(
+												"style",
+												"background-color: rgb(" + value + ");"
+												);
+											}
+									}
+								});
+								</script>
 							</tr>
 							<tr>
 								<td></td>
@@ -596,7 +591,7 @@ ul.cloth-list { list-style:none;}
 							</tr>
 							<tr>
 								<td>관련메모</td>
-								<td><input type="textarea" name="memo" id="memo" /></td>
+								<td><textarea name="memo" id="memo" cols="30" rows="4" placeholder="이 옷에 대한 메모를 입력하세요."></textarea></td>
 							</tr>
 						</table>
 					</div>
@@ -696,16 +691,20 @@ ul.cloth-list { list-style:none;}
                 $("#add-btn").click(function(){
                   var obj = new Object();
                   if(options.val() == 'top') {
+					obj.typeoption = 1;
                     obj.clothtype = $("#cloth-top").val();
                   } else if(options.val() == 'bottom') {
+					obj.typeoption = 2;
                     obj.clothtype = $("#cloth-bottom").val();
                   } else {
+					obj.typeoption = 3;
                     obj.clothtype = $("cloth-acc").val();
-                  };
+				  };
+				  obj.likestatus = $("#likestatus:checked").val();
                   obj.style = $("#style").val();
                   obj.colour = colour.val();
                   obj.fit = fit.val();
-                  obj.season = season.val();
+				  obj.season = season.val();
                   obj.brand = $("#brand").val();
                   obj.buydate = $("#buydate").val();
                   obj.memo = $('#memo').val();
@@ -713,17 +712,16 @@ ul.cloth-list { list-style:none;}
 
                   var JSONData = JSON.stringify(obj);
                   $.ajax({
-                    url: "/addnewcloth.look",
-                    data: {
-                      json: JSONData
-                    },
+                    url: "<%= contextPath %>/addmycloth.look",
+                    data: JSONData,
                     type: "POST",
                     dataType: "json",
                     success: function(data) {
 
                     },
-                    error: function() {
-                      alert("에러 발생");
+                    error: function(e) {
+					  alert("에러 발생");
+					  console.log(e)
                     }
                   });
 
