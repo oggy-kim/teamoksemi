@@ -119,7 +119,8 @@
         ul.category li a {
             margin:auto;
             color: black;
-             font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family: 'Noto Serif KR', serif; 
             font-size: 25px; 
         }
 
@@ -163,38 +164,54 @@
             font-weight: 700;
         }
 
-		
+		.overview_image_wrapper {
+			height:100%;
+			width : 15%; 
+			float : left;
+		}
+
+		#overview_welcome {
+			font-family: 'Noto Serif KR', serif;
+			width : 80%;
+			height : auto;
+			overflow : hidden;
+			margin-bottom : 5%;
+			cursor : pointer;
+			background : black;
+			color : white;
+		}
 
 		.overview_box {
 			font-family: 'Noto Serif KR', serif;
 			width : 80%;
 			height : auto;
 			overflow : hidden;
-			box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+			/* box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849); */
 			margin-bottom : 5%;
 			cursor : pointer;
 		}
 		
+		.overview_box:hover {
+			border:2px solid black;
+		}
+		
 		.overview_box p {
-			font-size : 20px;
+			font-size : 23px;
 			margin-left : 3%;
 		}
 		
 		.overview_box h3 {
 			font-weight : 700;
-			font-size : 25px;
-			margin-left : 2%; 
+			font-size : 30px;
+			margin-left : 3%; 
 		}
 		
-		.overview_content{
-			width : 80%;
-			height : auto;
-			overflow : hidden;
-			align : left;
-			margin-left : 5%;
-		}
-
-
+		.overview_contents{
+			width:85%; 
+			height:100%; 
+			display:inline-block;
+			/* box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849); */
+		} 
 
     </style>
 </head>
@@ -262,34 +279,54 @@
             <h2 id="content_title">&nbsp;&nbsp;OVERVIEW</h2>
         </div>
         <hr><br>
-         <div class="overview_box" id="overview_welcome" style="background:yellowgreen;" onclick="goMypage();">
-            <br><h4 class="welcome_message">&nbsp;&nbsp;&nbsp;관리자 페이지입니다. 무엇을 도와드릴까요?</h4><br>
+         <div id="overview_welcome" onclick="goMypage();">
+            <br><h4 class="welcome_message" style='font-weight:700;'>&nbsp;&nbsp;&nbsp;관리자 페이지입니다. 무엇을 도와드릴까요?</h4><br>
         </div> 
         
-        <div class="overview_box" onclick="goMember();" id="member">
-       		<br>
-       		<h3>회원관리</h3><br>
-       		<p>모든 회원들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다.</p>
+        <div class="overview_box" onclick="goMember();">
+	        <div class="overview_image_wrapper">
+	        	<img id="image_member" src="<%= contextPath %>/resources/images/adm/member.png" style="width:100%; height:100%; margin:0; padding:0;">
+	        </div>
+	        <div class="overview_contents" id="member">
+	       		<br><br>
+	       		<h3>회원관리</h3><br>
+	       		<p>모든 회원들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다.</p>
+	        </div>
         </div>	
         	
-        <div class="overview_box" onclick="goBoard();" id="board">	
-       		<br>
-       		<h3 >게시물관리</h3><br>
-       		<p>회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        <div class="overview_box" onclick="goBoard();">	
+       		<div class="overview_image_wrapper">
+       			<img id="image_board" src="<%= contextPath %>/resources/images/adm/board.png" style="width:100%; height:100%; margin:0; padding:0;">
+       		</div>
+			<div class="overview_contents" id="board">       		
+       			<br><br>
+       			<h3 >게시물관리</h3><br>
+       			<p>회원들이 올린 게시글들을 조회하고, 게시물이나 댓글을 수정하거나 삭제 할 수 있습니다. </p>
+        	</div>
         </div>	
-        	
-        <div class="overview_box" onclick="goShop();" id="shop">
-       		<br>
-       		<h3 >제휴쇼핑몰관리</h3><br>
-       		<p>당사와 제휴를 맺은 쇼핑몰들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다. </p>
- 		</div>	
+    
+    
+    	<div class="overview_box" onclick="goShop();">	
+       		<div class="overview_image_wrapper">
+       			<img id="image_shop" src="<%= contextPath %>/resources/images/adm/shop.png" style="width:100%; height:100%; margin:0; padding:0;">
+       		</div>
+			<div class="overview_contents" id="shop">
+	       		<br><br>
+    	   		<h3>제휴쇼핑몰관리</h3><br>
+       			<p>당사와 제휴를 맺은 쇼핑몰들의 정보를 조회하고, 수정하거나 삭제 할 수 있습니다. </p>
+ 			</div>	
+ 		</div>
  		
- 		<div class="overview_box" onclick="goQnA();" id="qna">
-       		<br>
-       		<h3 >문의사항관리</h3><br>
-       		<p>회원들의 문의 사항을 조회하고, 답변을 달 수 있습니다. </p>
-       	</div>       	
-
+ 		<div class="overview_box" onclick="goQNA();">	
+       		<div class="overview_image_wrapper">
+       			<img id="image_qna" src="<%= contextPath %>/resources/images/adm/qna.png" style="width:100%; height:100%; margin:0; padding:0;">
+       		</div>
+			<div class="overview_contents" id="qna">
+       			<br><br>
+       			<h3 >문의사항관리</h3><br>
+       			<p>회원들의 문의 사항을 조회하고, 답변을 달 수 있습니다. </p>
+       		</div>       	
+		</div>
  
 </section>
 <footer class="copyRight">

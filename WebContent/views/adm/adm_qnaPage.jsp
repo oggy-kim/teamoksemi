@@ -134,15 +134,15 @@
             padding: 10px;
         }
 
-        ul.category li a {
+        ul.category li {
             margin:auto;
             color: black;
             font-family: 'Do Hyeon', sans-serif; 
-            font-size: 25px; 
+            font-size: 30px; 
         }
 
-        ul.category li a:hover {
-            font-weight: bold;
+        ul.category li:hover {
+            text-decoration: underline;
             font-style: italic;
         }
 
@@ -178,7 +178,10 @@
 
         /* -----------------  qna & qna_detail ------------------------ */
 
-        /* Sortable tables */
+        table {
+			text-align : center;
+		}
+        
 		table.sortable thead {
 		    background-color:#eee;
 		    color:#666666;
@@ -186,16 +189,11 @@
 		    cursor: default;
 		}
 
-        /* -------------sorting_box------------- */
-
         .sorting_box {
             margin-right:10%;
             margin-bottom:1%;
             float : right;
         }
-        
-        /* ---------------------------------- */
-
 
         .qna_box {
             width : 80%;
@@ -221,11 +219,11 @@
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-        .table {
+        table {
             text-align : center;
-            width : 85%;
+            /* width : 85%;
             margin : 1% 0 0 5%;
-            font-size : 15px;
+            font-size : 15px; */
         }
 
         .qna_title, .qna_detail_title { /*  qna 제목 */
@@ -236,6 +234,34 @@
             font-size: 28px; 
 
         }
+        
+        .qna_detail_contents {
+        	float : left;
+			width : 40%;
+			height : 60%;
+			margin-top : 2%;
+			margin-left : 5%;
+			border : 1px solid black;
+			font-size : 20px;
+			display:inline-block;	
+        }
+        
+		#answer_btn {
+			/* float : right; */
+            background:gray;
+            border:gray;
+            color:white;
+            border-radius:5px;
+		}
+		
+		 .btnArea {
+			margin-right : 2%;
+			margin-top : 3%;
+			margin-botton : 10%;
+			width : 15%;
+			/* border : 1px solid black; */
+			float : right;
+		}
 
   /* -------search--------- */
 
@@ -485,16 +511,15 @@
 
             	           		var detail = "";
 
-            	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4><div id='qna_detail_contents' style='display:inline-block; border:1px solid black; margin-left:2%;'><div>글번호 : " + result.qnaNo + "</div>" +
-                                         /* "<div>회원번호 : " + result.memberNo + "</div>" + */
-                                         "<div>회원닉네임 : " + result.memberNick + "</div>" +
-                                         "<div>작성일 : " + result.enrollDate + "</div>" + 
-                                         "<div>QNA제목 : " + result.qnaTitle + "</div>" +
-                                         "<div>QNA내용 : " + result.qnaContents + "</div>" +
-                                         "<div>답변여부 : " + result.answerStatus + "</div>" +
-                                         "<div>답변내용 : " + result.answerContents + "</div></div>" +
-                                         "<div class='answerArea' style='display:inline-block;'><input type='text' id='answer' style='width:800px; height:200px;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'><button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button>" +
-                                         "</div>";
+            	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4><div class='qna_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>글번호 </th><td>" + result.qnaNo + "</td></tr>" +
+                                         "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" +
+                                         "<tr><th>작성일</th><td>" + result.enrollDate + "</td></tr>" + 
+                                         "<tr><th>QNA제목</th><td>" + result.qnaTitle + "</td></tr>" +
+                                         "<tr><th>QNA내용</th><td>" + result.qnaContents + "</td></tr>" +
+                                         "<tr><th>답변여부</th><td>" + result.answerStatus + "</td></tr>" +
+                                         "<tr><th>답변내용</th><td>" + result.answerContents + "</td></tr></table></div>" +
+                                         "<div class='qna_detail_contents'><textarea style='width:100%; height:100%; resize:none;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'></textarea></div>" + 
+                                         "<div class='btnArea'><button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button></div>";
                                          
                                 console.log(detail);
 

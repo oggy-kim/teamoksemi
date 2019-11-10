@@ -136,15 +136,15 @@
             padding: 10px;
         }
 
-        ul.category li a {
+        ul.category li {
             margin:auto;
             color: black;
             font-family: 'Do Hyeon', sans-serif; 
-            font-size: 25px; 
+            font-size: 30px; 
         }
 
-        ul.category li a:hover {
-            font-weight: bold;
+        ul.category li:hover {
+            text-decoration: underline;
             font-style: italic;
         }
 
@@ -182,8 +182,10 @@
 
         /* -------------sorting_box------------- */
 
+		table {
+			text-align : center;
+		}
 		
-		/* Sortable tables */
 		table.sortable thead {
 		    background-color:#eee;
 		    color:#666666;
@@ -249,17 +251,23 @@
          .shop_detail_box {
          	visibility : hidden; 
          	width : 80%;
-         	height : 23%;
+         	height : 25%;
+         	/* height : none;
+         	overflow : hidden; */
          	margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
          }
 
-		#shop_detail_contents { /* 다시 조정하기 */
-			width : 80%;
-			height : 60%;
+		.shop_detail_contents { /* 다시 조정하기 */
+			float : left;
+			width : 40%;
+			height : 75%;
 			margin-top : 2%;
 			margin-left : 5%;
-			border : 1px solid black;			
+			margin-botton : 0%;
+			border : 1px solid black;
+			font-size : 20px;
+			display:inline-block;			
 		}
 
 		#shop_table {
@@ -269,11 +277,11 @@
             font-size : 15px;
 		}
 
-        .table {
-            text-align : center;
-            width : 85%;
-            margin : 1% 0 0 5%;
-            font-size : 15px;
+		.shop_detail_title {
+            margin : 3% 0 0 5%;
+            padding : 2% 0 0 0;
+            font-family: 'Do Hyeon', sans-serif; 
+            font-size: 28px; 
         }
 
         .box_title, .table_title { /* 수익 및 거래총량 /제휴 쇼핑몰 리스트 제목 */
@@ -283,34 +291,30 @@
             font-size: 28px; 
         }
 
-        .shop_detail {
-            width : 80%;
-            height : 20%;
-            margin : 0 0 0 5%;
-            box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        }
-
-        .shop_detail_title {
-            margin : 3% 0 0 5%;
-            padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
-            font-size: 28px; 
-        }
 
         #update_btn, #delete_btn {
             float : right;
-            background:gray;
-            border:gray;
-            color:white;
-            border-radius:5px;
+            background : gray;
+            border : gray;
+            color : white;
+            border-radius : 5px;
         }
+        
+        .btnArea {
+			margin-right : 10%;
+			margin-top : 3%;
+			margin-botton : 20%; /* (!) 적용안됨 */
+			width : 25%;
+			/* border : 1px solid black; */
+			float : right;
+		}
 
         /* -------search--------- */
 
         .searchArea {
-            width:60%;
-            margin-left:30%;
-            margin-bottom:5%;
+            width : 60%;
+            margin-left : 30%;
+            margin-bottom : 5%;
         } 
         
         #searchBtn{
@@ -325,10 +329,6 @@
         #searchBtn:hover {
             cursor:pointer;
         }
-
-		.btnArea {
-			 margin-botton:10%;
-		}
 
     </style>
 </head>
@@ -605,21 +605,24 @@
 
         	           		var detail = "";
 
-        	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4><div id='shop_detail_contents'><div>회사번호 : " + result.shopNo + "</div>" +
-                                     "<div>회사명 : " + result.shopName + "</div>" +
-                                     "<div>계약상태 : " + result.status + "</div>" +
-                                     "<div>등급 : " + result.shopGradeCode + "</div>" + 
-                                     "<div>계약시작일 : " + result.contractDate + "</div>" +
-                                     "<div>계약만료일 : " + result.expireDate + "</div>" +
-                                     "<div>계약금 : " + result.contractMoney + "</div>" +
-                                     "<div>담당자 : " + result.shopPIC + "</div>" +
-                                     "<div>연락처 : " + result.shopContact + "</div></div>" +
-                                     "<div class='btnArea'><button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
+        	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4>" +
+                                     "<div class='shop_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>회사 로고</th><td></td><tr><th>홈페이지 주소</th><td></td></tr></table></div>" +
+                                     "<div class='shop_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>회사번호</th><td>" + result.shopNo + "</td></tr>" +
+                                     "<tr><th>회사명</th><td>" + result.shopName + "</td></tr>" +
+                                     "<tr><th>계약상태</th><td>" + result.status + "</td></tr>" +
+                                     "<tr><th>등급</th><td>" + result.shopGradeCode + "</td></tr>" + 
+                                     "<tr><th>계약시작일</th><td>" + result.contractDate + "</td></tr>" +
+                                     "<tr><th>계약만료일 </th><td>" + result.expireDate + "</td></tr>" +
+                                     "<tr><th>계약금</th><td>" + result.contractMoney + "</td></tr>" +
+                                     "<tr><th>담당자</th><td>" + result.shopPIC + "</td></tr>" +
+                                     "<tr><th>연락처</th><td>" + result.shopContact + "</td></tr></table></div>" +
+                                     "<div class='btnArea' style='display:inline-block;'>" + 
+                                     "<button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
                                      "<button type='button' id='update_btn' onclick='updateShop();' style='margin-right : 2%;'>쇼핑몰수정</button></div>" +
-                                     "<form action='' id='detailForm' method='post'><input type='hidden' name='shopNo' value='"+result.shopNo+"'></form>";
+                                     "<form action='' id='detailForm' method='post'><input type='hidden' name='shopNo' value='"+result.shopNo+"'></form><br><br>";
                                      
-                            console.log(detail);
-                            console.log(result.shopNo);
+                            // console.log(detail);
+                            // console.log(result.shopNo);
 
         	           		$("#shop_detail").html(detail);
         	           		
@@ -702,7 +705,7 @@
 		</script>
 
 		<div class="shop_detail_box" id="shop_detail">
-            
+
         </div>
 
     </div>

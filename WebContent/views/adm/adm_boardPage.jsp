@@ -66,6 +66,10 @@
         hr {
             border: 1px solid black;
         }
+        
+        table {
+        	/* text-align : center; */
+        }
 
         .btn {
             background: black;
@@ -132,15 +136,15 @@
             padding: 10px;
         }
 
-        ul.category li a {
+        ul.category li {
             margin:auto;
             color: black;
             font-family: 'Do Hyeon', sans-serif; 
-            font-size: 25px; 
+            font-size: 30px; 
         }
 
-        ul.category li a:hover {
-            font-weight: bold;
+        ul.category li:hover {
+            text-decoration: underline;
             font-style: italic;
         }
 
@@ -176,16 +180,16 @@
 
         /* ----------------- board ---------------- */
 
-		/* Sortable tables */
+		table {
+			text-align : center;
+		}
+		
 		table.sortable thead {
 		    background-color:#eee;
 		    color:#666666;
 		    font-weight: bold;
 		    cursor: default;
 		}
-		
-
-        /* -- 테이블 정렬 -- */
 
         .sorting_box {
             margin-right:10%;
@@ -235,16 +239,8 @@
         	text-align : center;
         	width : 85%;
         	margin : 1% 0 0 5%;
-        	font-size : 15px;
-        	
+        	font-size : 15px;	
         } 
-
-        .table {
-            text-align : center;
-            width : 85%;
-            margin : 1% 0 0 5%;
-            font-size : 15px;
-        }
 
         .table_title { 
             margin : 3% 0 0 5%;
@@ -267,12 +263,32 @@
             font-size: 28px; 
         }
 
+		.board_detail_contents {
+			float : left;
+			width : 40%;
+			height : 60%;
+			margin-top : 2%;
+			margin-left : 5%;
+			border : 1px solid black;
+			font-size : 20px;
+			display:inline-block;	
+		}
+
 		#delete_board_btn, #delete_comment_btn {
 			float : right;
             background:gray;
             border:gray;
             color:white;
             border-radius:5px;
+		}
+		
+		.btnArea {
+			margin-right : 9%;
+			margin-top : 3%;
+			margin-botton : 10%;
+			width : 25%;
+			/* border : 1px solid black; */
+			float : right;
 		}
 
 
@@ -609,16 +625,18 @@
 
           	           		var detail = "";
 
-          	           		detail += " <h4 class='board_detail_title'>게시글 상세보기</h4><div id='board_detail_contents' style='display:inline-block; border:1px solid black;'><div>게시판 글번호 : " + result.articleNo + "</div>" +
-                                       /* "<div>회원번호 : " + result.memberNo + "</div>" + */
-                                       "<div>회원닉네임 : " + result.memberNick + "</div>" +
-                                       "<div>프로필 사진 : " + result.profile + "</div>" +
-                                       "<div>선호스타일 : " + result.likeStyle + "</div>" +
-                                       "<div>조회수 : " + result.articleViews + "</div>" +
-                                       "<div>찜수 : " + result.ariticleLikes + "</div>" +
-                                       "<div>내용 : " + result.articleContents + "</div>" + 
-                                       "<div>작성일 : " + result.articleDate + "</div>" +
-                                       "<div>등록여부 : " + result.status + "</div></div>" +
+          	           		detail += "<h4 class='board_detail_title'>게시글 상세보기</h4>" +
+          	           				  "<div class='board_detail_contents'>실물</div>" +
+          	           				  "<div class='board_detail_contents'>" + 
+          	           				  "<table class='table-condensed' style='width:100%; height:100%;'><tr><th>게시판 글번호</th><td>" + result.articleNo + "</td></tr>" +
+                                       "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" +
+                                       "<tr><th>프로필 사진</th><td>" + result.profile + "</td></tr>" +
+                                       "<tr><th>선호스타일</th><td>" + result.likeStyle + "</td></tr>" +
+                                       "<tr><th>조회수</th><td>" + result.articleViews + "</td></tr>" +
+                                       "<tr><th>찜수</th><td>" + result.ariticleLikes + "</td></tr>" +
+                                       "<tr><th>내용</th><td>" + result.articleContents + "</td></tr>" + 
+                                       "<tr><th>작성일</th><td>" + result.articleDate + "</td></tr>" +
+                                       "<tr><th>등록여부</th><td>" + result.status + "</td></tr></table></div>" +
                                    	   // "<div>댓글 : </div>" : 댓글은 어떻게 넣지?	
                                        "<div class='btnArea'><button type='button' id='delete_board_btn' style='margin-right : 5%;' onclick='deleteBoard();'>게시물삭제</button>" +
                                        "<button type='button' id='delete_comment_btn' style='margin-right : 2%;' onclick='deleteBoardComment();'>댓글삭제</button></div>" + 
