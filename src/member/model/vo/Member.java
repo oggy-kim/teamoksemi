@@ -18,7 +18,21 @@ public class Member implements java.io.Serializable{
    
    public Member() {}
    
-   // Adm Member페이지 내 회원정보목록
+   
+   
+   
+   
+   public Member(String memberId, String memberPwd) {
+	super();
+	this.memberId = memberId;
+	this.memberPwd = memberPwd;
+}
+
+
+
+
+
+// Adm Member페이지 내 회원정보목록
    public Member(int memberNo, String gradeCode, String memberId, String memberNick, Date entryDate) {
 	super();
 	this.memberNo = memberNo;
