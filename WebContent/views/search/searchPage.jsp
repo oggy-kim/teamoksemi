@@ -24,7 +24,7 @@
         body {
           width : 100%;
           height:2200px;
-
+		  background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
         section {
@@ -317,7 +317,7 @@ $(function(){
 				 console.log(result);
 				 $("body").click(function(){
 					 $(".searchDetailForm").css({"visibility":"hidden"});
-					 $("body").css({"background":"none"});
+					 $("body").css({"background":"url('<%= request.getContextPath() %>/resources/images/mainback.jpg')"});
 				 });
 				 $(".searchDetailForm").css("visibility", "visible");
 				 $("body").css({"background": "gray"});

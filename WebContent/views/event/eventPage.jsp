@@ -23,6 +23,7 @@
         body {
           width : 100%;
           height : 1600px;
+          background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
         #navbar {
