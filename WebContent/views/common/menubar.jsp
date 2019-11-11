@@ -28,7 +28,7 @@
           width:100%;
           height:60px;
           position:fixed;
-          z-index: 1;
+          z-index: 10;
           color:white;
           font-family: 'Fugaz One', cursive;
         }
@@ -37,7 +37,7 @@
           width: 100%;
           height:60px;
           position: fixed;
-          z-index: 1;
+          z-index: 10;
           background: white;
           opacity:0.8;
           font-family: 'Paytone One', sans-serif;
