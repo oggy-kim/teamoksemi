@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import adm.model.service.AdmService;
-import board.model.service.BoardService;
-import board.model.vo.Board;
-import shop.model.vo.Shop;
+import board.model.vo.QnA;
 
 /**
- * Servlet implementation class AdmUpdateFormServlet
+ * Servlet implementation class AdmAnswerQNAServlet
  */
-@WebServlet("/updateForm.shop")
-public class AdmUpdateFormShopServlet extends HttpServlet {
+@WebServlet("/answerQNA.adm")
+public class AdmAnswerQNAServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmUpdateFormShopServlet() {
+    public AdmAnswerQNAServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +29,27 @@ public class AdmUpdateFormShopServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
-		// System.out.println("shopNo="+shopNo);
+		request.setCharacterEncoding("utf-8");
 		
-		Shop shop = new AdmService().selectShop(shopNo);
-		// System.out.println("shop="+shop);
+		String answerContents = request.getParameter("answerContents");
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		System.out.println("qnaNo="+qnaNo);
+		System.out.println("answerContents="+answerContents);
 		
-		if(shop != null) {
-			request.setAttribute("shop", shop);
-			request.getRequestDispatcher("views/adm/adm_shopUpdatePage.jsp").forward(request, response);
-		}else {
-			request.setAttribute("msg", "쇼핑몰 수정페이지를 불러오는데 실패했습니다.");
+		QnA qna = new QnA();
+		
+		qna.setQnaNo(qnaNo);
+		qna.setAnswerContents(answerContents);
+		
+		int result = new AdmService().answerQNA(qna);
+		System.out.println(result);
+		
+		if(result > 0) {
+			response.sendRedirect("qna.adm");
+			// request.setAttribute("msg", "문의글이 성공적으로 삭제되었습니다.");
+		} else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			// request.setAttribute("msg", "문의글 삭제에 실패했습니다.");
 		}
 	}
 

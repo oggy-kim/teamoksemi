@@ -185,8 +185,10 @@
 
 		table {
 			text-align : center;
+			vertical-align : center;
 			font-family : 'Noto Serif KR', serif;
 		}
+
 		
 		table.sortable th {
 		    background-color:#eee;
@@ -285,6 +287,10 @@
             padding : 2% 0 0 0;
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 28px; 
+        }
+        
+        #shop_image {
+        	background : url(../resources/images/musinsa.png);
         }
 
         .box_title, .table_title { /* 수익 및 거래총량 /제휴 쇼핑몰 리스트 제목 */
@@ -607,13 +613,13 @@
         	           		var detail = "";
 
         	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4>" +
-			           				  "<p style='margin-left:5%;'>선택한 쇼핑몰을 상세 조회하고, 해당 쇼핑몰의 정보를 수정하거나 삭제 할 수 있습니다.</p>" +
-                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr></tr></table></div>" +
-                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr><th colspan='1'>회사번호</th><td colspan='1'>" + result.shopNo + "</td><th colspan='1'>회사명</th><td colspan='1'>" + result.shopName + "</td></tr>" +
-                                     "<tr><th colspan='1'>계약상태</th><td colspan='1'>" + result.status + "</td><th colspan='1'>등급</th><td colspan='1'>" + result.shopGradeCode + "</td></tr>" + 
-                                     "<tr><th colspan='1'>계약시작일</th><td colspan='1'>" + result.contractDate + "</td><th colspan='1'>계약만료일 </th><td colspan='1'>" + result.expireDate + "</td></tr>" +
-                                     "<tr><th colspan='1'>계약금</th><td colspan='3'>" + result.contractMoney + "</td></tr>" +
-                                     "<tr><th colspan='1'>담당자</th><td colspan='1'>" + result.shopPIC + "</td><th colspan='1'>연락처</th><td colspan='1'>" + result.shopContact + "</td></tr></table></div>" +
+			           				  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 쇼핑몰을 상세 조회하고, 해당 쇼핑몰의 정보를 수정하거나 삭제 할 수 있습니다.</p>" +
+                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr><img id='shop_image'></tr></table></div>" +
+                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%; style='vertical-align:middle;''><tr><th colspan='1' style='vertical-align:middle;'>회사번호</th><td colspan='1' style='vertical-align:middle;'>" + result.shopNo + "</td><th colspan='1' style='vertical-align:middle;'>회사명</th><td colspan='1' style='vertical-align:middle;'>" + result.shopName + "</td></tr>" +
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약상태</th><td colspan='1' style='vertical-align:middle;'>" + result.status + "</td><th colspan='1' style='vertical-align:middle;'>등급</th><td colspan='1' style='vertical-align:middle;'>" + result.shopGradeCode + "</td></tr>" + 
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약시작일</th><td colspan='1' style='vertical-align:middle;'>" + result.contractDate + "</td><th colspan='1' style='vertical-align:middle;'>계약만료일 </th><td colspan='1' style='vertical-align:middle;'>" + result.expireDate + "</td></tr>" +
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약금</th><td colspan='3' style='vertical-align:middle;'>" + result.contractMoney + "</td></tr>" +
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>담당자</th><td colspan='1' style='vertical-align:middle;'>" + result.shopPIC + "</td><th colspan='1' style='vertical-align:middle;'>연락처</th><td colspan='1' style='vertical-align:middle;'>" + result.shopContact + "</td></tr></table></div>" +
                                      "<div class='btnArea' style='display:inline-block;'>" + 
                                      "<button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
                                      "<button type='button' id='update_btn' onclick='updateShop();' style='margin-right : 2%;'>쇼핑몰수정</button></div>" +

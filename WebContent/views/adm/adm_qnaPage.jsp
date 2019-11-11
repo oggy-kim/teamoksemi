@@ -361,7 +361,7 @@
     
         <div class="qna_box">
             <h4 class="qna_title">QnA</h4>
-            <p style="margin-left:5%;">상세보기를 원하는 문의글을 클릭하면, 하단에 해당하는 문의글의 상세정보를 볼 수 있습니다.</p>
+            <p style="margin-left:5%; font-family : 'Noto Serif KR', serif;">상세보기를 원하는 문의글을 클릭하면, 하단에 해당하는 문의글의 상세정보를 볼 수 있습니다.</p>
             
             <!-- 테이블 정렬 버튼 -->
             <div class="sorting_box">
@@ -523,23 +523,24 @@
             	           		var detail = "";
 
             	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4>" + 
-    	           				  "<p style='margin-left:5%; font-family : 'Noto Serif KR', serif;'>선택한 문의글을 상세 조회하고, 해당 문의글에 답변을 달거나 문의글을 삭제 할 수 있습니다.</p>" +
+    	           				  "<p style='margin-left:5%; font-family :Noto Serif KR;'>선택한 문의글을 상세 조회하고, 해당 문의글에 답변을 달거나 문의글을 삭제 할 수 있습니다.</p>" +
             	           					"<div class='qna_detail_contents'>" + 
             	           						"<table class='sortable table' style='width:100%; height:100%;'>" + 
-	            	           						"<tr><th colspan='1'>글번호</th><td colspan='1'>" + result.qnaNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
-	                                         		"<tr><th colspan='1'>작성일</th><td colspan='1'>" + result.enrollDate + "</td><th colspan='1'>답변여부</th><td colspan='1'>" + result.answerStatus + "</td></tr>" +
-	                                         		"<tr><th colspan='1'>제목</th><td colspan='3'>" + result.qnaTitle + "</td></tr>" +
-	                                         		"<tr><th colspan='1'>내용</th><td colspan='3'>" + result.qnaContents + "</td></tr>" +
-	                                         		"<tr><th colspan='1'>답변</th><td colspan='3'>" + result.answerContents + "</td></tr></table>" + 
+	            	           						"<tr><th colspan='1' style='vertical-align:middle;'>글번호</th><td colspan='1' style='vertical-align:middle;'>" + result.qnaNo + "</td><th colspan='1' style='vertical-align:middle;'>닉네임</th><td colspan='1' style='vertical-align:middle;'>" + result.memberNick + "</td></tr>" +
+	                                         		"<tr><th colspan='1' style='vertical-align:middle;'>작성일</th><td colspan='1' style='vertical-align:middle;'>" + result.enrollDate + "</td><th colspan='1' style='vertical-align:middle;'>답변여부</th><td colspan='1' style='vertical-align:middle;'>" + result.answerStatus + "</td></tr>" +
+	                                         		"<tr><th colspan='1' style='vertical-align:middle;'>제목</th><td colspan='3' style='vertical-align:middle;'>" + result.qnaTitle + "</td></tr>" +
+	                                         		"<tr><th colspan='1' style='vertical-align:middle;'>내용</th><td colspan='3' style='vertical-align:middle;'>" + result.qnaContents + "</td></tr>" +
+	                                         		"<tr><th colspan='1' style='vertical-align:middle;'>답변</th><td colspan='3' style='vertical-align:middle;'>" + result.answerContents + "</td></tr></table>" + 
                                          	"</div>" +
                                          "<div class='qna_detail_contents'>" + 
-                                         	"<textarea style='width:100%; height:100%; resize:none;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'></textarea>" + 
+                                         	"<textarea id='answer' style='width:100%; height:100%; resize:none;' placeholder='해당 문의글의 답변을 등록하세요.'></textarea>" + 
                                          "</div>" + 
                                          "<div class='btnArea'>" + 
 	                                        "<button type='submit' id='delete_btn' style='display:inline-block; margin-right : 5%;' onclick='deleteQNA();'>글 삭제</button>" +
-                                         	"<button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button>" + 
+                                         	"<button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;' onclick='answerQNA();'>답변등록</button>" + 
                                          "</div>" +
-                                         "<form action='' id='detailForm' method='post'><input type='hidden' name='qnaNo' value='"+result.qnaNo+"'></form>";
+                                         "<form action='' id='detailForm1' method='post'><input type='hidden' name='qnaNo' value='" + result.qnaNo + "'>" +
+                                         "<input type='hidden' name='answerContents' id='answerContents'></form>";
                                          
                                 console.log(detail);
 
@@ -605,10 +606,19 @@
         
         <script>
 		function deleteQNA() { // 서블릿 만들기
-    		$("#detailForm").attr("action", "<%= contextPath%>/deleteQNA.adm");
-    		$("#detailForm").submit();
+    		$("#detailForm1").attr("action", "<%= contextPath%>/deleteQNA.adm");
+    		$("#detailForm1").submit();
     		alert("성공적으로 삭제되었습니다.");
     	}
+		
+		function answerQNA() {
+			$("#answerContents").val($("#answer").val());
+			$("#detailForm1").attr("action", "<%= contextPath%>/answerQNA.adm");
+    		$("#detailForm1").submit();
+    		alert("답변이 성공적으로 등록되었습니다.");
+			
+		}
+		
     	
 		</script>
         

@@ -626,22 +626,38 @@
           	           		var detail = "";
 
           	           		detail += "<h4 class='board_detail_title'>게시물 상세보기</h4>" +
-          	           				  "<p style='margin-left:5%; font-family:" + "'Noto Serif KR', serif;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
-          	           				  "<div class='board_detail_contents'></div>" +
+          	           				  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
+          	           				  "<div class='board_detail_contents'>actual</div>" +
           	           				  "<div class='board_detail_contents'>" + 
           	           				  "<table class='sortable table' style='width:100%; height:100%;'>" + 
-          	           				  "<th colspan='1'>글번호</th><td colspan='1'>" + result.articleNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
-                                       "<tr><th colspan='1'>선호스타일</th><td colspan='3'>" + result.likeStyle + "</td></tr>" +
-                                       "<tr><th colspan='1'>찜수</th><td colspan='1'>" + result.ariticleLikes + "</td><th colspan='1'>조회수</th><td colspan='1'>" + result.articleViews + "</td></tr>" +
-                                       "<tr><th colspan='1'>작성일</th><td colspan='1'>" + result.articleDate + "</td><th colspan='1'>등록여부</th><td colspan='1'>" + result.status + "</td></tr>" + 
-                                       "<tr><th colspan='1'>내용</th><td colspan='3'>" + result.articleContents + "</td></tr>" + 
+          	           				  
+          	           				  	"<tr><th colspan='1' style='vertical-align:middle;'>글번호</th>" + 
+          	           				  	"<td colspan='1' style='vertical-align:middle;'>" + result.articleNo + "</td>" + 
+          	           				  	"<th colspan='1' style='vertical-align:middle;'>닉네임</th>" + 
+          	           				  	"<td colspan='1' style='vertical-align:middle;'>" + result.memberNick + "</td></tr>" +
+          	           				  	
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>선호스타일</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.likeStyle + "</td></tr>" +
+                                       	
+                                       	/* "<tr><th colspan='1' style='vertical-align:middle;'>찜수</th>" + 
+                                       	"<td colspan='1' style='vertical-align:middle;'>" + result.articleLikes + "</td>" + 
+                                       	"<th colspan='1' style='vertical-align:middle;'>조회수</th>" + 
+                                       	"<td colspan='1' style='vertical-align:middle;>" + result.articleLikes + "</td></tr>" + */
+                                       	
+                                       	/* "<tr><th colspan='1' style='vertical-align:middle;'>작성일</th>" + 
+                                       	"<td colspan='1' style='vertical-align:middle;'>" + result.articleDate + "</td>" + 
+                                       	"<th colspan='1' style='vertical-align:middle;'>등록여부</th>" + 
+                                       	"<td colspan='1' style='vertical-align:middle; >" + result.status + "</td></tr>" +  */
+                                       	
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>내용</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.articleContents + "</td></tr>" + 
+                                       	
                                        "</table></div>" +
-                                   	   // "<div>댓글 : </div>" : 댓글은 어떻게 넣지?	
-                                       "<div class='btnArea'><button type='button' id='delete_board_btn' style='margin-right : 5%;' onclick='deleteBoard();'>게시물삭제</button>" +
-                                       "<button type='button' id='delete_comment_btn' style='margin-right : 2%;' onclick='deleteBoardComment();'>댓글삭제</button></div>" + 
+                                       "<div class='btnArea'><button type='button' id='delete_board_btn' style='margin-right : 5%;' onclick='deleteBoard();'>게시물삭제</button></div>" +
+                                       
                                        "<form action='' id='detailForm' method='post'><input type='hidden' name='articleNo' value='"+result.articleNo+"'></form>";                                       
                               
-                                       // console.log(detail);
+                                       console.log(result.articleViews);
 
           	           		$("#board_detail").html(detail);
           	           		
@@ -714,11 +730,6 @@
     		alert("성공적으로 삭제되었습니다.");
     	}
     	
-		// 어떻게 하지?ㅋㅋㅋㅋㅋㅋ
-    	function deletBoardComment(){
-    		$("#detailForm").attr("action", "<%= contextPath%>/delete.comment"); 
-    		$("#detailForm").submit();
-    	}
 		</script>
      
     </div>

@@ -408,7 +408,7 @@
         <hr><br><br>
         <div class="member_box">
             <h4 class="table_title">회원 정보 목록</h4>
-            <p style="margin-left:5%; font-family : 'Noto Serif KR', serif;">상세보기를 원하는 회원을 클릭하면, 하단에 해당하는 회원의 상세정보를 볼 수 있습니다.</p>
+            <p style="margin-left:5%; font-family : 'Noto Serif KR', serif;">회원정보를 클릭하면, 하단에 해당하는 회원의 상세정보를 볼 수 있습니다.</p>
             <!-- 테이블 정렬 드롭박스 -->
             <div class="sorting_box">
                 <select id="sortCondition" name="sortCondition" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
@@ -616,7 +616,7 @@
          	           		var detail = "";
 
          	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
-          				  			  "<p style='margin-left:5%; font-family : 'Noto Serif KR', serif;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
+          				  			  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
          	           			      "<div class='member_profile_box'>" + 
          	           			      	"<div id='member_photo_wrapper'>" + 
          	           			      		"<img id='member_photo' src='" + result.profile + "'></div></div>" +
@@ -783,6 +783,7 @@
     	function updateMember(){
     		$("#detailForm").attr("action", "<%= contextPath%>/updateForm.member"); 
     		$("#detailForm").submit();
+    		alert("성공적으로 수정되었습니다.");
     	}
 		</script>
   

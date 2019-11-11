@@ -35,10 +35,11 @@ public class AdmUpdateShopServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
 		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
-		
-		System.out.println(shopNo);
-		
+		// System.out.println("shopNo="+shopNo); // 5
+			
 		Shop shop = new Shop();
 		
 		shop.setShopNo(shopNo);
@@ -49,31 +50,40 @@ public class AdmUpdateShopServlet extends HttpServlet {
 		shop.setShopPIC(request.getParameter("shopPIC"));
 		shop.setShopContact(request.getParameter("shopContact"));
 		
-		// shop.setContractDate(request.getParameter("contractDate"));
-		// shop.setExpireDate(request.getParameter("expireDate"));
-
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
-		Date cdate = null;
-		Date edate = null;
+		Date cdate = new Date();
+		Date edate = new Date();
+		
+		// String cd = request.getParameter("contractDate");
+		// String ed = request.getParameter("expireDate");	
+		// System.out.println("cd="+cd);
+		// System.out.println("ed="+ed);
 		
 		try {
 			cdate = dt.parse(request.getParameter("contractDate"));
 			edate = dt.parse(request.getParameter("expireDate"));
+			
+			// System.out.println("cdate="+cdate);
+			// System.out.println("edate="+edate);
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
 		shop.setContractDate(cdate);
-		shop.setContractDate(edate);
+		shop.setExpireDate(edate);
 		
+		System.out.println("shop="+shop);
 		
 		int result = new AdmService().updateShop(shop);
+		System.out.println("result="+result);
 		
 		if(result > 0) {
-			request.setAttribute("shopNo", shopNo);
-			request.getRequestDispatcher("shop.adm").forward(request, response);
+			// request.setAttribute("shopNo", shopNo);
+			// request.getRequestDispatcher("shop.adm").forward(request, response);
+			response.sendRedirect("shop.adm");
 		}else {
-			request.setAttribute("msg", "쇼핑몰 등급 수정에 실패했습니다.");
+			// request.setAttribute("msg", "쇼핑몰 정보 수정에 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

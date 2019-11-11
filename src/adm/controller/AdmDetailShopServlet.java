@@ -49,7 +49,7 @@ public class AdmDetailShopServlet extends HttpServlet {
 			response.setContentType("application/json; charset=UTF-8");
 			new Gson().toJson(s, response.getWriter());
 		} else {
-			request.setAttribute("msg", "세부 내용 읽기에 실패하셨습니다.");
+			// request.setAttribute("msg", "세부 내용 읽기에 실패하셨습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		

@@ -125,15 +125,16 @@
           padding: 10px;
       }
 
-      ul.category li a {
+      ul.category li {
           margin:auto;
           color: black;
           font-family: 'Do Hyeon', sans-serif; 
-          font-size: 25px; 
+          font-size: 30px; 
       }
 
-      ul.category li a:hover {
-          font-weight: bold;
+      ul.category li:hover {
+          /* font-weight: bold; */
+          text-decoration : underline;
           font-style: italic;
       }
 
@@ -154,9 +155,7 @@
       }
 
       #content_title {
-          /* font-family: 'Do Hyeon', sans-serif; */
-          font-family : 'Noto Serif KR', serif;
-          font-weight : 700; 
+          font-family: 'Do Hyeon', sans-serif;
           font-size: 40px; 
           margin : 0;
       }
@@ -202,7 +201,7 @@
 		}
 		
 		.btnArea {
-			margin-right : 18%;
+			margin-right : 30%;
 			margin-top : 3%;
 			margin-botton : 10%;
 			width : 50%;
@@ -277,7 +276,7 @@
     <div class="line"></div>
     <div class="content">
         <div id="content_title_wrapper">
-            <h2 id="content_title"> &nbsp;&nbsp;쇼핑몰 정보 수정 페이지</h2>
+            <h2 id="content_title"> &nbsp;&nbsp;쇼핑몰 정보수정 페이지</h2>
         </div>
         <hr>
         
@@ -286,42 +285,42 @@
             <br>
             <form class="content_box" action="<%= contextPath %>/update.shop" method="post">    
               	
-              	<table>
+              	<table style="font-family : 'Noto Serif KR', serif;">
               			<tr>
               				<th>회사번호</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopNo() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopNo" value="<%= shop.getShopNo() %>"></td>
 						</tr>
 						<tr>
               				<th>회사명</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopName() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopName" value="<%= shop.getShopName() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약상태</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getStatus() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="status" value="<%= shop.getStatus() %>"></td>
               			</tr>
               			<tr>	
               				<th>등급</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopGradeCode() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopGradeCode" value="<%= shop.getShopGradeCode() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약시작일</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getContractDate() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="contractDate" value="<%= shop.getContractDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약만료일</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getExpireDate() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="expireDate" value="<%= shop.getExpireDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약금</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getContractMoney() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="contractMoney" value="<%= shop.getContractMoney() %>"></td>
               			</tr>
               			<tr>	
               				<th>담당자</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopPIC() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopPIC" value="<%= shop.getShopPIC() %>"></td>
               			</tr>		
               			<tr>
               				<th>연락처</th>
-              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopContact() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopContact" value="<%= shop.getShopContact() %>"></td>
               			</tr>
               	</table>
                	<div class='btnArea' align="center">
