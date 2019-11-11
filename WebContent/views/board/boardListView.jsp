@@ -240,6 +240,7 @@ img:hover {
   background-color: #fff;
   border: 5px solid #3571B5;
   z-index: 10;
+  
 }
 
 .dim-layer {
