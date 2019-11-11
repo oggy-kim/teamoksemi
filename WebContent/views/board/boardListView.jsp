@@ -389,6 +389,7 @@ a.btn-layerClose:hover {
 			</div>
 			<div class="layer" style="height: 10px;">
 			<a href="#layer2" class="btn-example">★게시글 이용시 주의사항★</a>
+			
 			<div class="dim-layer">
 				<div class="dimBg"></div>
 				<div id="layer2" class="pop-layer">
