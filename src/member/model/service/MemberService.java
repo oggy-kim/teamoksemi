@@ -67,7 +67,30 @@ public class MemberService {
 
 		return result;
 	}
-
+	public int updateMember(int memberNo, String memberPwd, int birthYear, String memberNick, String likeStyle) {
+		Connection conn = getConnection(); 
+		
+		int result = new MemberDao().updateMember(conn, memberNo, memberPwd, birthYear, memberNick, likeStyle);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	// 닉네임 중복 확인
+	public int checkDuplicate(String memberNick) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().checkDuplicate(conn, memberNick);
+		
+		close(conn);
+		
+		return result;
+	}
 	public int nickcheck(String nickname) {
 		Connection conn = getConnection();
 		
@@ -120,5 +143,4 @@ public class MemberService {
 		      
 		      return updateMember;
 		   }
-
 }

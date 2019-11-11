@@ -1,28 +1,25 @@
-package board.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.service.BoardService;
-import member.model.vo.Member;
+import member.model.service.MemberService;
 
 /**
- * Servlet implementation class DeleteWishServlet
+ * Servlet implementation class MemberCheckDuplicateServlet
  */
-@WebServlet("/deletewish.look")
-public class DeleteWishServlet extends HttpServlet {
+@WebServlet(name="MemberCheckDuplicateServlet", urlPatterns="/memberduplicate.look")
+public class MemberCheckDuplicateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteWishServlet() {
+    public MemberCheckDuplicateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +30,10 @@ public class DeleteWishServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		Member m = (Member) request.getSession().getAttribute("loginUser");
+		String memberNick = request.getParameter("memberNick");
 		
-		//int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-		/*String wishDate = request.getParameter("wishDate");
-		String wishMemo = request.getParameter("wishMemo");*/
-		
-		String[] arr = request.getParameterValues("delete");
-		
-		int aNo = m.getMemberNo();
-		
-		//int result = new BoardService().deleteWish(aNo, arr);
-		
-		if(result > 0) {
-			response.sendRedirect("wishlist.look");
-		} else {
-			request.setAttribute("msg", "게시물 삭제에 실패했습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		int result = new MemberService().checkDuplicate(memberNick);
+		response.getWriter().print(result);
 	}
 
 	/**

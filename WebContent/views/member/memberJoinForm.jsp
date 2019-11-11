@@ -219,6 +219,22 @@ span {
 		</div>
 	</section>
 	<script>
+    var userNick = $("#userNick").val();
+    $.ajax({
+      url: "/checkoverlap.look",
+      data: {memberNick : $("#userNick").val()},
+      type: "post",
+      dataType: "int",
+      success: function(result){
+
+      },
+      error: function() {
+        console.log("통신실패");
+      }
+
+    });
+
+
 	// 2. 유효성 검사
 		
 	function joinValidate() {

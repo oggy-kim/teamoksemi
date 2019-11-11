@@ -129,6 +129,37 @@ public class ClosetDao {
 		
 		return count;
 	}
+	
+	// 새옷 추가 dao
+	public int addNewCloth(Connection conn, Closet c) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("addNewCloth");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getMemberNo());
+			pstmt.setString(2, c.getTypeCode());
+			pstmt.setString(3, c.getStyleCode());
+			pstmt.setString(4, c.getColourCode());
+			pstmt.setString(5, c.getFitCode());
+			pstmt.setString(6, c.getSeasonCode());
+			pstmt.setString(7, c.getClothName());
+			// java.util.Date --> java.sql.Date
+			java.sql.Date sqlDate = new java.sql.Date(c.getClothBuyDate().getTime());
+			pstmt.setDate(8, sqlDate);
+			pstmt.setString(9, c.getClothMemo());
+			pstmt.setString(10, c.getLikeStatus());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 	public ArrayList<Closet> recommendWinter(Connection conn, int memberNo) {
 		PreparedStatement pstmt = null;
