@@ -43,7 +43,7 @@ public class DeleteWishServlet extends HttpServlet {
 		
 		int aNo = m.getMemberNo();
 		
-		int result = new BoardService().deleteWish(aNo, arr);
+		//int result = new BoardService().deleteWish(aNo, arr);
 		
 		if(result > 0) {
 			response.sendRedirect("wishlist.look");

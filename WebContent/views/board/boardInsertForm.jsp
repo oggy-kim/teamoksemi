@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
 	Member m = (Member)session.getAttribute("loginUser");
 	String gradeCode = m.getGradeCode();
+	Board board = (Board)request.getAttribute("board");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,6 +13,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+    
     <style>
 
 <style>
@@ -98,8 +100,8 @@ body {
         }
         
         #titleImgArea {
-			width:350px;
-			height:200px;
+			width:220px;
+			height:260px;
 			border:2px dashed darkgray;
 			text-align:center;
 			display:table-cell;
@@ -128,24 +130,35 @@ body {
 			</div>
 			<br>
 	<br><br>
+	<!-- <div id="summernote"></div>
+  <script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            tabsize: 2,
+            height: 200,
+           	width: 900
+        });
+    }); -->
+  </script>
 	<section>
 		<div class="outer">
 			<br>
 			
 			<form action="<%= contextPath %>/boardinsert.look" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="memberno" value=<%= loginUser.getMemberNo() %>>
 				<div class="insertArea">
 					<table align="center">
 						<tr>
 							<td>사진</td>
 							<td colspan="2">
 								<div id="titleImgArea">
-									<img id="titleImg" width="350" height="200">
+									<img id="titleImg" width="220" height="260" name="titleImg">
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td width="100px">내용</td>
-							<td colspan="2"><textarea name="content" rows="5" cols="30" style="resize:none;"></textarea>
+							<td colspan="2"><input type="text" placeholder="내용을 입력하세요." style="text-align:center; width:200px; height:50px; letter-spacing: -2px" name="content">
 						</tr>
 					</table>
 					
@@ -155,10 +168,10 @@ body {
 					
 					<script>
 					$(function(){
-						$("fileArea").hide();
+						$("#fileArea").hide();
 						
 						$("#titleImgArea").click(function(){
-							$("thumbnailImg").click();
+							$("#thumbnailImg").click();
 						});
 					});
 
@@ -168,10 +181,14 @@ body {
 							
 							reader.onload = function(e){
 								
-								$("#titleImg").attr("src", e.target.result);
+								switch(num){
+								case 1 : 
+									$("#titleImg").attr("src", e.target.result);
+									break;
+								}
 								
-								reader.readAsDataURL(value.files[0]);
 							}
+							reader.readAsDataURL(value.files[0]);
 						}
 					}
 					
@@ -192,11 +209,11 @@ body {
 </footer>
 <script>
 function goStyle() {
-	location.href="<%= contextPath %>/list.bo";
+	location.href="<%= contextPath %>/boardlist.look";
 }
 
 function goFavorite() {
-	location.href="<%= contextPath %>/list.fa";
+	location.href="<%= contextPath %>/wishlist.look";
 }
 
 function goEvent() {s

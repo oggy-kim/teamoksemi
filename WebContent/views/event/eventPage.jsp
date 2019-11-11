@@ -144,10 +144,20 @@
           border-radius: 5px;
         }
 
-        h4 {
+        #caption {
           font-family: 'Do Hyeon', sans-serif;
           font-weight: bold;
-          text-align: center;
+          text-align: left;
+          margin:0 0 0 20px;
+          font-size:30px;
+        }
+        
+        #caption1 {
+          font-family: 'Do Hyeon', sans-serif;
+          font-weight: bold;
+          text-align: left;
+          margin:0 0 0 20px;
+          font-size:20px;
         }
 
 
@@ -172,36 +182,36 @@
     <div class="eventArea">
       <div class="eventArea1">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="https://www.styleshare.kr/catalogs/6914" target="_blank"><img src="<%= contextPath %>/resources/images/style1.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/6914" target="_blank"><img src="<%= contextPath %>/resources/images/banner/styleshare.jpg" class="card-img-top" height="350" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
-            <p class="card-text"><h4>Only LOOK SO FINE</h4><br><h4>LOOK SO FINE 단독행사</h4></p>
+            <p class="card-text"><h4 id="caption">Only LOOK SO FINE</h4><br><p id="caption1">LOOK SO FINE 단독행사</p></p>
           </div>
         </div>
       </div>
       <br><br>
       <div class="eventArea2">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="https://www.styleshare.kr/catalogs/9197" target="_blank"><img src="<%= contextPath %>/resources/images/style2.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://store.musinsa.com/app/plan/views/8069" target="_blank"><img src="<%= contextPath %>/resources/images/banner/musinsa.jpg" class="card-img-top" height="350" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
-            <p class="card-text"><h4>온라인 단독으로 만나는</h4><br><h4>뉴발란스 퍼 아이템</h4></p>
+            <p class="card-text"><h4 id="caption">베스트 베이직 아이템 기획전</h4><br><p id="caption1">베스트 베이직 아이템 기획전입니다.</p></p>
           </div>
         </div>
       </div>
       <br>
       <div class="eventArea3">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="https://www.styleshare.kr/catalogs/9096" target="_blank"><img src="<%= contextPath %>/resources/images/style3.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://www.styleshare.kr/catalogs/9199" target="_blank"><img src="<%= contextPath %>/resources/images/banner/styleshare1.jpg" class="card-img-top" height="350" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
-            <p class="card-text"><h4>10.16 - 10.20</h4><br><h4>더 샘 빅세일! ~50% 할인</h4></p>
+            <p class="card-text"><h4 id="caption">아우터 스타일 쇼 - 위클리 특가</h4><br><p id="caption1">애플앤딥, 엘리오티, 프레이 등</p></p>
           </div>
         </div>
       </div>
       <br><br>
       <div class="eventArea4">
         <div class="card" style="width: 100%; height: 100%; border-radius: 5px;">
-          <a href="https://www.styleshare.kr/catalogs/9220" target="_blank"><img src="<%= contextPath %>/resources/images/style4.PNG" class="card-img-top" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
+          <a href="https://store.musinsa.com/app/plan/views/7997" target="_blank"><img src="<%= contextPath %>/resources/images/banner/musinsa1.jpg" class="card-img-top" height="350" style="border-top-left-radius: 5px; border-top-right-radius: 5px;"></a>
           <div class="card-body">
-            <p class="card-text"><h4>스파오 X 위 베어 베어스</h4><br><h4>사랑스러운 콜라보레이션</h4></p>
+            <p class="card-text"><h4 id="caption">SPAO X HARRYPOTER</h4><br><p id="caption1">스파오 X 해리포터 19 F/W 컬렉션</p></p>
           </div>
         </div>
       </div>

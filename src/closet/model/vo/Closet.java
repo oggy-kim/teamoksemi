@@ -40,6 +40,21 @@ public class Closet implements java.io.Serializable{
 		this.likeStatus = likeStatus;
 		this.changeDate = changeDate;
 	}
+	// 내 옷장에 옷추가용 Constructor
+	public Closet(int memberNo, String typeCode, String styleCode, String colourCode, String fitCode,
+			String seasonCode, String clothName, Date clothBuyDate, String clothMemo, String likeStatus) {
+		super();
+		this.memberNo = memberNo;
+		this.typeCode = typeCode;
+		this.styleCode = styleCode;
+		this.colourCode = colourCode;
+		this.fitCode = fitCode;
+		this.seasonCode = seasonCode;
+		this.clothName = clothName;
+		this.clothBuyDate = clothBuyDate;
+		this.clothMemo = clothMemo;
+		this.likeStatus = likeStatus;
+	}
 
 	public int getClothNo() {
 		return clothNo;

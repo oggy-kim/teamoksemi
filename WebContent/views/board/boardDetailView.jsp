@@ -6,6 +6,7 @@
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	
 	ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
+	Attachment at = (Attachment)request.getAttribute("at");
 	
 	String gradeCode = m.getGradeCode();
 	
@@ -25,11 +26,12 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gaegu|McLaren&display=swap" rel="stylesheet">
     <style>
 
         body {
           width : 100%;
-          height : 1600px;
+          height : 600px;
         }
 
          #navbar {
@@ -60,7 +62,10 @@
 
         section {
             width: 100%;
-            height: 1200px;
+            height: 600px;
+            font-family: 'McLaren', cursive;
+			font-family: 'Gaegu', cursive;
+			font-size: 18px;
         }
 
         hr {
@@ -70,13 +75,13 @@
         .btn {
             background: black;
             border: 1px solid white;
-            color: white;
+            color: white;ㅌ
             text-decoration: underline;
         }
 
         .copyRight {
           text-align: center;
-          padding: 100px 0;
+          padding: 50px 0;
         }
 
         .menuLine {
@@ -107,7 +112,7 @@
         .detail {
         	border:1px solid black;
         	width:1200px;
-			height:500px;
+			height:530px;
 			background:black;
 			color:white;
 			margin:auto;
@@ -134,7 +139,7 @@
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp"%>
-<nav>
+<!-- <nav>
   <br>
   <div class="menuLine">
   <div class="div div1"><hr></div>
@@ -145,13 +150,20 @@
   </div>
   <div class="div div3"><hr></div>
 </div>
-</nav>
-<br>
+</nav> -->
 <section>
 	<div class="detail">
+		<form action="<%= contextPath %>/wishinsert.look" method="post">
 		<div class="left" align="center">
-			<img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" width="350px" height="400px">
+			<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="350px" height="400px">
+		<br>
+		<input type="text" placeholder="간단한 메모를 작성하세요." rows="2" cols="50" name="memo">
+		<input id="aNo" type="hidden" name="aNo" value="<%= board.getArticleNo() %>">
+		<input id="memberno" type="hidden" name="memberno" value="<%= m.getMemberNo() %>">
+		<input id="likes" type="hidden" name="likes" value="<%= board.getArticleLikes() %>">
+		<button type="submit" id="jjim">찜하기</button>
 		</div>
+		</form>
 		<div class="right">
 		<br>
 			<div class="tableArea">
@@ -165,21 +177,17 @@
 				</table> --%>
 				<table align="center" width="550px">
 				<tr>
-					<td>게시글번호</td>
-					<td><span><%= board.getArticleNo() %></span></td>
+					<td>작성자</td>
+					<td><span><%= board.getMemberNick() %></span></td>
 					<td>찜수</td>
 					<td colspan="3"><span><%= board.getArticleLikes() %></span></td>
 				</tr>
 				<tr>
-					<td>작성자번호</td>
-					<td><span><%= board.getMemberNick() %></span></td>
+					
 					<td>조회수</td>
 					<td><span><%= board.getArticleViews() %></span></td>
 					<td>작성일</td>
 					<td><span><%= board.getArticleDate() %></span></td>
-				</tr>
-				<tr>
-					<td colspan="6">내용</td>
 				</tr>
 				<tr>
 					<td colspan="6"><p id="content"><%= board.getArticleContents() %></p></td>
@@ -190,11 +198,12 @@
 			<br><br>
 			
 			<div class="CommentArea">
+				<div class="CommentAjax">
 				<div id="CommentSelectArea">
 				<table id="CommentSelectTable" border="1" align="center">
 					<% if(rlist.isEmpty()) { %>
 						<tr>
-							<td colspan="2">조회된 목록이 없습니다.</td>
+							<td colspan="2">조회된 댓글목록이 없습니다.</td>
 						</tr>
 					<% } else { %>
 					<% for(BoardComment c : rlist) { %>
@@ -207,17 +216,17 @@
 				</table>
 				</div>
 				
-				<br><br>
+				<br>
 				
 				<div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
-                <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=1'"> &lt;&lt; </button>
+                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=1&aNo=<%= board.getArticleNo() %>'"> &lt;&lt; </button>
 
                 <!-- 이전 페이지로 (<) -->
                 <% if(currentPage == 1){ %>
                 <button disabled> &lt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage - 1 %>&aNo=<%= board.getArticleNo() %>'"> &lt; </button>
                 <% } %>
 
                 <!-- 10개의 페이지 목록 -->
@@ -225,7 +234,7 @@
                 <% if(p == currentPage){ %>
                 <button disabled> <%= p %> </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= p %>'"><%= p %></button>
+                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= p %>&aNo=<%= board.getArticleNo() %>'"><%= p %></button>
                 <% } %>
                 <% } %>
 
@@ -233,17 +242,18 @@
                 <% if(currentPage == maxPage){ %>
                 <button disabled> &gt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage + 1 %>&aNo=<%= board.getArticleNo() %>'"> &gt; </button>
                 <% } %>
 
                 <!-- 맨 끝으로 (>>) -->
-                <button onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= maxPage %>&aNo=<%= board.getArticleNo() %>'"> &gt;&gt; </button>
+            </div>
             </div>
 				
 				<div class="CommentWriterArea">
 					<table align="center">
 						<tr>
-							<td><textarea rows="3" cols="70" id="CommentContent"></textarea>
+							<td><textarea rows="3" cols="55" id="CommentContent"></textarea>
 							<td><button id="addComment">댓글등록</button>
 					</table>
 				</div>
@@ -266,7 +276,7 @@
 				success : function(data){
 					console.log(data);
 					
-					$CommentTable = $("CommentSelectTable");
+					$CommentTable = $("#CommentSelectTable");
 					$CommentTable.html("");
 					
 					for(var key in data){
@@ -309,6 +319,12 @@
 			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
 		}
 	}
+	
+	<%-- $(".articleno").click(function(){
+    	var aNo = $(this).attr('title');
+    	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
+    	
+    }); --%>
 </script>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>

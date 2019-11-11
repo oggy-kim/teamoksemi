@@ -28,7 +28,7 @@
           width:100%;
           height:60px;
           position:fixed;
-          z-index: 1;
+          z-index: 10;
           color:white;
           font-family: 'Fugaz One', cursive;
         }
@@ -37,7 +37,7 @@
           width: 100%;
           height:60px;
           position: fixed;
-          z-index: 1;
+          z-index: 10;
           background: white;
           opacity:0.8;
           font-family: 'Paytone One', sans-serif;
@@ -89,10 +89,10 @@
     <a class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</a>
     <%if (loginUser != null) {%>
       <form class="form-inline" action="<%= contextPath %>/search.look">
-      <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
-      <button class="btn btn-outline-success" id="search" my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; color:white; border: 1px solid white;" disabled>SEARCH</button>
-      <button type="button" class="btn btn-light" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
-    </form>
+	      <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
+	      <button class="btn btn-outline-success" id="search" my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; color:white; border: 1px solid white;" disabled>SEARCH</button>
+	      <button type="button" class="btn btn-light" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
+      </form>
     <% } %>
   </nav>
   <nav style="padding:60px 0;">
