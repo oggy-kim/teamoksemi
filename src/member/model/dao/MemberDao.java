@@ -340,7 +340,6 @@ public class MemberDao {
 		}
 		return result;
 	}
-
 	   public int resetPwd(Connection conn,  Member m) {
 		   PreparedStatement pstmt = null;
 		      int result = 0;
