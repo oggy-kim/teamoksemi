@@ -136,15 +136,15 @@
             padding: 10px;
         }
 
-        ul.category li a {
+        ul.category li {
             margin:auto;
             color: black;
-             font-family: 'Do Hyeon', sans-serif; 
-            font-size: 25px; 
+            font-family: 'Do Hyeon', sans-serif; 
+            font-size: 30px; 
         }
 
-        ul.category li a:hover {
-            font-weight: bold;
+        ul.category li:hover {
+            text-decoration: underline;
             font-style: italic;
         }
 
@@ -180,8 +180,11 @@
 
 
          /* -------------------- member -------------------- */
-
- 		/* Sortable tables */
+		
+		table {
+			text-align : center;
+		}
+		
 		table.sortable thead {
 		    background-color:#eee;
 		    color:#666666;
@@ -199,17 +202,9 @@
             width : 80%;
             height : auto;
         	overflow : hidden;
-            margin : 0 0 0 5%;
-            box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        }
-
-       /* #member_detail {
-        	visibility : hidden;
-            width : 80%;
-            height : 40%;
             margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        } */
+        }
         
 		#member_detail_box {
 			visibility : hidden;
@@ -226,50 +221,57 @@
             font-size : 15px;
         }
 
-         .table_title, .member_detail_title { /* 회원 정보 목록, 회원 정보 */
+         .table_title { /* 회원 정보 목록, 회원 정보 */
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 28px; 
         }
+        
+        .member_detail_title {
+			margin : 3% 0 0 5%;
+            padding : 2% 0 0 0;
+            font-family: 'Do Hyeon', sans-serif; 
+            font-size: 28px;        
+        }
 
-        /* #member_detail_wrapper {
+        #member_detail_wrapper {
             width : 95%;
             height : 25%;
             margin : 5% auto;
-        } */
+        }
 
-        /* .member_profile_box {
+        .member_profile_box {
             width : 20%;
             height : 100%;
             display : inline-block;
             border : 1px solid black;
             margin : 0 3%;
-        } */
+        }
 
-        /* #member_photo_wrapper {
+        #member_photo_wrapper {
             margin : 5%;
             float : left;
             width : 90%;
             height : 90%;
-        } */
+        }
 
-        /* #member_photo {
+        #member_photo {
             width : 100%;
             height : 100%;
-        } */
+        }
 
-        /* .member_detail_1, .member_detail_2 {
+        .member_detail_1, .member_detail_2 {
             width : 30%;
             height : 100%;
             margin : 0 1%;
             display : inline-block;
-        } */
+        }
 
-        /* #member_detail_table_1, #member_detail_table_2 {
+        #member_detail_table_1, #member_detail_table_2 {
             height : 100%;
             width : 100%;
-        } */
+        }
 
         /* #caption {
             caption-side:top;
@@ -277,13 +279,22 @@
             color : black;
         } */
 
-        /* .member_detail_table td {
+        .member_detail_table td {
             padding : 0 2% 0 2%;
             border : 1px solid black;
             height : 15%;
-        } */
+        }
 
         /*-- 등급관리, 회원삭제 버튼 --*/
+
+		.btnArea {
+			margin-right : 5%;
+			margin-top : 3%;
+			margin-botton : 10%;
+			width : 25%;
+			/* border : 1px solid black; */
+			float : right;
+		}
 
         #update_btn, #delete_btn {
             float : right;
@@ -296,9 +307,9 @@
         /* -------search--------- */
 
         .searchArea {
-            width:60%;
-            margin-left:30%;
-            margin-bottom:5%;
+            width : 60%;
+            margin-left : 30%;
+            margin-bottom : 5%;
         } 
         
         #searchBtn{
@@ -387,6 +398,7 @@
         <hr><br><br>
         <div class="member_box">
             <h4 class="table_title">회원 정보 목록</h4>
+            <p style="margin-left:5%;">상세보기를 원하는 회원을 클릭하면, 하단에 해당하는 회원의 상세정보를 볼 수 있습니다.</p>
             <!-- 테이블 정렬 드롭박스 -->
             <div class="sorting_box">
                 <select id="sortCondition" name="sortCondition" style="display:inline-block;">
@@ -472,10 +484,86 @@
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
         </div>
-
         <br><br> 
-       	<script>
-            	
+
+        	
+      <div class="member_detail_box" id="member_detail_box">
+          <h4 class="member_detail_title">회원 상세 정보</h4>
+        
+             <!-- 해당 회원의 작성한 게시물 테이블 -->
+            <div class="member_detail_3">
+                <table class="table" id="member_board_table">
+                    <caption id="caption">작성한 게시물</caption>
+                    <thead id="member_board_table1">
+                    <tr>
+                    	<th>번호</th>
+                    	<th>내용</th>
+                        <th>게시일자</th>
+                        <th>조회수</th>
+                        <th>찜수</th>
+                    </tr>
+                    </thead>
+                    <tbody id="member_board_table2">
+                <% if(list == null){ %>
+	               		<tr>
+	                		<td colspan="5">작성된 게시글이 없습니다.</td>
+	                	<tr>
+                	<% } else { %>
+                	<% for(Board b : list){ %>    
+ 					<tr>
+	 					<td><%= b.getArticleNo() %></td>
+						<td><%= b.getArticleContents() %></td>
+	                    <td><%= b.getArticleDate() %></td>
+	                    <td><%= b.getArticleLikes() %></td>
+	                    <td><%= b.getArticleViews() %></td>          
+                	</tr>
+                <% } %>
+                <% } %> 
+                </tbody>  
+                </table>
+            </div>    
+                <!-- 페이지네이션 추가--> 
+	       	 <div class="pagingArea" align="center">
+               <!-- 맨 처음으로 (<<) -->
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=1'"> &lt;&lt; </button>
+
+               <!-- 이전 페이지로 (<) -->
+               <% if(currentPage == 1){ %>
+               <button disabled> &lt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+               <% } %>
+
+               <!-- 10개의 페이지 목록 -->
+               <% for(int p = startPage; p <= endPage; p++){ %>
+               <% if(p == currentPage){ %>
+               <button disabled> <%= p %> </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= p %>'"><%= p %></button>
+               <% } %>
+               <% } %>
+
+               <!-- 다음 페이지로 (>) -->
+               <% if(currentPage == maxPage){ %>
+               <button disabled> &gt; </button>
+               <% } else { %>
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+               <% } %>
+
+               <!-- 맨 끝으로 (>>) -->
+               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+           </div>   
+                                  
+		<div class='btnArea' style='display:inline-block; width:100px;'>
+			<button type='button' id='delete_btn' style='margin-right : 5%;' onclick='deleteMember();'>회원삭제</button>
+          	<button type='button' id='update_btn' style='margin-right : 2%;' onclick='updateMember();'>회원수정</button>
+         </div> 
+         <form action='' id='detailForm' method='post'>
+         	<input type='hidden' name='memberNo' value='memberNo'>
+         </form>
+  	  	</div>
+
+       	<script>            	
            // 동적 대상 function 주기
           	$(function(){ 
           		$(document).on('mouseenter', '#member_table2 td', function(){
@@ -503,9 +591,9 @@
            				$tableBody.html(""); // 테이블 초기화
            			
            				for(var key in data){
-                 				var $tr = $("<tr>");
+                 			var $tr = $("<tr>");
    							var $noTd = $("<td>").text(data[key].memberNo);
-                 				var $idTd = $("<td>").text(data[key].memberId);
+                 			var $idTd = $("<td>").text(data[key].memberId);
    							var $nickTd = $("<td>").text(data[key].memberNick);
    							var $codeTd = $("<td>").text(data[key].gradeCode);
    							var $entdTd = $("<td>").text(data[key].entryDate);	
@@ -532,7 +620,7 @@
          		$(document).on('click', '#member_table2 td', function(){
          			        	
                      var memberNo = $(this).parent().children("#mNo").html();
-                     console.log("memberNo="+memberNo); // ok
+                     // console.log("memberNo="+memberNo); // ok
                      
                      $.ajax({
                          url: "<%= contextPath %>/detailMember.adm",
@@ -540,40 +628,122 @@
                          type: "get",
                          dataType: "json",
                          success : function(result){ 
-         					console.log("ajax 연동성공");
-         					console.log("result="+result);
+         					console.log("상세보기_ajax 연동성공");
+
                          	$("#member_detail_box").css({"visibility":"visible"});
 
          	           		var detail = "";
 
-         	           		detail += "<div id='member_detail_contents'><div>회원번호 : " + result.memberNo + "</div>" +
-                                      "<div>회원등급 : " + result.gradeCode + "</div>" +
-                                      "<div>회원아이디 : " + result.memberId + "</div>" +
-                                      "<div>회원닉네임 : " + result.memberNick + "</div>" + 
-                                      "<div>성별 : " + result.gender + "</div>" +
-                                      "<div>프로필사진 : " + result.profile + "</div>" +
-                                      "<div>선호스타일 : " + result.likeStyle + "</div>" +
-                                      "<div>출생년도 : " + result.birthYear + "</div>" +
-                                      "<div>가입날짜 : " + result.entryDate + "</div>" +
-                                      "<div>현황 : " + result.memberStatus + "</div>" +
-                                      "<div class='btnArea'><button type='button' id='delete_btn' style='margin-right : 5%;' onclick='deleteMember();'>회원삭제</button>" +
-                                      "<button type='button' id='update_btn' style='margin-right : 2%;' onclick='updateMember();'>회원수정</button></div>" + 
-                                      "<form action='' id='detailForm' method='post'><input type='hidden' name='memberNo' value='"+result.memberNo+"'></form>";
+         	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
+          				  			  "<p style='margin-left:5%;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
+         	           			      "<div class='member_profile_box'>" + 
+         	           			      	"<div id='member_photo_wrapper'>" + 
+         	           			      		"<img id='member_photo' src='" + result.profile <%-- <%= contextPath %>/resources/images/member/1.jpg --%> + "'></div></div>" +
+         	           				  "<div class='member_detail_1'><table class='table-condensed' id='member_detail_table_1'><tr><th>회원번호 </th><td>" + result.memberNo + "</td></tr>" +
+                                      "<tr><th>회원아이디</th><td>" + result.memberId + "</td></tr>" +
+	                                  "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" + 
+                                      "<tr><th>성별</th><td>" + result.gender + "</td></tr>" +
+                                      "<tr><th>회원등급</th><td>" + result.gradeCode + "</td></tr></table></div>" +
+                                      "<div class='member_detail_2'><table class='table_condensed' id='member_detail_table_2'><tr><th>출생년도</th><td>" + result.birthYear + "</td></tr>" +
+                                      "<tr><th>선호스타일</th><td>" + result.likeStyle + "</td></tr>" +
+                                      "<tr><th>가입날짜</th><td>" + result.entryDate + "</td></tr>" +
+                                      "<tr><th>현황 </th><td>" + result.memberStatus + "</td></tr><tr><th>최근접속일</th><td>구현안함</td></tr></table></div>" +
+                                      "</section>";
                                       
-                            console.log("detail="+detail);
+                            // console.log("detail="+detail);
 
          	           		$("#member_detail_box").html(detail);
          	           		
          	           		// console.log($('#member_detail').html());
                          },
                          error: function() {
-                             console.log("ajax 연동실패");
+                             console.log("상세보기_ajax 연동실패");
                          }
                      });
-                 });
-             });
+                     
+                 }).on('click', '#member_table2 td', function(){
 
-          // 검색하기
+              		var memberNo = $(this).parent().children("#mNo").html();
+             		console.log("memberNo="+memberNo);
+              		
+             		$.ajax({
+             			url : "<%= contextPath %>/detailMboard.adm",
+             			type : "post",
+             			dataType : "json",
+             			data : {memberNo:memberNo},// key:value 
+             			success : function(data){
+             				console.log('작성한글리스트_성공');
+             				var $tableBody = $("#member_board_table");
+
+             				$tableBody.html(""); // 테이블 초기화
+    				   			
+             				for(var key in data){
+                   				var $tr = $("<tr>");
+     							var $aNo = $("<td>").text(data[key].articleNo);
+                   				var $aCont = $("<td>").text(data[key].articleContents);
+     							var $aDate = $("<td>").text(data[key].articleDate);
+     							var $aView = $("<td>").text(data[key].articleViews);
+     							var $aLike = $("<td>").text(data[key].articleLikes);	
+     							
+     							$tr.append($aNo);
+     							$tr.append($aCont);
+     							$tr.append($aDate);
+     							$tr.append($aView);
+     							$tr.append($aLike);
+     							
+     							$tableBody.append($tr);
+             				}
+             				
+             			},
+             			error : function(){
+             				console.log('작성한글_실패');
+             			}                	 
+                 });
+             		
+             });
+          
+          }); 		
+          // 상세보기 회원이 작성한 글 리스트 보기 
+<%--        		$("#member_board_table").click(function(){
+         		var memberNo = $("member_table2 td").parent().children("#mNo").html();
+         		
+         		$.ajax({
+         			url : "<%= contextPath %>/detailMboard.adm",
+         			type : "post",
+         			dataType : "json",
+         			data : {memberNo:memberNo},// key:value 
+         			success : function(data){
+         				console.log('작성한글리스트_성공');
+         				var $tableBody = $("#member_board_table");
+
+         				$tableBody.html(""); // 테이블 초기화
+				   			
+         				for(var key in data){
+               				var $tr = $("<tr>");
+ 							var $aNo = $("<td>").text(data[key].articleNo);
+               				var $aCont = $("<td>").text(data[key].articleContents);
+ 							var $aDate = $("<td>").text(data[key].articleDate);
+ 							var $aView = $("<td>").text(data[key].articleViews);
+ 							var $aLike = $("<td>").text(data[key].articleLikes);	
+ 							
+ 							$tr.append($aNo);
+ 							$tr.append($aCont);
+ 							$tr.append($aDate);
+ 							$tr.append($aView);
+ 							$tr.append($aLike);
+ 							
+ 							$tableBody.append($tr);
+         				}
+         				
+         			},
+         			error : function(){
+         				console.log('작성한글_실패');
+         			}
+         		});
+         	});
+ --%>           
+
+        // 검색하기
       	$(function(){
      			$(document).on('click', "#searchBtn", function(){
      				var sort = $("#searchCondition").val();
@@ -619,59 +789,20 @@
      		});
      		});
         	
-          	</script>
+        </script>
           	
        	<script>
-				function deleteMember() {
+		function deleteMember() {
     		$("#detailForm").attr("action", "<%= contextPath%>/delete.member");
     		$("#detailForm").submit();
      		alert("성공적으로 삭제되었습니다.");
     	}
     	
-    			function updateMember(){
+    	function updateMember(){
     		$("#detailForm").attr("action", "<%= contextPath%>/updateForm.member"); 
     		$("#detailForm").submit();
     	}
 		</script>
-          	
-      <div class="member_detail_box" id="member_detail_box">
-          <h4 class="member_detail_title">회원 상세 정보</h4>
-             <!-- 해당 회원의 작성한 게시물 테이블 -->
-            <div class="member_detail_3">
-                <table class="table" id="member_board_table">
-                    <caption id="caption">작성한 게시물</caption>
-                    <thead id="member_board_table1">
-                    <tr>
-                    	<th>번호</th>
-                        <th>게시사진</th>
-                        <th>게시일자</th>
-                        <th>조회수</th>
-                        <th>찜수</th>
-                        <!-- <th>댓글수</th> -->
-                    </tr>
-                    </thead>
-                    <tbody id="member_board_table2">
-                <%-- 	<% if(list == null){ %>
-	               		<tr>
-	                		<td colspan="5">작성된 게시글이 없습니다.</td>
-	                	<tr>
-                	<% } else { %>
-                	<% for(Board b : list){ %>    
- 					<tr>
-	 					<td><%= b.getArticleNo() %></td>
-	                    <td></td>
-	                    <td><%= b.getArticleDate() %></td>
-	                    <td><%= b.getArticleViews() %></td>
-	                    <td><%= b.getArticleLikes() %></td>
-	                    <td><%= b.getArticleLikes() %></td>
-	                     <!-- 댓글수 -->           
-                	</tr>
-                <% } %>
-                <% } %> --%>
-                </tbody>  
-                </table> 
-                <!-- 페이지네이션 추가--> 
-  	  </div>
   
   	</div>
  </section>
