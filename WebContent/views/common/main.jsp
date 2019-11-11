@@ -44,13 +44,13 @@
         }
 
         .mainImgArea{
-            width: 80%;
+            width: 75%;
             height: 100%;
             float: left;
         }
 
         .weatherArea {
-            width: 20%;
+            width: 25%;
             height: 100%;
             float: left;
             color: white;
