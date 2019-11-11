@@ -75,7 +75,7 @@
         .btn {
             background: black;
             border: 1px solid white;
-            color: white;
+            color: white;ㅌ
             text-decoration: underline;
         }
 

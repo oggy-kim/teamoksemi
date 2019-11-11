@@ -46,7 +46,7 @@ public class AdmSortQnAServlet extends HttpServlet {
 			sortId = 2;
 		} else if (sort.equals("newest_date")) {
 			sortId = 3;
-		}
+		} 
 		
 		System.out.println(sortId);
 		

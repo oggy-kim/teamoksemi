@@ -78,6 +78,9 @@ public class BoardDao {
                                    rset.getInt(6), rset.getString(7), rset.getDate(9),
                                    rset.getString(8)));
             }
+            
+            // System.out.println("list="+list); ok
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -110,7 +113,7 @@ public class BoardDao {
 
             while(rset.next()) {
                 list.add(new QnA(rset.getInt(2), rset.getInt(3), rset.getDate(5),
-                                   rset.getString(6), rset.getString(7), rset.getString(8).charAt(0),
+                                   rset.getString(6), rset.getString(7), rset.getString(8),
                                    rset.getString(9)));
             }
         } catch (SQLException e) {
@@ -184,7 +187,7 @@ public class BoardDao {
 
             if(rset.next()) {
                 q = new QnA(rset.getInt(1), rset.getInt(2), rset.getDate(3),
-                            rset.getString(4), rset.getString(5), rset.getString(6).charAt(0), rset.getString(7));
+                            rset.getString(4), rset.getString(5), rset.getString(6), rset.getString(7));
             }
 
         } catch (SQLException e) {

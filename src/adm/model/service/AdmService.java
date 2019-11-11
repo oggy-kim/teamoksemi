@@ -164,6 +164,13 @@ public class AdmService {
 		close(conn);
 		return q;
 	}
+	
+	public Board detailBoard(int articleNo) {
+		Connection conn = getConnection();
+		Board b = new AdmDao().detailBoard(conn, articleNo);
+		close(conn);
+		return b;
+	}
 
 	public int deleteShop(int shopNo) {
 		Connection conn = getConnection();
@@ -240,6 +247,36 @@ public class AdmService {
 		
 		return result;
 	}
+
+	public int deleteBoard(int articleNo) {
+		Connection conn = getConnection();
+		int result = new AdmDao().deleteBoard(conn, articleNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
+	public int deleteQNA(int qnaNo) {
+		Connection conn = getConnection();
+		int result = new AdmDao().deleteQNA(conn, qnaNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
+	
 
 
 	

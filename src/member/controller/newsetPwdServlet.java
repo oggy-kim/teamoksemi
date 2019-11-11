@@ -1,7 +1,6 @@
-package adm.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,26 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import adm.model.service.AdmService;
-import board.model.vo.Board;
-import board.model.vo.PageInfo;
+import member.model.service.MemberService;
 import member.model.vo.Member;
-import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmDetailMemberServlet
+ * Servlet implementation class newsetPwdServlet
  */
-@WebServlet("/detailMember.adm")
-public class AdmDetailMemberServlet extends HttpServlet {
+@WebServlet("/changePage.look")
+public class newsetPwdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailMemberServlet() {
+    public newsetPwdServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +32,14 @@ public class AdmDetailMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String email = request.getParameter("email"); //var email = $("#email").val();를 읽어온다. 즉 chlguddn@gmail.com을가져옴.
 		
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
-		// System.out.println(memberNo);
-
-		Member m = new AdmService().detailMember(memberNo);
+		System.out.println(email);
+		request.setAttribute("email", email);
 		
-		// System.out.println(m);
-		
-		if(m != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(m, response.getWriter());
-		} else {
-			// request.setAttribute("msg", "회원상세정보 조회에 실패하셨습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		RequestDispatcher view = request.getRequestDispatcher("views/member/newsetPwd.jsp");
+		view.forward(request, response);
 	}
 
 	/**

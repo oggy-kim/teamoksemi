@@ -59,7 +59,7 @@ section {
 	top: calc(50vh - 200px);
 	left: calc(43vw - 200px);
 	overflow: hidden;
-	background: rgba(100, 100, 100, 0.8);
+	background: rgba(223, 217, 230, 0.8);
 	padding: 30px;
 }
 
@@ -78,6 +78,7 @@ section {
 	padding: 5px;
 	margin: 5px;
 	margin-right: 10px;
+	margin-left: 20%;
 	width: 14%;
 	text-align: center;
 }
@@ -99,7 +100,7 @@ section {
 	border: 1px;
 	border-radius: 15px;
 	position: absolute;
-	margin-left: 23%;
+	margin-left: 40%;
 	margin-top: 10%;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -153,6 +154,10 @@ span {
 	border: 1px;
 	border-radius: 5px;
 }
+#nav {
+	background: rgba(59, 182, 11, 0.5);
+	width:15%;
+}
 
 /* #pwdResult {
 	color:red;
@@ -169,20 +174,7 @@ span {
 <body>
 	<%@ include file="../common/menubar.jsp"%>
 
-	<nav>
-		<br>
-		<div class="menuLine">
-			<div class="div div1">
-				<hr>
-			</div>
-			<div class="div div2">
-				<div class="innermenu">회원가입</div>
-			</div>
-			<div class="div div3">
-				<hr>
-			</div>
-		</div>
-	</nav>
+
 	<br>
 	<section>
 		<!-- <h1 align="center">LOOK SO FINE</h1> -->
@@ -193,6 +185,9 @@ span {
 
 				<div class="inner-container">
 					<div class="box">
+				<div align="center"><p id="nav">회원가입</p></div>
+				<br>
+
 						<label class="left">닉네임</label>&nbsp;<input type="text"
 							class="input name" placeholder="닉네임을 입력하세요" name="userNick"
 							id="userNick">

@@ -1,34 +1,27 @@
-package adm.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import adm.model.service.AdmService;
-import board.model.vo.Board;
-import board.model.vo.PageInfo;
+import member.model.service.MemberService;
 import member.model.vo.Member;
-import shop.model.vo.Shop;
 
 /**
- * Servlet implementation class AdmDetailMemberServlet
+ * Servlet implementation class ResetPwdServlet
  */
-@WebServlet("/detailMember.adm")
-public class AdmDetailMemberServlet extends HttpServlet {
+@WebServlet("/resetPwd.look")
+public class ResetPwdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailMemberServlet() {
+    public ResetPwdServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +30,25 @@ public class AdmDetailMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String newPwd = request.getParameter("newPwd");
+		String email = request.getParameter("email");
 		
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
-		// System.out.println(memberNo);
-
-		Member m = new AdmService().detailMember(memberNo);
+		System.out.println(newPwd); //잘들어가고
+		System.out.println(email); // null? 
 		
-		// System.out.println(m);
+		Member m = new Member(email, newPwd);
 		
-		if(m != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(m, response.getWriter());
-		} else {
-			// request.setAttribute("msg", "회원상세정보 조회에 실패하셨습니다.");
+		Member updateMem = new MemberService().resetPwd(m);
+		
+		if(updateMem != null ) {
+			response.sendRedirect(request.getContextPath());
+			request.getSession().setAttribute("msg", "비밀번호가 변경되었습니다 로그인해주세요");
+		}else {
+			request.setAttribute("msg", "비밀번호변경에 실패하였습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
+		
 	}
 
 	/**

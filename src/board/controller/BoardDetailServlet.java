@@ -61,7 +61,7 @@ public class BoardDetailServlet extends HttpServlet {
 				response.addCookie(c1);
 			} else {
 				board = new BoardService().selectBoardNoCnt(aNo);
-			}
+			}ㅁㄴ
 		}*/
 		
 		boolean flag = false;

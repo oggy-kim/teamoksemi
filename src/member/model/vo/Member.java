@@ -18,8 +18,15 @@ public class Member implements java.io.Serializable{
    
    public Member() {}
    
+
+   public Member(String memberId, String memberPwd) {
+	super();
+	this.memberId = memberId;
+	this.memberPwd = memberPwd;
+}
    // Adm Member페이지 내 회원정보목록
-   public Member(int memberNo, String memberId, String memberNick, String gradeCode, Date entryDate) {
+   public Member(int memberNo, String gradeCode, String memberId, String memberNick, Date entryDate) {
+
 	super();
 	this.memberNo = memberNo;
 	this.memberId = memberId;
@@ -30,6 +37,7 @@ public class Member implements java.io.Serializable{
    // Adm Member페이지 내 회원상세정보목록
 	public Member(int memberNo, String gradeCode, String memberId, String memberNick, String gender, String profile,
 		String likeStyle, int birthYear, Date entryDate, String memberStatus) {
+
 	super();
 	this.memberNo = memberNo;
 	this.gradeCode = gradeCode;
