@@ -500,23 +500,28 @@ a.btn-layerClose:hover {
 				</div>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="resources/images/newsponser/n1.jpg"
+				<a href="http://spao.elandmall.com/goods/initGoodsDetail.action?goods_no=1911809894&vir_vend_no=VV16001887&sale_shop_divi_cd=10&disp_ctg_no=1606001527&sale_area_no=D1606000649&tr_yn=Y&conts_dist_no=C19111155474734&conts_divi_cd=10&rel_no=1911809894&rel_divi_cd=10&brand_nm=%EC%8A%A4%ED%8C%8C%EC%98%A4&goods_nm=%EC%97%AC%EC%84%B1+%EC%B9%B4%EB%9D%BC%ED%8D%BC+%EB%AA%A8%EC%A7%81%EC%BD%94%ED%8A%B8_SPJW94VG22&cust_sale_price=129000&ga_ctg_nm=SPAO+%EB%A9%94%EC%9D%B8&dlp_list=&dlp_category=WOMEN%2F%EC%95%84%EC%9A%B0%ED%84%B0%2F%EC%BD%94%ED%8A%B8" target="">
+				<img src="resources/images/newlist/share1.jpg"
 					class="newlist-img1" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="resources/images/newsponser/n2.jpg"
+				<a href="http://spao.elandmall.com/goods/initGoodsDetail.action?goods_no=1911807935&vir_vend_no=VV16001887&sale_shop_divi_cd=10&disp_ctg_no=1606001527&sale_area_no=D1606000649&tr_yn=Y&conts_dist_no=C19111155477158&conts_divi_cd=10&rel_no=1911807935&rel_divi_cd=10&brand_nm=%EC%8A%A4%ED%8C%8C%EC%98%A4&goods_nm=%ED%8C%A8%EB%94%A9+%EB%8D%94%ED%94%8C%EC%BD%94%ED%8A%B8_SPJP94VC25&cust_sale_price=79920&ga_ctg_nm=SPAO+%EB%A9%94%EC%9D%B8&dlp_list=&dlp_category=MEN%2F%EC%95%84%EC%9A%B0%ED%84%B0%2F%ED%8C%A8%EB%94%A9%2C%EB%8B%A4%EC%9A%B4" target="">
+				<img src="resources/images/newlist/share2.jpg"
 					class="newlist-img2" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="resources/images/newsponser/n3.jpg"
+				<a href="https://store.musinsa.com/app/product/detail/1209123/0" target="">
+				<img src="resources/images/newlist/share3.jpg"
 					class="newlist-img3" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="resources/images/newsponser/n4.jpg"
+				<a href="https://store.musinsa.com/app/product/detail/404949/0" target="">
+				<img src="resources/images/newlist/share4.jpg"
 					class="newlist-img4" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
-				<a href="" target="_blank"><img src="resources/images/newsponser/n5.jpg"
+				<a href="https://www.benito.co.kr/product/%ED%8F%AC%EC%8A%A4-%EC%8A%AC%EB%9E%99%EC%8A%A4-3color-sl/13538/category/36/display/2/" target="">
+				<img src="resources/images/newlist/share5.jpg"
 					class="newlist-img5" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 
@@ -538,29 +543,32 @@ a.btn-layerClose:hover {
 			</div>
 
 			<div class="sponser pfirst">
-				<a href="" target="_blank"><img src="resources/images/newsponser/s2.jpg"
+				<a href="http://spao.elandmall.com/shop/initPlanShop.action?disp_ctg_no=1904387758" target="">
+				<img src="resources/images/newsponser/sponser1-1.jpg"
 					class="sponser-img1"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-a">
-					<h4 style="text-align: center;">2019 FASHIONABLE</h4>
+					<h4 style="text-align: center;">폴리스 & 덤블 최대 1만원 할인</h4>
 					</p></a>
 			</div>
 
 			<div class="sponser pfirst">
-				<a href="" target="_blank"><img src="resources/images/newsponser/s1.jpg"
+				<a href="https://kr.puma.com/puffer-long-down-jkt-14.html" target="">
+				<img src="resources/images/newsponser/sponser1-2.jpg"
 					class="sponser-img2"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-b">
-					<h4 style="text-align: center;">SPAO HOT</h4>
+					<h4 style="text-align: center;">PUFFER LONG DOWN JKT</h4>
 					</p></a>
 			</div>
 
 			<div class="sponser pfirst">
-				<a href="" target="_blank"><img src="resources/images/newsponser/s3.jpg"
+				<a href="http://spao.elandmall.com/shop/initPlanShop.action?disp_ctg_no=1910415305" target="">
+				<img src="resources/images/newsponser/sponser1-3.jpg"
 					class="sponser-img3"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-c">
-					<h4 style="text-align: center;">PUMA FALL WINTER</h4>
+					<h4 style="text-align: center;">Harry Potter 마지막 콜라보레이션</h4>
 					</p></a>
 			</div>
 
