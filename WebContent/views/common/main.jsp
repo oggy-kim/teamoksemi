@@ -151,7 +151,6 @@
         	margin:20px 0;
         }
         
-        
     </style>
     <script>
     
@@ -230,6 +229,8 @@
     			console.log(ran3);
     			document.getElementById( 'recommend1' ).setAttribute('src', 'resources/images/closet/' + result.up[ran1].typeCode  + '.png')
     			document.getElementById( 'recommend2' ).setAttribute('src', 'resources/images/closet/' + result.down[ran2].typeCode  + '.png')
+    			document.getElementById( 'recommend3' ).setAttribute('src', 'resources/images/closet/' + result.ac[ran3].typeCode  + '.png')
+    			
     		},
     		error:function() {
     			console.log("ajax 연동실패");
@@ -273,10 +274,13 @@
         </div>
     </div>
     <div class="subImg subImg2" onclick="goMyCloset();">
-        <div class="card" style="width: 100%; height:100%; border:0px;">
+        <div class="card" style="width: 100%; height:100%; border:0px; float:left;">
         	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">RECOMMEND</p>
-            <img class="card-img-top" id="recommend1" style="width:50%; height:25%; margin:auto;">
-            <img class="card-img-top" id="recommend2" style="width:50%; height:25%; margin:auto;">
+			<div class="closet" style="width:100%; height:50%;">
+				<img class="card-img-top" id="recommend1" style="width:50%; height:50%;">
+            	<img class="card-img-top" id="recommend2" style="width:50%; height:50%;">
+            	<img class="card-img-top" id="recommend3" style="width:50%; height:50%; float:right;">  
+			</div>	     
             <div class="card-body">
                 <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">TODAY RECOMMEND</h5>
                 <p class="card-text" style="font-family: 'Do Hyeon', sans-serif; font-size:20px; font-style: italic;">오늘같은 날씨에 이런 옷 어떠세요?</p>
@@ -308,7 +312,6 @@
     </div>
   </div>
   <br><br>
-  <!-- 스타일 이미지 -->
   <div class="styleImgArea">
      <div class="fotorama" data-fit="contain" data-arrows="false" data-width="100%" 
      		data-height="80%" data-ratio="4/3" data-autoplay="5000" onclick="goEvent();">
