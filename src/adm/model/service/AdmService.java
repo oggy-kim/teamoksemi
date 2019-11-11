@@ -262,6 +262,20 @@ public class AdmService {
 		return result;
 	}
 
+	public int deleteQNA(int qnaNo) {
+		Connection conn = getConnection();
+		int result = new AdmDao().deleteQNA(conn, qnaNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
 	
 
 

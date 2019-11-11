@@ -562,7 +562,7 @@ public class AdmDao {
 		} else if (sortId == 2) { // writer
 			sql = prop.getProperty("searchBList2");
 		} else { // 그 외
-			System.out.println("selectBList");
+			sql = prop.getProperty("selectBList");
 		}
 
 		try {
@@ -921,6 +921,27 @@ public class AdmDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, articleNo);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+
+	}
+
+	public int deleteQNA(Connection conn, int qnaNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteQNA");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNo);
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

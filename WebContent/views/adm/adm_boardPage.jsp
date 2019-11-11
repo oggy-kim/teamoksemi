@@ -66,10 +66,7 @@
         hr {
             border: 1px solid black;
         }
-        
-        table {
-        	/* text-align : center; */
-        }
+
 
         .btn {
             background: black;
@@ -132,6 +129,7 @@
             font-weight: 700;
         }
         
+        
         .sublist {
             padding: 10px;
         }
@@ -182,6 +180,7 @@
 
 		table {
 			text-align : center;
+			vertical-align : middle;
 		}
 		
 		table.sortable thead {
@@ -219,15 +218,7 @@
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
-        
-        .board_detail_box {
-        	visibility : hidden;
-        	width : 80%;
-        	height : 21%;
-        	margin-left : 5%;
-        	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        }
-        
+                
         #trend_table {
         	text-align : center;
             width : 85%;
@@ -249,11 +240,12 @@
             font-size: 28px; 
         }
 
-        .board_detail {
-            width : 80%;
-            height : 20%;
-            margin : 0 0 0 5%;
-            box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+        .board_detail_box {
+        	visibility : hidden;
+        	width : 80%;
+        	height : 25%;
+        	margin-left : 5%;
+        	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
         .board_detail_title {
@@ -265,12 +257,12 @@
 
 		.board_detail_contents {
 			float : left;
-			width : 40%;
+			width : 42%;
 			height : 60%;
 			margin-top : 2%;
 			margin-left : 5%;
 			border : 1px solid black;
-			font-size : 20px;
+			font-size : 15px;
 			display:inline-block;	
 		}
 
@@ -283,7 +275,7 @@
 		}
 		
 		.btnArea {
-			margin-right : 9%;
+			margin-right : 5%;
 			margin-top : 3%;
 			margin-botton : 10%;
 			width : 25%;
@@ -386,9 +378,9 @@
         <hr><br>
 
         <div class="trend_box">
-            <h4 class="table_title">실시간 인기 게시글</h4>
+            <h4 class="table_title">실시간 인기 게시물</h4>
             <br>
-            <!-- 인기 게시글 조회기간 설정 -->
+            <!-- 인기 게시물 조회기간 설정 -->
             <div class="date_box">
                 <select id="searchCondition1" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>
@@ -400,7 +392,7 @@
                 <input type="date" name="end_date" id="end_date">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
-            <!-- 인기 게시글 테이블 -->
+            <!-- 인기 게시물 테이블 -->
             <table class="sortable table" id="trend_table" class="sortable">
             <thead>
                 <tr>
@@ -466,7 +458,8 @@
         <br>
 
         <div class="board_box">
-            <h4 class="table_title">게시글 모아보기</h4>
+            <h4 class="table_title">게시물 모아보기</h4>
+            <p style="margin-left:5%;">상세보기를 원하는 게시물을 클릭하면, 하단에 해당하는 게시글의 상세정보를 볼 수 있습니다.</p>            
             <div class="sorting_box">
                 <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="write_date">작성일</option>
@@ -551,6 +544,11 @@
         </div>
         <br> 
         
+        <div class="board_detail_box" id="board_detail">
+           
+             
+        </div>
+        
 		<script>
         // BOARD 상세보기
     		$(function(){ // 동적 대상 function 주기
@@ -620,23 +618,23 @@
                           dataType: "json",
                           success : function(result){ 
           					console.log("상세보기_ajax 연동성공");
-                          	// console.log(result);
+             
+          					// console.log(result);
           	           		$("#board_detail").css({"visibility":"visible"});
 
           	           		var detail = "";
 
-          	           		detail += "<h4 class='board_detail_title'>게시글 상세보기</h4>" +
-          	           				  "<div class='board_detail_contents'>실물</div>" +
+          	           		detail += "<h4 class='board_detail_title'>게시물 상세보기</h4>" +
+          	           				  "<p style='margin-left:5%;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
+          	           				  "<div class='board_detail_contents'></div>" +
           	           				  "<div class='board_detail_contents'>" + 
-          	           				  "<table class='table-condensed' style='width:100%; height:100%;'><tr><th>게시판 글번호</th><td>" + result.articleNo + "</td></tr>" +
-                                       "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" +
-                                       "<tr><th>프로필 사진</th><td>" + result.profile + "</td></tr>" +
-                                       "<tr><th>선호스타일</th><td>" + result.likeStyle + "</td></tr>" +
-                                       "<tr><th>조회수</th><td>" + result.articleViews + "</td></tr>" +
-                                       "<tr><th>찜수</th><td>" + result.ariticleLikes + "</td></tr>" +
-                                       "<tr><th>내용</th><td>" + result.articleContents + "</td></tr>" + 
-                                       "<tr><th>작성일</th><td>" + result.articleDate + "</td></tr>" +
-                                       "<tr><th>등록여부</th><td>" + result.status + "</td></tr></table></div>" +
+          	           				  "<table class='table' style='width:100%; height:100%;'>" + 
+          	           				  "<th colspan='1'>글번호</th><td colspan='1'>" + result.articleNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
+                                       "<tr><th colspan='1'>선호스타일</th><td colspan='3'>" + result.likeStyle + "</td></tr>" +
+                                       "<tr><th colspan='1'>찜수</th><td colspan='1'>" + result.ariticleLikes + "</td><th colspan='1'>조회수</th><td colspan='1'>" + result.articleViews + "</td></tr>" +
+                                       "<tr><th colspan='1'>작성일</th><td colspan='1'>" + result.articleDate + "</td><th colspan='1'>등록여부</th><td colspan='1'>" + result.status + "</td></tr>" + 
+                                       "<tr><th colspan='1'>내용</th><td colspan='3'>" + result.articleContents + "</td></tr>" + 
+                                       "</table></div>" +
                                    	   // "<div>댓글 : </div>" : 댓글은 어떻게 넣지?	
                                        "<div class='btnArea'><button type='button' id='delete_board_btn' style='margin-right : 5%;' onclick='deleteBoard();'>게시물삭제</button>" +
                                        "<button type='button' id='delete_comment_btn' style='margin-right : 2%;' onclick='deleteBoardComment();'>댓글삭제</button></div>" + 
@@ -721,13 +719,7 @@
     		$("#detailForm").submit();
     	}
 		</script>
-        
-        
-        
-        <div class="board_detail_box" id="board_detail">
-           
-             
-        </div>
+     
     </div>
 </section>
 <footer class="copyRight">

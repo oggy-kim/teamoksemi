@@ -48,12 +48,13 @@ public class AdmSearchBoardServlet extends HttpServlet {
 		
 		if (sort.equals("contents")) { 
 			sortId = 1;
-		} else if (sort.equals("wrtier")){ // writer
+		} else if (sort.equals("writer")){ // writer
 			sortId = 2;
 		} else {
 			sortId = 3;
 		}
 		
+		System.out.println(sortId);
 		AdmService aService = new AdmService();
 		
 		int listCount = aService.getBListCount();		

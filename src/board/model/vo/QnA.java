@@ -11,6 +11,7 @@ public class QnA {
 	private String qnaContents; // QNA 내용
 	private String answerStatus; // 답변여부(Default 'N')
 	private String answerContents; // 답변 내용
+	private String qnaStatus; // QNA 글 삭제여부
 	
 	public QnA() {}
 	

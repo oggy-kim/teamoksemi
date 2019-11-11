@@ -317,7 +317,7 @@
  			</div>	
  		</div>
  		
- 		<div class="overview_box" onclick="goQNA();">	
+ 		<div class="overview_box" onclick="goQnA();">	
        		<div class="overview_image_wrapper">
        			<img id="image_qna" src="<%= contextPath %>/resources/images/adm/qna.png" style="width:100%; height:100%; margin:0; padding:0;">
        		</div>

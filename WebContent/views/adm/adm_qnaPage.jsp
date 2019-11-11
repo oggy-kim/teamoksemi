@@ -180,6 +180,7 @@
 
         table {
 			text-align : center;
+			vertical-align : middle;
 		}
         
 		table.sortable thead {
@@ -219,34 +220,28 @@
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
-        table {
-            text-align : center;
-            /* width : 85%;
-            margin : 1% 0 0 5%;
-            font-size : 15px; */
-        }
-
         .qna_title, .qna_detail_title { /*  qna 제목 */
             margin-top : 3%;
             margin-left : 5%;
             padding : 2% 0 0 0;
             font-family: 'Do Hyeon', sans-serif; 
             font-size: 28px; 
-
         }
         
         .qna_detail_contents {
         	float : left;
-			width : 40%;
-			height : 60%;
+			width : 42%;
+			height : 65%;
 			margin-top : 2%;
 			margin-left : 5%;
 			border : 1px solid black;
-			font-size : 20px;
-			display:inline-block;	
+			font-size : 15px;
+			display:inline-block;
+			vertical-align : bottom; /* 적용 안됨 */ 	
         }
+         
         
-		#answer_btn {
+		#answer_btn, #delete_btn {
 			/* float : right; */
             background:gray;
             border:gray;
@@ -258,7 +253,7 @@
 			margin-right : 2%;
 			margin-top : 3%;
 			margin-botton : 10%;
-			width : 15%;
+			width : 20%;
 			/* border : 1px solid black; */
 			float : right;
 		}
@@ -358,6 +353,8 @@
     
         <div class="qna_box">
             <h4 class="qna_title">QnA</h4>
+            <p style="margin-left:5%;">상세보기를 원하는 문의글을 클릭하면, 하단에 해당하는 문의글의 상세정보를 볼 수 있습니다.</p>
+            
             <!-- 테이블 정렬 버튼 -->
             <div class="sorting_box">
                 <select id="sortCondition" name="sortCondition" style="display:inline-block;">
@@ -441,6 +438,12 @@
 			<br>
         </div>
         <br> 
+        
+        <div class="qna_detail_box" id="qna_detail">
+            
+        </div>
+        
+        
         <script>
         // QNA 상세보기
             	$(function(){ // 동적 대상 function 주기 (수정하기)
@@ -497,7 +500,7 @@
             		$(document).on('click', '#qna_table2 td', function(){
             			        	
                         var qnaNo = $(this).parent().children("#qNo").html();
-                        console.log("qnaNo="+qnaNo); 
+                        console.log("qnaNo=" + qnaNo); 
                         
                         $.ajax({
                             url: "<%= contextPath %>/detailQNA.adm",
@@ -511,15 +514,24 @@
 
             	           		var detail = "";
 
-            	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4><div class='qna_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>글번호 </th><td>" + result.qnaNo + "</td></tr>" +
-                                         "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" +
-                                         "<tr><th>작성일</th><td>" + result.enrollDate + "</td></tr>" + 
-                                         "<tr><th>QNA제목</th><td>" + result.qnaTitle + "</td></tr>" +
-                                         "<tr><th>QNA내용</th><td>" + result.qnaContents + "</td></tr>" +
-                                         "<tr><th>답변여부</th><td>" + result.answerStatus + "</td></tr>" +
-                                         "<tr><th>답변내용</th><td>" + result.answerContents + "</td></tr></table></div>" +
-                                         "<div class='qna_detail_contents'><textarea style='width:100%; height:100%; resize:none;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'></textarea></div>" + 
-                                         "<div class='btnArea'><button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button></div>";
+            	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4>" + 
+    	           				  "<p style='margin-left:5%;'>선택한 문의글을 상세 조회하고, 해당 문의글에 답변을 달거나 문의글을 삭제 할 수 있습니다.</p>" +
+            	           					"<div class='qna_detail_contents'>" + 
+            	           						"<table class='table' style='width:100%; height:100%;'>" + 
+	            	           						"<tr><th colspan='1'>글번호</th><td colspan='1'>" + result.qnaNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
+	                                         		"<tr><th colspan='1'>작성일</th><td colspan='1'>" + result.enrollDate + "</td><th colspan='1'>답변여부</th><td colspan='1'>" + result.answerStatus + "</td></tr>" +
+	                                         		"<tr><th colspan='1'>제목</th><td colspan='3'>" + result.qnaTitle + "</td></tr>" +
+	                                         		"<tr><th colspan='1'>내용</th><td colspan='3'>" + result.qnaContents + "</td></tr>" +
+	                                         		"<tr><th colspan='1'>답변</th><td colspan='3'>" + result.answerContents + "</td></tr></table>" + 
+                                         	"</div>" +
+                                         "<div class='qna_detail_contents'>" + 
+                                         	"<textarea style='width:100%; height:100%; resize:none;' placeholder='답변여부에 따라 답변을 할 수 있도록 활성화시키는 function 주기'></textarea>" + 
+                                         "</div>" + 
+                                         "<div class='btnArea'>" + 
+	                                        "<button type='submit' id='delete_btn' style='display:inline-block; margin-right : 5%;' onclick='deleteQNA();'>글 삭제</button>" +
+                                         	"<button type='submit' id='answer_btn' style='display:inline-block; margin-right : 5%;'>답변등록</button>" + 
+                                         "</div>" +
+                                         "<form action='' id='detailForm' method='post'><input type='hidden' name='qnaNo' value='"+result.qnaNo+"'></form>";
                                          
                                 console.log(detail);
 
@@ -535,7 +547,7 @@
                     });
                 });
         
-        		// 검색하기 --> 제목검색 가능, 작성자 검색 불가
+        		// 검색하기
         		$(function(){
         			$(document).on('click', "#searchBtn", function(){
         				var sort = $("#searchCondition").val();
@@ -581,13 +593,17 @@
         		});
         		});
         		
-        		
         </script>
-
-        <div class="qna_detail_box" id="qna_detail">
-            
-        </div>
-
+        
+        <script>
+		function deleteQNA() { // 서블릿 만들기
+    		$("#detailForm").attr("action", "<%= contextPath%>/deleteQNA.adm");
+    		$("#detailForm").submit();
+    		alert("성공적으로 삭제되었습니다.");
+    	}
+    	
+		</script>
+        
 </div>
 </section>
 <footer class="copyRight">

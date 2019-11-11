@@ -65,7 +65,7 @@ public class AdmUpdateMemberServlet extends HttpServlet {
 			request.setAttribute("memberNo", memberNo);
 			request.getRequestDispatcher("member.adm").forward(request, response);
 		}else {
-			request.setAttribute("msg", "쇼핑몰 등급 수정에 실패했습니다.");
+			// request.setAttribute("msg", "회원정보 수정에 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

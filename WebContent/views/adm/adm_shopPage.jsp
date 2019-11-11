@@ -251,7 +251,7 @@
          .shop_detail_box {
          	visibility : hidden; 
          	width : 80%;
-         	height : 25%;
+         	height : 30%;
          	/* height : none;
          	overflow : hidden; */
          	margin-left : 5%;
@@ -260,13 +260,13 @@
 
 		.shop_detail_contents { /* 다시 조정하기 */
 			float : left;
-			width : 40%;
-			height : 75%;
+			width : 42%;
+			height : 70%;
 			margin-top : 2%;
 			margin-left : 5%;
 			margin-botton : 0%;
 			border : 1px solid black;
-			font-size : 20px;
+			font-size : 15px;
 			display:inline-block;			
 		}
 
@@ -428,6 +428,7 @@
 
         <div class="shop_box">
             <h4 class="table_title">제휴 쇼핑몰 리스트</h4>
+            <p style="margin-left:5%;">상세보기를 원하는 쇼핑몰을 클릭하면, 하단에 해당하는 쇼핑몰 상세정보를 볼 수 있습니다.</p>
             <div class="sorting_box">
                 <select id="sortCondition" name="sortCondition" style="display:inline-block;">
                     <option value="cont_money">계약금</option>
@@ -516,18 +517,11 @@
             
         </div>
         <br> 
+		<div class="shop_detail_box" id="shop_detail">
+
+        </div>
+
         <script>
-        // SHOP 상세보기 -> 선생님 수정
-        	/* $(function(){ // 동적 대상 function 주기
-            		$('#shop_table2 td').on({'mouseenter' : function(){
-            			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
-            		}, 'mouseout' : function(){
-            			$(this).parent().css({"background":"white"});
-            		}, 'click' : function(){ // SHOP click시, 해당 SHOP 상세정보가 하위에 표시
-            			var shopNo = $(this).parent().children("#sNo").html();
-                        console.log(shopNo); 
-            		});
-        	});  */
         
         	// 동적 대상 function 주기
         	$(function(){ 
@@ -606,16 +600,13 @@
         	           		var detail = "";
 
         	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4>" +
-                                     "<div class='shop_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>회사 로고</th><td></td><tr><th>홈페이지 주소</th><td></td></tr></table></div>" +
-                                     "<div class='shop_detail_contents'><table class='table-condensed' style='width:100%; height:100%;'><tr><th>회사번호</th><td>" + result.shopNo + "</td></tr>" +
-                                     "<tr><th>회사명</th><td>" + result.shopName + "</td></tr>" +
-                                     "<tr><th>계약상태</th><td>" + result.status + "</td></tr>" +
-                                     "<tr><th>등급</th><td>" + result.shopGradeCode + "</td></tr>" + 
-                                     "<tr><th>계약시작일</th><td>" + result.contractDate + "</td></tr>" +
-                                     "<tr><th>계약만료일 </th><td>" + result.expireDate + "</td></tr>" +
-                                     "<tr><th>계약금</th><td>" + result.contractMoney + "</td></tr>" +
-                                     "<tr><th>담당자</th><td>" + result.shopPIC + "</td></tr>" +
-                                     "<tr><th>연락처</th><td>" + result.shopContact + "</td></tr></table></div>" +
+			           				  "<p style='margin-left:5%;'>선택한 쇼핑몰을 상세 조회하고, 해당 쇼핑몰의 정보를 수정하거나 삭제 할 수 있습니다.</p>" +
+                                     "<div class='shop_detail_contents'><table class='table' style='width:100%; height:100%;'><tr><td rowspan='4' colspan='2'><img src='../resources/images/musinsa.png'></td></tr><tr><th rowspan='1' colspan='1'>홈페이지 주소</th><td colspan='1'></td></tr></table></div>" +
+                                     "<div class='shop_detail_contents'><table class='table' style='width:100%; height:100%;'><tr><th colspan='1'>회사번호</th><td colspan='1'>" + result.shopNo + "</td><th colspan='1'>회사명</th><td colspan='1'>" + result.shopName + "</td></tr>" +
+                                     "<tr><th colspan='1'>계약상태</th><td colspan='1'>" + result.status + "</td><th colspan='1'>등급</th><td colspan='1'>" + result.shopGradeCode + "</td></tr>" + 
+                                     "<tr><th colspan='1'>계약시작일</th><td colspan='1'>" + result.contractDate + "</td><th colspan='1'>계약만료일 </th><td colspan='1'>" + result.expireDate + "</td></tr>" +
+                                     "<tr><th colspan='1'>계약금</th><td colspan='3'>" + result.contractMoney + "</td></tr>" +
+                                     "<tr><th colspan='1'>담당자</th><td colspan='1'>" + result.shopPIC + "</td><th colspan='1'>연락처</th><td colspan='1'>" + result.shopContact + "</td></tr></table></div>" +
                                      "<div class='btnArea' style='display:inline-block;'>" + 
                                      "<button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
                                      "<button type='button' id='update_btn' onclick='updateShop();' style='margin-right : 2%;'>쇼핑몰수정</button></div>" +
@@ -703,10 +694,6 @@
     		$("#detailForm").submit();
     	}
 		</script>
-
-		<div class="shop_detail_box" id="shop_detail">
-
-        </div>
 
     </div>
 </section>
