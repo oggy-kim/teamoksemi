@@ -747,6 +747,5 @@ public class BoardDao {
 	      }
 	      return board;
 	   }
-
         
 }

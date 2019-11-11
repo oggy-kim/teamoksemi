@@ -113,8 +113,8 @@
         	border:1px solid black;
         	width:1200px;
 			height:530px;
-			background:black;
-			color:white;
+			background:white;
+			color:black;
 			margin:auto;
 			margin-top:50px;
         }
@@ -134,6 +134,45 @@
         	width:80px;
         }
         
+        .input1 {
+        	width:200px;
+        	text-align:center;
+        }
+        
+        #CommentContent {
+        	width:400px;
+        	text-align:center;
+        }
+        
+        button {
+        	border-radius:5px;
+			border: 1px solid skyblue;
+			background-color: rgba(0,0,0,0);
+			color: black;
+        }
+        
+        button:hover{
+    		transition-duration: 1s;
+    		background-color:gray; 
+    		font-weight:bold;
+        }
+        
+        table {
+        	text-align:center;
+        }
+        
+        .fonta, #jjim, #addComment {
+    		border-radius:5px;
+			border: 1px solid skyblue;
+			background-color: rgba(0,0,0,0);
+			color: black;
+		}
+        
+		.fonta:hover, #jjim:hover, #addComment:hover{
+			transition-duration: 1s;
+			background-color:gray; 
+    		font-weight:bold;
+		}
 
     </style>
 </head>
@@ -156,8 +195,8 @@
 		<form action="<%= contextPath %>/wishinsert.look" method="post">
 		<div class="left" align="center">
 			<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="350px" height="400px">
-		<br>
-		<input type="text" placeholder="간단한 메모를 작성하세요." rows="2" cols="50" name="memo">
+		<br><br>
+		<input type="text" placeholder="간단한 메모를 작성하세요." name="memo" class="input1">
 		<input id="aNo" type="hidden" name="aNo" value="<%= board.getArticleNo() %>">
 		<input id="memberno" type="hidden" name="memberno" value="<%= m.getMemberNo() %>">
 		<input id="likes" type="hidden" name="likes" value="<%= board.getArticleLikes() %>">
@@ -165,7 +204,7 @@
 		</div>
 		</form>
 		<div class="right">
-		<br>
+		<br><br>
 			<div class="tableArea">
 				<%-- <table align="center" width="550px">
 					<tr>
@@ -175,22 +214,23 @@
 					</tr>
 					
 				</table> --%>
-				<table align="center" width="550px">
+				<table align="center" width="550px" border="1">
 				<tr>
-					<td>작성자</td>
+					<td style="font-weight:bold;">작성자</td>
 					<td><span><%= board.getMemberNick() %></span></td>
-					<td>찜수</td>
-					<td colspan="3"><span><%= board.getArticleLikes() %></span></td>
-				</tr>
-				<tr>
-					
-					<td>조회수</td>
-					<td><span><%= board.getArticleViews() %></span></td>
-					<td>작성일</td>
+					<td style="font-weight:bold;">작성일</td>
 					<td><span><%= board.getArticleDate() %></span></td>
 				</tr>
 				<tr>
-					<td colspan="6"><p id="content"><%= board.getArticleContents() %></p></td>
+					
+					<td style="font-weight:bold;">조회수</td>
+					<td><span><%= board.getArticleViews() %></span></td>
+					<td style="font-weight:bold;">찜수</td>
+					<td colspan="3"><span><%= board.getArticleLikes() %></span></td>
+					
+				</tr>
+				<tr>
+					<td colspan="6" rowspan="10"><p id="content"><%= board.getArticleContents() %></p></td>
 				</tr>
 			</table>
 			</div>
@@ -208,7 +248,7 @@
 					<% } else { %>
 					<% for(BoardComment c : rlist) { %>
 						<tr>
-							<td width="150px"><%= c.getMemberNick() %></td>
+							<td width="150px" style="font-weight:bold;"><%= c.getMemberNick() %></td>
 							<td width="400px"><%= c.getCommentContents() %></td>
 						</tr>
 					<% } %>
@@ -220,41 +260,42 @@
 				
 				<div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
-                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=1&aNo=<%= board.getArticleNo() %>'"> &lt;&lt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=1&aNo=<%= board.getArticleNo() %>'"> &lt;&lt; </button>
 
                 <!-- 이전 페이지로 (<) -->
                 <% if(currentPage == 1){ %>
-                <button disabled> &lt; </button>
+                <button class="fonta" disabled> &lt; </button>
                 <% } else { %>
-                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage - 1 %>&aNo=<%= board.getArticleNo() %>'"> &lt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage - 1 %>&aNo=<%= board.getArticleNo() %>'"> &lt; </button>
                 <% } %>
 
                 <!-- 10개의 페이지 목록 -->
                 <% for(int p = startPage; p <= endPage; p++){ %>
                 <% if(p == currentPage){ %>
-                <button disabled> <%= p %> </button>
+                <button class="fonta" disabled> <%= p %> </button>
                 <% } else { %>
-                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= p %>&aNo=<%= board.getArticleNo() %>'"><%= p %></button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= p %>&aNo=<%= board.getArticleNo() %>'"><%= p %></button>
                 <% } %>
                 <% } %>
 
                 <!-- 다음 페이지로 (>) -->
                 <% if(currentPage == maxPage){ %>
-                <button disabled> &gt; </button>
+                <button class="fonta" disabled> &gt; </button>
                 <% } else { %>
-                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage + 1 %>&aNo=<%= board.getArticleNo() %>'"> &gt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= currentPage + 1 %>&aNo=<%= board.getArticleNo() %>'"> &gt; </button>
                 <% } %>
 
                 <!-- 맨 끝으로 (>>) -->
-                <button <%-- class="articleno" title="<%= board.getArticleNo() %>" --%> onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= maxPage %>&aNo=<%= board.getArticleNo() %>'"> &gt;&gt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boarddetail.look?currentPage=<%= maxPage %>&aNo=<%= board.getArticleNo() %>'"> &gt;&gt; </button>
             </div>
             </div>
-				
+				<br>
 				<div class="CommentWriterArea">
 					<table align="center">
 						<tr>
-							<td><textarea rows="3" cols="55" id="CommentContent"></textarea>
-							<td><button id="addComment">댓글등록</button>
+							<!-- <td><textarea rows="1" cols="55" id="CommentContent" style="resize:none"></textarea></td> -->
+							<td><input type="text" id="CommentContent" placeholder="댓글 내용을 쓰세요."></td>
+							<td><button id="addComment">댓글등록</button></td>
 					</table>
 				</div>
 			</div>

@@ -30,6 +30,7 @@
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Gaegu|McLaren&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gaegu|McLaren&display=swap" rel="stylesheet">
 <style>
 body {
 	width: 100%;
@@ -163,13 +164,38 @@ hr {
 	border: 1px solid white;
 }
 
-.sfirst, .ssecond, .sthird, .sfourth, .sfifth {
-	width: 18%;
+.sfirst{
+	width: 20%;
 	height: 250px;
+	margin-left:5.2%;
+	margin-top:1.5%;
+	margin-bottom:1.5%;
+	border-radius:5px;
+	
+}
+
+.sfirst:hover {
+	transform: perspective(300px) translateZ(70px);
+	transition:all 0.5s;
+}
+
+.ssecond {
+	width: 18%;
+	height: 300px;
 	margin: 0.9%;
 }
 
-.pfirst, .psecond, .pthird {
+.ssecond:hover {
+	transform: perspective(300px) translateZ(70px);
+	transition:all 0.5s;
+}
+
+.pfirst:hover {
+	transform: perspective(300px) translateZ(70px);
+	transition:all 0.5s;
+}
+
+.pfirst{
 	width: 25%;
 	height: 90%;
 	margin: 4%;
@@ -182,6 +208,20 @@ hr {
 .write {
 	float: right;
 	height: 20px;
+	
+}
+
+.writee {
+	border-radius:5px;
+	border: 1px solid skyblue;
+	background-color: rgba(0,0,0,0);
+	color: black;
+}
+
+.writee:hover {
+    transition-duration: 1s;
+    background-color:gray; 
+    font-weight:bold;
 }
 
 .display {
@@ -207,6 +247,10 @@ hr {
 	height: 80%;
 	width: 80%;
 	margin: auto;
+}
+
+img {
+	margin:auto;
 }
 
 img:hover {
@@ -284,6 +328,41 @@ a.btn-layerClose:hover {
   background-color: #1f326a;
   color: #fff;
 }
+
+.writee {
+	font-family: 'McLaren', cursive;
+	font-family: 'Gaegu', cursive;
+}
+
+.layer a {
+	font-family: 'McLaren', cursive;
+	font-family: 'Gaegu', cursive;
+}
+
+.font {
+	font-family: 'McLaren', cursive;
+	font-family: 'Gaegu', cursive;
+}
+
+.pop-conts {
+	font-family: 'McLaren', cursive;
+	font-family: 'Gaegu', cursive;
+}
+
+.fonta {
+    border-radius:5px;
+	border: 1px solid skyblue;
+	background-color: rgba(0,0,0,0);
+	color: black;
+}
+        
+.fonta:hover {
+	transition-duration: 1s;
+	background-color:gray; 
+    font-weight:bold;
+}
+
+
 </style>
 </head>
 <body>
@@ -303,10 +382,10 @@ a.btn-layerClose:hover {
 			</div>
 			<br>
 			<div class="write">
-				<button onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
+				<button class="writee" onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
 			</div>
-			<div style="height: 10px;"></div>
-			<a href="#layer2" class="btn-example">★한번은 클릭해주세요</a>
+			<div class="layer" style="height: 10px;">
+			<a href="#layer2" class="btn-example">★게시글 이용시 주의사항★</a>
 			<div class="dim-layer">
 				<div class="dimBg"></div>
 				<div id="layer2" class="pop-layer">
@@ -328,6 +407,7 @@ a.btn-layerClose:hover {
 					</div>
 				</div>
 			</div>
+			</div>
 			<br>
 
 			<%
@@ -339,8 +419,9 @@ a.btn-layerClose:hover {
 				<%-- <input type="hidden" value="<%= b.getArticleNo() %>"> --%>
 				<% for(Attachment at : flist){ %>
 					<%-- <% if(b.getArticleNo() == at.getArticleNo()){ %> --%>
-					<div class="sharing sfirst">
-						<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="220px" height="260px" class="picture" title="<%= at.getArticleNo() %>">
+					<div class="sharing sfirst" style="width:220px; height:260px;">
+						<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="220px" height="260px" class="picture" title="<%= at.getArticleNo() %>"
+						style="border-radius:5px;">
 					</div>
 			<% } %>
 			<% } %>
@@ -349,36 +430,38 @@ a.btn-layerClose:hover {
 
 			<br clear="both"> <br>
 
+			<div class="font">
 			<div class="pagingArea" align="center">
 
                 <!-- 맨 처음으로 (<<) -->
-                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'"> &lt;&lt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=1'"> &lt;&lt; </button>
 
                 <!-- 이전 페이지로 (<) -->
                 <% if(currentPage == 1){ %>
-                <button disabled> &lt; </button>
+                <button class="fonta" disabled> &lt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
                 <% } %>
 
                 <!-- 10개의 페이지 목록 -->
                 <% for(int p = startPage; p <= endPage; p++){ %>
                 <% if(p == currentPage){ %>
-                <button disabled> <%= p %> </button>
+                <button class="fonta" disabled> <%= p %> </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= p %>'"><%= p %></button>
                 <% } %>
                 <% } %>
 
                 <!-- 다음 페이지로 (>) -->
                 <% if(currentPage == maxPage){ %>
-                <button disabled> &gt; </button>
+                <button class="fonta" disabled> &gt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
                 <% } %>
 
                 <!-- 맨 끝으로 (>>) -->
-                <button onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+                <button class="fonta" onclick="location.href='<%= contextPath %>/boardlist.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+            </div>
             </div>
             
 			<!-- <div class="page-1">
@@ -416,25 +499,25 @@ a.btn-layerClose:hover {
 					<hr>
 				</div>
 			</div>
-			<div class="newlist sfirst">
+			<div class="newlist ssecond">
 				<a href="" target="_blank"><img src="resources/images/newsponser/n1.jpg"
-					class="newlist-img1" style="width: 100%; height: 100%;"></a>
+					class="newlist-img1" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
 				<a href="" target="_blank"><img src="resources/images/newsponser/n2.jpg"
-					class="newlist-img2" style="width: 100%; height: 100%;"></a>
+					class="newlist-img2" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
 				<a href="" target="_blank"><img src="resources/images/newsponser/n3.jpg"
-					class="newlist-img3" style="width: 100%; height: 100%;"></a>
+					class="newlist-img3" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
 				<a href="" target="_blank"><img src="resources/images/newsponser/n4.jpg"
-					class="newlist-img4" style="width: 100%; height: 100%;"></a>
+					class="newlist-img4" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 			<div class="newlist ssecond">
 				<a href="" target="_blank"><img src="resources/images/newsponser/n5.jpg"
-					class="newlist-img5" style="width: 100%; height: 100%;"></a>
+					class="newlist-img5" style="width: 100%; height: 100%; border-radius:5px;"></a>
 			</div>
 
 		</div>
@@ -463,7 +546,7 @@ a.btn-layerClose:hover {
 					</p></a>
 			</div>
 
-			<div class="sponser psecond">
+			<div class="sponser pfirst">
 				<a href="" target="_blank"><img src="resources/images/newsponser/s1.jpg"
 					class="sponser-img2"
 					style="width: 100%; height: 100%; border-radius: 5px;">
@@ -472,7 +555,7 @@ a.btn-layerClose:hover {
 					</p></a>
 			</div>
 
-			<div class="sponser pthird">
+			<div class="sponser pfirst">
 				<a href="" target="_blank"><img src="resources/images/newsponser/s3.jpg"
 					class="sponser-img3"
 					style="width: 100%; height: 100%; border-radius: 5px;">
@@ -522,6 +605,7 @@ a.btn-layerClose:hover {
         var $href = $(this).attr('href');
         layer_popup($href);
     });
+    
     function layer_popup(el){
 
         var $el = $(el);
@@ -553,7 +637,6 @@ a.btn-layerClose:hover {
             $('.dim-layer').fadeOut();
             return false;
         });
-
     }
     </script>    
 </body>
