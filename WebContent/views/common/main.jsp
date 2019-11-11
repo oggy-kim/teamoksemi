@@ -312,7 +312,6 @@
     </div>
   </div>
   <br><br>
-  <!-- 스타일 이미지--- -->
   <div class="styleImgArea">
      <div class="fotorama" data-fit="contain" data-arrows="false" data-width="100%" 
      		data-height="80%" data-ratio="4/3" data-autoplay="5000" onclick="goEvent();">
