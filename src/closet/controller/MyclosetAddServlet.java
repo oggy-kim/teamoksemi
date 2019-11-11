@@ -43,7 +43,53 @@ public class MyclosetAddServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		Closet c = new Closet();
 		Member m = (Member) request.getSession().getAttribute("loginUser");
-		System.out.println(c);		
+		int memberNo = m.getMemberNo();
+		String typeCode = request.getParameter("clothtype");
+		// int typeOption = Integer.parseInt(request.getParameter("typeoption"));
+		String[] styleCodeArr = request.getParameterValues("style");
+		System.out.println(styleCodeArr);
+		String styleCode = "";
+		if(styleCodeArr != null) {
+			styleCode = String.join("/", styleCodeArr);
+		} else {
+			styleCode = "";
+		}
+		String colourCode = request.getParameter("colour");
+		String fitCode = request.getParameter("fit");
+		String seasonCode = request.getParameter("season");
+		String clothName = request.getParameter("brand");
+		String dateForStr = request.getParameter("buydate");
+		System.out.println(dateForStr);
+		  Date clothBuyDate = new Date();
+			try {
+				clothBuyDate = new java.text.SimpleDateFormat("yyyy-MM").parse(dateForStr);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  System.out.println("clothBuyDate : " + clothBuyDate);
+		  String clothMemo = request.getParameter("memo");
+		  String likeStatus = ""; 
+		  if((request.getParameter("likestatus")).equals("Y")) {
+			  likeStatus = "Y";
+		  } else {
+			  likeStatus = "N";
+		  }
+		
+		  c = new Closet(memberNo, typeCode, styleCode, colourCode, fitCode, seasonCode,
+	  				clothName, clothBuyDate, clothMemo, likeStatus);
+
+			int result = new ClosetService().addNewCloth(c);
+			if(result > 0) {
+				request.setAttribute("msg", "등록에 성공하였습니다.");
+				request.getRequestDispatcher("<%= contextPath %>/closet.look").forward(request, response);
+			} else {
+				request.setAttribute("msg", "등록에 오류가 있습니다. 다시 확인해주세요.");
+				request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+			}
+		
+		// AJAX 구현
+		/*System.out.println(c);		
 
 		BufferedReader br = request.getReader(); //request를 통해 데이터를 읽는다.
 		  if(br == null) {
@@ -101,11 +147,13 @@ public class MyclosetAddServlet extends HttpServlet {
 			  if(result > 0) {
 				  
 				  
-			  }
-			  
+			  } else {
+				  
+			  }*/
+/*			  
 			  
 		}
-		  System.out.println(c);
+		  System.out.println(c);*/
 	
 	}
 

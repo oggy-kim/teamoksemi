@@ -686,44 +686,45 @@ ul.category ul>li {
               };
 
               $(document).ready(function(){
-
-
                 $("#add-btn").click(function(){
-                  var obj = new Object();
-                  if(options.val() == 'top') {
-					obj.typeoption = 1;
-                    obj.clothtype = $("#cloth-top").val();
-                  } else if(options.val() == 'bottom') {
-					obj.typeoption = 2;
-                    obj.clothtype = $("#cloth-bottom").val();
-                  } else {
-					obj.typeoption = 3;
-                    obj.clothtype = $("cloth-acc").val();
-				  };
-				  obj.likestatus = $("#likestatus:checked").val();
-                  obj.style = $("#style").val();
-                  obj.colour = colour.val();
-                  obj.fit = fit.val();
-				  obj.season = season.val();
-                  obj.brand = $("#brand").val();
-                  obj.buydate = $("#buydate").val();
-                  obj.memo = $('#memo').val();
-                  console.log(obj);
+					location.href="<%= contextPath %>/addmycloth.look";					
+				
+				// ajax 버전
+				//   var obj = new Object();
+                //   if(options.val() == 'top') {
+				// 	obj.typeoption = 1;
+                //     obj.clothtype = $("#cloth-top").val();
+                //   } else if(options.val() == 'bottom') {
+				// 	obj.typeoption = 2;
+                //     obj.clothtype = $("#cloth-bottom").val();
+                //   } else {
+				// 	obj.typeoption = 3;
+                //     obj.clothtype = $("cloth-acc").val();
+				//   };
+				//   obj.likestatus = $("#likestatus:checked").val();
+                //   obj.style = $("#style").val();
+                //   obj.colour = colour.val();
+                //   obj.fit = fit.val();
+				//   obj.season = season.val();
+                //   obj.brand = $("#brand").val();
+                //   obj.buydate = $("#buydate").val();
+                //   obj.memo = $('#memo').val();
+                //   console.log(obj);
 
-                  var JSONData = JSON.stringify(obj);
-                  $.ajax({
-                    url: "<%= contextPath %>/addmycloth.look",
-                    data: JSONData,
-                    type: "POST",
-                    dataType: "json",
-                    success: function(data) {
+                //   var JSONData = JSON.stringify(obj);
+                //   $.ajax({
+                //     url: "<%= contextPath %>/addmycloth.look",
+                //     data: JSONData,
+                //     type: "POST",
+                //     dataType: "json",
+                //     success: function(data) {
 
-                    },
-                    error: function(e) {
-					  alert("에러 발생");
-					  console.log(e)
-                    }
-                  });
+                //     },
+                //     error: function(e) {
+				// 	  alert("에러 발생");
+				// 	  console.log(e)
+                //     }
+                //   });
 
                 });
               });  
