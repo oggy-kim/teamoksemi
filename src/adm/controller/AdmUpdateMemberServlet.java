@@ -18,7 +18,7 @@ import shop.model.vo.Shop;
 /**
  * Servlet implementation class AdmUpdateMemberServlet
  */
-@WebServlet("/AdmUpdateMemberServlet")
+@WebServlet("/update.member")
 public class AdmUpdateMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
