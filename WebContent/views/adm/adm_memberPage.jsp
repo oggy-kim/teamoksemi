@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
     <style>
 
         body {
@@ -183,9 +184,10 @@
 		
 		table {
 			text-align : center;
+			font-family : 'Noto Serif KR', serif;
 		}
 		
-		table.sortable thead {
+		table.sortable th {
 		    background-color:#eee;
 		    color:#666666;
 		    font-weight: bold;
@@ -215,6 +217,7 @@
 		}
         
         #member_table, #member_board_table {
+        	
        		text-align : center;
             width : 85%;
             margin : 3% 0 0 5%;
@@ -224,14 +227,18 @@
          .table_title { /* 회원 정보 목록, 회원 정보 */
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif; 
+            font-weight : 700;
             font-size: 28px; 
         }
         
         .member_detail_title {
 			margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif;  */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700;
             font-size: 28px;        
         }
 
@@ -242,7 +249,7 @@
         }
 
         .member_profile_box {
-            width : 20%;
+            width : 25%;
             height : 100%;
             display : inline-block;
             border : 1px solid black;
@@ -261,7 +268,7 @@
             height : 100%;
         }
 
-        .member_detail_1, .member_detail_2 {
+        #member_detail_1, #member_detail_2 {
             width : 30%;
             height : 100%;
             margin : 0 1%;
@@ -272,11 +279,12 @@
             height : 100%;
             width : 100%;
         }
-
-        /* #caption {
-            caption-side:top;
-            font-size:15px;
-            color : black;
+        
+        /* #member_detail_table_1 th {
+        	background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
         } */
 
         .member_detail_table td {
@@ -297,6 +305,7 @@
 		}
 
         #update_btn, #delete_btn {
+        	font-family : 'Noto Serif KR', serif;
             float : right;
             background:gray;
             border:gray;
@@ -313,6 +322,7 @@
         } 
         
         #searchBtn{
+        	font-family : 'Noto Serif KR', serif;
             height:30px;
             width:80px;
             background:gray;
@@ -398,10 +408,10 @@
         <hr><br><br>
         <div class="member_box">
             <h4 class="table_title">회원 정보 목록</h4>
-            <p style="margin-left:5%;">상세보기를 원하는 회원을 클릭하면, 하단에 해당하는 회원의 상세정보를 볼 수 있습니다.</p>
+            <p style="margin-left:5%; font-family : 'Noto Serif KR', serif;">상세보기를 원하는 회원을 클릭하면, 하단에 해당하는 회원의 상세정보를 볼 수 있습니다.</p>
             <!-- 테이블 정렬 드롭박스 -->
             <div class="sorting_box">
-                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option value="member_no">회원번호</option>
                     <option value="member_nick">닉네임</option>
                     <option value="grade">등급</option>
@@ -474,13 +484,13 @@
          
             <br>
             <div class="searchArea">
-                <select id="searchCondition" name="sort" style="display:inline-block;">
+                <select id="searchCondition" name="sort" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option>-----</option>
                     <option value="member_no">회원번호</option>
                     <option value="member_id">아이디</option>
                     <option value="member_nick">닉네임</option>
                 </select>
-                <input type="text" style="display:inline-block;" id="searchKeyword">
+                <input type="text" style="display:inline-block; font-family : 'Noto Serif KR', serif;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
         </div>
@@ -606,16 +616,16 @@
          	           		var detail = "";
 
          	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
-          				  			  "<p style='margin-left:5%;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
+          				  			  "<p style='margin-left:5%; font-family : 'Noto Serif KR', serif;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
          	           			      "<div class='member_profile_box'>" + 
          	           			      	"<div id='member_photo_wrapper'>" + 
          	           			      		"<img id='member_photo' src='" + result.profile + "'></div></div>" +
-         	           				  "<div class='member_detail_1'><table class='table-condensed' id='member_detail_table_1'><tr><th>회원번호 </th><td>" + result.memberNo + "</td></tr>" +
+         	           				  "<div id='member_detail_1'><table class='sortable table' id='member_detail_table_1'><tr><th>회원번호 </th><td>" + result.memberNo + "</td></tr>" +
                                       "<tr><th>회원아이디</th><td>" + result.memberId + "</td></tr>" +
 	                                  "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" + 
                                       "<tr><th>성별</th><td>" + result.gender + "</td></tr>" +
                                       "<tr><th>회원등급</th><td>" + result.gradeCode + "</td></tr></table></div>" +
-                                      "<div class='member_detail_2'><table class='table_condensed' id='member_detail_table_2'><tr><th>출생년도</th><td>" + result.birthYear + "</td></tr>" +
+                                      "<div id='member_detail_2'><table class='sortable table' id='member_detail_table_2'><tr><th>출생년도</th><td>" + result.birthYear + "</td></tr>" +
                                       "<tr><th>선호스타일</th><td>" + result.likeStyle + "</td></tr>" +
                                       "<tr><th>가입날짜</th><td>" + result.entryDate + "</td></tr>" +
                                       "<tr><th>현황 </th><td>" + result.memberStatus + "</td></tr><tr><th>최근접속일</th><td>구현안함</td></tr></table></div>" +

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
     <style>
 
         body {
@@ -181,9 +182,10 @@
 		table {
 			text-align : center;
 			vertical-align : middle;
+			font-family : 'Noto Serif KR', serif;
 		}
 		
-		table.sortable thead {
+		table.sortable th {
 		    background-color:#eee;
 		    color:#666666;
 		    font-weight: bold;
@@ -198,25 +200,18 @@
         
         /* -- 인기 게시글 조회기간 설정 -- */
         
-        .date_box {
+        /* .date_box {
             width : 80%;
             height : 10%;
             margin-left : 5%;
-        }
-
-        /* .trend_box {
-            width : 80%;
-            height : 20%;
-            margin : 0 0 0 5%;
-            box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        } */
+        }  */
 
         .board_box {
             width : 80%;
             height : auto;
         	overflow : hidden;
             margin-left : 5%;
-            margin-top : 5%;
+            margin-top : 2%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
                 
@@ -237,7 +232,9 @@
         .table_title { 
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700; 
             font-size: 28px; 
         }
 
@@ -251,8 +248,10 @@
 
         .board_detail_title {
             margin : 3% 0 0 5%;
-            padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            padding : 3% 0 0 0;
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700;
             font-size: 28px; 
         }
 
@@ -262,12 +261,13 @@
 			height : 60%;
 			margin-top : 2%;
 			margin-left : 5%;
-			border : 1px solid black;
+			/* border : 1px solid black; */
 			font-size : 15px;
 			display:inline-block;	
 		}
 
 		#delete_board_btn, #delete_comment_btn {
+			font-family : 'Noto Serif KR', serif;
 			float : right;
             background:gray;
             border:gray;
@@ -460,9 +460,9 @@
 
         <div class="board_box">
             <h4 class="table_title">게시물 모아보기</h4>
-            <p style="margin-left:5%;">상세보기를 원하는 게시물을 클릭하면, 하단에 해당하는 게시글의 상세정보를 볼 수 있습니다.</p>            
+            <p style="margin-left:5%; font-family : 'Noto Serif KR', serif;">상세보기를 원하는 게시물을 클릭하면, 하단에 해당하는 게시글의 상세정보를 볼 수 있습니다.</p>            
             <div class="sorting_box">
-                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option value="write_date">작성일</option>
                     <option value="like_num">찜갯수</option>
                     <option value="view_num">조회수</option>
@@ -534,13 +534,13 @@
             </table>
             <br>
             <div class="searchArea">
-                <select id="searchCondition2" name="sort" style="display:inline-block;">
+                <select id="searchCondition2" name="sort" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option>-----</option>
                      <option value="contents">내용</option>
                      <option value="writer">작성자</option>
                 </select>
-                <input type="text" style="display:inline-block;" id="searchKeyword">
-                <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
+                <input type="text" style="display:inline-block; font-family : 'Noto Serif KR', serif;" id="searchKeyword">
+                <button id="searchBtn" type="submit" style="display:inline-block; font-family : 'Noto Serif KR', serif;">검색하기</button>
             </div>
         </div>
         <br> 
@@ -626,10 +626,10 @@
           	           		var detail = "";
 
           	           		detail += "<h4 class='board_detail_title'>게시물 상세보기</h4>" +
-          	           				  "<p style='margin-left:5%;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
+          	           				  "<p style='margin-left:5%; font-family:" + "'Noto Serif KR', serif;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
           	           				  "<div class='board_detail_contents'></div>" +
           	           				  "<div class='board_detail_contents'>" + 
-          	           				  "<table class='table' style='width:100%; height:100%;'>" + 
+          	           				  "<table class='sortable table' style='width:100%; height:100%;'>" + 
           	           				  "<th colspan='1'>글번호</th><td colspan='1'>" + result.articleNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
                                        "<tr><th colspan='1'>선호스타일</th><td colspan='3'>" + result.likeStyle + "</td></tr>" +
                                        "<tr><th colspan='1'>찜수</th><td colspan='1'>" + result.ariticleLikes + "</td><th colspan='1'>조회수</th><td colspan='1'>" + result.articleViews + "</td></tr>" +

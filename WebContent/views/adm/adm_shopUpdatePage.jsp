@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
 <style>
 
       body {
@@ -153,7 +154,9 @@
       }
 
       #content_title {
-          font-family: 'Do Hyeon', sans-serif; 
+          /* font-family: 'Do Hyeon', sans-serif; */
+          font-family : 'Noto Serif KR', serif;
+          font-weight : 700; 
           font-size: 40px; 
           margin : 0;
       }
@@ -178,7 +181,9 @@
       .shop_update_title {
             margin : 5% 0 0 5%;
             padding : 5% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700; 
             font-size: 28px; 
        }
        
@@ -187,6 +192,7 @@
        } 
        
        #updateBtn, #cancelBtn {
+       		font-family : 'Noto Serif KR', serif;
 			float : right;
             background:gray;
             border:gray;

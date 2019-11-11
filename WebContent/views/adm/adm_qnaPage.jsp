@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
 
     <style>
 
@@ -181,9 +182,10 @@
         table {
 			text-align : center;
 			vertical-align : middle;
+			font-family : 'Noto Serif KR', serif;
 		}
         
-		table.sortable thead {
+		table.sortable th {
 		    background-color:#eee;
 		    color:#666666;
 		    font-weight: bold;
@@ -201,7 +203,8 @@
             /* height : 18%; */
 			height : auto;	
         	overflow : hidden;
-            margin : 0 0 0 5%;
+            margin-left : 5%;
+            margin-top : 2%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
 
@@ -224,17 +227,20 @@
             margin-top : 3%;
             margin-left : 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700; 
             font-size: 28px; 
         }
         
         .qna_detail_contents {
+        	font-family: 'Noto Serif KR', serif;
         	float : left;
 			width : 42%;
 			height : 65%;
 			margin-top : 2%;
 			margin-left : 5%;
-			border : 1px solid black;
+			/* border : 1px solid black; */
 			font-size : 15px;
 			display:inline-block;
 			vertical-align : bottom; /* 적용 안됨 */ 	
@@ -247,6 +253,7 @@
             border:gray;
             color:white;
             border-radius:5px;
+            font-family : 'Noto Serif KR', serif;
 		}
 		
 		 .btnArea {
@@ -274,6 +281,7 @@
             border:gray;
             color:white;
             border-radius:5px;
+            font-family : 'Noto Serif KR', serif;
         }
         
         #searchBtn:hover {
@@ -357,7 +365,7 @@
             
             <!-- 테이블 정렬 버튼 -->
             <div class="sorting_box">
-                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option value="newest_date">최신순</option>
                     <option value="oldest_date">오래된순</option>
                     <option value="comment_status">답변여부</option>
@@ -432,8 +440,8 @@
                     <option value="title">제목</option>
                     <option value="writer">작성자</option>
                 </select>
-                <input type="text" style="display:inline-block;" id="searchKeyword">
-             	<button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
+                <input type="text" style="display:inline-block; font-family : 'Noto Serif KR', serif;" id="searchKeyword">
+             	<button id="searchBtn" type="submit" style="display:inline-block; font-family : 'Noto Serif KR', serif;">검색하기</button>
             </div>
 			<br>
         </div>
@@ -515,9 +523,9 @@
             	           		var detail = "";
 
             	           		detail += "<h4 class='qna_detail_title'>QnA 상세보기</h4>" + 
-    	           				  "<p style='margin-left:5%;'>선택한 문의글을 상세 조회하고, 해당 문의글에 답변을 달거나 문의글을 삭제 할 수 있습니다.</p>" +
+    	           				  "<p style='margin-left:5%; font-family : 'Noto Serif KR', serif;'>선택한 문의글을 상세 조회하고, 해당 문의글에 답변을 달거나 문의글을 삭제 할 수 있습니다.</p>" +
             	           					"<div class='qna_detail_contents'>" + 
-            	           						"<table class='table' style='width:100%; height:100%;'>" + 
+            	           						"<table class='sortable table' style='width:100%; height:100%;'>" + 
 	            	           						"<tr><th colspan='1'>글번호</th><td colspan='1'>" + result.qnaNo + "</td><th colspan='1'>닉네임</th><td colspan='1'>" + result.memberNick + "</td></tr>" +
 	                                         		"<tr><th colspan='1'>작성일</th><td colspan='1'>" + result.enrollDate + "</td><th colspan='1'>답변여부</th><td colspan='1'>" + result.answerStatus + "</td></tr>" +
 	                                         		"<tr><th colspan='1'>제목</th><td colspan='3'>" + result.qnaTitle + "</td></tr>" +

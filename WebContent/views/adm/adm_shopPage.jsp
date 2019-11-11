@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
     <style>
 
         body {
@@ -184,9 +185,10 @@
 
 		table {
 			text-align : center;
+			font-family : 'Noto Serif KR', serif;
 		}
 		
-		table.sortable thead {
+		table.sortable th {
 		    background-color:#eee;
 		    color:#666666;
 		    font-weight: bold;
@@ -259,14 +261,14 @@
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
          }
 
-		.shop_detail_contents { /* 다시 조정하기 */
+		.shop_detail_contents { 
 			float : left;
 			width : 42%;
 			height : 70%;
 			margin-top : 2%;
 			margin-left : 5%;
 			margin-botton : 0%;
-			border : 1px solid black;
+			/* border : 1px solid black; */
 			font-size : 15px;
 			display:inline-block;			
 		}
@@ -288,12 +290,15 @@
         .box_title, .table_title { /* 수익 및 거래총량 /제휴 쇼핑몰 리스트 제목 */
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
-            font-size: 28px; 
+            /* font-family: 'Do Hyeon', sans-serif;  */
+            font-family : 'Noto Serif KR', serif;
+            font-size : 28px; 
+            font-weight : 700;
         }
 
 
         #update_btn, #delete_btn {
+        	font-family : 'Noto Serif KR', serif;
             float : right;
             background : gray;
             border : gray;
@@ -325,6 +330,7 @@
             border:gray;
             color:white;
             border-radius:5px;
+            font-family : 'Noto Serif KR', serif;
         }
         
         #searchBtn:hover {
@@ -431,7 +437,7 @@
             <h4 class="table_title">제휴 쇼핑몰 리스트</h4>
             <p style="margin-left:5%;">상세보기를 원하는 쇼핑몰을 클릭하면, 하단에 해당하는 쇼핑몰 상세정보를 볼 수 있습니다.</p>
             <div class="sorting_box">
-                <select id="sortCondition" name="sortCondition" style="display:inline-block;">
+                <select id="sortCondition" name="sortCondition" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option value="cont_money">계약금</option>
                     <option value="cont_status">계약상태</option>
                 </select>
@@ -507,11 +513,11 @@
           	 <br>
             <!-- 검색옵션, 검색버튼 -->
             <div class="searchArea">
-            	<select id="searchCondition" name="sort" style="display:inline-block;">
+            	<select id="searchCondition" name="sort" style="display:inline-block; font-family : 'Noto Serif KR', serif;">
                     <option>-----</option>
                     <option value="shopName">회사명</option>
                 </select>
-                <input type="text" style="display:inline-block;" id="searchKeyword">
+                <input type="text" style="display:inline-block; font-family : 'Noto Serif KR', serif;" id="searchKeyword">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
             <br>
@@ -602,8 +608,8 @@
 
         	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4>" +
 			           				  "<p style='margin-left:5%;'>선택한 쇼핑몰을 상세 조회하고, 해당 쇼핑몰의 정보를 수정하거나 삭제 할 수 있습니다.</p>" +
-                                     "<div class='shop_detail_contents'><table class='table' style='width:100%; height:100%;'><tr><td rowspan='4' colspan='2'><img src='../resources/images/musinsa.png'></td></tr><tr><th rowspan='1' colspan='1'>홈페이지 주소</th><td colspan='1'></td></tr></table></div>" +
-                                     "<div class='shop_detail_contents'><table class='table' style='width:100%; height:100%;'><tr><th colspan='1'>회사번호</th><td colspan='1'>" + result.shopNo + "</td><th colspan='1'>회사명</th><td colspan='1'>" + result.shopName + "</td></tr>" +
+                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr></tr></table></div>" +
+                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr><th colspan='1'>회사번호</th><td colspan='1'>" + result.shopNo + "</td><th colspan='1'>회사명</th><td colspan='1'>" + result.shopName + "</td></tr>" +
                                      "<tr><th colspan='1'>계약상태</th><td colspan='1'>" + result.status + "</td><th colspan='1'>등급</th><td colspan='1'>" + result.shopGradeCode + "</td></tr>" + 
                                      "<tr><th colspan='1'>계약시작일</th><td colspan='1'>" + result.contractDate + "</td><th colspan='1'>계약만료일 </th><td colspan='1'>" + result.expireDate + "</td></tr>" +
                                      "<tr><th colspan='1'>계약금</th><td colspan='3'>" + result.contractMoney + "</td></tr>" +
