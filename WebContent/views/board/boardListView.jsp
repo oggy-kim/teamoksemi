@@ -260,6 +260,7 @@ img:hover {
 
 .pop-layer .pop-container {
   padding: 20px 25px;
+  
 }
 
 .pop-layer p.ctxt {
