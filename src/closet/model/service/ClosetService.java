@@ -44,6 +44,22 @@ public class ClosetService {
 				
 		return count;
 	}
+	
+	// 새 옷 추가 
+	public int addNewCloth(Closet c) {
+		Connection conn = getConnection();
+		int result = new ClosetDao().addNewCloth(conn, c);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 
 	public ArrayList<Closet> recommendWinter(int memberNo) {
 		Connection conn = getConnection();

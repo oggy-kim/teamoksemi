@@ -9,8 +9,14 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous" />
+<link href="<%= request.getContextPath() %>/css/ui-choose.css" rel="stylesheet">
+
 <style>
-#navbar {
+    #navbar {
             width:100%;
             height:60px;
             position:fixed;
@@ -124,8 +130,16 @@
             cursor: pointer;
             font-weight: 700;
         }
+        .update-member {
+            width: 80%;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 640px;
+        }
 </style>
-
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
+rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -152,7 +166,7 @@
             <li class="list" onclick="goQna();">FAQ / Q&A</li>
             <li class="list-readonly">개인정보관리
              <ul>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</a></li>
+                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</li>
                     <li class="sublist" onclick="goWishStyle();">선호 스타일</li>
                     <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원 탈퇴</li>
                 </ul>
@@ -179,15 +193,165 @@
     <div class="content">
         <h2>개인정보관리</h2>
         <hr>
+	<form action="<%= contextPath %>/update.look" method="post" enctype="multipart/form-data">
+	<table class="update-member">
+		<tr>
+			<td width="100px">출생년도</td>
+            <td>
+                <select name="birthYear" id="birthYear">
+                </select>
+            </td>
+        </tr>
+        <script>
+            var max = new Date().getFullYear();
+            var min = max - 100;
+            select = select = document.getElementById('birthYear');
+
+            for(var i = min; i <= max; i++) {
+                if(i == <%= loginUser.getBirthYear() %>) {
+                    var opt = document.createElement('option');
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    opt.selected = true;
+                    select.appendChild(opt);
+                }
+                var opt = document.createElement('option');
+                opt.value = i;
+                opt.innerHTML = i;
+                select.appendChild(opt);
+            }
+        </script>
+
+        <tr>
+            <td>닉네임</td>
+            <td><input type="text" id="memberNick" name="memberNick" value="<%= loginUser.getMemberNick() %>"></td>
+            <td><button type="button" id="btn-duplicate">중복확인</button></td> 
+        </tr>
+        <script>
+        	$(function(){
+        		$("#btn-duplicate").click(
+                    function(){
+                        var memberNick = $("#memberNick").val();
+                console.log(memberNick);
+                $.ajax({
+                    url: "<%= contextPath %>/memberduplicate.look",
+                    data: {memberNick : memberNick},
+                    type: "post",
+                    dataType: "text",
+                    success: function(result) {
+                        if(result > 0) {
+                            alert("중복된 닉네임 값이 있습니다.");
+                            $("#memberNick").focus();
+                            $("#memberNick").css({"border-color":"red"});
+                        } else {
+                            alert("사용 가능한 닉네임입니다.");
+                            $("#memberNick").css({"border-color":""});
+                        }
+                    },
+                    error: function() {
+                        alert("통신 실패입니다.");
+                    }
+                });
+                    });
+        		
+        	});
+        </script>
+        <tr>
+            <td>비밀번호 변경</td>
+            <td><input type="password" id="memberPwd" name="memberPwd" value="<%= loginUser.getMemberPwd() %>"></td>
+            <td>
+               <div class="pwd-validate"></div> 
+
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호 확인</td>
+            <td><input type="password" id="memberPwd" name="memberPwd" value="<%= loginUser.getMemberPwd() %>"></td>
+            </tr>
+            <script>
+                // 유효성 검사 추가필요
+            
+            
+            </script>
 
 
-    <div class="article left">
-    <article class="favoritestyle">
-    개인정보 수정관련
+
+
+
+            <tr>
+			<td>프로필 사진</td> <!-- cropper.js 추가 필요(사진 1:1 업로드) -->
+            <td><input type="file" id="profilePic" name="profilePic"></td>
+            <td>
+                <div style="width:100px; height: 100px">
+                <img id="profileImg" src="<%= request.getContextPath() %>/resources/images/profile/<%= loginUser.getMemberNo() %>.jpg" style="width:100px; height:100px">
+            </div>
+            </td>
+        </tr>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                    $('#profileImg').attr('src', e.target.result);
+                    $('#profileImg').attr('style', "width:100px; height:100px"); 
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+                }
+                $("#profilePic").change(function() {
+                readURL(this);
+                });
+        
+        </script>
+        
+		<tr>
+		
+		<tr>
+			<td>선호 스타일</td>
+			<td colspan="2"><select class="ui-choose" multiple="multiple" name="likeStyle" id="style">
+										<option value="깔끔한"">#깔끔한</option>
+										<option value="빈티지">#빈티지</option>
+										<option value="힙스터">#힙스터</option>
+                                        <option value="스트릿">#스트릿</option>
+										<option value="시크한">#시크한</option>
+										<option value="클래식">#클래식</option>
+										<option value="러블리">#러블리</option>
+										<option value="핑크룩">#핑크룩</option>
+										<option value="섹시한">#섹시한</option>
+										<option value="럭셔리">#럭셔리</option>
+										<option value="모던시크">#모던시크</option>
+										<option value="스쿨룩">#스쿨룩</option>
+										<option value="귀여운">#귀여운</option>
+										<option value="캐주얼">#캐주얼</option>
+										<option value="유니크">#유니크</option>
+										<option value="댄디룩">#댄디룩</option>
+								</select></td>
+		</tr>
+	</table>
+    <button>업데이트</button> <!-- 업데이트 후 변경된 정보로 loginUser Update 필요  -->
+    
+
+
+
+	</form>
     </div>
-   </div>
+    <script src="<%= contextPath %>/js/ui-choose.js"></script>
+    <script>
 
-    </div>
+    var style = $("#style").ui_choose();
+    style.click = function(value, item) {
+      console.log("click", value);
+      style = value;
+      console.log(style);
+    };
+    console.log("style" + style);
+
+    
+  </script>
+  
+  
+  
 </section>
 <footer class="copyRight">
   <p>Copyright 2019. LookSoFine.  All right reserved.</p>

@@ -17,8 +17,7 @@ public class Member implements java.io.Serializable{
    private String memberStatus; // 탈퇴여부
    
    public Member() {}
-   
-
+  
    public Member(String memberId, String memberPwd) {
 	super();
 	this.memberId = memberId;
