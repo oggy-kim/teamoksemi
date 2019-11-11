@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.ArrayList, closet.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.ArrayList, closet.model.vo.*, java.util.Date"%>
 <% 
 	ArrayList<Closet> list = (ArrayList<Closet>) request.getAttribute("list");
 	int topCount = (int) request.getAttribute("topCount");
 	int bottomCount = (int) request.getAttribute("bottomCount");
 	int accCount = (int) request.getAttribute("accCount");
 	int num = 0;
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();
 %>
 <!DOCTYPE html>
 <html>
@@ -21,11 +23,16 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+
 <!-- Owl StyleSheet -->
 <link href="<%= request.getContextPath() %>/css/owl.carousel.min.css" rel="stylesheet">
 <!-- Colorpicker StyleSheet-->
 <link href="<%= request.getContextPath() %>/css/bcp.min.css" rel="stylesheet">
 <style>
+	body {
+		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
+	}
 #navbar {
 	width: 100%;
 	height: 60px;
@@ -95,6 +102,7 @@ hr {
 }
 
 .content {
+	font-family: 'Do Hyeon', sans-serif;
 	width: 77%;
 	height: 1100px;
 	float: left;
@@ -102,6 +110,7 @@ hr {
 }
 
 .menu {
+	font-family: 'Do Hyeon', sans-serif;
 	width: 20%;
 	list-style-type: disc;
 	float: left;
@@ -232,6 +241,10 @@ ul.category ul>li {
 }
 
 /* 나의 옷장 carousel 스타일 */
+.cloth-wrapper {
+	height: 140px;
+	width: 120px;
+}
 .cloth-vec {
         height: 120px;
 		width: 120px;
@@ -281,45 +294,53 @@ ul.category ul>li {
 	</nav>
 	<br />
 	<section>
+		<!-- 좌측 네비바 -->
 		<div class="menu">
-			<ul class="category">
-				<li class="list" onclick="goMyCloset();">나의 옷장</li>
-				<li class="list" onclick="goMyList();">내 게시물 관리</li>
-				<li class="list" onclick="goQna();">FAQ / Q&A</li>
-				<li class="list-readonly">개인정보관리
-					<ul>
-						<li class="sublist"
-							onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인
-							정보 수정</a>
-						</li>
-						<li class="sublist" onclick="goWishStyle();">선호 스타일</li>
-						<li class="sublist"
-							onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원
-							탈퇴</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<script>
-        function goMyCloset(){
-            location.href="<%= contextPath %>/closet.look";
-        }
-        function goMyList(){
-            location.href="<%= contextPath %>/mylist.look";
-        }
-        function goQna(){
-            location.href="<%= contextPath %>/qna.look";
-        }
-        function goWishStyle(){
-            location.href="<%= contextPath %>/withstyle.look";
-        }
-    	</script>
+				<ul class="category">
+					<li class="list" onclick="goMyCloset();">나의 옷장</li>
+					<li class="list" onclick="goMyList();">내 게시물 관리</li>
+					<li class="list" onclick="goQna();">FAQ / Q&A</li>
+					<li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
+				</ul>
+			</div>
+			<script>
+				function goStyle() {
+    		location.href="<%= contextPath %>/boardlist.look";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/wishlist.look";
+    	}
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
+    	function goMypage() {
+    		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+    		if("<%= gradeCode %>" == 'S'){
+    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    		} else {
+    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    		}
+   	 	}
+				function goMyCloset(){
+					location.href="<%= contextPath %>/closet.look";
+				}
+				function goMyList(){
+					location.href="<%= contextPath %>/mylist.look";
+				}
+				function goQna(){
+					location.href="<%= contextPath %>/qna.look";
+				}
+			</script>
+
+			
 		<div class="line"></div>
 		<div class="content">
 			<div class="content left">
 				<div class="content left button">
-					<button onclick="addCloth();">옷 추가</button>
-					<button>옷 삭제</button>
+					<button class="btn btn-secondary" onclick="addCloth();">옷 추가</button> &nbsp; &nbsp;
+					<button class="btn btn-primary">옷 삭제</button> &nbsp; &nbsp;
+					<button class="btn btn-warning">선호스타일 보기</button>
 				</div>
 				<div class="content left mycloset">
 						<script type="text/javascript"
@@ -329,8 +350,14 @@ ul.category ul>li {
 						<div class="clothlist mytop">
 								<% for(Closet c : list) {
 									if(c.getTypeOption() == 1) { %>
-									<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
-									<% num++;
+									<div class="cloth-wrapper">
+										<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+										<% if(c.getLikeStatus().equals("Y")) { %>
+											<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+											<% 	} %>
+										
+										</div>
+									<%	num++;
 									}
 								} %>
 							  </div>		
@@ -366,13 +393,19 @@ ul.category ul>li {
 <hr>
 <h5>하의(총 <%= bottomCount %>벌)</h5>
 <div class="clothlist mybottom">
-		<% for(Closet c : list) {
-			if(c.getTypeOption() == 2) { %>
+	<% for(Closet c : list) {
+		if(c.getTypeOption() == 2) { %>
+		<div class="cloth-wrapper">
 			<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
-			<% num++;
-			}
-		} %>
-	  </div>		
+			<% if(c.getLikeStatus().equals("Y")) { %>
+				<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+				<% 	} %>
+			
+			</div>
+		<%	num++;
+		}
+	} %>
+  </div>		
 	 
 	  <script>
 			var carousel = $(".clothlist.mybottom");
@@ -405,12 +438,19 @@ ul.category ul>li {
 				<hr>
 <h5>악세사리(총 <%= accCount %>벌)</h5>
 <div class="clothlist myacc">
-		<% for(Closet c : list) {
-			if(c.getTypeOption() == 3) { %>
+	<% for(Closet c : list) {
+		if(c.getTypeOption() == 3) { %>
+		<div class="cloth-wrapper">
 			<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
-			<% num++;
-			}
-		} %>
+			<% if(c.getLikeStatus().equals("Y")) { %>
+				<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+				<% 	} %>
+			
+			</div>
+		<%	num++;
+		}
+	} %>
+  </div>
 	  </div>		
 
 	  <script>
@@ -447,33 +487,35 @@ ul.category ul>li {
 			</div>
 
 			<!-- content right -->
-			<form>
+			<form action="<%= contextPath %>/addmycloth.look" method="POST">
 				<div class="content right">
+					
+					<div class="content right thumbnail">
+						<div id="thumbnail-pic" align="center"
+							style="background-color: rgb(224, 20, 34);"></div>
+						<div id="thumbnail-add">
+							<button class="btn btn-secondary" id="add-btn">내 옷장에 추가!</button>
+						</div>
+					</div>
 					<div class="content right first">
 						<h5>분류 선택</h5>
-						<select class="ui-choose" id="options">
+						<select class="ui-choose" id="options" name="options">
 							<option value="top">상의</option>
 							<option value="bottom">하의</option>
 							<option value="acc">악세사리</option>
 						</select>
 					</div>
-					<div class="content right thumbnail">
-						<div id="thumbnail-pic" align="center"
-							style="background-color: rgb(224, 20, 34);"></div>
-						<div id="thumbnail-add">
-							<button type="button" id="add-btn">내 옷장에 추가!</button>
-						</div>
-					</div>
 					<div class="content right cloth style">
 						<table class="select-form">
 							<tr>
-								<td style="width: 100px">선호하는 옷?</td>
+								<td style="width: 100px">선호하는 <br>
+										옷인가요?</td>
 								<td><input type="checkbox" name="likestatus" id="likestatus" value="Y"></td>
 							</tr>
 							<tr id="select-top">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-top"
-									name="clothtype">
+									name="clothtypetop">
 										<option value="TSHIRTS">반팔티</option>
 										<option value="MANTOMAN">맨투맨</option>
 										<option value="HOOD">후드티</option>
@@ -487,7 +529,7 @@ ul.category ul>li {
 							<tr id="select-bottom">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-bottom"
-									name="clothtype">
+									name="clothtypebottom">
 										<option value="COTTON">면바지</option>
 										<option value="JEAN">청바지</option>
 										<option value="SHORT">반바지</option>
@@ -498,7 +540,7 @@ ul.category ul>li {
 							<tr id="select-acc">
 								<td>선택</td>
 								<td><select class="ui-choose" id="cloth-acc"
-									name="clothtype">
+									name="clothtypeacc">
 										<option value="CAP">모자</option>
 										<option value="SCARF">목도리</option>
 										<option value="SNEAKERS">스니커즈</option>
@@ -507,9 +549,9 @@ ul.category ul>li {
 								</select></td>
 							</tr>
 							<tr>
-								<td>스타일(2개까지 선택)</td>
+								<td>스타일</td>
 								<td><select class="ui-choose" multiple="multiple"
-									id="style">
+									id="style" name="style">
 										<option value="1">#깔끔한</option>
 										<option value="2">#빈티지</option>
 										<option value="3">#힙스터</option>
@@ -520,7 +562,7 @@ ul.category ul>li {
 										<option value="8">#핑크룩</option>
 										<option value="9">#섹시한</option>
 										<option value="10">#럭셔리</option>
-										<option value="11">#모던시크</option>
+										<option value="11">#모던싴</option>
 										<option value="12">#스쿨룩</option>
 										<option value="13">#귀여운</option>
 										<option value="14">#캐주얼</option>
@@ -530,7 +572,7 @@ ul.category ul>li {
 							</tr>
 							<tr>
 								<td>색감</td>
-								<td><select class="ui-choose" id="colour">
+								<td><select class="ui-choose" id="colour" name="colour">
 										<option value="245,245,245">화이트</option>
 										<option value="255,255,0">옐로우</option>
 										<option value="211,33,45">레드</option>
@@ -546,19 +588,19 @@ ul.category ul>li {
 								<script src="<%= contextPath %>/js/bcp.en.min.js"></script>
 								<script>
 								
-								$('.ui-choose').attr("selected").bcp();
-								$('#colour').on('pcb.refresh', function (e) {
-									if ($('#colour').val() == "기타") {
-										console.log("성공!");
-										let color = $(this).bcp('color');
-										if (color.value) {
-											$("#thumbnail-pic").attr(
-												"style",
-												"background-color: rgb(" + value + ");"
-												);
-											}
-									}
-								});
+								// $('.ui-choose').attr("selected").bcp();
+								// $('#colour').on('pcb.refresh', function (e) {
+								// 	if ($('#colour').val() == "기타") {
+								// 		console.log("성공!");
+								// 		let color = $(this).bcp('color');
+								// 		if (color.value) {
+								// 			$("#thumbnail-pic").attr(
+								// 				"style",
+								// 				"background-color: rgb(" + value + ");"
+								// 				);
+								// 			}
+								// 	}
+								// });
 								</script>
 							</tr>
 							<tr>
@@ -625,17 +667,19 @@ ul.category ul>li {
               var topcloth = $("#cloth-top").ui_choose();
               topcloth.click = function(value, item) {
                 console.log("click", value);
+				console.log($(".ui-choose[name=clothtype]").val());
                 $("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + value + '.png)'});
-              };
+				
+			  };
               var bottom = $("#cloth-bottom").ui_choose();
               bottom.click = function(value, item) {
                 console.log("click", value);
                 $("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + value + '.png)'});
-
               };
               var acc = $("#cloth-acc").ui_choose();
               acc.click = function(value, item) {
                 console.log("click", value);
+				console.log($(".ui-choose[name=clothtype]").val());
                 $("#thumbnail-pic").css({"-webkit-mask-box-image":'url(<%= contextPath %>/resources/images/closet/' + value + '.png)'});
 
               };
@@ -685,10 +729,8 @@ ul.category ul>li {
                 console.log("change", value);
               };
 
-              $(document).ready(function(){
-                $("#add-btn").click(function(){
-					location.href="<%= contextPath %>/addmycloth.look";					
-				
+			  
+					
 				// ajax 버전
 				//   var obj = new Object();
                 //   if(options.val() == 'top') {
@@ -725,10 +767,6 @@ ul.category ul>li {
 				// 	  console.log(e)
                 //     }
                 //   });
-
-                });
-              });  
-
             </script>
 				</div>
 			</form>

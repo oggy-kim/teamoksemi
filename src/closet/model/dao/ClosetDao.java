@@ -51,6 +51,36 @@ public class ClosetDao {
 		}
 		return list;
 	}
+	// 선호하는 스타일용
+	public ArrayList<Closet> selectMyCloset(Connection conn, int memberNo, String likeStatus) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Closet> list = new ArrayList<>();
+		
+		String sql = prop.getProperty("selectMyLikeCloset");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, likeStatus);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Closet c = new Closet(rset.getInt(2), rset.getInt(3), rset.getString(4), rset.getInt(5),
+									  rset.getString(6), rset.getString(7), rset.getString(8), rset.getString(9),
+									  rset.getString(10), rset.getDate(11), rset.getString(12), rset.getString(13),
+									  rset.getString(14), rset.getDate(15));
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	// 상의 총갯수
 	public int getTopCount(Connection conn, int memberNo) {
 		PreparedStatement pstmt = null;
@@ -77,6 +107,35 @@ public class ClosetDao {
 		
 		return count;
 	}
+	public int getTopCount(Connection conn, int memberNo, String likeStatus) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		
+		String sql = prop.getProperty("getLikeTopCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, likeStatus);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
+
+	
+	
 	// 하의 총갯수
 	public int getBottomCount(Connection conn, int memberNo) {
 		PreparedStatement pstmt = null;
@@ -103,6 +162,32 @@ public class ClosetDao {
 		
 		return count;
 	}
+	public int getBottomCount(Connection conn, int memberNo, String likeStatus) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		
+		String sql = prop.getProperty("getLikeBottomCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, likeStatus);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
 	// 악세사리 총갯수
 	public int getAccCount(Connection conn, int memberNo) {
 		PreparedStatement pstmt = null;
@@ -114,6 +199,32 @@ public class ClosetDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
+	public int getAccCount(Connection conn, int memberNo, String likeStatus) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		
+		String sql = prop.getProperty("getLikeAccCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, likeStatus);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -271,5 +382,7 @@ public class ClosetDao {
 		}
 		return clist;
 	}
+
+
 
 }

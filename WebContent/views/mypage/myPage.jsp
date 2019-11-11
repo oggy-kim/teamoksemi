@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.*" %>
 <% 
 	//세션에서 로그인유저 -> gradeCode로 admin 계정 확인하기
 	Member m = (Member)session.getAttribute("loginUser");
-	String gradeCode = m.getGradeCode();
+    String gradeCode = m.getGradeCode();
+    
+    String[] styleArr = m.getLikeStyle().split(",");
+    int i = 0;
+
+    
 %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +18,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
 <style>
+	body {
+		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
+	}
 #navbar {
             width:100%;
             height:60px;
@@ -83,12 +92,13 @@
         }
 
         .content {
+            font-family: 'Do Hyeon', sans-serif;
             width: 65%;
-            height: 500px;
             float: left;
         }
 
         .menu {
+            font-family: 'Do Hyeon', sans-serif;
             width: 20%;
             list-style-type: disc;
             float: left;
@@ -127,13 +137,34 @@
 
         .mytype {
           background: lightgray;
+          border-radius: 10px;
           margin: auto;
-          padding: 10px;
-          width: 50%;
+          width: 450px;
+          height: 150px;
         }
 
+        .nickname {
+            margin: auto;
+            width: 65%;
+            height: 100%; 
+            float: left;
+            padding-top: 20px;
+            text-align: center;
+
+        }
+        .profilepic {
+            float: right;
+            margin: 5px 5px 0 0;
+            width: 130px;
+            height: 130px;
+            border-radius: 10px;
+        }
+
+
         button.mytype {
-          width: 23%;
+        margin: auto;
+          width: 70px;
+          height: 40px;
           color: black;
           border-radius: 5px;
           border: 0px;
@@ -145,6 +176,33 @@
             cursor: pointer;
             font-weight: 700;
         }
+
+        .article {
+            float: left;
+            width: 49%;
+            /* border: 1px solid black; */
+        }
+
+        .article .favoritestyle {
+            width: 100%;
+            height: 550px;
+            background-color: lightgray;
+            border-radius: 10px;
+        }
+        .favorite {
+            height: 30%;
+            /* border: 1px solid black; */
+        }
+
+        .article .myboard {
+            height: 250px;
+        }
+        .article .myqna {
+            height: 250px;
+        }
+
+
+
 </style>
 </head>
 <body>
@@ -164,22 +222,16 @@
       </nav>
       <br>
 <section>
+    <!-- 좌측 네비바 -->
     <div class="menu">
-        <ul class="category">
-            <li class="list" onclick="goMyCloset();">나의 옷장</li>
-            <li class="list" onclick="goMyList();">내 게시물 관리</li>
-            <li class="list" onclick="goQna();">FAQ / Q&A</li>
-            <li class="list-readonly">개인정보관리
-             <ul>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</a></li>
-                    <li class="sublist" onclick="goWishStyle();">선호 스타일</li>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원 탈퇴</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+            <ul class="category">
+                <li class="list" onclick="goMyCloset();">나의 옷장</li>
+                <li class="list" onclick="goMyList();">내 게시물 관리</li>
+                <li class="list" onclick="goQna();">FAQ / Q&A</li>
+                <li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
+            </ul>
+        </div>
     <script>
-
     	function goStyle() {
     		location.href="<%= contextPath %>/boardlist.look";
     	}
@@ -207,37 +259,74 @@
         function goQna(){
             location.href="<%= contextPath %>/qna.look";
         }
-        function goWishStyle(){
-            location.href="<%= contextPath %>/withstyle.look";
-        }
     </script>
 
     <div class="line"></div>
     <div class="content">
         <h2>Overview</h2>
         <hr>
-        
         <div class="mytype">
-          <button class="mytype hashtag1" disabled>깔끔한</button>
-          <button class="mytype hashtag2" disabled>세련된</button>
-          아기바위 님의 페이지입니다. 
-          <img src="https://merriam-webster.com/assets/mw/images/article/art-wap-landing-mp-lg/egg-3442-4c317615ec1fd800728672f2c168aca5@1x.jpg" weight="50px" width="50px">
-
-        </div>
-
+        <div class="mytype nickname">
+        <% for(i = 0; i < styleArr.length; i++) { %>
+            <button class="mytype hashtag" disabled><%= styleArr[i] %></button>
+        <% } %> 스타일을 즐기는 <br><br>
+        <b><%= m.getMemberNick() %></b> 님의 페이지입니다. &nbsp; &nbsp; 
+    </div>
+    <div class="mytype profilepic"> 
+    <img class="profilepic" src="<%= contextPath %>/resources/images/profile/<%= m.getMemberNo() %>.jpg">
+    </div>  
+    </div>
+    <br><br>
 
     <div class="article left">
+        <h4 align="center">선호스타일</h4>
     <article class="favoritestyle">
-    선호하는 스타일 관리란
-    </div>
-    </article>    
-    <div class="article right">
-    <article class="myboard">
-    내 게시물 관리란
-    </article>
+    <div class="favorite top">
 
+    </div>
+    <hr>
+
+    <div class="favorite bottom">
+
+    </div>
+    <hr>
+    <div class="favorite acc">
+
+
+    </div>
+    </article>
+    <script>
+        $(function(){
+        $.ajax({
+            url: "<%= contextPath %>/closet.look",
+            type: "POST", 
+            data: {likestatus : "Y"},
+            dataType: "json",
+            success: function(result){
+                console.log(result);
+                var i = 0;
+                var top = $(".favorite top").html();
+                var bottom = $(".favorite .bottom").html();
+                var acc = $(".favorite .acc").html();
+                top += "아휴!";
+
+            },
+            error: function() {
+                console.log("ajax 연동실패");
+            }       
+
+        });
+        });
+    
+    </script>
+    </div>
+    <div class="article right">
+            <h4 align="center">내 게시물 관리</h4>
+    <article class="myboard">
+
+    </article>
+<h4 align="center">나의 Q&A</h4>
     <article class="myqna">
-    Q&A란
 
     </article>
    </div>

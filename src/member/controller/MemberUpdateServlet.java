@@ -61,7 +61,7 @@ public class MemberUpdateServlet extends HttpServlet {
 			
 			
 			if(likeStyleArr != null) {
-				likeStyle = String.join("/", likeStyleArr);
+				likeStyle = String.join(",", likeStyleArr);
 			} else {
 				likeStyle = "";
 			}

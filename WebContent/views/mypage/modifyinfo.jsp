@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+Member m = (Member)session.getAttribute("loginUser");
+String gradeCode = m.getGradeCode();
+%>
     
 <!DOCTYPE html>
 <html>
@@ -9,6 +13,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -16,6 +21,9 @@
 <link href="<%= request.getContextPath() %>/css/ui-choose.css" rel="stylesheet">
 
 <style>
+	body {
+		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg'); 
+	}
     #navbar {
             width:100%;
             height:60px;
@@ -54,6 +62,7 @@
             text-decoration: underline;
         }
 
+
         .copyRight {
           text-align: center;
           padding: 100px 0;
@@ -85,12 +94,15 @@
         }
 
         .content {
+            font-family: 'Do Hyeon', sans-serif;
             width: 65%;
             height: 500px;
             float: left;
+            margin: 10px;
         }
 
         .menu {
+            font-family: 'Do Hyeon', sans-serif;
             width: 20%;
             list-style-type: disc;
             float: left;
@@ -112,6 +124,7 @@
         }
 
         ul.category li a {
+            font-family: 'Do Hyeon', sans-serif;
             margin:auto;
             color: black;
         }
@@ -133,10 +146,15 @@
         .update-member {
             width: 80%;
         }
+        .update-member td {
+            padding: 0 0 10px 10px;
+        }
+
         .container {
             margin: 20px auto;
             max-width: 640px;
         }
+
 </style>
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
 rel="stylesheet" type="text/css" />
@@ -159,21 +177,34 @@ rel="stylesheet" type="text/css" />
       </nav>
       <br>
 <section>
+    <!-- 좌측 네비바 -->
     <div class="menu">
         <ul class="category">
             <li class="list" onclick="goMyCloset();">나의 옷장</li>
             <li class="list" onclick="goMyList();">내 게시물 관리</li>
             <li class="list" onclick="goQna();">FAQ / Q&A</li>
-            <li class="list-readonly">개인정보관리
-             <ul>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</li>
-                    <li class="sublist" onclick="goWishStyle();">선호 스타일</li>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원 탈퇴</li>
-                </ul>
-            </li>
+            <li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
         </ul>
     </div>
     <script>
+        function goStyle() {
+    		location.href="<%= contextPath %>/boardlist.look";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/wishlist.look";
+    	}
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
+    	function goMypage() {
+    		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+    		if("<%= gradeCode %>" == 'S'){
+    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    		} else {
+    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    		}
+   	 	}
         function goMyCloset(){
             location.href="<%= contextPath %>/closet.look";
         }
@@ -183,21 +214,18 @@ rel="stylesheet" type="text/css" />
         function goQna(){
             location.href="<%= contextPath %>/qna.look";
         }
-        function goWishStyle(){
-            location.href="<%= contextPath %>/withstyle.look";
-        }
     </script>
 
 
     <div class="line"></div>
     <div class="content">
-        <h2>개인정보관리</h2>
+        <h2>개인정보 수정</h2>
         <hr>
 	<form action="<%= contextPath %>/update.look" method="post" enctype="multipart/form-data">
 	<table class="update-member">
 		<tr>
 			<td width="100px">출생년도</td>
-            <td>
+            <td width="120px">
                 <select name="birthYear" id="birthYear">
                 </select>
             </td>
@@ -225,7 +253,7 @@ rel="stylesheet" type="text/css" />
         <tr>
             <td>닉네임</td>
             <td><input type="text" id="memberNick" name="memberNick" value="<%= loginUser.getMemberNick() %>"></td>
-            <td><button type="button" id="btn-duplicate">중복확인</button></td> 
+            <td colspan="2"><button type="button" id="btn duplicate" class='btn btn-secondary'>중복확인</button></td> 
         </tr>
         <script>
         	$(function(){
@@ -280,11 +308,11 @@ rel="stylesheet" type="text/css" />
 
             <tr>
 			<td>프로필 사진</td> <!-- cropper.js 추가 필요(사진 1:1 업로드) -->
-            <td><input type="file" id="profilePic" name="profilePic"></td>
+            <td><div style="width:100px; height: 100px; margin: auto;">
+                    <img id="profileImg" src="<%= request.getContextPath() %>/resources/images/profile/<%= loginUser.getMemberNo() %>.jpg" style="width:100px; height:100px"></div></td>
             <td>
-                <div style="width:100px; height: 100px">
-                <img id="profileImg" src="<%= request.getContextPath() %>/resources/images/profile/<%= loginUser.getMemberNo() %>.jpg" style="width:100px; height:100px">
-            </div>
+                    <input type="file" id="profilePic" name="profilePic" class='btn btn-secondary'>
+            
             </td>
         </tr>
         <script>
@@ -320,7 +348,7 @@ rel="stylesheet" type="text/css" />
 										<option value="핑크룩">#핑크룩</option>
 										<option value="섹시한">#섹시한</option>
 										<option value="럭셔리">#럭셔리</option>
-										<option value="모던시크">#모던시크</option>
+										<option value="모던싴">#모던싴</option>
 										<option value="스쿨룩">#스쿨룩</option>
 										<option value="귀여운">#귀여운</option>
 										<option value="캐주얼">#캐주얼</option>
@@ -329,7 +357,7 @@ rel="stylesheet" type="text/css" />
 								</select></td>
 		</tr>
 	</table>
-    <button>업데이트</button> <!-- 업데이트 후 변경된 정보로 loginUser Update 필요  -->
+    <button class='btn btn-secondary'>업데이트</button> <!-- 업데이트 후 변경된 정보로 loginUser Update 필요  -->
     
 
 
@@ -350,6 +378,38 @@ rel="stylesheet" type="text/css" />
     
   </script>
   
+  
+  <div class="content">
+        <h2>회원 탈퇴</h2>
+        <hr>
+        <h4>회원탈퇴 안내</h4>
+        <p>회원탈퇴를 하기 전에 안내 사항을 꼭 확인해주세요.
+        <br><br>
+        1. 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다. <br>
+        2. 탈퇴 후 회원정보 및 개인서비스 이용기록은 모두 삭제됩니다. </p>
+        <br><br>
+
+        <form action="<%= contextPath %>/withdraw.look" method="POST" onsubmit="return confirm('탈퇴 시 개인 데이터는 모두 삭제됩니다. 그래도 탈퇴하시겠습니까?');">
+          <input type="checkbox" id="withdraw" name="withdraw" unchecked>
+          안내사항을 모두 확인하였으며, 이에 동의합니다. <br><br>
+          <button id="submit" class='btn btn-secondary' disabled>확인</button>
+        </form>
+
+
+        <script>
+            $("input:checkbox").change(checkedChange);
+                function checkedChange(){
+                    // prop() : 선택한 요소의 속성 값을 반환하거나 설정
+                    console.log($(this).prop("checked"));
+                    if($(this).prop("checked")) {
+                        $("#submit").attr('disabled', false);
+                    } else {
+                        $("#submit").attr('disabled', true);
+                    }
+                    }
+        </script>
+
+</div>
   
   
 </section>

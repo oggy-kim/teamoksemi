@@ -1,21 +1,15 @@
 package closet.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import closet.model.service.ClosetService;
 import closet.model.vo.Closet;
@@ -27,7 +21,7 @@ import member.model.vo.Member;
 @WebServlet(name="MyclosetAddServlet", urlPatterns="/addmycloth.look")
 public class MyclosetAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,38 +33,52 @@ public class MyclosetAddServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		request.setCharacterEncoding("UTF-8");
 		Closet c = new Closet();
 		Member m = (Member) request.getSession().getAttribute("loginUser");
 		int memberNo = m.getMemberNo();
-		String typeCode = request.getParameter("clothtype");
-		// int typeOption = Integer.parseInt(request.getParameter("typeoption"));
+		String options = request.getParameter("options");
+		String typeCode = "";	
+		switch(options) {
+		case "top" 
+			: typeCode = request.getParameter("clothtypetop");
+			break;
+		case "bottom"
+			: typeCode = request.getParameter("clothtypebottom");
+			break;
+		case "acc"
+			: typeCode = request.getParameter("clothtypeacc");
+			break;
+		}
+		
+		System.out.println(typeCode);
 		String[] styleCodeArr = request.getParameterValues("style");
-		System.out.println(styleCodeArr);
 		String styleCode = "";
 		if(styleCodeArr != null) {
-			styleCode = String.join("/", styleCodeArr);
+			styleCode = String.join(",", styleCodeArr);
 		} else {
 			styleCode = "";
 		}
+		System.out.println("코드체크 : " + styleCode);
 		String colourCode = request.getParameter("colour");
+		System.out.println("컬러코드 : " + colourCode);
 		String fitCode = request.getParameter("fit");
 		String seasonCode = request.getParameter("season");
 		String clothName = request.getParameter("brand");
-		String dateForStr = request.getParameter("buydate");
-		System.out.println(dateForStr);
-		  Date clothBuyDate = new Date();
-			try {
-				clothBuyDate = new java.text.SimpleDateFormat("yyyy-MM").parse(dateForStr);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		  System.out.println("clothBuyDate : " + clothBuyDate);
+		String clothBuyDater = request.getParameter("buydate");
+		System.out.println(clothBuyDater);
+		Date clothBuyDate = new Date();
+		try {
+			clothBuyDate = new SimpleDateFormat("yyyy-MM").parse(clothBuyDater);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println(clothBuyDate);
+		
 		  String clothMemo = request.getParameter("memo");
 		  String likeStatus = ""; 
-		  if((request.getParameter("likestatus")).equals("Y")) {
+		  if((request.getParameter("likestatus")) != null) {
 			  likeStatus = "Y";
 		  } else {
 			  likeStatus = "N";
@@ -82,79 +90,11 @@ public class MyclosetAddServlet extends HttpServlet {
 			int result = new ClosetService().addNewCloth(c);
 			if(result > 0) {
 				request.setAttribute("msg", "등록에 성공하였습니다.");
-				request.getRequestDispatcher("<%= contextPath %>/closet.look").forward(request, response);
+				request.getRequestDispatcher("/closet.look").forward(request, response);
 			} else {
 				request.setAttribute("msg", "등록에 오류가 있습니다. 다시 확인해주세요.");
 				request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
 			}
-		
-		// AJAX 구현
-		/*System.out.println(c);		
-
-		BufferedReader br = request.getReader(); //request를 통해 데이터를 읽는다.
-		  if(br == null) {
-			  System.out.println("buffer = null");
-			  br = null;
-		  }
-		  
-		  Object obj = JSONValue.parse(br); 
-		  if(obj == null) {
-			  System.out.println("obj = null");
-			  obj = null;
-		  }
-		  
-		  JSONObject object = (JSONObject)obj;
-		  if(object == null) {
-			  System.out.println("JSONObject = null");
-			  object = null;
-		  }
-		  
-		  if(!(object == null)){   
-			  int memberNo = m.getMemberNo();
-			  String typeCode = (String)object.get("clothtype");
-			  int typeOption = ((Long)object.get("typeoption")).intValue();
-			  
-			  JSONArray styleCodeArr = (JSONArray)object.get("style");
-			  String styleCode = styleCodeArr.toJSONString().toString();
-			  System.out.println("styleCode : " + styleCode);
-			  
-			  String colourCode = (String)object.get("colour");
-			  String fitCode = (String)object.get("fit");
-			  String seasonCode = (String)object.get("season");
-			  String clothName = (String)object.get("brand");
-			  System.out.println("clothName : " + clothName);
-			  String dateForStr = (String)object.get("buydate");
-			  System.out.println(dateForStr);
-			  Date clothBuyDate = new Date();
-				try {
-					clothBuyDate = new java.text.SimpleDateFormat("yyyy-MM").parse(dateForStr);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			  System.out.println("clothBuyDate : " + clothBuyDate);
-			  String clothMemo = (String)object.get("memo");
-			  String likeStatus = ""; 
-			  if(((String)object.get("likestatus")).equals("Y")) {
-				  likeStatus = "Y";
-			  } else {
-				  likeStatus = "N";
-			  }
-			  c = new Closet(memberNo, typeCode, typeOption, styleCode, colourCode, fitCode, seasonCode,
-					  				clothName, clothBuyDate, clothMemo, likeStatus);
-			  
-			  int result = new ClosetService().addNewCloth(c);
-			  if(result > 0) {
-				  
-				  
-			  } else {
-				  
-			  }*/
-/*			  
-			  
-		}
-		  System.out.println(c);*/
-	
 	}
 
 	/**

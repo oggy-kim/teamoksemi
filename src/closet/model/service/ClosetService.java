@@ -17,10 +17,27 @@ public class ClosetService {
 		close(conn);
 		return list;
 	}
+	public ArrayList<Closet> selectMyCloset(int memberNo, String likeStatus) {
+		Connection conn = getConnection();
+		ArrayList<Closet> list = new ClosetDao().selectMyCloset(conn, memberNo, likeStatus);
+		
+		close(conn);
+		return list;
+	}
+
+	
 
 	public int getTopCount(int memberNo) {
 		Connection conn = getConnection();
 		int count = new ClosetDao().getTopCount(conn, memberNo); 
+		
+		close(conn);
+				
+		return count;
+	}
+	public int getTopCount(int memberNo, String likeStatus) {
+		Connection conn = getConnection();
+		int count = new ClosetDao().getTopCount(conn, memberNo, likeStatus); 
 		
 		close(conn);
 				
@@ -35,10 +52,26 @@ public class ClosetService {
 				
 		return count;
 	}
+	public int getBottomCount(int memberNo, String likeStatus) {
+		Connection conn = getConnection();
+		int count = new ClosetDao().getBottomCount(conn, memberNo, likeStatus); 
+		
+		close(conn);
+				
+		return count;
+	}
 
 	public int getAccCount(int memberNo) {
 		Connection conn = getConnection();
 		int count = new ClosetDao().getAccCount(conn, memberNo); 
+		
+		close(conn);
+				
+		return count;
+	}
+	public int getAccCount(int memberNo, String likeStatus) {
+		Connection conn = getConnection();
+		int count = new ClosetDao().getAccCount(conn, memberNo, likeStatus); 
 		
 		close(conn);
 				
@@ -90,5 +123,7 @@ public class ClosetService {
 		
 		return clist;
 	}
+
+
 
 }

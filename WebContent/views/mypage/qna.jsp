@@ -9,6 +9,10 @@
     int maxPage = pi.getMaxPage();
     int startPage = pi.getStartPage();
     int endPage = pi.getEndPage();
+
+	Member m = (Member)session.getAttribute("loginUser");
+    String gradeCode = m.getGradeCode();
+
 %>    
 <!DOCTYPE html>
 <html>
@@ -18,7 +22,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
 <style>
+	body {
+		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
+	}
     #navbar {
         width:100%;
         height:60px;
@@ -88,12 +96,14 @@
     }
 
     .content {
+        font-family: 'Do Hyeon', sans-serif;
         width: 65%;
         height: 500px;
         float: left;
     }
 
     .menu {
+        font-family: 'Do Hyeon', sans-serif;
         width: 20%;
         list-style-type: disc;
         float: left;
@@ -185,6 +195,7 @@
     }
     
     .QnAInsertForm {
+        font-family: 'Do Hyeon', sans-serif;
     	background: lightgray;
     	visibility: hidden;
     	position: fixed;
@@ -221,21 +232,34 @@
 </nav>
 <br>
 <section>
+    <!-- 좌측 네비바 -->
     <div class="menu">
-        <ul class="category">
-            <li class="list" onclick="goMyCloset();">나의 옷장</li>
-            <li class="list" onclick="goMyList();">내 게시물 관리</li>
-            <li class="list" onclick="goQna();">FAQ / Q&A</li>
-            <li class="list-readonly">개인정보관리
-                <ul>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</a></li>
-                    <li class="sublist" onclick="goWishStyle();">선호 스타일</li>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원 탈퇴</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+            <ul class="category">
+                <li class="list" onclick="goMyCloset();">나의 옷장</li>
+                <li class="list" onclick="goMyList();">내 게시물 관리</li>
+                <li class="list" onclick="goQna();">FAQ / Q&A</li>
+                <li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
+            </ul>
+        </div>
     <script>
+    	function goStyle() {
+    		location.href="<%= contextPath %>/boardlist.look";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/wishlist.look";
+    	}
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
+    	function goMypage() {
+    		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+    		if("<%= gradeCode %>" == 'S'){
+    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    		} else {
+    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    		}
+   	 	}
         function goMyCloset(){
             location.href="<%= contextPath %>/closet.look";
         }
@@ -244,9 +268,6 @@
         }
         function goQna(){
             location.href="<%= contextPath %>/qna.look";
-        }
-        function goWishStyle(){
-            location.href="<%= contextPath %>/withstyle.look";
         }
     </script>
 
@@ -271,7 +292,7 @@
 					</table>
 					<br>
 					<div align="center">
-						<button type="button" onclick="">취소하기(이거 안돼...)</button>
+						<button type="button" onclick="">취소하기</button>
 						<button id="submit" type="submit">문의글 등록</button>
 					</div>
 				</form>
@@ -371,7 +392,7 @@
         <div class="myQnAListArea">
 	        <p>총 <%= listCount%> 개의 게시물이 있습니다.</p>
             <div class="btn-qna" align="right">
-				<button onclick="showQnAInsertForm();">Q&A 문의글 등록</button>
+				<button class="btn btn-secondary" onclick="showQnAInsertForm();">Q&A 문의글 등록</button>
             </div>
             
             <table id="myQnAList">
