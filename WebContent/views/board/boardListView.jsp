@@ -247,6 +247,7 @@ hr {
 	height: 80%;
 	width: 80%;
 	margin: auto;
+	
 }
 
 img {
