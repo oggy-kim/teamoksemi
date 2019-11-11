@@ -30,7 +30,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Gaegu|McLaren&display=swap" rel="stylesheet">
 <style>
 body {
 	width: 100%;
@@ -65,7 +65,7 @@ body {
 
 section {
 	width: 100%;
-	height: 500px;
+	height: 800px;
 }
 
 hr {
@@ -152,6 +152,10 @@ hr {
 	width: 400px;
 }
 
+.th-3 {
+	width: 600px;
+}
+
 .table td {
 	vertical-align: middle;
 }
@@ -167,6 +171,45 @@ hr {
 .table {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+img:hover {
+	cursor:pointer;
+}
+
+button {
+	border-radius:5px;
+	border: 1px solid skyblue;
+	background-color: rgba(0,0,0,0);
+	color: black;
+}
+
+button:hover {
+    transition-duration: 1s;
+    background-color:gray; 
+    font-weight:bold;
+}
+
+.font {
+	font-family: 'McLaren', cursive;
+	font-family: 'Gaegu', cursive;
+}
+
+.none {
+	border:1px solid white;
+}
+
+.fonta, .delete {
+    border-radius:5px;
+	border: 1px solid skyblue;
+	background-color: rgba(0,0,0,0);
+	color: black;
+}
+        
+.fonta:hover, .delete:hover {
+	transition-duration: 1s;
+	background-color:gray; 
+    font-weight:bold;
 }
 </style>
 </head>
@@ -188,34 +231,36 @@ hr {
 	</nav>
 	<br>
 	<section>
+	<div class="font">
 		<form action="<%= contextPath %>/deletewish.look" method="post">
 			<table class="mytable" align="center">
 				<caption>표 제목</caption>
 				<tr>
 					<th><input type="checkbox" id="select"
 						style="width: 20px; height: 20px;" class="check-all"></th>
-					<th class="th-1">찜한 게시물</th>
-					<th>찜한 날짜</th>
-					<th class="th-2">메모</th>
+					<th class="th-1" style="font-size:20px;">찜한 게시물</th>
+					<th class="th-2" style="font-size:20px;">찜한 날짜</th>
+					<th class="th-3" style="font-size:20px;">메모</th>
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-					<td colspan="4">조회된 찜목록이 없습니다..</td>
+					<td colspan="4" class="none">조회된 찜목록이 없습니다..</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
 					<input type="hidden" value="<%= w.getMemberNo() %>">
 					<td><input type="checkbox" class="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
-					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getChangeName() %>" width="130px" height="160px"></td>
-					<td><%= w.getWishDate() %></td>
-					<td><%= w.getWishMemo() %></td>
+					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getChangeName() %>" class="picture" title="<%= w.getArticleNo() %>" width="130px" height="160px"></td>
+					<td style="font-size:18px;"><%= w.getWishDate() %></td>
+					<td style="font-size:18px;"><%= w.getWishMemo() %></td>
 				</tr>
 				<% } %>
 				<% } %>
 			</table>
-
-			<button class="cart-select-delete-btn" onclick="deleteWish();" type="submit">선택삭제</button>
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="cart-select-delete-btn" onclick="deleteWish();" type="submit" style="font-size:20px;" class="delete">선택삭제</button>
 		</form>
 		
 		<br>
@@ -223,15 +268,15 @@ hr {
 
 		<div class="pagingArea" align="center">
 			<!-- 맨 처음으로 (<<) -->
-			<button
+			<button class="fonta"
 				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=1'">
 				&lt;&lt;</button>
 
 			<!-- 이전 페이지로 (<) -->
 			<% if(currentPage == 1){ %>
-			<button disabled>&lt;</button>
+			<button class="fonta" disabled>&lt;</button>
 			<% } else { %>
-			<button
+			<button class="fonta"
 				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= currentPage - 1 %>'">
 				&lt;</button>
 			<% } %>
@@ -239,30 +284,30 @@ hr {
 			<!-- 10개의 페이지 목록 -->
 			<% for(int p = startPage; p <= endPage; p++){ %>
 			<% if(p == currentPage){ %>
-			<button disabled>
+			<button class="fonta" disabled>
 				<%= p %>
 			</button>
 			<% } else { %>
-			<button
+			<button class="fonta"
 				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= p %>'"><%= p %></button>
 			<% } %>
 			<% } %>
 
 			<!-- 다음 페이지로 (>) -->
 			<% if(currentPage == maxPage){ %>
-			<button disabled>&gt;</button>
+			<button class="fonta" disabled>&gt;</button>
 			<% } else { %>
-			<button
+			<button class="fonta"
 				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= currentPage + 1 %>'">
 				&gt;</button>
 			<% } %>
 
 			<!-- 맨 끝으로 (>>) -->
 			<% if(currentPage == maxPage){ %>
-			<button disabled>&gt;&gt;</button>
+			<button class="fonta" disabled>&gt;&gt;</button>
 			<% } else { %>
 			
-			<button
+			<button class="fonta"
 				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= maxPage %>'">
 				&gt;&gt;</button>
 			<% } %>
@@ -283,7 +328,7 @@ hr {
 				</ul>
 			</nav>
 		</div> -->
-
+	</div>
 	</section>
 	<br>
 	<br>
@@ -316,6 +361,11 @@ hr {
         function goMypage() {
         	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
         }
+        
+        $(".picture").click(function(){
+        	var aNo = $(this).attr('title');
+        	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
+        });
     </script>
 </body>
 </html>

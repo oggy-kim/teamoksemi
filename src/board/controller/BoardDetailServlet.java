@@ -61,21 +61,21 @@ public class BoardDetailServlet extends HttpServlet {
 				response.addCookie(c1);
 			} else {
 				board = new BoardService().selectBoardNoCnt(aNo);
-			}
+			}ㅁㄴ
 		}*/
 		
 		boolean flag = false;
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {
 			for(Cookie c : cookies) {
-				if(c.getName().equals(String.valueOf(mNo)+String.valueOf(aNo))) {
+				if(c.getName().equals("aNo"+aNo+"mNo"+mNo)) {
 					flag = true;
 				}
 			}
 			
 			if(!flag) {
 				board = new BoardService().selectBoard(aNo);
-				Cookie c1 = new Cookie(String.valueOf(mNo)+String.valueOf(aNo), String.valueOf(mNo)+" "+String.valueOf(aNo));
+				Cookie c1 = new Cookie("aNo"+aNo+"mNo"+mNo, String.valueOf(aNo)+String.valueOf(mNo));
 				c1.setMaxAge(1 * 24 * 60 * 60);
 				response.addCookie(c1);
 			} else {

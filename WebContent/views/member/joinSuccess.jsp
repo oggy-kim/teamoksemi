@@ -307,7 +307,8 @@
                     var reader = new FileReader();
                     
                     reader.onload = function(e) {
-                        $('#preview').html("<img src=" + e.target.result + " width='250' height='250'>");
+/*                     	$('#preview').html("<img src="WebContent/resources/images/profile.png" + width='250' height='250'>"); */
+                    	$('#preview').html("<img src=" + e.target.result + " width='250' height='250'>");
                     }
                     reader.readAsDataURL(this.files[0]);
                 }

@@ -69,23 +69,28 @@
             padding:30px 0px;
             padding-top: 5px;
             }
-			/* #pass {
-				margin-left: 40%;
-              margin-bottom: 10%;
-              margin-top:10%;
-              margin-right: 30%;
-			}*/
+			#pass {
+				margin-left: 18%;
+              margin-bottom: 0%;
+              margin-top:0%;
+              margin-right: 20%;
+			}
 			#pass2 {
-				margin-left: 28%;
-              margin-bottom: 10%;
-              margin-top:10%;
-              margin-right: 30%;
+				margin-left: 18%;
+              margin-bottom: 0%;
+              margin-top:0%;
+              margin-right: 20%;
 			} 
 			#btn {
-				margin-left: 28%;
+				margin-left: 40%;
               margin-bottom: 10%;
               margin-top:40%;
-              margin-right: 30%;
+              margin-right: 20%;
+              background: rgba(59, 182, 11, 0.5);
+                color: white;
+                border: 1px;
+                border-radius: 15px;
+                padding: 2%;
 			}
 </style>
 
@@ -98,13 +103,14 @@
 <form method="post" action="<%= request.getContextPath()%>/resetPwd.look"
 	onsubmit="return checkPwd();">
 	 <input type="hidden" name="email" value="<%= request.getAttribute("email") %>">
-<label>변경할비밀번호</label><span id="pass"><input type="password" id="newPwd" name="newPwd" placeholder="변경할 비밀번호를 입력하세요"></span><br>
-<br><label>비밀번호확인</label><span id="pass2"><input type="password" id="newPwd2" name="newPwd2" placeholder="비밀번호 확인"></span><br>
+<span id="pass"><label>변경할비밀번호</label><input type="password" width="10%" id="newPwd" name="newPwd" placeholder="변경할 비밀번호를 입력하세요"></span><br>
+<br><span id="pass2"><label>비밀번호확인</label><input type="password" width="10%" id="newPwd2" name="newPwd2" placeholder="비밀번호 확인"></span><br>
 <button id="btn">제출</button>
 
 </form>
 </div>
 </div>
+
 
 <script>
 	function checkPwd() {

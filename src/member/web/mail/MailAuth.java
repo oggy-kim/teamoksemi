@@ -18,6 +18,3 @@ public class MailAuth extends Authenticator{
         return pa;
     }
 }
-
-
-
