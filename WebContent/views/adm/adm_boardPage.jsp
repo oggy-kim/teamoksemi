@@ -204,18 +204,19 @@
             margin-left : 5%;
         }
 
-        .trend_box {
+        /* .trend_box {
             width : 80%;
             height : 20%;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        }
+        } */
 
         .board_box {
             width : 80%;
             height : auto;
         	overflow : hidden;
-            margin : 0 0 0 5%;
+            margin-left : 5%;
+            margin-top : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
                 
@@ -377,10 +378,10 @@
         </div>
         <hr><br>
 
-        <div class="trend_box">
+        <!-- <div class="trend_box">
             <h4 class="table_title">실시간 인기 게시물</h4>
             <br>
-            <!-- 인기 게시물 조회기간 설정 -->
+            인기 게시물 조회기간 설정
             <div class="date_box">
                 <select id="searchCondition1" name="searchCondition" style="display:inline-block;">
                     <option>-----</option>
@@ -392,7 +393,7 @@
                 <input type="date" name="end_date" id="end_date">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
-            <!-- 인기 게시물 테이블 -->
+            인기 게시물 테이블
             <table class="sortable table" id="trend_table" class="sortable">
             <thead>
                 <tr>
@@ -455,7 +456,7 @@
             </table>
         </div> 
         <br>
-        <br>
+        <br> -->
 
         <div class="board_box">
             <h4 class="table_title">게시물 모아보기</h4>

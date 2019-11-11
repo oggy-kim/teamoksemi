@@ -244,6 +244,7 @@
             width : 80%;
 			height : auto;
         	overflow : hidden;
+        	margin-top  : 5%;
             margin-left : 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
         }
@@ -400,18 +401,18 @@
         </div>
         <hr>
 
-        <div class="sales_box">
+        <!-- <div class="sales_box">
             <h4 class="box_title">수익 및 거래총량</h4>
             <br>
-            <!-- 날짜 조회 탭 -->
+            날짜 조회 탭
             <div class="date_box">    
                 <input type="date" name="start_date" id="start_date">
                 <input type="date" name="end_date" id="end_date">
                 <button id="searchBtn" type="submit" style="display:inline-block;">검색하기</button>
             </div>
-            <!-- 가로 구분선 -->
+            가로 구분선
             <hr id="horizon_line" style="width:85%; margin-left:5%;">
-            <!-- 거래수 / 수익 -->
+            거래수 / 수익
             <div class="profit_detail_wrapper">
                 <div class="profit_detail" id="sales_num">
                     <a class="profit_detail_title" style=" font-size:25px;">거래수</a>
@@ -424,7 +425,7 @@
                 </div>
             </div>
         </div> 
-        <br><br>
+        <br><br>  -->
 
         <div class="shop_box">
             <h4 class="table_title">제휴 쇼핑몰 리스트</h4>

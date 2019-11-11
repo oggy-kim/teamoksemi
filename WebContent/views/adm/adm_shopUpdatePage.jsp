@@ -167,6 +167,44 @@
       }
       
       
+      .shop_update_box {
+      		width : 45%;
+        	height : 25%;
+        	margin-top : 5%;
+        	margin-left : 5%;
+        	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+      }
+      
+      .shop_update_title {
+            margin : 5% 0 0 5%;
+            padding : 5% 0 0 0;
+            font-family: 'Do Hyeon', sans-serif; 
+            font-size: 28px; 
+       }
+       
+       .content_box {
+       		margin-left : 5%;
+       } 
+       
+       #updateBtn, #cancelBtn {
+			float : right;
+            background:gray;
+            border:gray;
+            color:white;
+            border-radius:5px;
+            margin-right : 5%;
+		}
+		
+		.btnArea {
+			margin-right : 18%;
+			margin-top : 3%;
+			margin-botton : 10%;
+			width : 50%;
+			/* border : 1px solid black; */
+			float : right;
+		}
+        
+      
 </style>
 </head>
 <body>
@@ -240,51 +278,57 @@
         <div class="shop_update_box">
             <h4 class="shop_update_title">정보 수정</h4>
             <br>
-            <form class="date_box" action="<%= contextPath %>/update.shop" method="post">    
+            <form class="content_box" action="<%= contextPath %>/update.shop" method="post">    
               	
               	<table>
               			<tr>
               				<th>회사번호</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopNo() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopNo() %>"></td>
 						</tr>
 						<tr>
               				<th>회사명</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopName() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopName() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약상태</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getStatus() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getStatus() %>"></td>
               			</tr>
               			<tr>	
               				<th>등급</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopGradeCode() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopGradeCode() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약시작일</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getContractDate() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getContractDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약만료일</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getExpireDate() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getExpireDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약금</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getContractMoney() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getContractMoney() %>"></td>
               			</tr>
               			<tr>	
               				<th>담당자</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopPIC() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopPIC() %>"></td>
               			</tr>		
               			<tr>
               				<th>연락처</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopContact() %>"></td>
+              				<td>&nbsp;&nbsp;<input type="text" size="50" name="shopNo" value="<%= shop.getShopContact() %>"></td>
               			</tr>
               	</table>
-               	<div align="center">
+               	<div class='btnArea' align="center">
             		<button id="updateBtn" type="submit" style="display:inline-block;">저장하기</button>
-            		<button type="button" onclick="location.href='<%= contextPath %>/shop.adm">취소하기</button>
+            		<button id="cancelBtn" type="button" onclick="goBack();">취소하기</button>
             	</div>
             </form>
         </div> 	
+        
+        <script>
+        	function goBack() {
+        		window.history.go(-1);
+        	}
+        </script>
 </body>
 </html>
