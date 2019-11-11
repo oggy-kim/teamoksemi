@@ -89,10 +89,10 @@
     <a class="navbar-brand" style="font-size : 28px;" onclick="goMain();">LOOK SO FINE</a>
     <%if (loginUser != null) {%>
       <form class="form-inline" action="<%= contextPath %>/search.look">
-      <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
-      <button class="btn btn-outline-success" id="search" my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; color:white; border: 1px solid white;" disabled>SEARCH</button>
-      <button type="button" class="btn btn-light" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
-    </form>
+	      <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="SEARCH" aria-label="SEARCH" style="font-family: 'Do Hyeon', sans-serif; font-style: italic;">
+	      <button class="btn btn-outline-success" id="search" my-2 my-sm-0" type="submit" style="background:black; text-decoration: none; color:white; border: 1px solid white;" disabled>SEARCH</button>
+	      <button type="button" class="btn btn-light" onclick="logout();"><img src="<%= contextPath %>/resources/images/logout.png" width="23" height="23"></button>
+      </form>
     <% } %>
   </nav>
   <nav style="padding:60px 0;">
@@ -109,6 +109,7 @@
         <li class="nav-item">
           <p class="nav-link" style="color: #000;" onclick="goMypage();">MY PAGE</p>
         </li>
+        
       </ul>
     </nav>
 </header>

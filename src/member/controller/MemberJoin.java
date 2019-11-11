@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
@@ -46,9 +47,11 @@ public class MemberJoin extends HttpServlet {
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "회원가입 성공!!");
 			request.setAttribute("userId", userId);
-//			response.sendRedirect(request.getContextPath());
 			RequestDispatcher view = request.getRequestDispatcher("views/member/joinSuccess.jsp");
 			view.forward(request, response);
+			
+			
+			
 		} else {
 			request.setAttribute("msg", "회원 가입에 실패하였습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
 <%
+	Member m = (Member)session.getAttribute("loginUser");
+	String gradeCode = m.getGradeCode();		
+
 	ArrayList<WishList> list = (ArrayList<WishList>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
@@ -9,6 +12,9 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -24,10 +30,11 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap"
 	rel="stylesheet">
+
 <style>
 body {
 	width: 100%;
-	height: 1200px;
+	height: 1000px;
 }
 
 #navbar {
@@ -58,7 +65,7 @@ body {
 
 section {
 	width: 100%;
-	height: 850px;
+	height: 500px;
 }
 
 hr {
@@ -193,15 +200,14 @@ hr {
 				</tr>
 				<% if(list.isEmpty()){ %>
 				<tr>
-				
-					<td coldspan="4">조회된 찜목록이 없습니다.</td>
+					<td colspan="4">조회된 찜목록이 없습니다..</td>
 				</tr>
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
 					<input type="hidden" value="<%= w.getMemberNo() %>">
-					<td><input type="checkbox" id="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
-					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getArticleNo() %>.jpg" width="130px" height="160px"></td>
+					<td><input type="checkbox" class="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
+					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getChangeName() %>" width="130px" height="160px"></td>
 					<td><%= w.getWishDate() %></td>
 					<td><%= w.getWishMemo() %></td>
 				</tr>
@@ -218,7 +224,7 @@ hr {
 		<div class="pagingArea" align="center">
 			<!-- 맨 처음으로 (<<) -->
 			<button
-				onclick="location.href='<%= contextPath %>/list.bo?currentPage=1'">
+				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=1'">
 				&lt;&lt;</button>
 
 			<!-- 이전 페이지로 (<) -->
@@ -226,10 +232,10 @@ hr {
 			<button disabled>&lt;</button>
 			<% } else { %>
 			<button
-				onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage - 1 %>'">
+				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= currentPage - 1 %>'">
 				&lt;</button>
 			<% } %>
-
+		
 			<!-- 10개의 페이지 목록 -->
 			<% for(int p = startPage; p <= endPage; p++){ %>
 			<% if(p == currentPage){ %>
@@ -238,7 +244,7 @@ hr {
 			</button>
 			<% } else { %>
 			<button
-				onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= p %>'"><%= p %></button>
+				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= p %>'"><%= p %></button>
 			<% } %>
 			<% } %>
 
@@ -247,17 +253,22 @@ hr {
 			<button disabled>&gt;</button>
 			<% } else { %>
 			<button
-				onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= currentPage + 1 %>'">
+				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= currentPage + 1 %>'">
 				&gt;</button>
 			<% } %>
 
 			<!-- 맨 끝으로 (>>) -->
+			<% if(currentPage == maxPage){ %>
+			<button disabled>&gt;&gt;</button>
+			<% } else { %>
+			
 			<button
-				onclick="location.href='<%= contextPath %>/list.bo?currentPage=<%= maxPage %>'">
+				onclick="location.href='<%= contextPath %>/wishlist.look?currentPage=<%= maxPage %>'">
 				&gt;&gt;</button>
+			<% } %>
 		</div>
 
-		<div class="page-1">
+		<!-- <div class="page-1">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<li class="page-item"><a class="page-link" href="#"
@@ -271,16 +282,7 @@ hr {
 					</a></li>
 				</ul>
 			</nav>
-		</div>
-
-		<div class="page-2">
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="SEARCH" aria-label="SEARCH">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-					style="background: black; text-decoration: none; border: 1px solid white;">SEARCH</button>
-			</form>
-		</div>
+		</div> -->
 
 	</section>
 	<br>
@@ -288,10 +290,10 @@ hr {
 	<footer class="copyRight">
 		<p>Copyright 2019. LookSoFine. All right reserved.</p>
 	</footer>
-<script>
+	<script>
         $(document).ready(function(){
             $('.check-all').click(function(){
-                $('.ca').prop('checked', this.checked);
+                $('.select').prop('checked', this.checked);
             });
         });
         
@@ -314,10 +316,6 @@ hr {
         function goMypage() {
         	location.href="<%= contextPath %>/views/mypage/myPage.jsp";
         }
-        
-        function deleteWish() {
-        	location.href="<%= contextPath %>/deletewish.look";
-        }
-</script>
+    </script>
 </body>
 </html>

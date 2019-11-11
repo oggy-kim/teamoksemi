@@ -98,7 +98,6 @@ public class MemberDao {
 			pstmt.setString(2, m.getLikeStyle());
 			pstmt.setString(3, m.getMemberId());
 			
-			
 			result = pstmt.executeUpdate();
 //			MEMBER_NO
 //			GRADE_CODE
@@ -111,9 +110,6 @@ public class MemberDao {
 //			BIRTH_YEAR
 //			ENTRY_DATE
 //			MEMBER_STATUS
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -143,7 +139,7 @@ public class MemberDao {
         return result;
 	}
 
-	public Member selectMember(Connection conn, String memberId) {
+	public Member selectMember(Connection conn, String id) {
 		Member mem = null;
 		
 		PreparedStatement pstmt = null;
@@ -154,7 +150,7 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memberId);
+			pstmt.setString(1, id);
 			
 			rset = pstmt.executeQuery();
 			
@@ -178,6 +174,121 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
+		return mem;
+	}
+
+	public int nickcheck(Connection conn, String nickname) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("nickCheck");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,nickname);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+				
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int emailcheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("emailCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updatePwd(Connection conn, String memberId, String newPwd) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, newPwd);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member selectemail(Connection conn, String id) {
+		Member mem = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectemail");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEMBER_NO"),
+									   rset.getString("GRADE_CODE"),
+									   rset.getString("MEMBER_ID"),
+									   rset.getString("MEMBER_PWD"),
+									   rset.getString("MEMBER_NICK"),
+									   rset.getString("GENDER"),
+									   rset.getString("PROFILE"),
+									   rset.getString("LIKE_STYLE"),
+									   rset.getInt("BIRTH_YEAR"),
+									   rset.getDate("ENTRY_DATE"),
+									   rset.getString("MEMBER_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("select : " + mem);
 		return mem;
 	}
 	// Mypage 화면에서 개인정보 수정
@@ -229,5 +340,27 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	   public int resetPwd(Connection conn,  Member m) {
+		   PreparedStatement pstmt = null;
+		      int result = 0;
+		      
+		      String query = prop.getProperty("resetPwd");
+		      
+		      try {
+		    	  System.out.println("비번 : " + m.getMemberPwd() + ", 아이디 : " + m.getMemberId());
+		         pstmt = conn.prepareStatement(query);
+		         pstmt.setString(1, m.getMemberPwd());
+		         pstmt.setString(2, m.getMemberId());
+		         result = pstmt.executeUpdate();
+		         System.out.println("update : " + result);
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }finally {
+		         close(pstmt);
+		      }
+		      System.out.println("update : " + result);
+		      return result;
+		   }
 
 }

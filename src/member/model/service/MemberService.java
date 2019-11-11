@@ -24,6 +24,7 @@ public class MemberService {
 		
 		if(result > 0) {
 			commit(conn);
+			
 		} else {
 			rollback(conn);
 		}
@@ -66,7 +67,6 @@ public class MemberService {
 
 		return result;
 	}
-
 	public int updateMember(int memberNo, String memberPwd, int birthYear, String memberNick, String likeStyle) {
 		Connection conn = getConnection(); 
 		
@@ -91,5 +91,56 @@ public class MemberService {
 		
 		return result;
 	}
+	public int nickcheck(String nickname) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().nickcheck(conn, nickname);
+		
+		close(conn);
 
+		return result;
+	}
+
+	public int emailcheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().emailcheck(conn , userId);
+		close(conn);
+		return result;
+	}
+
+	public Member updatePwd(String memberId, String newPwd) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().updatePwd(conn , memberId, newPwd);
+		
+		Member updateMember = null;
+		
+		if(result > 0 ) {
+			updateMember = new MemberDao().selectMember(conn , memberId);
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return updateMember;
+	}
+
+	   public Member resetPwd(Member m) {
+		      Connection conn = getConnection();
+		      Member updateMember = null;
+		      
+		      int result = new MemberDao().resetPwd(conn, m);
+		      
+		      if(result > 0 ) {
+		         updateMember = new MemberDao().selectemail(conn , m.getMemberId());
+		         commit(conn);
+		      }else {
+		         rollback(conn);
+		      }
+		      close(conn);
+		      
+		      return updateMember;
+		   }
 }

@@ -85,11 +85,12 @@
         }
         .hastag {
             height: 100px;
+            margin:40px 0;
         }
         
         .hastag button {
             width: 10%;
-            height: 30%;
+        	height:auto;
             text-align: center;
             border-radius: 5px;
             float: left;
@@ -98,10 +99,12 @@
         }
 
         .hastag button a {
-            text-decoration: none;
+            text-decoration: none;            
+            font-size:25px;
         }
 
         .searchTitle{
+        	margin:0 0 0 10%;
             height: 100px;
             text-align: left;
             font-family: 'Do Hyeon', sans-serif;
@@ -109,6 +112,7 @@
 
         .searchTitle h1 {
             margin: 1% 0 0 3%;
+            font-size: 60px;
         }
         
         .searchName {
@@ -165,7 +169,7 @@
         }
         
         .searchDetailForm {
-        	background:rgb(230,230,230);
+        	background:white;
     		visibility: hidden;
     		position: fixed;
     		top: 20%;
@@ -191,17 +195,8 @@
 </nav>
 <br>
 <section>
-    <div class="search search1">
-        <div class="hastag">
-            <button><a href="#">#가디건</a></button>
-            <button><a href="#">#가을가디건</a></button>
-            <button><a href="#">#여자가디건</a></button>
-            <button><a href="#">#남자가디건</a></button>
-            <button><a href="#">#오버핏가디건</a></button>
-        </div>
-        <div class="searchTitle">
-           <h1><%= keyword %> 검색결과</h1>
-        </div>
+	<div class="searchTitle">
+           <h1 style="font-family: 'Do Hyeon', sans-serif;"><%= keyword %> 검색결과</h1>
     </div>
     <br>
     <div class="search search2">
@@ -217,8 +212,8 @@
             	<div class="subImg subImg1">
                 <div class="card" style="width: 100%; height:100%;">
                 <input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
-                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
-                    <div class="card-body" height="30%">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="60%" class="card-img-top">                    
+                    <div class="card-body" height="40%">
                         <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
                     </div>                                       
                 </div>
@@ -229,14 +224,14 @@
             		<div class="subImg subImg1">
                 	<div class="card" style="width: 100%; height:100%;">
                 	<input type="hidden" value="<%= blist.get(i).getArticleNo() %>">
-                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="70%" class="card-img-top">                    
-                    <div class="card-body" height="30%">
+                    <img src="<%= contextPath %>/resources/images/board/<%= blist.get(i).getArticleNo() %>.jpg" width="100" height="60%" class="card-img-top">                    
+                    <div class="card-body" height="40%">
                         <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;"><%= blist.get(i).getArticleContents() %></p>
                     </div>                                       
                 	</div>
             	</div>            	
              <% } %>
-             <button id="detail"><a href="#">DETAIL</a></button>
+             <button id="detail"><a href="<%= contextPath %>/boardlist.look">DETAIL</a></button>
             <% } %> 
         </div>
     </div>    
@@ -247,32 +242,34 @@
             <hr>
         </div>
         <div class="thumbnail">
-            <div class="subImg subImg1">
+            <div class="subImg subImg1"><a style="text-decoration:none; color:black;" href="https://store.musinsa.com/app/product/search?type=&keyword_value=&keyword_url=&q=<%= keyword %>" target="_blank"> 
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/musinsa.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">무신사 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
-            <div class="subImg subImg2">
+            <div class="subImg subImg2"><a style="text-decoration:none; color:black;" href="https://www.styleshare.kr/search?keyword=<%= keyword %>" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/styleshare.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">스타일쉐어 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
-            <div class="subImg subImg3">
+            <div class="subImg subImg3"><a style="text-decoration:none; color:black;" href="https://search.shopping.naver.com/search/all.nhn?query=<%= keyword %>&cat_id=&frm=NVSHATC" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
-                    <img src="<%= contextPath %>/resources/images/tour3.jpg" class="card-img-top">
+                    <img src="<%= contextPath %>/resources/images/shop/naver.png" class="card-img-top" style="height:70%;">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text" style="font-family: 'Do Hyeon', sans-serif;">네이버쇼핑 <%= keyword %> 검색결과 보기</p>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
-        <button id="detail"><a href="#">DETAIL</a></button>  
     </div>
     <div class="searchDetailForm" id="searchDetailForm">
     </div>
@@ -286,11 +283,11 @@ function goMain() {
 }
 
 function goStyle() {
-	location.href="<%= contextPath %>/list.bo";
+	location.href="<%= contextPath %>/boardlist.look";
 }
 
 function goFavorite() {
-	location.href="<%= contextPath %>/list.fa";
+	location.href="<%= contextPath %>/wishlist.look";
 }
 
 function goEvent() {
@@ -328,30 +325,42 @@ $(function(){
 				 	var detail = "";
 				 	var num = result.articleNo;
 
-	           		detail += "<table border='1' style='text-align:center' width='100%' height='80%'>" + 
-	           					"<tr>" +
-	           						"<th  colspan='5'><p style='font-size:20px;'>STYLE</p></th>" +
-	           					"</tr>" +
-	           					"<tr>" +
-	           						"<td rowspan='5' style='width:500px;'><img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='400px;'></td>" +
-	           					"</tr>" +
-	           					"<tr>" +
-           							"<td><p style='font-weight:bold;'>DATE</p></td>" +
-           							"<td><p style='font-weight:bold;'>" + result.articleDate + "</p></td>" + 
-           						"</tr>" +
-           						"<tr>" +
-       								"<td><p style='font-weight:bold;'>VIEWS</p></td>" +
-       								"<td><p style='font-weight:bold;'>" + result.articleViews + "</p></td>" + 
-       							"</tr>" +
-       							"<tr>" +
-       								"<td><p style='font-weight:bold;'>LIKES</p></td>" +
-       								"<td><p style='font-weight:bold;'>" + result.articleLikes + "</p></td>" + 
-       							"</tr>" +
-       							"<tr>" +
-       								"<td><p style='font-weight:bold;'>CONTENT</p></td>" +
-       								"<td><p style='font-weight:bold;'>" + result.articleContents + "</p></td>" + 
-       							"</tr></table>" +
-                          		"<button id='detail'><a href='#'>" + "DETAIL" + "</a></button>";
+	           		detail += "<div style='width:50%; height:100%; float:left;'>" + 
+	           					"<img src='resources/images/board/" + result.articleNo + ".jpg' width='100%' height='100%'>" + 
+	           				  "</div>" +
+	           				  "<div style='width:50%; height:30%; float:left;'>" + 
+	           				  	"<div style='width:80%; height:80%; margin:3% 0 0 10%; border:1px solid rgba(192,192,192,0.8); border-radius:15px;'>" + 
+	           				  		"<div>" + 
+	           				  			// 사진 나중에 memberNo로 바꿔야함
+	           				  			"<img src='resources/images/profile/" + result.memberNo + ".jpg' style='float:left; width:150px; height:153px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;'>" + 
+	           				  		"</div>" + 
+	           				  		"<p style='text-align:center; font-size:20px; margin:25px 0; font-family: Do Hyeon, sans-serif;'> ID : " + result.memberNick + "</p>" +
+	           				  		"<p style='text-align:center; font-size:20px; margin:25px 0; font-family: Do Hyeon, sans-serif;'> LIKE : " + result.likeStyle + "</p>" + 
+	           				  	"</div>" + 
+	           				  	"</div>" +
+	           				  	"<div style='width:50%; height:40%; float:left;'>" + 
+	           				  		"<div style='width:80%; height:80%; margin:3% 0 0 10%; border:1px solid rgba(192,192,192,0.8); border-radius:15px;'>" + 
+	           				  			"<p style='text-align:left; font-size:20px; margin:25px 0 0 25px; font-family: Do Hyeon, sans-serif;'>" + result.articleContents + "</p>" + 
+	           				  		"</div>" + 
+	           				  	"</div>" + 
+	           				  	"<div style='width:50%; height:10%; float:left;'>" + 
+	           				  		"<div style='width:50%; height:100%; float:left;'>" + 
+	           				  			"<div style='width:80%; height:80%; margin:0.5% 0 0 10%; border:1px solid rgba(192,192,192,0.8); border-radius:15px;'>" + 
+	           				  			"<p style='text-align:center; font-size:20px; margin:10px 0; font-family: Do Hyeon, sans-serif;'> VIEWS : " + result.articleViews + "</p>" + 
+	           				  		"</div>" + 
+	           				  	"</div>" + 
+	           				  	"<div style='width:50%; height:100%; float:left;'>" + 
+	           				  		"<div style='width:80%; height:80%; margin:0.5% 0 0 10%; border:1px solid rgba(192,192,192,0.8); border-radius:15px;'>" + 
+	           				  			"<p style='text-align:center; font-size:20px; margin:10px 0; font-family: Do Hyeon, sans-serif;'> &hearts; " + result.articleWishes + "</p>" + 
+	           				  		"<div>" + 
+	           				  	"</div>" +
+	           				  "</div>" +
+	           				  "</div>"+
+	           				  "<div style='float:left; margin:20px 0 0 43%;'>" + 
+	           				  	"<button id='detail'style='margin:20px 0;'><a href='<%= contextPath %>/boardlist.look'>" + "DETAIL" + "</a></button>" + 
+	           				  "</div>";
+	           				
+	           				  	
                  	console.log(detail);
 
 	           		$(".searchDetailForm").html(detail);
@@ -364,8 +373,6 @@ $(function(){
 		 });
 	});
 });
-
-// "<img src='resources/images/board/" + result.articleNo + ".jpg' width='400' height='500'>"
 
 </script>
 </body>

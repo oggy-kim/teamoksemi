@@ -1,6 +1,6 @@
 package shop.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Shop implements java.io.Serializable{
 	private static final long serialVersionUID = 3526284197511410119L;
