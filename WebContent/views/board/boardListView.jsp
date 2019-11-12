@@ -35,6 +35,7 @@
 body {
 	width: 100%;
 	height: 1000px;
+	background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
 }
 
 #navbar {
@@ -86,8 +87,8 @@ hr {
 
 .menuLine {
 	margin: auto;
-	width: 100%;
-	height: 20px;
+	width: 95%;
+	height: 10px;
 	align-items: center;
 }
 
@@ -110,21 +111,22 @@ hr {
 }
 
 .sharingArea {
-	background: white;
+	background: none;
 	width: 85%;
 	height: 320px;
 	margin: auto;
+	margin-top:24px;
 }
 
 .newlistArea {
-	background: white;
+	background: none;
 	width: 85%;
 	height: 300px;
 	margin: auto;
 }
 
 .sponserArea {
-	background: white;
+	background: none;
 	width: 85%;
 	height: 300px;
 	margin: auto;
@@ -365,6 +367,15 @@ a.btn-layerClose:hover {
     font-weight:bold;
 }
 
+.none {
+	text-align:center;
+}
+
+.empty {
+	width:100%;
+	text-align:center;
+}
+
 
 </style>
 </head>
@@ -385,10 +396,11 @@ a.btn-layerClose:hover {
 			</div>
 			<br>
 			<div class="write">
-				<button class="writee" onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>
+				<button class="writee" onclick="location.href='<%= contextPath %>/views/board/boardInsertForm.jsp'">글쓰기</button>&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 			<div class="layer" style="height: 10px;">
-			<a href="#layer2" class="btn-example">★게시글 이용시 주의사항★</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#layer2" class="btn-example" style="font-weight:bold;">★게시글 이용시 주의사항★</a>
 			
 			<div class="dim-layer">
 				<div class="dimBg"></div>
@@ -417,7 +429,10 @@ a.btn-layerClose:hover {
 			<%
 				if (flist.isEmpty()) {
 			%>
+			<div class="font">
+			<br><br>
 			<div class="empty" algin="center">조회된 리스트가 없습니다.</div>
+			<br><br>
 			<% } else { %>
 			<%-- <% for(Board b : list) { %> --%>
 				<%-- <input type="hidden" value="<%= b.getArticleNo() %>"> --%>
@@ -434,7 +449,7 @@ a.btn-layerClose:hover {
 
 			<br clear="both"> <br>
 
-			<div class="font">
+			
 			<div class="pagingArea" align="center">
 
                 <!-- 맨 처음으로 (<<) -->
@@ -552,7 +567,7 @@ a.btn-layerClose:hover {
 					class="sponser-img1"
 					style="width: 100%; height: 100%; border-radius: 5px;">
 					<p class="sponser-a">
-					<h4 style="text-align: center;">폴리스 & 덤블 최대 1만원 할인</h4>
+					<h4 style="text-align: center;">플리스 & 덤블 최대 1만원 할인</h4>
 					</p></a>
 			</div>
 
