@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import board.model.service.BoardService;
 import board.model.vo.*;
 import member.model.vo.*;
@@ -36,7 +38,11 @@ public class QnASelectServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         BoardService bService = new BoardService();
-
+        String fromajax = request.getParameter("fromajax");
+        if(fromajax == null) {
+        	
+        
+        
         int listCount = bService.getQnAListCount(m.getMemberNo());
 
         int boardLimit = 5;
@@ -62,6 +68,13 @@ public class QnASelectServlet extends HttpServlet {
         request.setAttribute("list", list);
         request.setAttribute("pi", pi);
         view.forward(request, response);
+        } else {
+        	ArrayList<QnA> list = bService.selectQnAList( m.getMemberNo());
+        	response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=UTF-8");
+			new Gson().toJson(list, response.getWriter());
+        	
+        }
     }
 
 	/**

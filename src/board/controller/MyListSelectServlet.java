@@ -11,45 +11,60 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name="MyListSelectServlet", urlPatterns="/mylist.look")
+@WebServlet(name = "MyListSelectServlet", urlPatterns = "/mylist.look")
 public class MyListSelectServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Member m = (Member) request.getSession().getAttribute("loginUser");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Member m = (Member) request.getSession().getAttribute("loginUser");
 
-        request.setCharacterEncoding("UTF-8");
-        BoardService bService = new BoardService();
+		request.setCharacterEncoding("UTF-8");
+		BoardService bService = new BoardService();
 
-        int listCount = bService.getListCount(m.getMemberNo());
+		String fromajax = request.getParameter("fromajax");
 
-        int boardLimit = 7;
-        int currentPage = 1;
-        int pageLimit = 5;
-        int maxPage = (int)Math.ceil((double)listCount/boardLimit);
-        int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
-        int endPage = startPage + pageLimit - 1;
+		if (fromajax == null) {
+			int listCount = bService.getListCount(m.getMemberNo());
 
-        if(maxPage < endPage) {
-            endPage = maxPage;
-        }
+			int boardLimit = 7;
+			int currentPage = 1;
+			int pageLimit = 5;
+			int maxPage = (int) Math.ceil((double) listCount / boardLimit);
+			int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+			int endPage = startPage + pageLimit - 1;
 
-        if(request.getParameter("currentPage") != null) {
-            currentPage = Integer.parseInt(request.getParameter("currentPage"));
-        }
+			if (maxPage < endPage) {
+				endPage = maxPage;
+			}
 
-        PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
+			if (request.getParameter("currentPage") != null) {
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			}
 
-        ArrayList<Board> list = bService.selectMyList(currentPage, boardLimit, m.getMemberNo());
+			PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-        RequestDispatcher view = request.getRequestDispatcher("views/mypage/mylist.jsp");
-        request.setAttribute("list", list);
-        request.setAttribute("pi", pi);
-        view.forward(request, response);
-    }
+			ArrayList<Board> list = bService.selectMyList(currentPage, boardLimit, m.getMemberNo());
+
+			RequestDispatcher view = request.getRequestDispatcher("views/mypage/mylist.jsp");
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+			view.forward(request, response);
+		} else {
+			ArrayList<Board> list = bService.selectMyList(m.getMemberNo());
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		}
+
+	}
 }

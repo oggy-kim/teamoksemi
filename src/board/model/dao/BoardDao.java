@@ -90,6 +90,38 @@ public class BoardDao {
 
         return list;
     }
+    
+    
+    // 메인 페이지 ajax용
+	public ArrayList<Board> selectMyList(Connection conn, int memberNo) {
+		ArrayList<Board> list = new ArrayList<>();
+
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String sql = prop.getProperty("selectMyListForMain");
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, memberNo);
+            
+            rset = pstmt.executeQuery();
+
+            while(rset.next()) {
+                list.add(new Board(rset.getInt(2), rset.getInt(3), rset.getInt(5),
+                                   rset.getInt(6), rset.getString(7), rset.getDate(9),
+                                   rset.getString(8)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rset);
+            close(pstmt);
+        }
+
+        return list;
+	}
 
 
 	public ArrayList<QnA> selectQnAList(Connection conn, int currentPage, int boardLimit, int memberNo) {
@@ -108,6 +140,36 @@ public class BoardDao {
             pstmt.setInt(1, memberNo);
             pstmt.setInt(2, startRow);
             pstmt.setInt(3, endRow);
+
+            rset = pstmt.executeQuery();
+
+            while(rset.next()) {
+                list.add(new QnA(rset.getInt(2), rset.getInt(3), rset.getDate(5),
+                                   rset.getString(6), rset.getString(7), rset.getString(8),
+                                   rset.getString(9)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rset);
+            close(pstmt);
+        }
+        return list;
+	}
+	
+	// ajax용 
+	public ArrayList<QnA> selectQnAList(Connection conn, int memberNo) {
+		ArrayList<QnA> list = new ArrayList<>();
+
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String sql = prop.getProperty("selectQnAListForMain");
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, memberNo);
 
             rset = pstmt.executeQuery();
 
@@ -750,5 +812,10 @@ public class BoardDao {
 	      }
 	      return board;
 	   }
+
+
+	
+
+
         
 }

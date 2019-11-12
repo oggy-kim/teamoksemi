@@ -269,12 +269,10 @@
                     <th width="100">게시일자</th>
                     <th width="50">조회수</th>
                     <th width="50">찜수</th>
-                    <th width="50">댓글수</th>
-                    <th>최근댓글</th>
                 </tr>
                 <% if(list.isEmpty()){ %>
                 <tr>
-                    <td colspan="6">조회된 리스트가 없습니다.</td>
+                    <td colspan="5">조회된 리스트가 없습니다.</td>
                 </tr>
                 <% } else { %>
                 <% for(Board b : list) {%>
@@ -285,8 +283,6 @@
                     <td><%= b.getArticleDate() %></td>
                     <td><%= b.getArticleViews() %></td>
                     <td><%= b.getArticleLikes() %></td>
-                    <td><%= b.getArticleLikes() %></td>
-                    <td>/</td>
                 </tr>
                 <% } %>
                 <% } %>

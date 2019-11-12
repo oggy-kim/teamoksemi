@@ -57,7 +57,7 @@ public class MyclosetSelectServlet extends HttpServlet {
 			request.setAttribute("accCount", accCount);
 			
 			request.getRequestDispatcher("/views/mypage/mycloset.jsp").forward(request, response);
-		} else {
+		} else { // ajax
 			likeStatus = request.getParameter("likestatus");
 			System.out.println("likeStatus : " + likeStatus);
 			ArrayList<Closet> list = cService.selectMyCloset(m.getMemberNo(), likeStatus);
@@ -71,13 +71,7 @@ public class MyclosetSelectServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("application/json; charset=UTF-8");
 			new Gson().toJson(list, response.getWriter());
-//			new Gson().toJson(topCount, response.getWriter());
-//			new Gson().toJson(bottomCount, response.getWriter());
-//			new Gson().toJson(accCount, response.getWriter());
-			
 		}
-		
-		
 	}
 
 	/**

@@ -25,139 +25,134 @@ String gradeCode = m.getGradeCode();
 		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg'); 
 	}
     #navbar {
-            width:100%;
-            height:60px;
-            position:fixed;
-            z-index: 1;
-            text-align: center;
-        }
+        width:100%;
+        height:60px;
+        position:fixed;
+        z-index: 1;
+        text-align: center;
+    }
 
-        #category {
-          width: 100%;
-          height:60px;
-          position: fixed;
-          z-index: 1;
-          background: white;
-          opacity:0.8;
-        }
+    #category {
+        width: 100%;
+        height:60px;
+        position: fixed;
+        z-index: 1;
+        background: white;
+        opacity:0.8;
+    }
 
-        .nav-link:hover {
-          text-decoration:underline;
-          font-weight:bold;
-        }
+    .nav-link:hover {
+        text-decoration:underline;
+        font-weight:bold;
+    }
 
-        section {
-            width: 100%;
-            height: 1200px;
-        }
+    section {
+        width: 100%;
+        height: 1200px;
+    }
 
-        hr {
-            border: 1px solid black;
-        }
+    hr {
+        border: 1px solid black;
+    }
 
-        .btn {
-            background: black;
-            border: 1px solid white;
-            color: white;
-            text-decoration: underline;
-        }
+    .btn {
+        background: black;
+        border: 1px solid white;
+        color: white;
+        text-decoration: underline;
+    }
 
 
-        .copyRight {
-          text-align: center;
-          padding: 100px 0;
-        }
+    .copyRight {
+        text-align: center;
+        padding: 100px 0;
+    }
 
-        .menuLine {
-            margin: auto;
-            width: 80%;
-            height: 100px;
-            align-items: center;
-        }
+    .menuLine {
+        margin: auto;
+        width: 80%;
+        height: 100px;
+        align-items: center;
+    }
 
-        .div {
-            width: 33%;
-            margin: auto;
-            float: left;
-            text-align: center;
-        }
+    .div {
+        width: 33%;
+        margin: auto;
+        float: left;
+        text-align: center;
+    }
 
-        .innermenu {
-            width: 100px;
-            height: 30px;
-            text-align: center;
-            border: 1px solid black;
-            border-radius: 5px;
-            margin: auto;
-            font-weight: bold;
-            font-size: 18px;
-        }
+    .innermenu {
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 5px;
+        margin: auto;
+        font-weight: bold;
+        font-size: 18px;
+    }
 
-        .content {
-            font-family: 'Do Hyeon', sans-serif;
-            width: 65%;
-            height: 500px;
-            float: left;
-            margin: 10px;
-        }
+    .content {
+        font-family: 'Do Hyeon', sans-serif;
+        width: 65%;
+        height: 500px;
+        float: left;
+        margin: 10px;
+    }
 
-        .menu {
-            font-family: 'Do Hyeon', sans-serif;
-            width: 20%;
-            list-style-type: disc;
-            float: left;
-            font-size: 20px;
-        }
+    .menu {
+        font-family: 'Do Hyeon', sans-serif;
+        width: 20%;
+        list-style-type: disc;
+        float: left;
+        font-size: 20px;
+    }
 
-        .line {
-            width: 5%;
-            float: left;
-            border-left: 2px solid black;
-            height: 1200px;
-        }
+    .line {
+        width: 5%;
+        float: left;
+        border-left: 2px solid black;
+        height: 1200px;
+    }
 
-        .list, .list-readonly {
-            padding: 10px;
-        }
-        .sublist {
-            padding: 10px;
-        }
+    .list, .list-readonly {
+        padding: 10px;
+    }
+    .sublist {
+        padding: 10px;
+    }
 
-        ul.category li a {
-            font-family: 'Do Hyeon', sans-serif;
-            margin:auto;
-            color: black;
-        }
+    ul.category li a {
+        font-family: 'Do Hyeon', sans-serif;
+        margin:auto;
+        color: black;
+    }
 
-        ul.category li a:hover {
-            font-weight: bold;
-            font-style: italic;
-        }
+    ul.category li a:hover {
+        font-weight: bold;
+        font-style: italic;
+    }
 
-        ul.category ul > li {
-            list-style-type: square;
-            margin: 5px 5px;
-            text-decoration: none;
-        }
-        .list:hover, .sublist:hover {
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .update-member {
-            width: 80%;
-        }
-        .update-member td {
-            padding: 0 0 10px 10px;
-        }
-
-        .container {
-            margin: 20px auto;
-            max-width: 640px;
-        }
-
+    ul.category ul > li {
+        list-style-type: square;
+        margin: 5px 5px;
+        text-decoration: none;
+    }
+    .list:hover, .sublist:hover {
+        cursor: pointer;
+        font-weight: 700;
+    }
+    .update-member {
+        width: 80%;
+    }
+    .update-member td {
+        padding: 0 0 10px 10px;
+    }
 </style>
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
 rel="stylesheet" type="text/css" />
+<lint href="<%= request.getContextPath() %>/css/cropper.js" rel="stylesheet" type="text/css"> 
 
 </head>
 <body>
@@ -221,7 +216,7 @@ rel="stylesheet" type="text/css" />
     <div class="content">
         <h2>개인정보 수정</h2>
         <hr>
-	<form action="<%= contextPath %>/update.look" method="post" enctype="multipart/form-data">
+	<form action="<%= contextPath %>/update.look" method="post" onsubmit="return checkPwd();" enctype="multipart/form-data">
 	<table class="update-member">
 		<tr>
 			<td width="100px">출생년도</td>
@@ -260,7 +255,6 @@ rel="stylesheet" type="text/css" />
         		$("#btn-duplicate").click(
                     function(){
                         var memberNick = $("#memberNick").val();
-                console.log(memberNick);
                 $.ajax({
                     url: "<%= contextPath %>/memberduplicate.look",
                     data: {memberNick : memberNick},
@@ -294,25 +288,35 @@ rel="stylesheet" type="text/css" />
         </tr>
         <tr>
             <td>비밀번호 확인</td>
-            <td><input type="password" id="memberPwd" name="memberPwd" value="<%= loginUser.getMemberPwd() %>"></td>
+            <td><input type="password" id="memberPwd2" name="memberPwd2" value="<%= loginUser.getMemberPwd() %>"></td>
             </tr>
             <script>
-                // 유효성 검사 추가필요
-                
-            
-            </script>
+                function checkPwd() {
+                    var newPwd = $("#memberPwd");
+                    var newPwd2 = $("#memberPwd2");
+                    
+                    if(newPwd.val().trim() == "" || newPwd2.val().trim() == "" ) {
+                        return false;
+                    }
+                    if(newPwd.val() != newPwd2.val()) {
+                        alert('비밀번호가 다릅니다.');
+                        newPwd2.select();
+                        return false;
+                    }
+                    return true;
+                }
+                </script>
 
 
 
 
 
             <tr>
-			<td>프로필 사진</td> <!-- cropper.js 추가 필요(사진 1:1 업로드) -->
+			<td>프로필 사진</td> 
             <td><div style="width:100px; height: 100px; margin: auto;">
                     <img id="profileImg" src="<%= request.getContextPath() %>/resources/images/profile/<%= loginUser.getMemberNo() %>.jpg" style="width:100px; height:100px"></div></td>
-            <td>
+                    <td>
                     <input type="file" id="profilePic" name="profilePic" class='btn btn-secondary'>
-            
             </td>
         </tr>
         <script>

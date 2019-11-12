@@ -27,6 +27,17 @@ public class BoardService {
         close(conn);
         return list;
     }
+    
+
+	public ArrayList<Board> selectMyList(int memberNo) {
+		Connection conn = getConnection();
+
+        ArrayList<Board> list = new BoardDao().selectMyList(conn, memberNo);
+
+        close(conn);
+        return list;
+	}
+    
 
 	public ArrayList<QnA> selectQnAList(int currentPage, int boardLimit, int memberNo) {
         Connection conn = getConnection();
@@ -36,6 +47,17 @@ public class BoardService {
         close(conn);
         return list;
 	}
+	// mypage 메인용
+	public ArrayList<QnA> selectQnAList(int memberNo) {
+		Connection conn = getConnection();
+
+        ArrayList<QnA> list = new BoardDao().selectQnAList(conn, memberNo);
+
+        close(conn);
+        return list;
+	}
+	
+	
 
 	public int getQnAListCount(int memberNo) {
 		Connection conn = getConnection();
@@ -323,6 +345,8 @@ public class BoardService {
 	      
 	      return board;
 	   }
+
+
 
 
 }

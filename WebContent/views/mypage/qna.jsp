@@ -193,6 +193,11 @@
     #myQnAList td {
         height: 50px;
     }
+    #myQnAList tr:hover {
+        background-color: lightgray;
+        cursor: pointer;
+        transition: 0.3s;
+    }
     
     .QnAInsertForm {
         font-family: 'Do Hyeon', sans-serif;
@@ -208,11 +213,31 @@
     	background: lightgray;
     	visibility: hidden;
     	position: fixed;
-    	top: 20%;
-    	left: 20%;
-        width: 800px;
+    	top: 30%;
+    	left: 30%;
+        width: 500px;
         height: 400px;
     }
+
+    .qnadetailview {
+        border: 1px solid darkgray;
+        font-family: 'Do Hyeon', sans-serif;
+        height: 95%;
+        margin: auto;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .qnadetailview th {
+        background-color: gray;
+    }
+    .qnadetailview td {
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: lightgray;
+    }
+
     </style>
 </head>
 <body>	
@@ -292,7 +317,7 @@
 					</table>
 					<br>
 					<div align="center">
-						<button type="button" onclick="">취소하기</button>
+						<button id="cancel">취소하기</button>
 						<button id="submit" type="submit">문의글 등록</button>
 					</div>
 				</form>
@@ -300,6 +325,13 @@
 			</div>
 	</div>
 	<script>
+
+        $(document).ready(function(c) {
+            $('.alert-close').on('click', function(c){
+                $(this).parent().fadeOut('slow', function(c){
+                });
+            });	
+        });
            	function showQnAInsertForm(){
            		$("#QnAInsertForm").css("visibility", "visible");
            		$("body").css({"background": "gray"});
@@ -348,6 +380,7 @@
 	$(function(){
         $('#myQnAList td').click(
             function() {
+
             var qnaNo = $(this).parent().children("input").val();
             $.ajax({
                 url: "qnadetail.look",
@@ -368,13 +401,17 @@
 
 
 	           		var detail = "";
-
-	           		detail += "<div>등록일 : " + result.enrollDate + "</div>" +
-                             "<div>제목 : " + result.qnaTitle + "</div>" +
-                             "<div>문의내용 : " + result.qnaContents + "</div>" +
-                             "<div>답변여부 : " + result.answerStatus + "</div>" + 
-                             "<div>답변내용 : " + result.answerContents + "</div>";
-                    console.log(detail);
+                    
+                    detail += '<div class="qnadetailview">' + 
+                    '<table><tr>' +
+                        '<th width="100px">등록일</th><td width="300px">' + result.enrollDate + '</td></tr>' +
+                        '<tr><th>제목</th><td>' + result.qnaTitle + '</td></tr>' +
+                        '<th>답변여부</th><td>' + result.answerStatus + '</td>' +
+                        '<tr><th>문의내용</th><td>' + result.qnaContents + '</td></tr>' +
+                        '<th>답변내용</th>' +
+                    '</tr></table>' +
+                    '<div>' + result.answerContents + '</div>' + 
+                    '</div>';
 
 	           		$(".QnADetailForm").html(detail);
 	           		
@@ -423,33 +460,33 @@
             </table>
             <div class="pagingArea" align="center">
                 <!-- 맨 처음으로 (<<) -->
-                <button onclick="location.href='<%= contextPath %>/qna.look?currentPage=1'"> &lt;&lt; </button>
+                <button class="btn btn-secondary" onclick="location.href='<%= contextPath %>/qna.look?currentPage=1'"> &lt;&lt; </button>
 
                 <!-- 이전 페이지로 (<) -->
                 <% if(currentPage == 1){ %>
-                <button disabled> &lt; </button>
+                <button class="btn btn-secondary" disabled> &lt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+                <button class="btn btn-secondary" onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
                 <% } %>
 
                 <!-- 10개의 페이지 목록 -->
                 <% for(int p = startPage; p <= endPage; p++){ %>
                 <% if(p == currentPage){ %>
-                <button disabled> <%= p %> </button>
+                <button class="btn btn-secondary" disabled> <%= p %> </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= p %>'"><%= p %></button>
+                <button class="btn btn-secondary" onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= p %>'"><%= p %></button>
                 <% } %>
                 <% } %>
 
                 <!-- 다음 페이지로 (>) -->
                 <% if(currentPage == maxPage){ %>
-                <button disabled> &gt; </button>
+                <button class="btn btn-secondary" disabled> &gt; </button>
                 <% } else { %>
-                <button onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+                <button class="btn btn-secondary" onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
                 <% } %>
 
                 <!-- 맨 끝으로 (>>) -->
-                <button onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+                <button class="btn btn-secondary" onclick="location.href='<%= contextPath %>/qna.look?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
             </div>
         </div>
 

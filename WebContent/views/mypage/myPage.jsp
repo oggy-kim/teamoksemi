@@ -210,6 +210,17 @@
         .look-more {
             text-decoration: none;
         }
+        .myboardlist {
+            text-align: center;
+            margin: auto;
+        }
+        .myboardlist th {
+            background-color: black;
+            color: white;
+        }
+        .myboardlist tr {
+            background-color: gray;
+        }
 
 
 </style>
@@ -289,21 +300,11 @@
 
     <div class="article left">
         <h4 align="center">선호하는 스타일</h4>
-        <p align="right"><a class="look-more" href="<%= contextPath %>/closet.look">.. 더보기</a></p>
+        <p align="right"><a class="look-more" href="<%= contextPath %>/closet.look">.. 나의 옷장으로</a></p>
     <article class="favoritestyle">
-    <div class="favorite top">
-
-    </div>
-    <hr>
-
-    <div class="favorite bottom">
-
-    </div>
-    <hr>
-    <div class="favorite acc">
-
-
-    </div>
+    <div class="favorite top"></div><hr>
+    <div class="favorite bottom"></div><hr>
+    <div class="favorite acc"></div>
     </article>
     <script>
         $(function(){
@@ -356,14 +357,91 @@
     </script>
     </div>
     <div class="article right">
-            <h4 align="center">내 게시물 관리</h4>
-    <article class="myboard">
-
+        <h4 align="center">내 게시물 관리</h4>
+        <p align="right"><a class="look-more" href="<%= contextPath %>/mylist.look">.. 내 게시물 더보기</a></p>
+    <article class="myboard">   
     </article>
-<h4 align="center">나의 Q&A</h4>
+    <script>
+        $(function(){
+            $.ajax({
+                url: "<%= contextPath %>/mylist.look",
+                type: "POST", 
+                data: {fromajax : "Y"},
+                dataType: "json",
+                success: function(result){
+                    var content = '<table class="myboardlist"><th>게시사진</th><th width="120px">게시일</th><th width="60px">조회수</th><th width="60px">찜수</th>';
+                    var count = 0;
+
+                    if(result.length == 0) {
+                        content += '<tr><td colspan="4">등록한 게시물이 없습니다.</td></tr></table>';
+                    } else {
+                        for(var i = 0; i < result.length; i++) {
+                            if(count < 2) {
+                                content += '<tr><td><img src ="<%= contextPath %>/resources/images/board/' + result[i].articleNo + '.jpg" style="height:100px; width: 100px;"></td>' +
+                                    '<td>' + result[i].articleDate + '</td>' +
+                                    '<td>' + result[i].articleViews + '</td>' +
+                                    '<td>' + result[i].articleLikes + '</td></tr>';
+                                count++;
+                            } else {
+                                content += '</table>';
+                            } 
+                        }
+                    }
+
+                $('.myboard').html(content);
+                                    
+                },
+                error: function(){
+                    console.log("ajax 에러");
+                }
+            });
+
+        });
+    
+    </script>
+
+
+        <h4 align="center">나의 Q&A</h4>
+        <p align="right"><a class="look-more" href="<%= contextPath %>/qna.look">.. Q&A 더보기</a></p>
     <article class="myqna">
 
     </article>
+
+    <script>
+            $(function(){
+                $.ajax({
+                    url: "<%= contextPath %>/qna.look",
+                    type: "POST", 
+                    data: {fromajax : "Y"},
+                    dataType: "json",
+                    success: function(result){
+                        var content = '<table class="myboardlist"><th width="200px">제목</th><th width="120px">게시일</th><th width="60px">답변여부</th>';
+                        var count = 0;
+                        console.log(result);
+                        if(result.length == 0) {
+                            content += '<tr><td colspan="3">등록한 Q&A글이 없습니다.</td></tr></table>';
+                        } else {
+                            for(var i = 0; i < result.length; i++) {
+                                if(count < 2) {
+                                    content += '<tr><td>' + result[i].qnaTitle + '</td>' +
+                                        '<td>' + result[i].enrollDate + '</td>' +
+                                        '<td>' + result[i].answerStatus + '</td></tr>';
+                                    count++;
+                                } else {
+                                    content += '</table>';
+                                } 
+                            }
+                        }
+                    $('.myqna').html(content);
+                    },
+                    error: function(){
+                        console.log("ajax 에러");
+                    }
+                });
+    
+            });
+        
+        </script>
    </div>
 
     </div>
