@@ -65,6 +65,8 @@
             color:#fff;
             padding:30px 0px;
             padding-top: 5px;
+            	        font-family: 'Do Hyeon', sans-serif;
+			font-style: italic;
             }
             #h3tag {
             position:absolute;
@@ -78,10 +80,12 @@
               font-size: 1.2em;
               font-weight: bold;
               color:rgba(87, 79, 79, 0.2);
+              font-family: 'Do Hyeon', sans-serif;
+			font-style: italic;
             }
             .email {
               position:absolute;
-              margin-left: 20%;
+              margin-left: 25%;
               margin-bottom: 35%;
               margin-top:5%;
               margin-right: 40%;
@@ -137,9 +141,7 @@
               margin-right: 15%;
             }
             #email-code {
-              margin-left: -10%;
-              margin-bottom: 10%;
-              margin-top:40%;
+              margin-top:25%;
               margin-right: 30%;
             }
             #code {
@@ -147,6 +149,22 @@
               margin-bottom: 10%;
               margin-top:40%;
               margin-right: 30%;
+            }
+            #check-email-code-check {
+              margin-top: 10%;
+              background: rgb(38, 156, 202);
+              color: white;
+              border: 1px;
+              border-radius: 5px;
+              padding-left: 2%;
+              padding-right: 2%;
+              padding-top: 5px;
+              padding-bottom: 5px;
+            }
+            #emailcode {
+              margin-top: 10%;
+              background: skyblue;
+              color:white;
             }
 
 
@@ -188,12 +206,12 @@
    <div class="form-group" style="width: 38%; margin: 10px auto;">  
      <button type="button" id="email-code" class="btn btn-primary btn-lg btn-block" onclick="send_mail();">보내기</button>
   </div>  
-  <a href="#" id="atag">새 계정 만들기</a><br>
-  <button type="button" id="loginbtn" >로그인으로</button>
+  <!-- <a href="#" id="atag">새 계정 만들기</a><br>
+  <button type="button" id="loginbtn" >로그인으로</button> -->
   
   
   <span id="code">
-  <input type="text" placeholder="인증코드를 입력하세요." name="emailcode" id="emailcode">
+  &nbsp;&nbsp;<input type="text" placeholder="인증코드를 입력하세요." name="emailcode" id="emailcode">
   <button type="button" id="check-email-code-check" onclick="send_emailcheck();">확인</button>
 </span>
   </div>
@@ -220,14 +238,6 @@
 		});
 	}
 
-
-
-	  <%-- <form method="POST" action="<%= request.getContextPath() %>/changePage.look">
-	    <input type="email" class="login email" id="email" name="email" placeholder="  이메일 또는 닉네임을 입력하세요"><br>
-	  </form>
-	  
-	  <input type="text" placeholder="인증코드를 입력하세요." name="emailcode" id="emailcode"> --%>
-
 	 //인증코드를 받고나서 제출하는기능
 function send_emailcheck(){
 	var email = $("#email").val();
@@ -241,6 +251,7 @@ function send_emailcheck(){
 		//틀릴경우다시입력
 	}else {
 		alert('코드가 일치하지않습니다.');
+		
 	}
 	
 }

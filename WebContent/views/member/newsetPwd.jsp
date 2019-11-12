@@ -44,10 +44,6 @@
             font-weight: bold;
             font-size: 18px;
         }
-
-
-
-
 		.inner {
             position: absolute;
           }
@@ -55,10 +51,11 @@
             width:600px;
             height:450px;
             position:absolute;
-            top:calc(60vh - 200px);
+            top:calc(45vh - 200px);
             left:calc(45vw - 200px);
             overflow:hidden;
             background: rgba(223, 217, 230, 0.8);
+            border-radius: 10%;
           }
         .box{
             position:absolute;
@@ -68,6 +65,8 @@
             color:#fff;
             padding:30px 0px;
             padding-top: 5px;
+            font-family: 'Do Hyeon', sans-serif;
+			font-style: italic;
             }
 			#pass {
 				margin-left: 18%;
@@ -82,16 +81,31 @@
               margin-right: 20%;
 			} 
 			#btn {
-				margin-left: 40%;
+				margin-left: 42%;
               margin-bottom: 10%;
-              margin-top:40%;
-              margin-right: 20%;
+              margin-top:18%;
+              margin-right: 25%;
               background: rgba(59, 182, 11, 0.5);
                 color: white;
                 border: 1px;
                 border-radius: 15px;
-                padding: 2%;
+                padding-left: 5%;
+                padding-right: 5%;
+                padding-top: 1%;
+                padding-bottom: 1%;
+
 			}
+            #pwd2 {
+                margin-right: 5%;
+            }
+            #nav {
+                background: rgba(59, 182, 11, 0.5);
+                width:20%;
+            }
+            .left {
+                border: 1px;
+                background: rgba(128, 128, 128, 0.8);
+            }
 </style>
 
 </head>
@@ -101,10 +115,13 @@
 		<div class="inner-container">
 				<div class="box">
 <form method="post" action="<%= request.getContextPath()%>/resetPwd.look"
-	onsubmit="return checkPwd();">
-	 <input type="hidden" name="email" value="<%= request.getAttribute("email") %>">
-<span id="pass"><label>변경할비밀번호</label><input type="password" width="10%" id="newPwd" name="newPwd" placeholder="변경할 비밀번호를 입력하세요"></span><br>
-<br><span id="pass2"><label>비밀번호확인</label><input type="password" width="10%" id="newPwd2" name="newPwd2" placeholder="비밀번호 확인"></span><br>
+    onsubmit="return checkPwd();">
+    <br>
+    <div align="center"><p id="nav">비밀번호 재설정</p></div>
+     <input type="hidden" name="email" value="<%= request.getAttribute("email") %>">
+     <br><br> <br><br>
+<span id="pass"><label class="left">변경할비밀번호</label>&nbsp;&nbsp;&nbsp;<input type="password" size="25" id="newPwd" name="newPwd" placeholder="변경할 비밀번호를 입력하세요"></span><br>
+<br><span id="pass2"><label class="left" id="pwd2">비밀번호확인</label><input type="password" size="25" id="newPwd2" name="newPwd2" placeholder="비밀번호 확인"></span><br>
 <button id="btn">제출</button>
 
 </form>

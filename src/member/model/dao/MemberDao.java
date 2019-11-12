@@ -89,7 +89,7 @@ public class MemberDao {
 	public int updateMember(Connection conn, Member m) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = prop.getProperty("updateMember");
+		String query = prop.getProperty("updateMem");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
