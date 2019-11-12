@@ -34,248 +34,244 @@
 	body {
 		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
 	}
-#navbar {
-	width: 100%;
-	height: 60px;
-	position: fixed;
-	z-index: 1;
-	text-align: center;
-}
+	#navbar {
+		width: 100%;
+		height: 60px;
+		position: fixed;
+		z-index: 1;
+		text-align: center;
+	}
 
-#category {
-	width: 100%;
-	height: 60px;
-	position: fixed;
-	z-index: 1;
-	background: white;
-	opacity: 0.8;
-}
+	#category {
+		width: 100%;
+		height: 60px;
+		position: fixed;
+		z-index: 1;
+		background: white;
+		opacity: 0.8;
+	}
 
-.nav-link:hover {
-	text-decoration: underline;
-	font-weight: bold;
-}
+	.nav-link:hover {
+		text-decoration: underline;
+		font-weight: bold;
+	}
 
-section {
-	width: 100%;
-	height: 1200px;
-}
+	section {
+		width: 100%;
+		height: 1200px;
+	}
 
-hr {
-	border: 1px solid black;
-}
+	hr {
+		border: 1px solid black;
+	}
 
-.btn {
-	background: black;
-	border: 1px solid white;
-	color: white;
-	text-decoration: underline;
-}
+	.btn {
+		background: black;
+		border: 1px solid white;
+		color: white;
+		text-decoration: underline;
+	}
 
-.copyRight {
-	text-align: center;
-	padding: 100px 0;
-}
+	.copyRight {
+		text-align: center;
+		padding: 100px 0;
+	}
 
-.menuLine {
-	margin: auto;
-	width: 80%;
-	height: 100px;
-	align-items: center;
-}
+	.menuLine {
+		margin: auto;
+		width: 80%;
+		height: 100px;
+		align-items: center;
+	}
 
-.div {
-	width: 33%;
-	margin: auto;
-	float: left;
-	text-align: center;
-}
+	.div {
+		width: 33%;
+		margin: auto;
+		float: left;
+		text-align: center;
+	}
 
-.innermenu {
-	width: 100px;
-	height: 30px;
-	text-align: center;
-	border: 1px solid black;
-	border-radius: 5px;
-	margin: auto;
-	font-weight: bold;
-	font-size: 18px;
-}
+	.innermenu {
+		width: 100px;
+		height: 30px;
+		text-align: center;
+		border: 1px solid black;
+		border-radius: 5px;
+		margin: auto;
+		font-weight: bold;
+		font-size: 18px;
+	}
 
-.content {
-	font-family: 'Do Hyeon', sans-serif;
-	width: 77%;
-	height: 1100px;
-	float: left;
-	padding: 10px;
-	display: inline-block;
-}
+	.content {
+		font-family: 'Do Hyeon', sans-serif;
+		width: 77%;
+		height: 1100px;
+		float: left;
+		padding: 10px;
+		display: inline-block;
+	}
 
-.menu {
-	font-family: 'Do Hyeon', sans-serif;
-	width: 20%;
-	list-style-type: disc;
-	float: left;
-	font-size: 20px;
-}
+	.menu {
+		font-family: 'Do Hyeon', sans-serif;
+		width: 20%;
+		list-style-type: disc;
+		float: left;
+		font-size: 20px;
+	}
 
-.line {
-	width: 3%;
-	float: left;
-	border-left: 2px solid black;
-	height: 1200px;
-}
+	.line {
+		width: 3%;
+		float: left;
+		border-left: 2px solid black;
+		height: 1200px;
+	}
 
-.list {
-	padding: 10px;
-}
+	.list {
+		padding: 10px;
+	}
+	.list:hover {
+		cursor: pointer;
+		font-weight: 700;
+	}
 
-.sublist {
-	padding: 10px;
-}
+	.sublist {
+		padding: 10px;
+	}
 
-ul.category li a {
-	margin: auto;
-	color: black;
-}
+	ul.category li a {
+		margin: auto;
+		color: black;
+	}
 
-ul.category li a:hover {
-	font-weight: bold;
-	font-style: italic;
-}
+	ul.category li a:hover {
+		font-weight: bold;
+		font-style: italic;
+	}
 
-ul.category ul>li {
-	list-style-type: square;
-	margin: 5px 5px;
-	text-decoration: none;
-}
 
-.left {
-	width: 450px;
-	height: 85%;
-	/* border: 1px solid black; */
-	box-sizing: border-box;
-	display: block;
-	margin: auto;
-	margin-right: 30px;
-}
+	ul.category ul>li {
+		list-style-type: square;
+		margin: 5px 5px;
+		text-decoration: none;
+	}
 
-.right {
-	width: 40%;
-	height: 1000px;
-	/* border: 1px solid black; */
-	box-sizing: border-box;
-	display: inline-block;
-	visibility: hidden;
-}
+	.left {
+		width: 450px;
+		height: 85%;
+		/* border: 1px solid black; */
+		box-sizing: border-box;
+		display: block;
+		margin: auto;
+		margin-right: 30px;
+	}
 
-.mycloset {
-	border-radius: 10px;
-	width: 100%;
-	height: 90%;
-	background-color: rgb(184, 184, 184);
-}
+	.right {
+		width: 40%;
+		height: 1000px;
+		/* border: 1px solid black; */
+		box-sizing: border-box;
+		display: inline-block;
+		visibility: hidden;
+	}
 
-.left .button {
-	text-align: center;
-	width: 100%;
-	height: 8%;
-}
+	.mycloset {
+		border-radius: 10px;
+		width: 100%;
+		height: 90%;
+		background-color: rgb(184, 184, 184);
+	}
 
-.right .first {
-	width: 30%;
-	height: 200px;
-	display: inline-block;
-	margin-right: 30px;
-}
+	.left .button {
+		text-align: center;
+		width: 100%;
+		height: 8%;
+	}
 
-.right .thumbnail {
-	background-color: lightgray;
-	border-radius: 10px;
-	width: 40%;
-	height: 200px;
-	position: relative;
-	display: block;
-}
+	.right .first {
+		width: 30%;
+		height: 200px;
+		display: inline-block;
+		margin-right: 30px;
+	}
 
-#thumbnail-pic {
-	width: 90%;
-	height: 80%;
-	margin: auto;
-	z-index: 1;
-	-webkit-mask-box-image: url(<%= request.getContextPath() %>/resources/images/closet/question.png);
-}
+	.right .thumbnail {
+		background-color: lightgray;
+		border-radius: 10px;
+		width: 40%;
+		height: 200px;
+		position: relative;
+		display: block;
+	}
 
-#add-btn {
-	margin: auto;
-	width: 100%;
-}
-/* 
-#thumbnail-add {
-	height: 20%;
-	margin: auto;
-	position: absolute;
-	bottom: 0;
-	left: 35%;
-} */
+	#thumbnail-pic {
+		width: 90%;
+		height: 80%;
+		margin: auto;
+		z-index: 1;
+		-webkit-mask-box-image: url(<%= request.getContextPath() %>/resources/images/closet/question.png);
+	}
 
-.right .cloth {
-	width: 99%;
-	height: auto;
-}
+	#add-btn {
+		margin: auto;
+		width: 100%;
+	}
+	.right .cloth {
+		width: 99%;
+		height: auto;
+	}
 
-.select-form {
-	width: 99%;
-	height: 80%;
-	border-collapse: separate;
-	border-spacing: 5 5px;
-}
+	.select-form {
+		width: 99%;
+		height: 80%;
+		border-collapse: separate;
+		border-spacing: 5 5px;
+	}
 
-#select-top {
-	visibility: collapse;
-}
+	#select-top {
+		visibility: collapse;
+	}
 
-#select-bottom {
-	visibility: collapse;
-}
+	#select-bottom {
+		visibility: collapse;
+	}
 
-#select-acc {
-	visibility: collapse;
-}
+	#select-acc {
+		visibility: collapse;
+	}
 
-/* 나의 옷장 carousel 스타일 */
-.cloth-wrapper {
-	height: 140px;
-	width: 120px;
-}
-.cloth-vec {
+	/* 나의 옷장 carousel 스타일 */
+	.cloth-wrapper {
+		height: 140px;
+		width: 120px;
+	}
+	.cloth-vec {
         height: 120px;
 		width: 120px;
-      }
-      .clothlist {
-        width: 100%;
-        overflow: hidden;
-      }
-      .owl-nav,
-      .owl-dots {
-        display: block;
-        text-align: center;
-      }
-      .owl-nav .owl-prev,
-      .owl-nav .owl-next {
-        display: inline-block;
-        margin: 5px;
-      }
-      .owl-dots .owl-dot {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        margin: 5px;
-      }
-      .owl-dots .active {
-        background-color: #666;
-      }
+	}
+	.clothlist {
+	width: 100%;
+	overflow: hidden;
+	}
+	.owl-nav,
+	.owl-dots {
+	display: block;
+	text-align: center;
+	}
+	.owl-nav .owl-prev,
+	.owl-nav .owl-next {
+	display: inline-block;
+	margin: 5px;
+	}
+	.owl-dots .owl-dot {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	margin: 5px;
+	}
+	.owl-dots .active {
+	background-color: #666;
+	}
 
 </style>
 </head>
@@ -299,32 +295,32 @@ ul.category ul>li {
 	<section>
 		<!-- 좌측 네비바 -->
 		<div class="menu">
-				<ul class="category">
-					<li class="list" onclick="goMyCloset();">나의 옷장</li>
-					<li class="list" onclick="goMyList();">내 게시물 관리</li>
-					<li class="list" onclick="goQna();">FAQ / Q&A</li>
-					<li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
-				</ul>
-			</div>
+			<ul class="category">
+				<li class="list" onclick="goMyCloset();">나의 옷장</li>
+				<li class="list" onclick="goMyList();">내 게시물 관리</li>
+				<li class="list" onclick="goQna();">FAQ / Q&A</li>
+				<li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
+			</ul>
+		</div>
 			<script>
 				function goStyle() {
-    		location.href="<%= contextPath %>/boardlist.look";
-    	}
+    				location.href="<%= contextPath %>/boardlist.look";
+    			}
 
-    	function goFavorite() {
-    		location.href="<%= contextPath %>/wishlist.look";
-    	}
-    	function goEvent() {
-    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
-    	}
-    	function goMypage() {
-    		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
-    		if("<%= gradeCode %>" == 'S'){
-    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
-    		} else {
-    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
-    		}
-   	 	}
+				function goFavorite() {
+					location.href="<%= contextPath %>/wishlist.look";
+				}
+				function goEvent() {
+					location.href="<%= contextPath %>/views/event/eventPage.jsp";
+				}
+				function goMypage() {
+					// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+					if("<%= gradeCode %>" == 'S'){
+						location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+					} else {
+						location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+					}
+				}
 				function goMyCloset(){
 					location.href="<%= contextPath %>/closet.look";
 				}
@@ -339,26 +335,18 @@ ul.category ul>li {
 			
 		<div class="line"></div>
 		<div class="content">
-				<h2>나의 옷장(총 <%= totalCount %>개 의류가 등록되어 있습니다.)</h2>
-				<hr>
+			<h2>나의 옷장<small>(<%= totalCount %>개의 옷이 등록되어 있네요!)</small></h2>
+			<hr>
 			<div class="content left">
 				<div class="content left button">
 					<button class="btn btn-secondary" onclick="addCloth();">옷 추가</button> &nbsp; &nbsp;
-					<button class="btn btn-primary" onclick="deleteCloth();">옷 삭제</button> &nbsp; &nbsp;
-					<script>
-						function deleteCloth() {
-							if(confirm('정말 삭제하시겠습니까?')) {
-								alert("당분간 삭제 기능은 지원되지 않습니다! 삭제 필요시 관리자에게 문의주시며, 신중하게 등록해주세요.");
-							} else {
-								alert("다시 확인 부탁드립니다.");
-							}
-						}
-					</script>
+					<button type="button" class="btn btn-warning deletecloth" onclick="alert('일시 중단입니다. 관리자에게 문의해주세요.');">옷 삭제</button>
+					
 
 
-					<button type="button" class="btn btn-warning">선호스타일 보기</button>
+					<!-- <button type="button" class="btn btn-warning">선호스타일 보기</button> -->
 
-					<script>
+					<!-- <script>
 						$('.btn-warning').click(function(){
 							$.ajax({
 								url: "<%= contextPath %>/closet.look",
@@ -404,11 +392,9 @@ ul.category ul>li {
 										}
 
 									}
-
-										$('.clothlist.mytop').html(addtop);
-										$('.clothlist.mybottom').html(addbottom);
-										$('.clothlist.mybottom').html(addacc);
-					
+									$('.clothlist.mytop').html(addtop);
+									$('.clothlist.mybottom').html(addbottom);
+									$('.clothlist.mybottom').html(addacc);
 								},
 								error: function() {
 									console.log("ajax 연동실패");
@@ -417,163 +403,170 @@ ul.category ul>li {
 							});
 
 						});
-						</script>
-
-
+					</script> -->
 				</div>
 				<div class="content left mycloset">
-						<script type="text/javascript"
-						src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-						<script src="<%= request.getContextPath() %>/js/owl.carousel.js"></script>
-						<h5>상의(총 <%= topCount %>벌)</h5>
-						<div class="clothlist mytop">
-								<% for(Closet c : list) {
-									if(c.getTypeOption() == 1) { %>
-									<div class="cloth-wrapper">
-										<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
-										<% if(c.getLikeStatus().equals("Y")) { %>
-											<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
-											<% 	} %>
-										
-										</div>
-									<%	num++;
-									}
-								} %>
-							  </div>		
+					<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+					<script src="<%= request.getContextPath() %>/js/owl.carousel.js"></script>
+					<h5>상의(<%= topCount %>개)</h5>
+					<div class="clothlist mytop">
+						<% for(Closet c : list) {
+							if(c.getTypeOption() == 1) { %>
+							<div class="cloth-wrapper">
+								<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+								<input type="hidden" name="clothNo" value="<%= list.get(num).getClothNo() %>">
+								<% if(c.getLikeStatus().equals("Y")) { %>
+									<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+									<% 	} %>
+								
+								</div>
+							<%	num++;
+							}
+						} %>
+					</div>		
 
-							  <script>
-									var carousel = $(".clothlist.mytop");
-									carousel.owlCarousel({
-									  loop: false,
-									  margin: 10,
-									  nav: true,
-									  responsive: {
-										0: {
-										  items: 1
-										},
-										600: {
-										  items: 2
-										},
-										1000: {
-										  items: 3
-										}
-									  }
-									});
-									/* Mousewheel에 따른 이벤트 구현 */
-									// carousel.on("mousewheel", ".owl-stage", function(e) {
-									//   if (e.deltaY > 0) {
-									// 	carousel.trigger("next.carousel");
-									//   } else{
-									// 	carousel.trigger("prev.carousel");
-									//   }
-									//   e.preventDefault();
-									// });
-								  </script>
-<hr>
-<h5>하의(총 <%= bottomCount %>벌)</h5>
-<div class="clothlist mybottom">
-	<% for(Closet c : list) {
-		if(c.getTypeOption() == 2) { %>
-		<div class="cloth-wrapper">
-			<div class="cloth-vec" style="-webkit-mask-box-image: 
-			url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); 
-			background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
-			<% if(c.getLikeStatus().equals("Y")) { %>
-				<img src="<%= contextPath %>/resources/images/closet/like.png" 
-				style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
-				<% 	} %>
-			
-			</div>
-		<%	num++;
-		}
-	} %>
-  </div>		
-	 
-	  <script>
-			var carousel = $(".clothlist.mybottom");
-			carousel.owlCarousel({
-			  loop: false,
-			  margin: 10,
-			  nav: true,
-			  responsive: {
-				0: {
-				  items: 1
-				},
-				600: {
-				  items: 2
-				},
-				1000: {
-				  items: 3
-				}
-			  }
-			});
-			/* Mousewheel에 따른 이벤트 구현 */
-			// carousel.on("mousewheel", ".owl-stage", function(e) {
-			//   if (e.deltaY > 0) {
-			// 	carousel.trigger("next.carousel");
-			//   } else{
-			// 	carousel.trigger("prev.carousel");
-			//   }
-			//   e.preventDefault();
-			// });
-		  </script>
+					<script>
+						var carousel = $(".clothlist.mytop");
+						carousel.owlCarousel({
+							loop: false,
+							margin: 10,
+							nav: true,
+							responsive: {
+							0: {
+								items: 1
+							},
+							600: {
+								items: 2
+							},
+							1000: {
+								items: 3
+							}
+							}
+						});
+					</script>
 				<hr>
-<h5>악세사리(총 <%= accCount %>벌)</h5>
-<div class="clothlist myacc">
-	<% for(Closet c : list) {
-		if(c.getTypeOption() == 3) { %>
-		<div class="cloth-wrapper">
-			<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)">
-			<input type="hidden" name="clothNo" id="clothNo" value="<%= list.get(num).getClothNo() %>">
-			</div>
-			<% if(c.getLikeStatus().equals("Y")) { %>
-				<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
-				<% 	} %>
-			
-			</div>
-		<%	num++;
-		}
-	} %>
-  </div>
-	  </div>		
+				<h5>하의(<%= bottomCount %>개)</h5>
+				<div class="clothlist mybottom">
+					<% for(Closet c : list) {
+						if(c.getTypeOption() == 2) { %>
+						<div class="cloth-wrapper">
+							<div class="cloth-vec" style="-webkit-mask-box-image: 
+							url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); 
+							background-color: rgb(<%= list.get(num).getColourCode() %>)"></div>
+							<% if(c.getLikeStatus().equals("Y")) { %>
+								<img src="<%= contextPath %>/resources/images/closet/like.png" 
+								style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+								<% 	} %>
+							</div>
+						<%	num++;
+						}
+					} %>
+				</div>		
+	 
+				<script>
+					var carousel = $(".clothlist.mybottom");
+					carousel.owlCarousel({
+					loop: false,
+					margin: 10,
+					nav: true,
+					responsive: {
+						0: {
+						items: 1
+						},
+						600: {
+						items: 2
+						},
+						1000: {
+						items: 3
+						}
+					}
+					});
 
-	  <script>
-			var carousel = $(".clothlist.myacc");
-			carousel.owlCarousel({
-			  loop: false,
-			  margin: 10,
-			  nav: true,
-			  responsive: {
-				0: {
-				  items: 1
-				},
-				600: {
-				  items: 2
-				},
-				1000: {
-				  items: 3
+				</script>
+				<hr>
+				<h5>악세사리(<%= accCount %>개)</h5>
+				<div class="clothlist myacc">
+					<% for(Closet c : list) {
+						if(c.getTypeOption() == 3) { %>
+						<div class="cloth-wrapper">
+							<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/<%= list.get(num).getTypeCode() %>.png); background-color: rgb(<%= list.get(num).getColourCode() %>)">
+							<input type="hidden" name="clothNo" id="clothNo" value="<%= list.get(num).getClothNo() %>">
+							</div>
+							<% if(c.getLikeStatus().equals("Y")) { %>
+								<img src="<%= contextPath %>/resources/images/closet/like.png" style="position: absolute; width: 35px; height: 30px; top: 0px; right: 25px; z-index: 3;">	
+								<% 	} %>
+							
+							</div>
+						<%	num++;
+						}
+					} %>
+				</div>
+			</div>		
+
+			<script>
+				var carousel = $(".clothlist.myacc");
+				carousel.owlCarousel({
+				loop: false,
+				margin: 10,
+				nav: true,
+				responsive: {
+					0: {
+					items: 1
+					},
+					600: {
+					items: 2
+					},
+					1000: {
+					items: 3
+					}
 				}
-			  }
-			});
-			/* Mousewheel에 따른 이벤트 구현 */
-			// carousel.on("mousewheel", ".owl-stage", function(e) {
-			//   if (e.deltaY > 0) {
-			// 	carousel.trigger("next.carousel");
-			//   } else{
-			// 	carousel.trigger("prev.carousel");
-			//   }
-			//   e.preventDefault();
-			// });
-		  </script>
-		<script>
-			$(function(){
-				$('.cloth-vec').click(function() {
-					var checkedImg = `<img src="<%= contextPath %>/resources/images/closet/checked.png" style="position: absolute; width: 35px; height: 30px; top: 50px; left: 40px; z-index: 3;">`;
-					$(this).after(checkedImg);
 				});
-			});
-		
-		</script>
+			</script>
+			<script>
+				$(function(){
+					var deleteArr = new Array();
+
+					$('.cloth-vec').click(function() {
+					var checkedImg = `<img class="checkedImg" src="<%= contextPath %>/resources/images/closet/checked.png" style="position: absolute; width: 35px; height: 30px; top: 50px; left: 40px; z-index: 3;">`;
+					var clothNo = $(this).parent().children("input").val();
+					if($(this).attr("value") == undefined) {
+						deleteArr.push(clothNo);
+						$(this).attr("value", "1");
+						$(this).after(checkedImg);
+						console.log(deleteArr);
+					} else {
+						deleteArr.splice(deleteArr.indexOf(clothNo),1);
+						$(this).siblings("img").remove(); 
+						$(this).attr("value", "0");
+						console.log(deleteArr);
+					}
+
+
+
+					});	
+					
+					$('.deletecloth').click(function(){
+						console.log("deleteArr : " + deleteArr);
+						$.ajax({
+							url: "<%= contextPath %>/deletemycloth.look",
+							type: "POST", 
+							data: {deletelist : deleteArr},
+							dataType: "json",
+							success: function(result){
+								console.log(result); 
+							},
+							error: function() {
+								console.log("통신 에러");
+							}
+						})
+
+					})
+				
+
+				});
+				
+			
+			</script>
 			
 		</div>
 		
