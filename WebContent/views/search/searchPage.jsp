@@ -24,7 +24,7 @@
         body {
           width : 100%;
           height:2200px;
-
+		  background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
         section {
@@ -242,7 +242,8 @@
             <hr>
         </div>
         <div class="thumbnail">
-            <div class="subImg subImg1"><a style="text-decoration:none; color:black;" href="https://store.musinsa.com/app/product/search?type=&keyword_value=&keyword_url=&q=<%= keyword %>" target="_blank"> 
+            <div class="subImg subImg1"><a style="text-decoration:none; color:black;" 
+            	href="https://store.musinsa.com/app/product/search?type=&keyword_value=&keyword_url=&q=<%= keyword %>" target="_blank"> 
                 <div class="card" style="width: 100%; height:100%;">
                     <img src="<%= contextPath %>/resources/images/shop/musinsa.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
@@ -251,7 +252,8 @@
                 </div>
                 </a>
             </div>
-            <div class="subImg subImg2"><a style="text-decoration:none; color:black;" href="https://www.styleshare.kr/search?keyword=<%= keyword %>" target="_blank">
+            <div class="subImg subImg2"><a style="text-decoration:none; color:black;" 
+            	href="https://www.styleshare.kr/search?keyword=<%= keyword %>" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
                     <img src="<%= contextPath %>/resources/images/shop/styleshare.jpg" class="card-img-top" style="height:70%;">
                     <div class="card-body">
@@ -260,7 +262,8 @@
                 </div>
                 </a>
             </div>
-            <div class="subImg subImg3"><a style="text-decoration:none; color:black;" href="https://search.shopping.naver.com/search/all.nhn?query=<%= keyword %>&cat_id=&frm=NVSHATC" target="_blank">
+            <div class="subImg subImg3"><a style="text-decoration:none; color:black;" 
+            	href="https://search.shopping.naver.com/search/all.nhn?query=<%= keyword %>&cat_id=&frm=NVSHATC" target="_blank">
                 <div class="card" style="width: 100%; height:100%;">
                     <img src="<%= contextPath %>/resources/images/shop/naver.png" class="card-img-top" style="height:70%;">
                     <div class="card-body">
@@ -317,7 +320,7 @@ $(function(){
 				 console.log(result);
 				 $("body").click(function(){
 					 $(".searchDetailForm").css({"visibility":"hidden"});
-					 $("body").css({"background":"none"});
+					 $("body").css({"background":"url('<%= request.getContextPath() %>/resources/images/mainback.jpg')"});
 				 });
 				 $(".searchDetailForm").css("visibility", "visible");
 				 $("body").css({"background": "gray"});

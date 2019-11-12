@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
     <style>
-
+		
         #navbar {
           width:100%;
           height:60px;

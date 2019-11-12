@@ -28,6 +28,7 @@
         body {
           width : 100%;
           height : 1600px;
+          background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
         header {
@@ -37,19 +38,19 @@
 
         .mainArea {
           background: darkgray;
-          width: 80%;
+          width: 70%;
           height: 400px;
           margin: auto;
         }
 
         .mainImgArea{
-            width: 80%;
+            width: 75%;
             height: 100%;
             float: left;
         }
 
         .weatherArea {
-            width: 20%;
+            width: 25%;
             height: 100%;
             float: left;
             color: white;
@@ -155,9 +156,9 @@
     <script>
     
     $.getJSON('http://api.openweathermap.org/data/2.5/forecast?id=1835848&APPID=975353dea991d476ec748ec5b88c3a52&units=metric&cnt=7', function(data){
-        var $cTemp = data.list[0].main.temp;
-        var $chum = data.list[0].main.humidity;
-        var $cwind = data.list[0].wind.speed;
+        var $cTemp = Math.round(data.list[0].main.temp);
+        var $chum = Math.round(data.list[0].main.humidity);
+        var $cwind = Math.round(data.list[0].wind.speed);
         var $wData = data.list[0].weather[0].main;
         var $wIcon = data.list[0].weather[0].icon;
         var cTemp = $cTemp;
@@ -243,7 +244,7 @@
 </head>
 <body>
  	<%@ include file="menubar.jsp" %>
-<br>
+<br><br><br>
 <section>
   <div class="mainArea">
     <div class="mainImgArea">
@@ -260,13 +261,13 @@
         </div>
     </div>
   </div>
+  <br><br><br>
   <div class="middleArea">
-    <br>
     <div class="subImg subImg1" onclick="goStyle();">
         <div class="card" style="width: 100%; height: 100%; border:0px;">
         	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">BEST</p>
-            <img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" class="card-img-top" style="width:100%; height:50%;">
-            <div class="card-body" style="width:100%; height:35%;">
+            <img src="<%= contextPath %>/resources/images/board/<%= board.getArticleNo() %>.jpg" class="card-img-top" style="width:80%; height:50%; margin:auto;">
+            <div class="card-body" style="width:80%; height:50%; margin:auto;">
                 <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">#OOTD</h5>
                 <p class="card-text" style="font-family: 'Do Hyeon', sans-serif; font-size:30px; font-style: italic;"><%= board.getArticleContents() %></p>
                 <p style="font-family: 'Paytone One', sans-serif; font-size:15px; font-style: italic;"> &hearts; &nbsp; <%= board.getArticleLikes() %> </p>
@@ -276,12 +277,12 @@
     <div class="subImg subImg2" onclick="goMyCloset();">
         <div class="card" style="width: 100%; height:100%; border:0px; float:left;">
         	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">RECOMMEND</p>
-			<div class="closet" style="width:100%; height:50%;">
+			<div class="closet" style="width:80%; height:50%; margin:auto;">
 				<img class="card-img-top" id="recommend1" style="width:50%; height:50%;">
             	<img class="card-img-top" id="recommend2" style="width:50%; height:50%;">
-            	<img class="card-img-top" id="recommend3" style="width:50%; height:50%; float:right;">  
+            	<img class="card-img-top" id="recommend3" style="width:40%; height:50%;">  
 			</div>	     
-            <div class="card-body">
+            <div class="card-body" style="width:80%; height:50%; margin:auto;">
                 <h5 class="card-title" style="font-family: 'Paytone One', sans-serif; font-size:30px; font-style: italic;">TODAY RECOMMEND</h5>
                 <p class="card-text" style="font-family: 'Do Hyeon', sans-serif; font-size:20px; font-style: italic;">오늘같은 날씨에 이런 옷 어떠세요?</p>
             </div>
@@ -290,7 +291,7 @@
     <div class="subImg subImg3">
         <div class="card" style="width: 100%; height:100%; border:0px;">
     	<p style="text-align:center; font-size:20px; font-family: 'Fugaz One', cursive; margin:0;">FORECAST</p>
-        	<div class="forecastArea">
+        	<div class="forecastArea" style="width:80%; height:50%; margin:auto;">
         		<div class="forecastIcon">
         			<div class="fIcon fIcon1"></div>
         			<div class="fIcon fIcon2"></div>
@@ -300,7 +301,7 @@
         			<div class="fIcon fIcon6"></div>
         		</div>
         	</div>
-            <div class="card-body" style="font-family: 'Fugaz One', cursive; height:40%; padding:0;">
+            <div class="card-body" style="font-family: 'Fugaz One', cursive; width:80%; height:50%; margin:auto; padding:0;">
             	<div class="fData fData1"><br></div>
             	<div class="fData fData2"><br></div>
             	<div class="fData fData3"><br></div>
@@ -311,7 +312,7 @@
         </div>
     </div>
   </div>
-  <br><br>
+  <br><br><br>
   <div class="styleImgArea">
      <div class="fotorama" data-fit="contain" data-arrows="false" data-width="100%" 
      		data-height="80%" data-ratio="4/3" data-autoplay="5000" onclick="goEvent();">
