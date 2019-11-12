@@ -7,23 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import adm.model.service.AdmService;
-import board.model.vo.Board;
-import member.model.vo.Member;
+import board.model.vo.QnA;
 
 /**
- * Servlet implementation class AdmDetailBoaradServlet
+ * Servlet implementation class AdmAnswerQNAServlet
  */
-@WebServlet("/detailBoard.adm")
-public class AdmDetailBoardServlet extends HttpServlet {
+@WebServlet("/answerQNA.adm")
+public class AdmAnswerQNAServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmDetailBoardServlet() {
+    public AdmAnswerQNAServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +29,27 @@ public class AdmDetailBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int articleNo = Integer.parseInt(request.getParameter("aNo"));		
+		request.setCharacterEncoding("utf-8");
 		
-		Board b = new AdmService().detailBoard(articleNo);
+		String answerContents = request.getParameter("answerContents");
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		System.out.println("qnaNo="+qnaNo);
+		System.out.println("answerContents="+answerContents);
 		
-		if(b != null) {
-	 		response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
-			new Gson().toJson(b, response.getWriter());
+		QnA qna = new QnA();
+		
+		qna.setQnaNo(qnaNo);
+		qna.setAnswerContents(answerContents);
+		
+		int result = new AdmService().answerQNA(qna);
+		System.out.println(result);
+		
+		if(result > 0) {
+			response.sendRedirect("qna.adm");
+			// request.setAttribute("msg", "문의글이 성공적으로 삭제되었습니다.");
 		} else {
-			// request.setAttribute("msg", "게시물상세조회에 실패하셨습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			// request.setAttribute("msg", "문의글 삭제에 실패했습니다.");
 		}
 	}
 

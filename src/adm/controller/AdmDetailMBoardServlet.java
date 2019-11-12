@@ -41,7 +41,7 @@ public class AdmDetailMBoardServlet extends HttpServlet {
 		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-		// System.out.println("memberNo="+memberNo);
+		System.out.println("memberNo="+memberNo);
 		
 		BoardService bService = new BoardService();
         int listCount = bService.getListCount(memberNo);

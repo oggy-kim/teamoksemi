@@ -205,7 +205,7 @@ public class AdmService {
 	public Shop selectShop(int shopNo) {
 		Connection conn = getConnection();
 		Shop s = new AdmDao().selectShop(conn, shopNo);
-		System.out.println("s="+s);
+		// System.out.println("s="+s);
 		close(conn);
 		return s;
 	}
@@ -265,6 +265,20 @@ public class AdmService {
 	public int deleteQNA(int qnaNo) {
 		Connection conn = getConnection();
 		int result = new AdmDao().deleteQNA(conn, qnaNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+
+	public int answerQNA(QnA qna) {
+		Connection conn = getConnection();
+		int result = new AdmDao().answerQNA(conn, qna);
 		
 		if(result > 0) {
 			commit(conn);

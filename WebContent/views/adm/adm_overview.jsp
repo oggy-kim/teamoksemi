@@ -20,6 +20,7 @@
         body {
           width : 100%;
           height : 1600px;
+          background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
         #navbar {
@@ -182,6 +183,7 @@
 		}
 
 		.overview_box {
+			/* background : white; */
 			font-family: 'Noto Serif KR', serif;
 			width : 80%;
 			height : auto;
@@ -192,7 +194,9 @@
 		}
 		
 		.overview_box:hover {
-			border:2px solid black;
+			background : gray;
+			color : white;
+			/* border:2px solid black; */
 		}
 		
 		.overview_box p {

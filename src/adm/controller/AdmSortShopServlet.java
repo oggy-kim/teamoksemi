@@ -45,8 +45,6 @@ public class AdmSortShopServlet extends HttpServlet {
 			sortId = 2;
 		} 
 		
- 		// System.out.println(sortId);
-		
 		AdmService aService = new AdmService();
 		
 		int listCount = aService.getSListCount();		
@@ -68,10 +66,6 @@ public class AdmSortShopServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
 		ArrayList<Shop> list = aService.sortSList(sortId, currentPage, boardLimit);
-		
-//		System.out.println("list" + list);
-//		System.out.println("pi" + pi);
-//		System.out.println("sort" + sortId);
 		
 		response.setContentType("application/json; charset=utf-8");
 		

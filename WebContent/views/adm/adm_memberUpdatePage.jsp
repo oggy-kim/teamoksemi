@@ -17,11 +17,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
 <style>
 
       body {
         width : 100%;
         height : 1600px;
+        background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
       }
 
       #navbar {
@@ -153,7 +155,9 @@
       }
 
       #content_title {
-          font-family: 'Do Hyeon', sans-serif; 
+          /* font-family: 'Do Hyeon', sans-serif;  */
+          font-weight : 700;
+          font-family : 'Noto Serif KR', serif;
           font-size: 40px; 
           margin : 0;
       }
@@ -166,6 +170,9 @@
           margin : 0;
       }
       
+      table {
+      	font-family : 'Noto Serif KR', serif;
+      }
       
 </style>
 </head>

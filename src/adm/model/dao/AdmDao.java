@@ -134,10 +134,10 @@ public class AdmDao {
 			
 			while(rset.next()) { // qnaNo, qnaTitle, memberNick, enrollDate, answerStatus 
 				list.add(new QnA(rset.getInt(2), 
-									rset.getString(5), 
-									rset.getString(3),
-									rset.getDate(4), 
-									rset.getString(7)));
+									rset.getString(3), 
+									rset.getString(4),
+									rset.getDate(5), 
+									rset.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -711,11 +711,11 @@ public class AdmDao {
 			
 			if(rset.next()) {
 				q = new QnA(rset.getInt(2), // qna글번호
-							rset.getString(5), // 제목
-							rset.getString(3), // 회원닉네임
-							rset.getDate(4), // 글 등록일
-							rset.getString(6), // 내용
-							rset.getString(7), // 답변여부
+							rset.getString(3), // 제목
+							rset.getString(4), // 회원닉네임
+							rset.getDate(5), // 글 등록일
+							rset.getString(7), // 내용
+							rset.getString(6), // 답변여부
 							rset.getString(8)); // 답변내용			
 			}
 		} catch (SQLException e) {
@@ -743,17 +743,15 @@ public class AdmDao {
 			
 			if(rset.next()) {
 				b = new Board(rset.getInt(2), // ARTICLE_NO 
-						rset.getString(3), // ARTICE_NICK
-						rset.getString(4), // PROFILE
+						rset.getString(3), // MEMBER_NICK
 						rset.getString(5), // LIKE_STYLE
 						rset.getInt(6), // ARTICLE_VIEWS
 						rset.getInt(7), // ARTICLE_WISHES
-						rset.getString(8), // ARTICLE_CONTENTS
 						rset.getDate(9), // ARTICLE_DATE
-						rset.getString(10)); // ARTICLE_STATUS
+						rset.getString(10), // ARTICLE_STATUS
+						rset.getString(8)); // ARTICLE_CONTENTS
 			}
-			
-			System.out.println(b);
+			// System.out.println(b);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -792,12 +790,22 @@ public class AdmDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 
-			pstmt.setString(1, shop.getShopGradeCode());
-			pstmt.setInt(2, shop.getShopNo());
-			// shopName, contractMoney, shopPIC
-			// , shopContract, cdate, edate 추가 예정
+			pstmt.setString(1, shop.getShopName());
+			pstmt.setString(2,  shop.getStatus());
+			pstmt.setString(3, shop.getShopGradeCode());
+			pstmt.setInt(4, shop.getContractMoney());
+			pstmt.setString(5, shop.getShopPIC());
+			pstmt.setString(6, shop.getShopContact());
+			// util -> sql로 convert 해주기
+			java.sql.Date cd = new java.sql.Date(shop.getContractDate().getDate()); 
+			pstmt.setDate(7, cd);
+			java.sql.Date ed = new java.sql.Date(shop.getExpireDate().getDate());
+			pstmt.setDate(8, ed);
+			pstmt.setInt(9, shop.getShopNo());
+			
 			result = pstmt.executeUpdate();
-
+			
+			System.out.println("result="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -951,7 +959,27 @@ public class AdmDao {
 		}
 
 		return result;
+	}
 
+	public int answerQNA(Connection conn, QnA qna) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("answerQNA");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, qna.getAnswerContents());
+			pstmt.setInt(2, qna.getQnaNo());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 	

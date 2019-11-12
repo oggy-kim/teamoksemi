@@ -17,11 +17,14 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+
 <style>
 
       body {
         width : 100%;
         height : 1600px;
+         background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
       }
 
       #navbar {
@@ -124,15 +127,16 @@
           padding: 10px;
       }
 
-      ul.category li a {
+      ul.category li {
           margin:auto;
           color: black;
           font-family: 'Do Hyeon', sans-serif; 
-          font-size: 25px; 
+          font-size: 30px; 
       }
 
-      ul.category li a:hover {
-          font-weight: bold;
+      ul.category li:hover {
+          /* font-weight: bold; */
+          text-decoration : underline;
           font-style: italic;
       }
 
@@ -153,7 +157,7 @@
       }
 
       #content_title {
-          font-family: 'Do Hyeon', sans-serif; 
+          font-family: 'Do Hyeon', sans-serif;
           font-size: 40px; 
           margin : 0;
       }
@@ -166,6 +170,55 @@
           margin : 0;
       }
       
+      table.sortable th {
+      		vertical-align : middle;
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
+      
+      .shop_update_box {
+      		background : white;
+      		width : 45%;
+        	height : 35%;
+        	margin-top : 5%;
+        	margin-left : 5%;
+        	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
+      }
+      
+      .shop_update_title {
+            margin : 5% 0 0 5%;
+            padding : 5% 0 0 0;
+            /* font-family: 'Do Hyeon', sans-serif; */
+            font-family : 'Noto Serif KR', serif;
+            font-weight : 700; 
+            font-size: 28px; 
+       }
+       
+       .content_box {
+       		margin-left : 5%;
+       } 
+       
+       #updateBtn, #cancelBtn {
+       		font-family : 'Noto Serif KR', serif;
+			float : right;
+            background:gray;
+            border:gray;
+            color:white;
+            border-radius:5px;
+            margin-right : 5%;
+		}
+		
+		.btnArea {
+			margin-right : 15%;
+			margin-top : 3%;
+			margin-botton : 10%;
+			width : 50%;
+			/* border : 1px solid black; */
+			float : right;
+		}
+        
       
 </style>
 </head>
@@ -233,58 +286,64 @@
     <div class="line"></div>
     <div class="content">
         <div id="content_title_wrapper">
-            <h2 id="content_title"> &nbsp;&nbsp;쇼핑몰 정보 수정 페이지</h2>
+            <h2 id="content_title"> &nbsp;&nbsp;쇼핑몰 정보수정 페이지</h2>
         </div>
         <hr>
         
         <div class="shop_update_box">
             <h4 class="shop_update_title">정보 수정</h4>
             <br>
-            <form class="date_box" action="<%= contextPath %>/update.shop" method="post">    
+            <form class="content_box" action="<%= contextPath %>/update.shop" method="post">    
               	
-              	<table>
+              	<table class='sortable table' style="font-family : 'Noto Serif KR', serif; width:90%; margin-top:3%;">
               			<tr>
               				<th>회사번호</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopNo() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopNo" value="<%= shop.getShopNo() %>"></td>
 						</tr>
 						<tr>
               				<th>회사명</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopName() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopName" value="<%= shop.getShopName() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약상태</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getStatus() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="status" value="<%= shop.getStatus() %>"></td>
               			</tr>
               			<tr>	
               				<th>등급</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopGradeCode() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopGradeCode" value="<%= shop.getShopGradeCode() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약시작일</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getContractDate() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="contractDate" value="<%= shop.getContractDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약만료일</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getExpireDate() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="expireDate" value="<%= shop.getExpireDate() %>"></td>
               			</tr>
               			<tr>	
               				<th>계약금</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getContractMoney() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="contractMoney" value="<%= shop.getContractMoney() %>"></td>
               			</tr>
-              			<tr>	
+              			<%-- <tr>	
               				<th>담당자</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopPIC() %>"></td>
-              			</tr>		
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopPIC" value="<%= shop.getShopPIC() %>"></td>
+              			</tr> --%>		
               			<tr>
               				<th>연락처</th>
-              				<td><input type="text" size="50" name="shopNo" value="<%= shop.getShopContact() %>"></td>
+              				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopContact" value="<%= shop.getShopContact() %>"></td>
               			</tr>
               	</table>
-               	<div align="center">
+               	<div class='btnArea' align="center">
             		<button id="updateBtn" type="submit" style="display:inline-block;">저장하기</button>
-            		<button type="button" onclick="location.href='<%= contextPath %>/shop.adm">취소하기</button>
+            		<button id="cancelBtn" type="button" onclick="goBack();">취소하기</button>
             	</div>
             </form>
         </div> 	
+        
+        <script>
+        	function goBack() {
+        		window.history.go(-1);
+        	}
+        </script>
 </body>
 </html>

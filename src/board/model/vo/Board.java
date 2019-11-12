@@ -8,7 +8,7 @@ public class Board implements java.io.Serializable{
 	private int articleNo; // 게시판글번호
 	private int memberNo; // 회원번호
 	private String memberNick; // 회원닉네임 (추가 19.10.31.)
-	private int articleWishes; // 찜 횟수(추가 19.11.06 - 준섭) // 삭제해야징
+	// private int articleWishes; // 찜 횟수(추가 19.11.06 - 준섭) // 삭제해야징
 	private String profile; // 프로필사진(추가 19.11.06 - 준섭)
 	private String likeStyle; // 선호스타일(추가 19.11.06 - 준섭)
 	private int articleViews; // 게시판조회수
@@ -32,18 +32,17 @@ public class Board implements java.io.Serializable{
 	}
 	
 	// ADM BOARD 상세보기
-	public Board(int articleNo, String memberNick, String profile, String likeStyle, int articleViews, int articleLikes,
-			String articleContents, Date articleDate, String status) {
+	public Board(int articleNo, String memberNick, String likeStyle, int articleViews, int articleLikes,
+			 Date articleDate, String status, String articleContents) {
 		super();
 		this.articleNo = articleNo;
 		this.memberNick = memberNick;
-		this.profile = profile;
 		this.likeStyle = likeStyle;
 		this.articleViews = articleViews;
 		this.articleLikes = articleLikes;
-		this.articleContents = articleContents;
 		this.articleDate = articleDate;
 		this.status = status;
+		this.articleContents = articleContents;
 	}
 
 	public Board(int articleNo, int memberNo, int articleViews, int articleLikes, String articleContents,
@@ -71,13 +70,13 @@ public class Board implements java.io.Serializable{
 		this.status = status;
 	}
 	
-	public Board(int memberNo, int articleNO, int articleViews, int articleWishes, 
+	public Board(int memberNo, int articleNO, int articleViews, int articleLikes, 
 	         String articleContents, String memberNick, String profile, String likeStyle) {
 	      super();
 	      this.memberNo = memberNo;
 	      this.articleNo = articleNO;
 	      this.articleViews = articleViews;
-	      this.articleWishes = articleWishes;
+	      this.articleLikes = articleLikes;
 	      this.articleContents = articleContents;
 	      this.memberNick = memberNick;
 	      this.profile = profile;
@@ -114,13 +113,13 @@ public class Board implements java.io.Serializable{
 		this.memberNick = memberNick;
 	}
 
-	public int getArticleWishes() {
+	/*public int getArticleWishes() {
 		return articleWishes;
-	}
+	}*/
 
-	public void setArticleWishes(int articleWishes) {
+	/*public void setArticleWishes(int articleWishes) {
 		this.articleWishes = articleWishes;
-	}
+	}*/
 
 	public String getProfile() {
 		return profile;
@@ -185,7 +184,7 @@ public class Board implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Board [articleNo=" + articleNo + ", memberNo=" + memberNo + ", memberNick=" + memberNick
-				+ ", articleWishes=" + articleWishes + ", profile=" + profile + ", likeStyle=" + likeStyle
+				+ /*", articleWishes=" + articleWishes+ */ ", profile=" + profile + ", likeStyle=" + likeStyle
 				+ ", articleViews=" + articleViews + ", articleLikes=" + articleLikes + ", articleContents="
 				+ articleContents + ", articleDate=" + articleDate + ", status=" + status + "]";
 	}

@@ -32,16 +32,13 @@ public class AdmUpdateFormShopServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
-		System.out.println("shopNo="+shopNo);
 		
 		Shop shop = new AdmService().selectShop(shopNo);
-		System.out.println("shop="+shop);
 		
 		if(shop != null) {
 			request.setAttribute("shop", shop);
 			request.getRequestDispatcher("views/adm/adm_shopUpdatePage.jsp").forward(request, response);
 		}else {
-			request.setAttribute("msg", "쇼핑몰 수정페이지를 불러오는데 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
