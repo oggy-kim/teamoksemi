@@ -90,7 +90,7 @@ public class MemberUpdateServlet extends HttpServlet {
 				request.setAttribute("msg", "회원 정보가 정상적으로 수정되었습니다.");
 				request.getSession().setAttribute("loginUser", UpdateMember);
 				// response.sendRedirect(request.getContextPath());
-				response.sendRedirect(request.getContextPath() + "/views/mypage/myPage.jsp");
+				request.getRequestDispatcher("/views/mypage/myPage.jsp").forward(request, response);
 			} else {
 				File failedFile = new File(tempPath + originName);
 				failedFile.delete();

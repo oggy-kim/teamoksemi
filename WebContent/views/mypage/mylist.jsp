@@ -176,6 +176,15 @@
             height: 85px;
         }
 
+        #myListArea tr:hover {
+            background-color: lightgray;
+            transition: all 0.3s;
+        }
+        #myListArea td:hover {
+            cursor: pointer;
+            
+        }
+
 
     </style>
 </head>
@@ -269,7 +278,7 @@
                 </tr>
                 <% } else { %>
                 <% for(Board b : list) {%>
-                <tr>
+                <tr id="boardDetail">
                     <input type="hidden" value="<%= b.getArticleNo() %>">
                     <td><input type="checkbox" name="delete" value="<%= b.getArticleNo() %>"></td>
                     <td><img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="100px" height="100px"></td>
@@ -318,6 +327,17 @@
 
 
     </div>
+
+    <script>
+
+
+    $("#myListArea tr td").click(function(){
+        var aNo = $(this).parent().children("input").val();
+        console.log(aNo);
+    	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
+    });
+    
+    </script>
 </section>
 <footer class="copyRight">
     <p>Copyright 2019. LookSoFine.  All right reserved.</p>

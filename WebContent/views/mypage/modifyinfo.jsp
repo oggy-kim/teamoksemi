@@ -253,7 +253,7 @@ rel="stylesheet" type="text/css" />
         <tr>
             <td>닉네임</td>
             <td><input type="text" id="memberNick" name="memberNick" value="<%= loginUser.getMemberNick() %>"></td>
-            <td colspan="2"><button type="button" id="btn duplicate" class='btn btn-secondary'>중복확인</button></td> 
+            <td colspan="2"><button type="button" id="btn-duplicate" class='btn btn-secondary'>중복확인</button></td> 
         </tr>
         <script>
         	$(function(){
@@ -298,7 +298,7 @@ rel="stylesheet" type="text/css" />
             </tr>
             <script>
                 // 유효성 검사 추가필요
-            
+                
             
             </script>
 

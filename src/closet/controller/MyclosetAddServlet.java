@@ -89,6 +89,7 @@ public class MyclosetAddServlet extends HttpServlet {
 
 			int result = new ClosetService().addNewCloth(c);
 			if(result > 0) {
+				request.setAttribute("check", "check");
 				request.setAttribute("msg", "등록에 성공하였습니다.");
 				request.getRequestDispatcher("/closet.look").forward(request, response);
 			} else {

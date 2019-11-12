@@ -188,6 +188,7 @@
             height: 550px;
             background-color: lightgray;
             border-radius: 10px;
+            text-align: center;
         }
         .favorite {
             height: 30%;
@@ -200,7 +201,15 @@
         .article .myqna {
             height: 250px;
         }
-
+        .cloth-vec {
+        height: 100px;
+		width: 25%;
+        float: left;
+        margin: 2%;
+        } 
+        .look-more {
+            text-decoration: none;
+        }
 
 
 </style>
@@ -279,7 +288,8 @@
     <br><br>
 
     <div class="article left">
-        <h4 align="center">선호스타일</h4>
+        <h4 align="center">선호하는 스타일</h4>
+        <p align="right"><a class="look-more" href="<%= contextPath %>/closet.look">.. 더보기</a></p>
     <article class="favoritestyle">
     <div class="favorite top">
 
@@ -303,12 +313,37 @@
             data: {likestatus : "Y"},
             dataType: "json",
             success: function(result){
-                console.log(result);
-                var i = 0;
-                var top = $(".favorite top").html();
-                var bottom = $(".favorite .bottom").html();
-                var acc = $(".favorite .acc").html();
-                top += "아휴!";
+                var addtop = "<h4>상의</h4>";
+                var addbottom = "<h4>하의</h4>";
+                var addacc = "<h4>악세사리</h4>";
+                var topCount = 0;
+                var bottomCount = 0;
+                var accCount = 0;
+
+                for(var i = 0; i < result.length; i++) {
+										if(result[i].typeOption == "1" && topCount < 3)  {
+                                            topCount++;
+											var typeCode = result[i].typeCode;
+											var colourCode = result[i].colourCode;
+											addtop += '<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/' + typeCode + '.png); background-color: rgb(' + colourCode + ');"></div>';	
+										} 
+										if(result[i].typeOption == "2" && bottomCount < 3) {
+                                            bottomCount++;
+											var typeCode = result[i].typeCode;
+											var colourCode = result[i].colourCode;
+											addbottom += '<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/' + typeCode + '.png); background-color: rgb(' + colourCode + ');"></div>'; 
+												
+										}
+										if(result[i].typeOption == "3" && accCount < 3) {
+                                            accCount++;
+											var typeCode = result[i].typeCode;
+											var colourCode = result[i].colourCode;
+											addacc += '<div class="cloth-vec" style="-webkit-mask-box-image: url(<%= contextPath %>/resources/images/closet/' + typeCode + '.png); background-color: rgb(' + colourCode + ');"></div>';
+										}                   
+                }
+                $('.favorite.top').html(addtop);
+                $('.favorite.bottom').html(addbottom);
+                $('.favorite.acc').html(addacc);
 
             },
             error: function() {

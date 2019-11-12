@@ -37,8 +37,11 @@ public class MyclosetSelectServlet extends HttpServlet {
 		Member m = (Member) request.getSession().getAttribute("loginUser");
 		ClosetService cService = new ClosetService();
 		
-		String likeStatus = "";
-		if(request.getParameter("likestatus") == null) {
+		String likeStatus = request.getParameter("likestatus");
+		System.out.println(likeStatus);
+		String check = (String) request.getAttribute("check");
+		
+		if(likeStatus == null || check != null) {
 			ArrayList<Closet> list = cService.selectMyCloset(m.getMemberNo());
 			int topCount = cService.getTopCount(m.getMemberNo());
 			int bottomCount = cService.getBottomCount(m.getMemberNo());
