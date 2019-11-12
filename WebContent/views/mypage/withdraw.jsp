@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%
+Member m = (Member)session.getAttribute("loginUser");
+String gradeCode = m.getGradeCode();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +14,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
 <style>
+	body {
+		background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
+	}
 #navbar {
             width:100%;
             height:60px;
@@ -145,21 +152,34 @@
       </nav>
       <br>
 <section>
+    <!-- 좌측 네비바 -->
     <div class="menu">
-        <ul class="category">
-            <li class="list" onclick="goMyCloset();">나의 옷장</li>
-            <li class="list" onclick="goMyList();">내 게시물 관리</li>
-            <li class="list" onclick="goQna();">FAQ / Q&A</li>
-            <li class="list-readonly">개인정보관리
-             <ul>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인 정보 수정</li>
-                    <li class="sublist" onclick="goWishStyle();">선호 스타일</li>
-                    <li class="sublist" onclick="location.href='<%= contextPath %>/views/mypage/withdraw.jsp'">회원 탈퇴</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+            <ul class="category">
+                <li class="list" onclick="goMyCloset();">나의 옷장</li>
+                <li class="list" onclick="goMyList();">내 게시물 관리</li>
+                <li class="list" onclick="goQna();">FAQ / Q&A</li>
+                <li class="list" onclick="location.href='<%= contextPath %>/views/mypage/modifyinfo.jsp'">개인정보관리</li>
+            </ul>
+        </div>
     <script>
+    	function goStyle() {
+    		location.href="<%= contextPath %>/boardlist.look";
+    	}
+
+    	function goFavorite() {
+    		location.href="<%= contextPath %>/wishlist.look";
+    	}
+    	function goEvent() {
+    		location.href="<%= contextPath %>/views/event/eventPage.jsp";
+    	}
+    	function goMypage() {
+    		// admin계정으로 로그인했을 때, admin페이지로 넘어갈 수 있도록 수정	
+    		if("<%= gradeCode %>" == 'S'){
+    			location.href="<%= contextPath %>/views/adm/adm_overview.jsp";
+    		} else {
+    			location.href="<%= contextPath %>/views/mypage/myPage.jsp";
+    		}
+   	 	}
         function goMyCloset(){
             location.href="<%= contextPath %>/closet.look";
         }
@@ -168,9 +188,6 @@
         }
         function goQna(){
             location.href="<%= contextPath %>/qna.look";
-        }
-        function goWishStyle(){
-            location.href="<%= contextPath %>/withstyle.look";
         }
     </script>
 

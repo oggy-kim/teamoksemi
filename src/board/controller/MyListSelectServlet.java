@@ -28,7 +28,7 @@ public class MyListSelectServlet extends HttpServlet {
 
         int listCount = bService.getListCount(m.getMemberNo());
 
-        int boardLimit = 10;
+        int boardLimit = 7;
         int currentPage = 1;
         int pageLimit = 5;
         int maxPage = (int)Math.ceil((double)listCount/boardLimit);
