@@ -32,6 +32,7 @@
         body {
           width : 100%;
           height : 600px;
+          background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
         }
 
          #navbar {
@@ -174,22 +175,12 @@
     		font-weight:bold;
 		}
 
+		
     </style>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp"%>
-<!-- <nav>
-  <br>
-  <div class="menuLine">
-  <div class="div div1"><hr></div>
-  <div class="div div2">
-      <div class="innermenu">
-          Style
-      </div>
-  </div>
-  <div class="div div3"><hr></div>
-</div>
-</nav> -->
+
 <section>
 	<div class="detail">
 		<form action="<%= contextPath %>/wishinsert.look" method="post">
@@ -206,14 +197,6 @@
 		<div class="right">
 		<br><br>
 			<div class="tableArea">
-				<%-- <table align="center" width="550px">
-					<tr>
-						<td><span><%= board.getMemberNo() %></span>
-						<td><span><%= board.getArticleViews() %></span>
-						<td><span><%= board.getArticleLikes() %></span>
-					</tr>
-					
-				</table> --%>
 				<table align="center" width="550px" border="1">
 				<tr>
 					<td style="font-weight:bold;">작성자</td>
