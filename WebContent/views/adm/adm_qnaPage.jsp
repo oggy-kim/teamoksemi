@@ -200,6 +200,7 @@
         }
 
         .qna_box {
+        	background : white;
             width : 80%;
             /* height : 18%; */
 			height : auto;	
@@ -217,6 +218,7 @@
 		}
 
         .qna_detail_box {
+        	background : white;
         	visibility : hidden;
             width : 80%;
             height : 25%;

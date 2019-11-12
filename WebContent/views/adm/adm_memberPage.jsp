@@ -202,6 +202,7 @@
         }
   
         .member_box {
+        	background : white;
             width : 80%;
             height : auto;
         	overflow : hidden;
@@ -210,6 +211,7 @@
         }
         
 		#member_detail_box {
+			background : white;
 			/*visibility : hidden;*/
             width : 80%;
             height : 40%;
@@ -249,28 +251,9 @@
             margin : 5% auto;
         }
 
-        .member_profile_box {
-            width : 25%;
-            height : 100%;
-            display : inline-block;
-            border : 1px solid black;
-            margin : 0 3%;
-        }
-
-        #member_photo_wrapper {
-            margin : 5%;
-            float : left;
-            width : 90%;
-            height : 90%;
-        }
-
-        #member_photo {
-            width : 100%;
-            height : 100%;
-        }
 
         #member_detail_1, #member_detail_2 {
-            width : 30%;
+            width : 45%;
             height : 100%;
             margin : 0 1%;
             display : inline-block;
@@ -499,50 +482,17 @@
 
       <!-- 작성한 글 리스트  -->  	
       <div class="member_detail_box" id="member_detail_box">
-         <div></div>
-         <div>
+         <div id="member_detail_box_1"></div>
+         <div id="member_detail_box_2">
          	<table id='member_board_table'>
          	
          	</table>
-           <!-- 페이지네이션 추가--> 
-	       	 <div class="pagingArea" align="center">
-               <!-- 맨 처음으로 (<<) -->
-               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=1'"> &lt;&lt; </button>
-
-               <!-- 이전 페이지로 (<) -->
-               <% if(currentPage == 1){ %>
-               <button disabled> &lt; </button>
-               <% } else { %>
-               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
-               <% } %>
-
-               <!-- 10개의 페이지 목록 -->
-               <% for(int p = startPage; p <= endPage; p++){ %>
-               <% if(p == currentPage){ %>
-               <button disabled> <%= p %> </button>
-               <% } else { %>
-               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= p %>'"><%= p %></button>
-               <% } %>
-               <% } %>
-
-               <!-- 다음 페이지로 (>) -->
-               <% if(currentPage == maxPage){ %>
-               <button disabled> &gt; </button>
-               <% } else { %>
-               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
-               <% } %>
-
-               <!-- 맨 끝으로 (>>) -->
-               <button onclick="location.href='<%= contextPath %>/member.adm?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
-           </div>                            
-		<div class='btnArea' style='display:inline-block; width:100px;'>
-			<button type='button' id='delete_btn' style='margin-right : 5%;' onclick='deleteMember();'>회원삭제</button>
-          	<button type='button' id='update_btn' style='margin-right : 2%;' onclick='updateMember();'>회원수정</button>
-         </div> 
-         <form action='' id='detailForm' method='post'>
-         	<input type='hidden' name='memberNo' value='memberNo'>
-         </form>
-      </div>    
+         </div>
+         <div id="member_detail_box_3">
+         	<form action='' id='detailForm' method='post'>
+         		<input type='hidden' name='memberNo' value='memberNo'>
+         	</form>
+         </div>  
   	 </div>
 
        	<script>            	
@@ -602,7 +552,6 @@
          		$(document).on('click', '#member_table2 td', function(){
          			        	
                      var memberNo = $(this).parent().children("#mNo").html();
-                     // console.log("memberNo="+memberNo); // ok
                      
                      $.ajax({
                          url: "<%= contextPath %>/detailMember.adm",
@@ -618,9 +567,6 @@
 
          	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
           				  			  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p><section id='member_detail_wrapper'>" +
-         	           			      "<div class='member_profile_box'>" + 
-         	           			      	"<div id='member_photo_wrapper'>" + 
-         	           			      		"<img id='member_photo' src='" + result.profile + "'></div></div>" +
          	           				  "<div id='member_detail_1'><table class='sortable table' id='member_detail_table_1'><tr><th>회원번호 </th><td>" + result.memberNo + "</td></tr>" +
                                       "<tr><th>회원아이디</th><td>" + result.memberId + "</td></tr>" +
 	                                  "<tr><th>회원닉네임</th><td>" + result.memberNick + "</td></tr>" + 
@@ -634,7 +580,7 @@
                                       
                             // console.log("detail="+detail);
 
-         	           		$("#member_detail_box").html(detail);
+         	           		$("#member_detail_box_1").html(detail);
          	           		
          	           		// console.log($('#member_detail').html());
                          },
@@ -643,51 +589,11 @@
                          }
                      });
                      
-                 }).on('click', '#member_table2 td', function(){
-
-              		var memberNo = $(this).parent().children("#mNo").html();
-             		console.log("memberNo="+memberNo);
-              		
-             		$.ajax({
-             			url : "<%= contextPath %>/detailMboard.adm",
-             			type : "post",
-             			dataType : "json",
-             			data : {memberNo:memberNo},// key:value 
-             			success : function(data){
-             				console.log('작성한글리스트_성공');
-             				var $tableBody = $("#member_board_table");
-             				console.log(data)
-             				$tableBody.html(""); // 테이블 초기화
-    				   			
-             				for(var key in data){
-             			
-                   				var $tr = $("<tr>");
-     							var $aNo = $("<td>").text(data[key].articleNo);
-                   				var $aCont = $("<td>").text(data[key].articleContents);
-     							var $aDate = $("<td>").text(data[key].articleDate);
-     							var $aView = $("<td>").text(data[key].articleViews);
-     							var $aLike = $("<td>").text(data[key].articleLikes);	
-     							
-     							$tr.append($aNo);
-     							$tr.append($aCont);
-     							$tr.append($aDate);
-     							$tr.append($aView);
-     							$tr.append($aLike);
-     							
-     							$tableBody.append($tr);
-             				}
-             				
-             			},
-             			error : function(){
-             				console.log('작성한글_실패');
-             			}                	 
                  });
-             		
-             });
           
           }); 		
           // 상세보기 회원이 작성한 글 리스트 보기 
-<%--        		$("#member_board_table").click(function(){
+   		$("#member_board_table").click(function(){
          		var memberNo = $("member_table2 td").parent().children("#mNo").html();
          		
          		$.ajax({
@@ -723,8 +629,7 @@
          				console.log('작성한글_실패');
          			}
          		});
-         	});
- --%>           
+         	});         
 
         // 검색하기
       	$(function(){

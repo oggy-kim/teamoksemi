@@ -18,11 +18,13 @@
 <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Paytone+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon:400" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+
 <style>
 
       body {
         width : 100%;
         height : 1600px;
+         background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
       }
 
       #navbar {
@@ -168,10 +170,18 @@
           margin : 0;
       }
       
+      table.sortable th {
+      		vertical-align : middle;
+		    background-color:#eee;
+		    color:#666666;
+		    font-weight: bold;
+		    cursor: default;
+		}
       
       .shop_update_box {
+      		background : white;
       		width : 45%;
-        	height : 25%;
+        	height : 35%;
         	margin-top : 5%;
         	margin-left : 5%;
         	box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
@@ -201,7 +211,7 @@
 		}
 		
 		.btnArea {
-			margin-right : 30%;
+			margin-right : 15%;
 			margin-top : 3%;
 			margin-botton : 10%;
 			width : 50%;
@@ -285,7 +295,7 @@
             <br>
             <form class="content_box" action="<%= contextPath %>/update.shop" method="post">    
               	
-              	<table style="font-family : 'Noto Serif KR', serif;">
+              	<table class='sortable table' style="font-family : 'Noto Serif KR', serif; width:90%; margin-top:3%;">
               			<tr>
               				<th>회사번호</th>
               				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopNo" value="<%= shop.getShopNo() %>"></td>
@@ -314,10 +324,10 @@
               				<th>계약금</th>
               				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="contractMoney" value="<%= shop.getContractMoney() %>"></td>
               			</tr>
-              			<tr>	
+              			<%-- <tr>	
               				<th>담당자</th>
               				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopPIC" value="<%= shop.getShopPIC() %>"></td>
-              			</tr>		
+              			</tr> --%>		
               			<tr>
               				<th>연락처</th>
               				<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="30" name="shopContact" value="<%= shop.getShopContact() %>"></td>

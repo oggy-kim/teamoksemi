@@ -134,10 +134,10 @@ public class AdmDao {
 			
 			while(rset.next()) { // qnaNo, qnaTitle, memberNick, enrollDate, answerStatus 
 				list.add(new QnA(rset.getInt(2), 
-									rset.getString(5), 
-									rset.getString(3),
-									rset.getDate(4), 
-									rset.getString(7)));
+									rset.getString(3), 
+									rset.getString(4),
+									rset.getDate(5), 
+									rset.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -711,11 +711,11 @@ public class AdmDao {
 			
 			if(rset.next()) {
 				q = new QnA(rset.getInt(2), // qna글번호
-							rset.getString(5), // 제목
-							rset.getString(3), // 회원닉네임
-							rset.getDate(4), // 글 등록일
-							rset.getString(6), // 내용
-							rset.getString(7), // 답변여부
+							rset.getString(3), // 제목
+							rset.getString(4), // 회원닉네임
+							rset.getDate(5), // 글 등록일
+							rset.getString(7), // 내용
+							rset.getString(6), // 답변여부
 							rset.getString(8)); // 답변내용			
 			}
 		} catch (SQLException e) {
@@ -743,17 +743,15 @@ public class AdmDao {
 			
 			if(rset.next()) {
 				b = new Board(rset.getInt(2), // ARTICLE_NO 
-						rset.getString(3), // ARTICE_NICK
-						rset.getString(4), // PROFILE
+						rset.getString(3), // MEMBER_NICK
 						rset.getString(5), // LIKE_STYLE
 						rset.getInt(6), // ARTICLE_VIEWS
 						rset.getInt(7), // ARTICLE_WISHES
-						rset.getString(8), // ARTICLE_CONTENTS
 						rset.getDate(9), // ARTICLE_DATE
-						rset.getString(10)); // ARTICLE_STATUS
+						rset.getString(10), // ARTICLE_STATUS
+						rset.getString(8)); // ARTICLE_CONTENTS
 			}
-			
-			System.out.println(b);
+			// System.out.println(b);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

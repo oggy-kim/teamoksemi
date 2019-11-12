@@ -41,9 +41,6 @@ public class AdmSearchShopServlet extends HttpServlet {
 		String sort = request.getParameter("sort");
 		String keyword = request.getParameter("keyword");
 		
-		System.out.println(sort);
-		System.out.println(keyword);
-		
 		int sortId = 0;
 		
 		if (sort.equals("shopName")) { 

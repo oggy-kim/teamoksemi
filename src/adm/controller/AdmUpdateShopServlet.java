@@ -38,10 +38,8 @@ public class AdmUpdateShopServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		int shopNo = Integer.parseInt(request.getParameter("shopNo"));
-		// System.out.println("shopNo="+shopNo); // 5
 			
 		Shop shop = new Shop();
-		
 		shop.setShopNo(shopNo);
 		shop.setShopName(request.getParameter("shopName"));
 		shop.setStatus(request.getParameter("status"));
@@ -54,18 +52,9 @@ public class AdmUpdateShopServlet extends HttpServlet {
 		Date cdate = new Date();
 		Date edate = new Date();
 		
-		// String cd = request.getParameter("contractDate");
-		// String ed = request.getParameter("expireDate");	
-		// System.out.println("cd="+cd);
-		// System.out.println("ed="+ed);
-		
 		try {
 			cdate = dt.parse(request.getParameter("contractDate"));
 			edate = dt.parse(request.getParameter("expireDate"));
-			
-			// System.out.println("cdate="+cdate);
-			// System.out.println("edate="+edate);
-			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -79,11 +68,8 @@ public class AdmUpdateShopServlet extends HttpServlet {
 		System.out.println("result="+result);
 		
 		if(result > 0) {
-			// request.setAttribute("shopNo", shopNo);
-			// request.getRequestDispatcher("shop.adm").forward(request, response);
 			response.sendRedirect("shop.adm");
 		}else {
-			// request.setAttribute("msg", "쇼핑몰 정보 수정에 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

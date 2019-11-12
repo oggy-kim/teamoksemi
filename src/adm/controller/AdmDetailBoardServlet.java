@@ -32,13 +32,9 @@ public class AdmDetailBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int articleNo = Integer.parseInt(request.getParameter("aNo"));
+		int articleNo = Integer.parseInt(request.getParameter("aNo"));		
 		
-		// System.out.println("서블릿연결_articleNo="+articleNo);
-
 		Board b = new AdmService().detailBoard(articleNo);
-		
-		// System.out.println("보드객체="+b);
 		
 		if(b != null) {
 	 		response.setCharacterEncoding("UTF-8");

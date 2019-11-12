@@ -205,18 +205,18 @@
         }
 
 
-        .sales_box {
+        /* .sales_box {
             width : 80%;
             height : 15%;
             margin : 0 0 0 5%;
             box-shadow : 3px 3px 5px rgba(36, 34, 34, 0.849);
-        } 
+        }  */
 
-        .date_box {
+        /* .date_box {
             width : 80%;
             height : 15%;
             margin-left : 5%;
-        }
+        } */
 
         .profit_detail_wrapper {
             height : 45%;
@@ -224,28 +224,29 @@
             margin-top : 0;
         }
 
-        #vertical_line {
+        /* #vertical_line {
             width: 2%;
             display : inline-block;
             border-left: 2px solid black;
             height: 100px;
-        }
+        } */
 
-        #sales_num{
+/*         #sales_num{
             display : inline-block;
             width : 15%;
             height : 100%;
             margin : 2% 2% 0 5%;
-        } 
+        } */ 
         
-        #profit_num {
+        /* #profit_num {
             display : inline-block;
             width : 60%;
             height : 100%;
             margin : 2% 2% 0 2%;
-        }
+        } */
 
         .shop_box {
+            background : white;
             width : 80%;
 			height : auto;
         	overflow : hidden;
@@ -255,9 +256,10 @@
         }
         
          .shop_detail_box {
+         	background : white;
          	visibility : hidden; 
          	width : 80%;
-         	height : 30%;
+         	height : 20%;
          	/* height : none;
          	overflow : hidden; */
          	margin-left : 5%;
@@ -266,11 +268,11 @@
 
 		.shop_detail_contents { 
 			float : left;
-			width : 42%;
-			height : 70%;
+			width : 80%;
+			height : 60%;
 			margin-top : 2%;
 			margin-left : 5%;
-			margin-botton : 0%;
+			margin-botton : 0;
 			/* border : 1px solid black; */
 			font-size : 15px;
 			display:inline-block;			
@@ -284,14 +286,11 @@
 		}
 
 		.shop_detail_title {
+			font-family : 'Noto Serif KR', serif;
             margin : 3% 0 0 5%;
             padding : 2% 0 0 0;
-            font-family: 'Do Hyeon', sans-serif; 
+            /* font-family: 'Do Hyeon', sans-serif;  */
             font-size: 28px; 
-        }
-        
-        #shop_image {
-        	background : url(../resources/images/musinsa.png);
         }
 
         .box_title, .table_title { /* 수익 및 거래총량 /제휴 쇼핑몰 리스트 제목 */
@@ -314,8 +313,8 @@
         }
         
         .btnArea {
-			margin-right : 10%;
-			margin-top : 3%;
+			margin-right : 15%;
+			margin-top : 2%;
 			margin-botton : 20%; /* (!) 적용안됨 */
 			width : 25%;
 			/* border : 1px solid black; */
@@ -535,8 +534,7 @@
 
         </div>
 
-        <script>
-        
+        <script>  
         	// 동적 대상 function 주기
         	$(function(){ 
         		$(document).on('mouseenter', '#shop_table2 td', function(){
@@ -596,10 +594,8 @@
         	
         	// 상세보기 
         	$(function(){ 
-        		$(document).on('click', '#shop_table2 td', function(){
-        			        	
+        		$(document).on('click', '#shop_table2 td', function(){		        	
                     var shopNo = $(this).parent().children("#sNo").html();
-                    // console.log("shopNo="+shopNo); // ok
                     
                     $.ajax({
                         url: "<%= contextPath %>/detailShop.adm",
@@ -615,23 +611,21 @@
 
         	           		detail += "<h4 class='shop_detail_title'>쇼핑몰 상세보기</h4>" +
 			           				  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 쇼핑몰을 상세 조회하고, 해당 쇼핑몰의 정보를 수정하거나 삭제 할 수 있습니다.</p>" +
-                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%;'><tr><img id='shop_image'></tr></table></div>" +
-                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%; style='vertical-align:middle;''><tr><th colspan='1' style='vertical-align:middle;'>회사번호</th><td colspan='1' style='vertical-align:middle;'>" + result.shopNo + "</td><th colspan='1' style='vertical-align:middle;'>회사명</th><td colspan='1' style='vertical-align:middle;'>" + result.shopName + "</td></tr>" +
-                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약상태</th><td colspan='1' style='vertical-align:middle;'>" + result.status + "</td><th colspan='1' style='vertical-align:middle;'>등급</th><td colspan='1' style='vertical-align:middle;'>" + result.shopGradeCode + "</td></tr>" + 
-                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약시작일</th><td colspan='1' style='vertical-align:middle;'>" + result.contractDate + "</td><th colspan='1' style='vertical-align:middle;'>계약만료일 </th><td colspan='1' style='vertical-align:middle;'>" + result.expireDate + "</td></tr>" +
+                                     "<div class='shop_detail_contents'><table class='sortable table' style='width:100%; height:100%; style='vertical-align:middle;''>"+
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>회사번호</th><td colspan='1' style='vertical-align:middle;'>" + result.shopNo + "</td>"+
+                                     "<th colspan='1' style='vertical-align:middle;'>회사명</th><td colspan='1' style='vertical-align:middle;'>" + result.shopName + "</td></tr>" +
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약상태</th><td colspan='1' style='vertical-align:middle;'>" + result.status + "</td>"+
+                                     "<th colspan='1' style='vertical-align:middle;'>등급</th><td colspan='1' style='vertical-align:middle;'>" + result.shopGradeCode + "</td></tr>" + 
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>계약시작일</th><td colspan='1' style='vertical-align:middle;'>" + result.contractDate + "</td>"+
+                                     "<th colspan='1' style='vertical-align:middle;'>계약만료일 </th><td colspan='1' style='vertical-align:middle;'>" + result.expireDate + "</td></tr>" +
                                      "<tr><th colspan='1' style='vertical-align:middle;'>계약금</th><td colspan='3' style='vertical-align:middle;'>" + result.contractMoney + "</td></tr>" +
-                                     "<tr><th colspan='1' style='vertical-align:middle;'>담당자</th><td colspan='1' style='vertical-align:middle;'>" + result.shopPIC + "</td><th colspan='1' style='vertical-align:middle;'>연락처</th><td colspan='1' style='vertical-align:middle;'>" + result.shopContact + "</td></tr></table></div>" +
-                                     "<div class='btnArea' style='display:inline-block;'>" + 
+                                     "<tr><th colspan='1' style='vertical-align:middle;'>연락처</th><td colspan='3' style='vertical-align:middle;'>" + result.shopContact + "</td></tr></table></div>" +
+                                     "<div class='btnArea' style='display:inline; margin-bottom:3%;'>" + 
                                      "<button type='button' id='delete_btn' onclick='deleteShop();' style='margin-right : 5%;'>쇼핑몰삭제</button>" +
                                      "<button type='button' id='update_btn' onclick='updateShop();' style='margin-right : 2%;'>쇼핑몰수정</button></div>" +
                                      "<form action='' id='detailForm' method='post'><input type='hidden' name='shopNo' value='"+result.shopNo+"'></form><br><br>";
-                                     
-                            // console.log(detail);
-                            // console.log(result.shopNo);
 
         	           		$("#shop_detail").html(detail);
-        	           		
-        	           		// console.log($('#shop_detail').html());
         				
                         },
                         error: function() {
@@ -700,7 +694,6 @@
 		function deleteShop() {
     		$("#detailForm").attr("action", "<%= contextPath%>/delete.shop");
     		$("#detailForm").submit();
-     		/* alert("성공적으로 삭제되었습니다."); */
     	}
     	
     	function updateShop(){

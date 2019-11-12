@@ -198,16 +198,9 @@
             margin-bottom:1%;
             float : right;
         }
-        
-        /* -- 인기 게시글 조회기간 설정 -- */
-        
-        /* .date_box {
-            width : 80%;
-            height : 10%;
-            margin-left : 5%;
-        }  */
-
+  
         .board_box {
+       		background : white;
             width : 80%;
             height : auto;
         	overflow : hidden;
@@ -240,6 +233,7 @@
         }
 
         .board_detail_box {
+        	background : white;
         	visibility : hidden;
         	width : 80%;
         	height : 25%;
@@ -257,8 +251,9 @@
         }
 
 		.board_detail_contents {
+			background : white;
 			float : left;
-			width : 42%;
+			width : 80%;
 			height : 60%;
 			margin-top : 2%;
 			margin-left : 5%;
@@ -620,15 +615,15 @@
                           dataType: "json",
                           success : function(result){ 
           					console.log("상세보기_ajax 연동성공");
-             
-          					// console.log(result);
+							
+          					console.log("likes="+result.articleLikes);
+          					
           	           		$("#board_detail").css({"visibility":"visible"});
 
           	           		var detail = "";
 
           	           		detail += "<h4 class='board_detail_title'>게시물 상세보기</h4>" +
           	           				  "<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 게시물을 상세 조회하고, 해당 게시물을 삭제하거나 게시물의 댓글을 삭제 할 수 있습니다.</p>" +
-          	           				  "<div class='board_detail_contents'>actual</div>" +
           	           				  "<div class='board_detail_contents'>" + 
           	           				  "<table class='sortable table' style='width:100%; height:100%;'>" + 
           	           				  
@@ -640,15 +635,28 @@
                                        	"<tr><th colspan='1' style='vertical-align:middle;'>선호스타일</th>" + 
                                        	"<td colspan='3' style='vertical-align:middle;'>" + result.likeStyle + "</td></tr>" +
                                        	
-                                       	/* "<tr><th colspan='1' style='vertical-align:middle;'>찜수</th>" + 
-                                       	"<td colspan='1' style='vertical-align:middle;'>" + result.articleLikes + "</td>" + 
-                                       	"<th colspan='1' style='vertical-align:middle;'>조회수</th>" + 
+                                       	/* "<tr><th colspan='1' style='vertical-align:middle;'>조회수</th>" + 
+                                       	"<td colspan='1' style='vertical-align:middle;'>" + result.articleViews + "</td>" + 
+                                       	"<th colspan='1' style='vertical-align:middle;'>찜수</th>" + 
                                        	"<td colspan='1' style='vertical-align:middle;>" + result.articleLikes + "</td></tr>" + */
                                        	
-                                       	/* "<tr><th colspan='1' style='vertical-align:middle;'>작성일</th>" + 
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>조회수</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.articleViews + "</td></tr>" +
+                                       	
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>찜수</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.articleLikes + "</td></tr>" +
+                                       	
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>작성일</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.articleDate + "</td></tr>" +
+                                       	
+                                       	"<tr><th colspan='1' style='vertical-align:middle;'>등록여부</th>" + 
+                                       	"<td colspan='3' style='vertical-align:middle;'>" + result.status + "</td></tr>" +
+                                       	
+                                       /* 	"<tr><th colspan='1' style='vertical-align:middle;'>작성일</th>" + 
                                        	"<td colspan='1' style='vertical-align:middle;'>" + result.articleDate + "</td>" + 
                                        	"<th colspan='1' style='vertical-align:middle;'>등록여부</th>" + 
-                                       	"<td colspan='1' style='vertical-align:middle; >" + result.status + "</td></tr>" +  */
+                                       	"<td colspan='1' style='vertical-align:middle; >" + result.status + "</td></tr>" +  
+                                       	 */
                                        	
                                        	"<tr><th colspan='1' style='vertical-align:middle;'>내용</th>" + 
                                        	"<td colspan='3' style='vertical-align:middle;'>" + result.articleContents + "</td></tr>" + 
@@ -661,8 +669,6 @@
                                        console.log(result.articleViews);
 
           	           		$("#board_detail").html(detail);
-          	           		
-          	           		// console.log($('#board_detail').html());
           				
                           },
                           error: function() {
