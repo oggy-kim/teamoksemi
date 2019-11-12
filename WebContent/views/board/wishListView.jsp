@@ -35,6 +35,7 @@
 body {
 	width: 100%;
 	height: 1000px;
+	background: url('<%= request.getContextPath() %>/resources/images/mainback.jpg');
 }
 
 #navbar {
@@ -211,6 +212,8 @@ button:hover {
 	background-color:gray; 
     font-weight:bold;
 }
+
+
 </style>
 </head>
 <body>
