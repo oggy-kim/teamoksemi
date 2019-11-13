@@ -123,6 +123,20 @@ public class ClosetService {
 		
 		return clist;
 	}
+	public int deleteMyCloth(int[] deleteList) {
+		Connection conn = getConnection();
+		
+		int result = new ClosetDao().deleteMyCloth(conn, deleteList);
+		
+		if(result == deleteList.length) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
 
 
 

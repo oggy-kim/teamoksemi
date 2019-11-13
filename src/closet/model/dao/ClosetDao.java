@@ -383,6 +383,28 @@ public class ClosetDao {
 		return clist;
 	}
 
+	public int deleteMyCloth(Connection conn, int[] deleteList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("deleteMyCloth");
+		
+		try {
+			for(int i = 0; i < deleteList.length; i++) {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, deleteList[i]);
+			result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		} 
+		return result;
+	}
+
+
+
 
 
 }
