@@ -288,7 +288,7 @@
 			float : right;
 		}
 
-        #update_btn, #delete_btn {
+        #updateBtn, #deleteBtn {
         	font-family : 'Noto Serif KR', serif;
             float : right;
             background:gray;
@@ -411,7 +411,7 @@
                     <th>닉네임</th>
                     <th>등급</th>
                     <th>가입일자</th>
-                 	<!-- <th>최근접속일</th> -->
+                 	
                 </tr>
                 </thead>
                 <tbody id="member_table2">
@@ -427,7 +427,7 @@
 	                    <td><%= ml.getMemberNick() %></td>
 	                    <td><%= ml.getGradeCode() %></td>
 	                    <td><%= ml.getEntryDate() %></td>
-	                    <!-- <td>최근접속일</td> -->
+	                    
 	                </tr>
                 <% } %>
                 <% } %> 
@@ -482,17 +482,54 @@
 
       <!-- 작성한 글 리스트  -->  	
       <div class="member_detail_box" id="member_detail_box">
-         <div id="member_detail_box_1"></div>
+         <div id="member_detail_box_1">
+         	<h4 class='member_detail_title'>회원 상세 정보</h4>
+          	<p style='margin-left:5%; font-family:Noto Serif KR;'>선택한 회원의 정보를 상세 조회하고, 해당 회원의 정보를 수정하거나 삭제 할 수 있습니다.</p>
+          	<section id='member_detail_wrapper'>
+         	  <div id='member_detail_1'>
+         	  <table class='sortable table' id='member_detail_table_1'>
+         	  <tr><th>회원번호 </th><td></td></tr>
+              <tr><th>회원아이디</th><td></td></tr>
+	           <tr><th>회원닉네임</th><td></td></tr>
+               <tr><th>성별</th><td></td></tr>
+               <tr><th>회원등급</th><td></td></tr></table></div>
+               <div id='member_detail_2'>
+               <table class='sortable table' id='member_detail_table_2'>
+               <tr><th>출생년도</th><td></td></tr>
+                <tr><th>선호스타일</th><td></td></tr>
+               <tr><th>가입날짜</th><td></td></tr>
+               <tr><th>현황 </th><td></td></tr><tr><th>최근접속일</th><td>알수없음</td></tr></table></div>
+               </section>
+         </div>
          <div id="member_detail_box_2">
          	<table id='member_board_table'>
-         	
+         		<thead id="member_board_table1" class='sortable table'> 
+                <tr>
+                    <th>번호</th>
+                    <th>내용</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                    <th>찜수</th>
+                </tr>
+                </thead>
+                <tbody id="member_board_table2">
+               <%-- <% if(list.isEmpty()){ %>
+                <tr>
+                	<td colspan="5">작성된 글이 없습니다.</td>
+                <tr>
+               <% } %>   --%>
+                </tbody>
          	</table>
          </div>
-         <div id="member_detail_box_3">
+         <!-- <div id="member_detail_box_3">
          	<form action='' id='detailForm' method='post'>
          		<input type='hidden' name='memberNo' value='memberNo'>
          	</form>
-         </div>  
+         	<div class='btnArea' style='display:inline;'>
+         		<button id='updateBtn' type='button' onclick='updateMember();' style='display:inline-block;'>회원정보수정</button>
+         		<button id='deleteBtn' type='button' onclick='deleteMember();' style='display:inline-block; margin-right:2%;'>회원삭제</button>
+         	</div>
+         </div> -->  
   	 </div>
 
        	<script>            	
@@ -561,8 +598,8 @@
                          success : function(result){ 
          					console.log("상세보기_ajax 연동성공");
 
-                         	// $("#member_detail_box").css({"visibility":"visible"});
-
+                         	$("#member_detail_box_1").html("");
+                         	
          	           		var detail = "";
 
          	           		detail += "<h4 class='member_detail_title'>회원 상세 정보</h4>" +
@@ -575,14 +612,11 @@
                                       "<div id='member_detail_2'><table class='sortable table' id='member_detail_table_2'><tr><th>출생년도</th><td>" + result.birthYear + "</td></tr>" +
                                       "<tr><th>선호스타일</th><td>" + result.likeStyle + "</td></tr>" +
                                       "<tr><th>가입날짜</th><td>" + result.entryDate + "</td></tr>" +
-                                      "<tr><th>현황 </th><td>" + result.memberStatus + "</td></tr><tr><th>최근접속일</th><td>구현안함</td></tr></table></div>" +
+                                      "<tr><th>현황 </th><td>" + result.memberStatus + "</td></tr><tr><th>최근접속일</th><td>알수없음</td></tr></table></div>" +
                                       "</section>";
-                                      
-                            // console.log("detail="+detail);
-
+  
          	           		$("#member_detail_box_1").html(detail);
          	           		
-         	           		// console.log($('#member_detail').html());
                          },
                          error: function() {
                              console.log("상세보기_ajax 연동실패");
@@ -593,8 +627,9 @@
           
           }); 		
           // 상세보기 회원이 작성한 글 리스트 보기 
-   		$("#member_board_table").click(function(){
-         		var memberNo = $("member_table2 td").parent().children("#mNo").html();
+   		$("#member_table2 td").click(function(){
+         		var memberNo = $("#member_table2 td").parent().children("#mNo").html();
+         		console.log(memberNo);
          		
          		$.ajax({
          			url : "<%= contextPath %>/detailMboard.adm",
@@ -603,7 +638,7 @@
          			data : {memberNo:memberNo},// key:value 
          			success : function(data){
          				console.log('작성한글리스트_성공');
-         				var $tableBody = $("#member_board_table");
+         				var $tableBody = $("#member_board_table2");
 
          				$tableBody.html(""); // 테이블 초기화
 				   			
