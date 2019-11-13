@@ -287,8 +287,8 @@ public class BoardDao {
 	}
 
 
-	public ArrayList<Attachment> selectList(Connection conn, int currentPage, int boardLimit) {
-	      ArrayList<Attachment> list = new ArrayList<>();
+	public ArrayList<Board> selectList(Connection conn, int currentPage, int boardLimit) {
+	      ArrayList<Board> list = new ArrayList<>();
 	      
 	      PreparedStatement pstmt = null;
 	      ResultSet rset = null;
@@ -306,17 +306,15 @@ public class BoardDao {
 	         rset = pstmt.executeQuery();
 	         
 	         while(rset.next()) {
-	        	 Attachment at = new Attachment();
-	        	 at.setArticleNo(rset.getInt("article_no"));
-	        	 at.setChangeName(rset.getString("change_name"));
-	        	 at.setFilePath(rset.getString("file_path"));
-	        	 
+	        	 Board at = new Board();
+	        	 at.setArticleNo(rset.getInt("ARTICLE_NO"));
 	        	 list.add(at);
 	         }
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
 	         close(rset);
+	         close(pstmt);
 	      }
 	      return list;
 	   }
@@ -360,8 +358,12 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			
 			int startRow = (currentPage-1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
+			System.out.println("memberNo : " + memberNo);
+			System.out.println("startRow : " + startRow);
+			System.out.println("endRow : " + endRow);
 			
 			pstmt.setInt(1, memberNo);
 			pstmt.setInt(2, startRow);
@@ -378,7 +380,6 @@ public class BoardDao {
 				w.setWishDate(rset.getDate("wish_date"));
 				w.setWishMemo(rset.getString("wish_memo"));
 				w.setWishStatus(rset.getString("wish_status"));
-				w.setChangeName(rset.getString("change_name"));
 				
 				list.add(w);
 				
@@ -551,11 +552,12 @@ public class BoardDao {
 			
 			if(rset.next()) {
 				b = new Board(rset.getInt(2),
-							rset.getString(4),
-							  rset.getString(3),
-							  rset.getDate(5),
+							rset.getString(3),
 							  rset.getInt(6),
-							  rset.getInt(7));
+							  rset.getInt(7),
+							  rset.getString(8),
+							  rset.getDate(9),
+							  rset.getString(10));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

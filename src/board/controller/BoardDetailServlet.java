@@ -43,7 +43,7 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		int mNo = loginUser.getMemberNo();
 		
-		Board board = null;
+		Board board = new Board();
 		
 		/*boolean flag = false;
 		Cookie[] cookies = request.getCookies();
@@ -110,9 +110,13 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		ArrayList<BoardComment> rlist = bService.selectCommentList(currentPage, boardLimit, aNo);
 		
-		Attachment at = bService.selectChangeName(aNo);
+		// Attachment at = bService.selectChangeName(aNo);
 		
-		if(board != null) {
+		Board at = bService.selectBoard(aNo);
+		System.out.println(at);
+		
+		if(at != null) {
+			
 			request.setAttribute("board", board);
 			
 			request.setAttribute("rlist", rlist);

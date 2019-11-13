@@ -61,6 +61,7 @@ public class WishServlet extends HttpServlet {
         PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
         
         ArrayList<WishList> list = bService.selectWishList(currentPage, boardLimit, m.getMemberNo());
+        System.out.println(list);
         
         RequestDispatcher view = request.getRequestDispatcher("views/board/wishListView.jsp");
         request.setAttribute("list", list);

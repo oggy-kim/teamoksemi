@@ -77,10 +77,10 @@ public class BoardService {
 		return listCount;
 	}
 
-	public ArrayList<Attachment> selectList(int currentPage, int boardLimit) {
+	public ArrayList<Board> selectList(int currentPage, int boardLimit) {
 		Connection conn = getConnection();
 		
-		ArrayList<Attachment> flist = new BoardDao().selectList(conn, currentPage, boardLimit);
+		ArrayList<Board> flist = new BoardDao().selectList(conn, currentPage, boardLimit);
 		
 		// 이후 SQL Developer에 데이터 만들기 server.sql
 		

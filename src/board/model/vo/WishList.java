@@ -13,6 +13,15 @@ public class WishList implements java.io.Serializable{
 	private String wishStatus; // 찜삭제여부
 	private String changeName; // 사진가져올친구
 	
+	
+	
+	public WishList(int memberNo, int articleNo, String wishMemo) {
+		super();
+		this.memberNo = memberNo;
+		this.articleNo = articleNo;
+		this.wishMemo = wishMemo;
+	}
+
 	public WishList(int wishNo, int memberNo, int articleNo, Date wishDate, String wishMemo, String wishStatus,
 			String changeName) {
 		super();

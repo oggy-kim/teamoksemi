@@ -252,9 +252,9 @@ button:hover {
 				<% } else { %>
 				<% for(WishList w : list) { %>
 				<tr>
-					<input type="hidden" value="<%= w.getMemberNo() %>">
-					<td><input type="checkbox" class="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getArticleNo() %>"></td>
-					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getChangeName() %>" class="picture" title="<%= w.getArticleNo() %>" width="130px" height="160px"></td>
+					<input type="hidden" value="<%= w.getWishNo() %>">
+					<td><input type="checkbox" class="select" name="delete" style="width: 20px; height: 20px;" value="<%= w.getWishNo() %>"></td>
+					<td><img src="<%= contextPath %>/resources/images/board/<%= w.getArticleNo() %>.jpg" class="picture" title="<%= w.getWishNo() %>" width="130px" height="160px"></td>
 					<td style="font-size:18px;"><%= w.getWishDate() %></td>
 					<td style="font-size:18px;"><%= w.getWishMemo() %></td>
 				</tr>

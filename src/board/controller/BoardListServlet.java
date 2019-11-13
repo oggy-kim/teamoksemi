@@ -68,7 +68,9 @@ public class BoardListServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Attachment> flist = bService.selectList(currentPage, boardLimit);
+		ArrayList<Board> flist = bService.selectList(currentPage, boardLimit);
+		
+		// ArrayList<Attachment> flist = bService.selectList(currentPage, boardLimit);
 		
 		RequestDispatcher view = request.getRequestDispatcher("views/board/boardListView.jsp");
 		request.setAttribute("flist", flist);

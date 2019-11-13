@@ -44,7 +44,6 @@ public class WishInsertServlet extends HttpServlet {
 		w.setWishMemo(memo);
 		
 		int result = new BoardService().insertWish(w);
-		
 		int result1 = new BoardService().increaseCountt(aNo);
 		
 		if(result > 0) {

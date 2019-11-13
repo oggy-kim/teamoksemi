@@ -11,7 +11,7 @@
     int endPage = pi.getEndPage();
     
     ArrayList<BoardComment> rlist = (ArrayList<BoardComment>)request.getAttribute("rlist");
-    ArrayList<Attachment> flist = (ArrayList<Attachment>)request.getAttribute("flist");
+    ArrayList<Board> flist = (ArrayList<Board>)request.getAttribute("flist");
     
 
 	Member m = (Member)session.getAttribute("loginUser");
@@ -434,18 +434,13 @@ a.btn-layerClose:hover {
 			<div class="empty" algin="center">조회된 리스트가 없습니다.</div>
 			<br><br>
 			<% } else { %>
-			<%-- <% for(Board b : list) { %> --%>
-				<%-- <input type="hidden" value="<%= b.getArticleNo() %>"> --%>
-				<% for(Attachment at : flist){ %>
-					<%-- <% if(b.getArticleNo() == at.getArticleNo()){ %> --%>
+				<% for(Board b : flist){ %>
 					<div class="sharing sfirst" style="width:220px; height:260px;">
-						<img src="<%= contextPath %>/resources/images/board/<%= at.getChangeName() %>" width="220px" height="260px" class="picture" title="<%= at.getArticleNo() %>"
+						<img src="<%= contextPath %>/resources/images/board/<%= b.getArticleNo() %>.jpg" width="220px" height="260px" class="picture" title="<%= b.getArticleNo() %>"
 						style="border-radius:5px;">
 					</div>
 			<% } %>
 			<% } %>
-			<%-- <% } %> --%>
-			<%-- <% } %> --%>
 
 			<br clear="both"> <br>
 
@@ -625,6 +620,7 @@ a.btn-layerClose:hover {
         
     $(".picture").click(function(){
     	var aNo = $(this).attr('title');
+		console.log(aNo);
     	location.href="<%= contextPath %>/boarddetail.look?aNo="+aNo;
     });
     
