@@ -710,9 +710,9 @@
 							<tr>
 								<td>계절감</td>
 								<td><select class="ui-choose" id="season" name="season">
-										<option value="sf">봄가을</option>
-										<option value="su">여름</option>
-										<option value="wi">겨울</option>
+										<option value="SF">봄가을</option>
+										<option value="SU">여름</option>
+										<option value="WI">겨울</option>
 								</select></td>
 							</tr>
 							<tr>
