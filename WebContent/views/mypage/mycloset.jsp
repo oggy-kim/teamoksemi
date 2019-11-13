@@ -340,7 +340,7 @@
 			<div class="content left">
 				<div class="content left button">
 					<button class="btn btn-secondary" onclick="addCloth();">옷 추가</button> &nbsp; &nbsp;
-					<button type="button" class="btn btn-warning deletecloth" onclick="alert('일시 중단입니다. 관리자에게 문의해주세요.');">옷 삭제</button>
+					<button type="button" class="btn btn-warning deletecloth" onclick="confirm('한번 삭제 시 복구가 불가합니다. 삭제하시겠습니까?');">옷 삭제</button>
 					
 
 
@@ -550,12 +550,16 @@
 						$.ajax({
 							url: "<%= contextPath %>/deletemycloth.look",
 							type: "POST", 
-							data: {deletelist : deleteArr},
-							dataType: "json",
+							traditional : true,
+							data: {'deletelist' : deleteArr},
+							dataType: "text",
 							success: function(result){
 								console.log(result); 
+								alert(result + '개 옷의 삭제가 완료되었습니다!');
+								location.href="<%= contextPath %>/closet.look";
 							},
-							error: function() {
+							error: function(e) {
+								console.log(e);
 								console.log("통신 에러");
 							}
 						})

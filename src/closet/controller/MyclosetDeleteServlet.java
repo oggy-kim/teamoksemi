@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import closet.model.dao.ClosetDao;
+import closet.model.service.ClosetService;
+
 /**
  * Servlet implementation class MyclosetDeleteServlet
  */
@@ -26,8 +29,25 @@ public class MyclosetDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String s = request.getParameter("deletelist");
-		 
+		String[] s = request.getParameterValues("deletelist");
+		System.out.println(s[1]);
+		
+		
+		int[] deleteList = new int[s.length];
+		
+		if(s != null) {
+			for(int i = 0; i < s.length; i++) {
+				deleteList[i] = Integer.parseInt(s[i]);
+			}
+		}
+		for(int i = 0; i < deleteList.length; i++) {
+			System.out.println("list ; " + deleteList[i]);
+		}
+		
+		int result = new ClosetService().deleteMyCloth(deleteList);
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(result);
+		
 	}
 
 	/**
