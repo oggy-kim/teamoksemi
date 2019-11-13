@@ -551,7 +551,7 @@ public class BoardDao {
 			
 			if(rset.next()) {
 				b = new Board(rset.getInt(2),
-							rset.getString(4),
+							  rset.getString(4),
 							  rset.getString(3),
 							  rset.getDate(5),
 							  rset.getInt(6),
