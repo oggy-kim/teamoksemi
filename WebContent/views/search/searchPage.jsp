@@ -354,7 +354,7 @@ $(function(){
 	           				  	"</div>" + 
 	           				  	"<div style='width:50%; height:100%; float:left;'>" + 
 	           				  		"<div style='width:80%; height:80%; margin:0.5% 0 0 10%; border:1px solid rgba(192,192,192,0.8); border-radius:15px;'>" + 
-	           				  			"<p style='text-align:center; font-size:20px; margin:10px 0; font-family: Do Hyeon, sans-serif;'> &hearts; " + result.articleWishes + "</p>" + 
+	           				  			"<p style='text-align:center; font-size:20px; margin:10px 0; font-family: Do Hyeon, sans-serif;'> &hearts; " + result.articleLikes + "</p>" + 
 	           				  		"<div>" + 
 	           				  	"</div>" +
 	           				  "</div>" +
